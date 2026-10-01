@@ -1,22 +1,33 @@
-import Link from 'next/link';
-import type { ReactNode } from 'react';
+'use client';
+import { Suspense, type ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
+import { SearchHeader } from '@/components/ui/search-header';
+import { BottomNav } from '@/components/ui/bottom-nav';
+import { IncidentFilterControls } from '@/components/ui/incident-filter-controls';
 export function AppShell({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const browse = pathname === '/' || pathname === '/incidents';
+  const fullScreen =
+    pathname === '/report' || pathname.startsWith('/incidents/');
   return (
     <div className="app-shell">
-      <header className="app-header">
-        <Link href="/" className="brand">
-          흉흉
-        </Link>
-        <Link href="/search">사건 검색</Link>
-      </header>
+      <a className="skip-link" href="#main-content">
+        본문으로 이동
+      </a>
+      {browse && (
+        <>
+          <SearchHeader />
+          <Suspense fallback={<div className="filter-loading" />}>
+            <IncidentFilterControls />
+          </Suspense>
+        </>
+      )}
       <main id="main-content">{children}</main>
-      <nav className="bottom-nav" aria-label="주 메뉴">
-        <Link href="/">지도</Link>
-        <Link href="/report" className="report-link">
-          제보하기
-        </Link>
-        <Link href="/incidents">목록</Link>
-      </nav>
+      {!fullScreen && (
+        <Suspense fallback={null}>
+          <BottomNav />
+        </Suspense>
+      )}
     </div>
   );
 }

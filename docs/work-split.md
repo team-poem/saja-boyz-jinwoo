@@ -10,14 +10,14 @@
 
 ## 담당 영역
 
-| 담당 | 화면·기능 | 담당 파일 |
-| --- | --- | --- |
-| easter721 | 공용 레이아웃·토큰·공용 UI·사건 계약 | src/components/ui/, src/components/layout/, src/app/layout.tsx, src/app/globals.css, src/features/incidents/ |
-| easter721 | 지도 홈·필터·마커·클러스터·내 위치·핫한 사건·바텀시트 | src/app/page.tsx, src/features/map/ (후속 추가) |
-| easter721 | 검색 시작·입력·최근 검색·검색 결과 | src/app/search/, src/features/search/ (후속 추가) |
-| amazon | 사건 목록·카드·빈 결과·로딩 | src/app/incidents/page.tsx, src/features/incident-list/ (추가 가능) |
-| amazon | 사건 상세·타임라인·출처·공유 | src/app/incidents/[id]/, src/features/incident-detail/ (추가 가능) |
-| amazon | 제보 폼·입력 검증·첨부·제출 상태 | src/app/report/, src/features/report/ (추가 가능) |
+| 담당      | 화면·기능                                             | 담당 파일                                                                                                    |
+| --------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| easter721 | 공용 레이아웃·토큰·공용 UI·사건 계약                  | src/components/ui/, src/components/layout/, src/app/layout.tsx, src/app/globals.css, src/features/incidents/ |
+| easter721 | 지도 홈·필터·마커·클러스터·내 위치·핫한 사건·바텀시트 | src/app/page.tsx, src/features/map/ (후속 추가)                                                              |
+| easter721 | 검색 시작·입력·최근 검색·검색 결과                    | src/app/search/, src/features/search/ (후속 추가)                                                            |
+| amazon    | 사건 목록·카드·빈 결과·로딩                           | src/app/incidents/page.tsx, src/features/incident-list/ (추가 가능)                                          |
+| amazon    | 사건 상세·타임라인·출처·공유                          | src/app/incidents/[id]/, src/features/incident-detail/ (추가 가능)                                           |
+| amazon    | 제보 폼·입력 검증·첨부·제출 상태                      | src/app/report/, src/features/report/ (추가 가능)                                                            |
 
 공용 파일은 easter721이 관리한다. amazon은 화면별 CSS Module을 사용한다. 공용 API 변경이 필요하면 `ask @easter721` 저널 이벤트로 알려 순서를 조율한다. package.json·pnpm-lock.yaml 등 허브 파일은 두 사람이 동시에 수정하지 않는다.
 

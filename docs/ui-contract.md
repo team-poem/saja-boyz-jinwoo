@@ -2,14 +2,14 @@
 
 ## 컴포넌트
 
-| 컴포넌트 | 경로 | 입력과 용도 |
-| --- | --- | --- |
-| SearchHeader | src/components/ui/search-header.tsx | query?, brand?; 검색 화면으로 연결. 기본 브랜드 흉흉 |
-| FilterBar | src/components/ui/filter-bar.tsx | value: IncidentFilterSelection, onChange(value); 화면 상태로 제어 |
-| IncidentFilterControls | src/components/ui/incident-filter-controls.tsx | URL 필터를 읽고 변경. useSearchParams를 쓰므로 Suspense 안에 배치 |
-| IncidentBadges | src/components/ui/incident-badges.tsx | category, status; 공용 한글 라벨과 색상 |
-| BottomNav | src/components/ui/bottom-nav.tsx | 현재 경로에 따른 활성 표시·지도/목록/제보 이동 |
-| AppShell | src/components/layout/app-shell.tsx | 공용 레이아웃. 지도·목록에 검색/필터, 상세·제보에서는 검색/메뉴 숨김 |
+| 컴포넌트               | 경로                                           | 입력과 용도                                                               |
+| ---------------------- | ---------------------------------------------- | ------------------------------------------------------------------------- |
+| SearchHeader           | src/components/ui/search-header.tsx            | query?, brand?; 검색 화면으로 연결. 기본 브랜드 흉흉                      |
+| FilterBar              | src/components/ui/filter-bar.tsx               | value: IncidentFilterSelection, onChange(value); 화면 상태로 제어         |
+| IncidentFilterControls | src/components/ui/incident-filter-controls.tsx | URL 필터를 읽고 변경. useSearchParams를 쓰므로 Suspense 안에 배치         |
+| IncidentBadges         | src/components/ui/incident-badges.tsx          | category, status; 공용 한글 라벨과 색상                                   |
+| BottomNav              | src/components/ui/bottom-nav.tsx               | 현재 경로에 따른 활성 표시·지도/목록/제보 이동. 지도↔목록은 URL 필터 유지 |
+| AppShell               | src/components/layout/app-shell.tsx            | 공용 레이아웃. 지도·목록에 검색/필터, 상세·제보에서는 검색/메뉴 숨김      |
 
 Figma 기준 노드: 검색 헤더 `18:2360`, 필터 행 `18:2368`, 상태 드롭다운 `45:3691`, 배지 `18:2408`·`18:2410`, 메뉴 `18:2428`. 정적 SVG는 `public/figma/shared/`에 로컬 보관하며 원본 치수를 유지한다.
 
@@ -19,12 +19,12 @@ Figma 기준 노드: 검색 헤더 `18:2360`, 필터 행 `18:2368`, 상태 드�
 
 `src/features/incidents/filter-selection.ts`의 API를 사용한다.
 
-| URL 키 | 허용값 | 의미 |
-| --- | --- | --- |
-| q | 문자열 | 검색어. 앞뒤 공백 제거 |
-| category | society, security, politics, international | 사건 카테고리 |
-| status | ongoing, publicized, closed | 진행 중·공론화 성공·종결 |
-| period | 1w, 1m, 3m | 최근 7·30·90일. 달력 월이 아닌 고정 일수 |
+| URL 키   | 허용값                                     | 의미                                     |
+| -------- | ------------------------------------------ | ---------------------------------------- |
+| q        | 문자열                                     | 검색어. 앞뒤 공백 제거                   |
+| category | society, security, politics, international | 사건 카테고리                            |
+| status   | ongoing, publicized, closed                | 진행 중·공론화 성공·종결                 |
+| period   | 1w, 1m, 3m                                 | 최근 7·30·90일. 달력 월이 아닌 고정 일수 |
 
 - `readFilterSelection(params)`: URL을 읽고 알 수 없는 분류·상태·기간을 무시한다.
 - `writeFilterSelection(value, existing?)`: 선택을 URL로 만들고 나머지 파라미터를 보존한다. 입력 params를 변경하지 않는다.

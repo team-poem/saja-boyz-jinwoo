@@ -2,9 +2,9 @@
 branch: codex/shared-ui-foundation
 owner: easter721
 started: 2026-10-01
-status: active
+status: done
 goal: feat(ui): Figma 공용 UI와 협업 구현 계약 추가
-next: src/app/globals.css src/components/layout/app-shell.tsx src/features/incidents/
+next:
 base:
 ---
 
