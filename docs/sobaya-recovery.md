@@ -1,5 +1,7 @@
 # sobaya 연결 복구와 승인 전 상태
 
+> 최신 상태: 기존 공용 UI 코드·자산·추가 테스트를 제거하고 src를 초기 main scaffold로 복원했다. 새 명세·검사 계약은 docs/sobaya-restart-approval.md, 정확한 테스트 초안은 해당 브랜치 claim 폴더의 failed-test.draft.md에서 확인한다. 4개 초안은 sobaya probe에서 실제 RED를 확인했다. brain index 오류는 공식 도구로 해소했고, doctor의 현재 실패는 협업 훅을 sobaya 단독 훅으로 인정하지 않는 호환 문제다.
+
 협업 하네스는 작업 선언·충돌·저널을 관리한다. 개발은 반드시 `collab.sh run`으로 감싼 sobaya `approve → loop → gate → review` 절차로 수행한다. 일반 `pnpm run check` 실행은 sobaya 개발 루프를 대체하지 않는다.
 
 ## 현재 상태

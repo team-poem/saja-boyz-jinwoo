@@ -31,7 +31,11 @@ AUTO_REBASE=true
 SYNC_MODE=merge
 
 # 개발 하네스 sobaya 의 워크스페이스 루트. 비우면 이 리포의 두 단계 위(sobaya/apps/<이 리포>)를 본다.
-SOBAYA_ROOT="${SOBAYA_ROOT:-$ROOT/../sobaya}"
+SOBAYA_ROOT="${SOBAYA_ROOT:-}"
+# sobaya/apps 아래의 자동 감지를 우선하고, 외부 앱은 설치된 형제 클론을 찾는다.
+if [ -z "$SOBAYA_ROOT" ] && [ ! -x "$ROOT/../../tdd-set/bin/step.sh" ] && [ -x "$ROOT/../sobaya/tdd-set/bin/step.sh" ]; then
+  SOBAYA_ROOT="$ROOT/../sobaya"
+fi
 
 # 동료 저널을 며칠 전까지 읽을지 (미머지 브랜치 저널은 기간 무관하게 읽는다)
 JOURNAL_LOOKBACK_DAYS=14

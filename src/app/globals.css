@@ -35,10 +35,10 @@ textarea {
   outline-offset: 4px;
 }
 .app-shell {
-  max-width: 480px;
+  max-width: 640px;
   min-height: 100dvh;
   margin: auto;
-  padding: max(16px, env(safe-area-inset-top)) 16px 120px;
+  padding: 24px 16px 110px;
 }
 .app-header {
   display: flex;
@@ -124,20 +124,4 @@ p {
   color: white;
   background: var(--color-brand);
   border-radius: 24px;
-}
-
-.skip-link {
-  position: fixed;
-  top: -100px;
-  z-index: 100;
-  padding: 12px;
-  background: white;
-  color: var(--color-brand);
-}
-.skip-link:focus {
-  top: 8px;
-}
-.filter-loading {
-  height: 30px;
-  margin-top: 8px;
 }
