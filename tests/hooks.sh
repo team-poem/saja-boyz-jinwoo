@@ -94,6 +94,8 @@ check "wip_snapshot 이 미추적 파일 포함"  "echo new > src/auth/untracked
 
 echo "# 온보딩: 리포 상태에 따라 세션 시작이 달라지는가"
 O="$(mktemp -d)"; cp -R "$SRC/.claude" "$SRC/.codex" "$SRC/.githooks" "$SRC/.agents" "$SRC/harness" "$SRC/collab" "$SRC/scripts" "$SRC/.gitignore" "$SRC/AGENTS.md" "$O"/; rm -rf "$O/.claude/cache"
+# 초기화된 앱에서도 setup 전이를 검증하도록 템플릿 상태를 명시한다.
+printf '# {{PROJECT_NAME}}\n- Test: `<declare the actual test command>`\n' > "$O/AGENTS.md"
 (cd "$O" && git init -q -b main && git config user.email o@o && git config user.name o && git add -A && git commit -qm init) >/dev/null 2>&1
 st="$(cd "$O" && CLAUDE_PROJECT_DIR="$O" sh scripts/collab.sh state)"
 check "플레이스홀더 남음 → state=setup"          "printf '%s' \"\$st\" | grep -q '^state=setup'"

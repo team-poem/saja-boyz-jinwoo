@@ -3,3 +3,9 @@
 .claude/cache/
 node_modules/
 *.log
+.next/
+out/
+coverage/
+*.tsbuildinfo
+.env*
+!.env.example
