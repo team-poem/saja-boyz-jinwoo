@@ -2,6 +2,8 @@
 
 Figma: https://www.figma.com/design/TCSILMzViAVqeHRphoyHCH?node-id=18-2348
 
+상세 탐색: [Figma 분석과 섹션별 노드 인덱스](figma-analysis.md)
+
 ## 화면 방향
 
 393px 모바일 화면이 중심이다. 전체 지도 위에 반투명 검색창과 필터 칩, 사건 카드 캐러셀, 하단 내비게이션을 띄운다. 흰색·슬레이트 회색과 빨강 강조색, 둥근 모서리, 얕은 그림자를 사용한다. 검색·목록·상세는 같은 밝은 스타일로 이어진다.

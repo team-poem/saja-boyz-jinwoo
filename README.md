@@ -8,7 +8,7 @@ npm ci
 npm run dev
 ```
 
-[프로젝트 방향](docs/project.md) · [개발 구조와 검증](docs/architecture.md)
+[프로젝트 방향](docs/project.md) · [Figma 분석·노드 인덱스](docs/figma-analysis.md) · [개발 구조와 검증](docs/architecture.md)
 
 ---
 
