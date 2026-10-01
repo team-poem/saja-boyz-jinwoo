@@ -12,7 +12,7 @@
 - changed harness/config.sh 기존 sobaya/apps 자동 감지를 우선하고 형제 클론을 차선으로 탐색 → 별도 위치는 SOBAYA_ROOT 환경 변수 지정
 - changed tests/sobaya.sh 미결합 가짜 저장소에서 실제 앱 lock 상속 제거 → 테스트 기대값은 그대로이며 승인 baseline 전 준비 수정임
 
-## 검증과 남은 것
+## 남은 것
 - git diff origin/main -- src 결과 없음: 초기 src와 일치.
 - sobaya 공식 probe: browseChrome, navigationKeepsFilters, selectedFilters, immersiveRoutes 모두 실행된 assertion 실패로 RED. 환경·import 오류 아님.
 - pnpm 검사 계약 변경안은 승인 대기. 패키지 관리는 pnpm 유지. 정확한 테스트 초안은 claim 폴더에 공유.
