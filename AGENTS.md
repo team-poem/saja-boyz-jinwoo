@@ -2,9 +2,9 @@
 
 ## App facts
 <!-- 개발 하네스 sobaya 가 읽는 앱 계약. - Test: 는 정확히 한 줄, 전체 테스트 스위트 명령. Format:/Lint:/Bench: 는 선택 -->
-- Test: `npm test`
-- Format: `npm run format:check`
-- Lint: `npm run lint`
+- Test: `pnpm test`
+- Format: `pnpm run format:check`
+- Lint: `pnpm run lint`
 - Skills: nodejs
 
 여러 사람이 각자 AI 에이전트를 데리고 이 리포에서 **동시에** 일한다. 이 문서는 에이전트가 동료 에이전트가 한 일을 읽고,
@@ -52,7 +52,7 @@
 
 ## 7. 커밋과 언어
 작고 의미 단위로. 에이전트가 의미 있는 부분을 썼으면 `Assisted-by: <모델명>` 트레일러. `--force` 금지 (기본이 merge 라 필요 없다). 남의 브랜치에 push 금지 — 단 이어받기로 claim `owner` 를 나로 바꾼 뒤부터는 내 브랜치다.
-머지는 GitHub 에서 **squash 만**, 머지 시 브랜치 삭제. PR 제목 = claim goal. 브랜치 안의 커밋 메시지는 자유(sobaya 체크포인트 포함).
+머지는 GitHub 에서 **squash 만**, 머지 시 브랜치 삭제. PR 제목 = claim goal. 커밋 제목은 `<type>(<scope>): <한국어 설명>` 형식을 쓴다(scope 선택). 타입은 `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `ci` 등 변경 목적에 맞게 고른다. sobaya 자동 체크포인트는 도구 형식을 유지한다.
 대화·문서·커밋은 한국어, 코드·식별자·브랜치명은 영어.
 
 ## 8. 개발 하네스 sobaya 와 함께 쓸 때

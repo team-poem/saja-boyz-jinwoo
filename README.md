@@ -4,8 +4,9 @@ Figma 기반 모바일 사건사고 지도 서비스입니다. 현재는 앱 코
 
 ```sh
 nvm use
-npm ci
-npm run dev
+corepack enable
+pnpm install --frozen-lockfile
+pnpm run dev
 ```
 
 [프로젝트 방향](docs/project.md) · [Figma 분석·노드 인덱스](docs/figma-analysis.md) · [개발 구조와 검증](docs/architecture.md)

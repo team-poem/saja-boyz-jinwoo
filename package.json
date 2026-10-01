@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=24 <25"
+    "node": ">=24 <25",
+    "pnpm": ">=10.34.6 <11"
   },
   "scripts": {
     "dev": "next dev",
@@ -11,12 +12,12 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
-    "test": "vitest run && npm run test:harness",
+    "test": "vitest run && pnpm run test:harness",
     "test:unit": "vitest run",
     "test:harness": "sh tests/hooks.sh && sh tests/loop.sh && sh tests/sobaya.sh",
-    "format": "prettier --write src docs/project.md docs/architecture.md *.json *.mjs *.ts",
-    "format:check": "prettier --check src docs/project.md docs/architecture.md *.json *.mjs *.ts",
-    "check": "npm run lint && npm run typecheck && npm test && npm run build"
+    "format": "prettier --write src docs/project.md docs/architecture.md docs/figma-analysis.md *.json *.mjs *.ts",
+    "format:check": "prettier --check src docs/project.md docs/architecture.md docs/figma-analysis.md *.json *.mjs *.ts",
+    "check": "pnpm run lint && pnpm run typecheck && pnpm test && pnpm run build"
   },
   "dependencies": {
     "next": "16.3.8",
@@ -33,5 +34,6 @@
     "typescript": "^5.0.0",
     "vitest": "5.0.3"
   },
-  "type": "module"
+  "type": "module",
+  "packageManager": "pnpm@10.34.6"
 }
