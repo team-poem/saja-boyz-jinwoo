@@ -2,13 +2,14 @@
 branch: codex/shared-ui-foundation
 owner: easter721
 started: 2026-10-01
-status: done
+status: active
 goal: feat(ui): Figma 공용 UI와 협업 구현 계약 추가
-next:
+next: harness/config.sh harness/sobaya.lock docs/ui-contract.md
 base:
 ---
 
 ## 메모
+- 2026-10-01 사용자 정정: 실제 개발은 sobaya로 수행해야 함. 연결을 복구하고 기존 PR의 완료 판정을 보류함.
 - 사용자 승인 분담: easter721은 공용 UI·데이터 계약 선행 PR 후 지도·검색·필터·마커·사건 바텀시트 구현.
 - amazon은 사건 목록(/incidents)·상세(/incidents/[id])·공유·제보(/report)와 화면별 CSS 담당. 아직 상대의 작업 시작은 확인되지 않음.
 - 이 선행 PR은 공용 검색 헤더·필터·배지·하단 메뉴·안정된 사건 계약을 제공. 지도 SDK·뉴스 API·제보 저장과 최종 화면 구현은 후속 범위.
