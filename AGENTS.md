@@ -1,8 +1,10 @@
-# {{PROJECT_NAME}} — 협업 하네스
+# saja-boyz-jinwoo — 협업 하네스
 
 ## App facts
 <!-- 개발 하네스 sobaya 가 읽는 앱 계약. - Test: 는 정확히 한 줄, 전체 테스트 스위트 명령. Format:/Lint:/Bench: 는 선택 -->
-- Test: `<declare the actual test command>`
+- Test: `npm test`
+- Format: `npm run format:check`
+- Lint: `npm run lint`
 - Skills: nodejs
 
 여러 사람이 각자 AI 에이전트를 데리고 이 리포에서 **동시에** 일한다. 이 문서는 에이전트가 동료 에이전트가 한 일을 읽고,

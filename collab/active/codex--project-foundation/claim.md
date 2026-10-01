@@ -2,9 +2,9 @@
 branch: codex/project-foundation
 owner: easter721
 started: 2026-10-01
-status: active
+status: paused
 goal: 사건사고 지도 서비스의 하네스와 프런트엔드 코드베이스 초기 설정
-next: package.json package-lock.json AGENTS.md
+next:
 base:
 ---
 

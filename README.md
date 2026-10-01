@@ -1,3 +1,17 @@
+# 흉흉 · 사건사고 지도 서비스
+
+Figma 기반 모바일 사건사고 지도 서비스입니다. 현재는 앱 코드베이스를 준비한 단계입니다.
+
+```sh
+nvm use
+npm ci
+npm run dev
+```
+
+[프로젝트 방향](docs/project.md) · [개발 구조와 검증](docs/architecture.md)
+
+---
+
 # Poem Collaboration Harness
 
 여러 사람이 각자 AI 에이전트를 데리고 **한 리포에서 동시에** 일하기 위한 하네스 템플릿.
