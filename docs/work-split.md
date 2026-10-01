@@ -1,0 +1,33 @@
+# 구현 분담 · easter721 / amazon
+
+2026-10-01 사용자가 승인한 분담. amazon의 작업 시작·claim은 아직 확인되지 않았다. 상대 claim을 대신 작성하지 않는다.
+
+## 순서
+
+1. **공용 기반 선행 PR**: easter721, `codex/shared-ui-foundation`. 검색 헤더·필터·배지·하단 메뉴·사건 데이터 계약을 제공한다.
+2. 선행 PR을 squash merge한 main에서 각자 기능 브랜치와 claim을 만든다. 일찍 시작해야 하면 공용 브랜치를 base로 하는 스택 PR을 쓰고 claim에 `base: codex/shared-ui-foundation`을 명시한다.
+3. easter721은 지도·검색, amazon은 목록·상세·제보를 병렬 구현한다. 기능별 PR과 저널로 통합한다.
+
+## 담당 영역
+
+| 담당 | 화면·기능 | 담당 파일 |
+| --- | --- | --- |
+| easter721 | 공용 레이아웃·토큰·공용 UI·사건 계약 | src/components/ui/, src/components/layout/, src/app/layout.tsx, src/app/globals.css, src/features/incidents/ |
+| easter721 | 지도 홈·필터·마커·클러스터·내 위치·핫한 사건·바텀시트 | src/app/page.tsx, src/features/map/ (후속 추가) |
+| easter721 | 검색 시작·입력·최근 검색·검색 결과 | src/app/search/, src/features/search/ (후속 추가) |
+| amazon | 사건 목록·카드·빈 결과·로딩 | src/app/incidents/page.tsx, src/features/incident-list/ (추가 가능) |
+| amazon | 사건 상세·타임라인·출처·공유 | src/app/incidents/[id]/, src/features/incident-detail/ (추가 가능) |
+| amazon | 제보 폼·입력 검증·첨부·제출 상태 | src/app/report/, src/features/report/ (추가 가능) |
+
+공용 파일은 easter721이 관리한다. amazon은 화면별 CSS Module을 사용한다. 공용 API 변경이 필요하면 `ask @easter721` 저널 이벤트로 알려 순서를 조율한다. package.json·pnpm-lock.yaml 등 허브 파일은 두 사람이 동시에 수정하지 않는다.
+
+## amazon 시작 안내
+
+- [Figma 화면·섹션별 노드](figma-analysis.md)에서 목록 `11:2123`, 상세 `11:2043`, 제보 `11:2221`을 조회한다.
+- 공유 시안 `34:3311`은 문구가 혼재하므로 동작을 확인한 뒤 구현한다.
+- [공용 UI·데이터 계약](ui-contract.md)을 읽고 제공 컴포넌트·타입·라벨·필터 어댑터를 재사용한다.
+- 목록에서는 AppShell이 검색 헤더·필터·내비게이션을 이미 렌더한다. 화면에서 중복으로 추가하지 않는다.
+- 상세·제보는 AppShell이 공용 검색 헤더·내비게이션을 숨긴다. 각 화면의 뒤로가기·닫기·CTA를 직접 구현한다.
+- 샘플 사건은 실제 기사로 오해하지 않도록 샘플 표시와 fixture 경계를 유지한다. 실제 뉴스 API·제보 저장·인증은 후속 결정이다.
+
+현재 선행 PR은 **공용 기반만** 만든다. 지도 SDK·검색 결과·목록·상세·제보 완성본이 아니다.
