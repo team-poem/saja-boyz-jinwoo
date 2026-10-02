@@ -92,3 +92,14 @@ test('incidentImages', () => {
     'href="/incidents/sample%2F%EC%84%9C%EC%9A%B8%20%3F"',
   );
 });
+
+test('incidentEmpty', () => {
+  const html = renderReady([]);
+  const status = readStatus(html);
+  expect(status).not.toBeNull();
+  expect(status?.[3]).toContain('조건에 맞는 사건이 없어요');
+  expect(html).toContain('검색어나 필터를 바꿔보세요');
+  expect(html).not.toContain('<article');
+  expect(html).not.toContain('href="/incidents/');
+  expect(html).not.toContain('사건을 불러오는 중');
+});

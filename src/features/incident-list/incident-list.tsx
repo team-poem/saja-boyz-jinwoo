@@ -23,6 +23,15 @@ function formatRelativeTime(occurredAt: string, now: Date) {
 export function IncidentList(props: IncidentListProps) {
   if (props.state !== 'ready') return null;
 
+  if (props.incidents.length === 0) {
+    return (
+      <div role="status">
+        <p>조건에 맞는 사건이 없어요</p>
+        <p>검색어나 필터를 바꿔보세요</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       {props.incidents.map((incident) => (

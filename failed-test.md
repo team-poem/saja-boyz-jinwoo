@@ -110,7 +110,7 @@ test('incidentImages', () => {
 });
 ```
 
-- [ ] incidentEmpty — 조회 완료 후 0건이면 빈 결과 안내만 표시한다
+- [x] incidentEmpty — 조회 완료 후 0건이면 빈 결과 안내만 표시한다
 
 ```ts
 test('incidentEmpty', () => {
