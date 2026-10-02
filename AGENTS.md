@@ -2,7 +2,7 @@
 
 ## App facts
 <!-- 개발 하네스 sobaya 가 읽는 앱 계약. - Test: 는 정확히 한 줄, 전체 테스트 스위트 명령. Format:/Lint:/Bench: 는 선택 -->
-- Test: `pnpm test`
+- Test: `./node_modules/.bin/vitest run`
 - Format: `pnpm run format:check`
 - Lint: `pnpm run lint`
 - Skills: nodejs
