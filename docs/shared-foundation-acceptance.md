@@ -35,4 +35,6 @@ DOM 행동 테스트는 이벤트를 실행하고 실제 router 호출 및 다�
 
 ## GitHub 정책 적용 상태
 
-dev는 main의 c8ee953에서 생성했다. 저장소는 squash만 허용하고 merge/rebase merge 및 auto-merge를 끈다. 로컬 하네스는 dev/main 직접 코드 push를 막는다. 비공개 저장소의 현재 요금제가 브랜치 보호 API를 403으로 거부하므로 서버에서 승인 1명·새 push 재승인·CI·대화 해결을 강제하는 설정은 아직 적용되지 않았다. 수동 리뷰 규칙을 강제 보호로 오해하지 않는다. 공개 전환 또는 보호 지원 요금제 결정 후 main/dev 보호를 다시 적용해야 한다.
+dev는 main의 c8ee953에서 생성했다. 2026-10-02 사용자 공개 전환 후 저장소는 public이며 main/dev 보호 API 적용과 조회 모두 성공했다. 양쪽 모두 승인 1명, 마지막 push 작성자 외 승인, 새 push 재승인, 필수 CI 3개, 최신 base와 대화 해결을 요구하고 관리자에게도 적용한다. force push·삭제를 금지하고 선형 히스토리를 요구한다. 저장소는 squash만 허용하고 merge/rebase merge 및 auto-merge를 끈다. 로컬 하네스도 dev/main 직접 코드 push를 막는다.
+
+같은 시점 PR #1의 base는 dev, reviewDecision은 REVIEW_REQUIRED, mergeStateStatus는 BLOCKED로 확인했다. 이 값은 리뷰·CI에 따라 변하는 현재 상태이며 계속 고정되는 값은 아니다. 이전 비공개 상태에서의 403은 과거 기록이며 현재 미적용 상태를 뜻하지 않는다. 관리자의 저장소 설정 변경 권한 자체까지 막은 것은 아니다.
