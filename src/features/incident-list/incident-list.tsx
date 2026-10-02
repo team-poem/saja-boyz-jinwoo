@@ -1,9 +1,49 @@
+import Link from 'next/link';
+import { categoryLabels, statusLabels } from '../incidents/labels';
 import type { Incident } from '../incidents/types';
 
 type IncidentListProps =
   | { state: 'loading'; now: Date }
   | { state: 'ready'; incidents: readonly Incident[]; now: Date };
 
-export function IncidentList(_props: IncidentListProps) {
-  return null;
+function formatRelativeTime(occurredAt: string, now: Date) {
+  const minutes = Math.floor(
+    (now.getTime() - new Date(occurredAt).getTime()) / 60_000,
+  );
+
+  if (minutes < 1) return '방금 전';
+  if (minutes < 60) return `${minutes}분 전`;
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}시간 전`;
+  return `${Math.floor(hours / 24)}일 전`;
+}
+
+export function IncidentList(props: IncidentListProps) {
+  if (props.state !== 'ready') return null;
+
+  return (
+    <div>
+      {props.incidents.map((incident) => (
+        <article key={incident.id}>
+          <Link href={`/incidents/${encodeURIComponent(incident.id)}`}>
+            <h2>{incident.title}</h2>
+            <p>
+              <span>{categoryLabels[incident.category]}</span>
+              {' · '}
+              <span>{statusLabels[incident.status]}</span>
+            </p>
+            <p>
+              {incident.location.address}
+              {' · '}
+              <time dateTime={incident.occurredAt}>
+                {formatRelativeTime(incident.occurredAt, props.now)}
+              </time>
+            </p>
+            <p>{incident.summary}</p>
+          </Link>
+        </article>
+      ))}
+    </div>
+  );
 }
