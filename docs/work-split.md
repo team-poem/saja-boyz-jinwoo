@@ -5,7 +5,7 @@
 ## 순서
 
 1. **공용 기반 선행 PR**: easter721, `codex/shared-ui-foundation`. 검색 헤더·필터·배지·하단 메뉴·사건 데이터 계약을 제공한다.
-2. 선행 PR을 squash merge한 main에서 각자 기능 브랜치와 claim을 만든다. 일찍 시작해야 하면 공용 브랜치를 base로 하는 스택 PR을 쓰고 claim에 `base: codex/shared-ui-foundation`을 명시한다.
+2. 선행 PR은 dev를 대상으로 리뷰 후 squash merge한다. dev에서 각자 기능 브랜치와 claim을 만든다. 일찍 시작해야 하면 공용 브랜치를 base로 하는 스택 PR을 쓰고 claim에 `base: codex/shared-ui-foundation`을 명시한다. dev→main 통합도 별도 리뷰 PR로 진행한다.
 3. easter721은 지도·검색, amazon은 목록·상세·제보를 병렬 구현한다. 기능별 PR과 저널로 통합한다.
 
 ## 담당 영역
@@ -31,3 +31,7 @@
 - 샘플 사건은 실제 기사로 오해하지 않도록 샘플 표시와 fixture 경계를 유지한다. 실제 뉴스 API·제보 저장·인증은 후속 결정이다.
 
 현재 선행 PR은 **공용 기반만** 만든다. 지도 SDK·검색 결과·목록·상세·제보 완성본이 아니다.
+
+## 공용 기반 인수
+
+첫 레이아웃 루프 4개 통과는 중간 체크포인트다. [단계별 인수 조건](shared-foundation-acceptance.md)의 공용 컴포넌트·URL 어댑터·실제 상호작용 검증과 sobaya gate·독립 review까지 완료되어야 amazon이 공용 기반을 인수한다.

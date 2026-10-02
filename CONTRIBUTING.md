@@ -9,7 +9,7 @@
 - `git config rerere.enabled true` (init.sh 가 해준다). 같은 충돌을 두 번 풀지 않는다.
 
 ## 브랜치
-- `main` 은 보호 브랜치. PR 로만. 브랜치 하나 = claim 하나 = PR 하나.
+- `dev`·`main`은 보호 대상 브랜치. 기능은 dev에서 시작해 dev 대상 리뷰 PR로 통합한다. dev→main도 별도 리뷰 PR로만 진행한다. 브랜치 하나 = claim 하나 = PR 하나.
 - 브랜치는 짧게. 하루 안에 머지하는 걸 목표로. 오래 끌수록 충돌은 커진다.
 
 ## 흐름
@@ -20,11 +20,11 @@
 ## PR 과 머지
 - 본문은 `scripts/collab.sh pr-body` 가 만든다. 사람은 "검증" 칸만 채운다. 제목 = claim goal.
 - **머지는 squash 만, 머지 시 브랜치 삭제.** 첫 push 뒤 `sh harness/github-policy.sh` 가 GitHub 설정을 건다 (온보딩이 한다). 하네스의 머지 감지와 prune 이 이 전제로 돈다.
-- **PR 규칙(GitHub 룰셋, `github-policy.sh` 가 건다):** 다른 멤버 1명 이상 승인, 새 커밋이 올라오면 재승인, 리뷰 대화 전부 해결, CI 두 job 통과, 브랜치가 main 최신. 관리자도 예외 없음 — 아무도 main 에 직접 push 못 한다.
+- **PR 규칙:** 다른 멤버 1명 이상 승인, 새 커밋이면 재승인, 리뷰 대화 해결, CI 통과, 대상 브랜치 최신 상태가 목표다. 현재 private 저장소 요금제에서는 GitHub 보호 API가 403을 반환하므로 서버 강제는 적용되지 않았다. `github-policy.sh`는 main/dev 양쪽에 적용을 시도하고 실패를 표시한다.
 - 리뷰어는 서로. 하루에 PR 여러 개, 400줄 넘기 전에. 공유 파일(스키마·의존성) 변경은 작은 선행 PR 로 먼저.
-- CI 가 여는 claim 정리 PR("chore(collab): prune claims")도 사람이 승인해야 머지된다. 보이면 승인한다.
-- 먼저 머지되는 쪽이 이기고 나중 쪽이 main 을 merge 로 따라잡는다 (pulse 가 자동). `check` 가 "다른 열린 브랜치와 같은 파일" 을 알려준다.
-- **main 보호:** 리포는 public 으로 둔다 (조직이 Free 플랜이라 private 에는 브랜치 보호를 못 건다). `github-policy.sh` 가 PR 필수·CI 통과 필수·force push 금지를 건다. git 훅도 같은 걸 막으므로 이중이다. private 로 만들어야 하면 git 훅만 남는다는 걸 알고 쓴다.
+- 리뷰 없는 자동 push를 피하기 위해 CI claim 자동 정리는 비활성화했다. 필요하면 별도 리뷰 PR로 정리한다.
+- 나중에 통합하는 쪽이 dev를 merge로 따라잡는다(pulse 기준도 dev). `check`가 다른 열린 브랜치와 같은 파일을 알려준다.
+- **보호 상태:** 저장소는 private을 유지한다. squash만 허용하고 auto-merge는 껐다. 로컬 git 훅은 dev/main 직접 코드 push를 막지만 GitHub 화면에서 승인 없는 수동 merge를 차단하지는 못한다. 보호 지원 요금제나 공개 전환은 사용자가 별도로 결정한다.
 
 ## AI 사용 고지
 - 에이전트가 diff 의 의미 있는 부분을 썼으면 커밋에 `Assisted-by: <모델명>`.

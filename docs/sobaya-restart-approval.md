@@ -35,6 +35,8 @@ for (const suite of ['hooks', 'loop', 'sobaya']) {
 
 ## 기능 테스트와 실행 정책
 
+amazon 피드백을 반영한 [단계별 인수 조건](shared-foundation-acceptance.md)을 적용한다. 아래 4개는 첫 레이아웃 checkpoint이며 공용 기반 전체 완료 조건이 아니다. 2단계에서 배지·공용 컴포넌트·URL 어댑터와 DOM 상호작용의 정확한 테스트·지원 코드를 별도 baseline 승인안으로 제시하고, 최종 gate·독립 review 후에만 인수한다. 통합 대상은 dev다.
+
 failed-test.md에 전체 헤더와 4개 항목의 정확한 본문이 있다: browseChrome, navigationKeepsFilters, selectedFilters, immersiveRoutes. 초기 AppShell을 실행해 기능 부재로 실패해야 하며 import·환경 오류는 RED로 인정하지 않는다.
 
 sobaya 기본 정책: gpt-6-astra, selected, 최대 20회 호출, 호출당 900초. 구현·독립 review를 별도 컨텍스트로 실행한다. 모든 워커 명령은 collab.sh run으로 감싼다.

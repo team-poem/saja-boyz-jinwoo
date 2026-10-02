@@ -1,7 +1,7 @@
 # 하네스 설정. 훅과 scripts/collab.sh 가 읽는다. 키 이름은 바꾸지 않는다.
 
-# 직접 커밋을 막는 보호 브랜치 (공백 구분). 첫 항목이 기준(main).
-PROTECTED_BRANCHES="main master develop"
+# 직접 커밋을 막는 보호 브랜치 (공백 구분). 첫 항목이 기준(dev).
+PROTECTED_BRANCHES="dev main master develop"
 
 # 협업 메모리
 CLAIM_DIR="collab/active"        # collab/active/<branch-slug>/claim.md + 브랜치 산출물

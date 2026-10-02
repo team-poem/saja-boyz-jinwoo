@@ -5,7 +5,7 @@ started: 2026-10-01
 status: active
 goal: feat(ui): sobaya로 Figma 공용 UI 다시 구현
 next: src/ public/ failed-test.md docs/sobaya-recovery.md
-base:
+base: dev
 ---
 
 ## 메모
