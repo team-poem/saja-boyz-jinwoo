@@ -125,7 +125,7 @@ test('incidentEmpty', () => {
 });
 ```
 
-- [ ] incidentLoading — 로딩 상태를 빈 결과와 구분한다
+- [x] incidentLoading — 로딩 상태를 빈 결과와 구분한다
 
 ```ts
 test('incidentLoading', () => {

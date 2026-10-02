@@ -21,7 +21,13 @@ function formatRelativeTime(occurredAt: string, now: Date) {
 }
 
 export function IncidentList(props: IncidentListProps) {
-  if (props.state !== 'ready') return null;
+  if (props.state === 'loading') {
+    return (
+      <div role="status" aria-busy="true">
+        사건을 불러오는 중
+      </div>
+    );
+  }
 
   if (props.incidents.length === 0) {
     return (

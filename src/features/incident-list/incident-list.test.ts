@@ -103,3 +103,16 @@ test('incidentEmpty', () => {
   expect(html).not.toContain('href="/incidents/');
   expect(html).not.toContain('사건을 불러오는 중');
 });
+
+test('incidentLoading', () => {
+  const html = renderToStaticMarkup(
+    createElement(IncidentList, { state: 'loading', now }),
+  );
+  const status = readStatus(html);
+  expect(status).not.toBeNull();
+  expect(status?.[2]).toContain('aria-busy="true"');
+  expect(status?.[3]).toContain('사건을 불러오는 중');
+  expect(html).not.toContain('조건에 맞는 사건이 없어요');
+  expect(html).not.toContain('<article');
+  expect(html).not.toContain('href="/incidents/');
+});
