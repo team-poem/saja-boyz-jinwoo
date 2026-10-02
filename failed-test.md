@@ -1,8 +1,7 @@
 # 사건 목록 본문 — 승인된 테스트 계획
 
-2026-10-02 사용자 승인. 아래 원본 테스트 코드는 승인 당시 내용 그대로다. 포맷 교체안은 별도 파일에 있으며 추가 승인 전 적용하지 않는다.
-대상: 목록 표시 컴포넌트의 첫 체크포인트. URL 필터 연결·라우트 샘플 연결·공용 UI 인수·API 연결 완료를 의미하지 않는다.
-공유 헤더와 각 본문은 아래 코드 그대로 실행한다. 검토 설명은 review.md에만 둔다.
+2026-10-02 사용자가 최초 명세·테스트·실행 지원을 승인했고, 이어 포맷 교체안도 승인했다.
+대상은 목록 표시 컴포넌트다. 라우트 연결·공용 UI 인수·API 연결 완료를 의미하지 않는다.
 
 ## 목록 표시
 
@@ -48,12 +47,15 @@ function renderReady(items: readonly Incident[] = incidents) {
 }
 
 function readTimes(html: string) {
-  return [...html.matchAll(/<time\b[^>]*datetime="([^"]+)"[^>]*>([^<]*)<\/time>/gi)]
-    .map((match) => [match[1], match[2]]);
+  return [
+    ...html.matchAll(/<time\b[^>]*datetime="([^"]+)"[^>]*>([^<]*)<\/time>/gi),
+  ].map((match) => [match[1], match[2]]);
 }
 
 function readStatus(html: string) {
-  return html.match(/<([a-z][a-z0-9]*)\b([^>]*\brole="status"[^>]*)>([\s\S]*?)<\/\1>/);
+  return html.match(
+    /<([a-z][a-z0-9]*)\b([^>]*\brole="status"[^>]*)>([\s\S]*?)<\/\1>/,
+  );
 }
 ```
 
@@ -69,7 +71,9 @@ test('incidentCards', () => {
     expect(card).toContain(incident.title);
     expect(card).toContain(incident.summary);
     expect(card).toContain(incident.location.address);
-    expect(card).toContain(`href="/incidents/${encodeURIComponent(incident.id)}"`);
+    expect(card).toContain(
+      `href="/incidents/${encodeURIComponent(incident.id)}"`,
+    );
   }
   expect(cards[0]).toContain('사회');
   expect(cards[0]).toContain('진행 중');
@@ -78,7 +82,8 @@ test('incidentCards', () => {
   expect(cards[1]).toContain('종결');
   expect(readTimes(cards[1])).toEqual([[incidents[1].occurredAt, '2일 전']]);
   const reversedHtml = renderReady([...incidents].reverse());
-  const reversedCards = reversedHtml.match(/<article\b[^>]*>[\s\S]*?<\/article>/g) ?? [];
+  const reversedCards =
+    reversedHtml.match(/<article\b[^>]*>[\s\S]*?<\/article>/g) ?? [];
   expect(reversedCards).toHaveLength(2);
   expect(reversedCards[0]).toContain(incidents[1].title);
   expect(reversedCards[1]).toContain(incidents[0].title);
@@ -98,7 +103,9 @@ test('incidentImages', () => {
   expect(cards[1]).toContain('사진 없음');
   expect(cards[1]).not.toContain('<img');
   expect(cards[1]).toContain('샘플: 지역 행사 종료');
-  expect(cards[1]).toContain('href="/incidents/sample%2F%EC%84%9C%EC%9A%B8%20%3F"');
+  expect(cards[1]).toContain(
+    'href="/incidents/sample%2F%EC%84%9C%EC%9A%B8%20%3F"',
+  );
 });
 ```
 
