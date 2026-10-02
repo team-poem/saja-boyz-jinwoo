@@ -8,6 +8,17 @@ type IncidentListProps =
   | { state: 'loading'; now: Date }
   | { state: 'ready'; incidents: readonly Incident[]; now: Date };
 
+function getIncidentHref(id: string): string | null {
+  if (id === '' || id === '.' || id === '..') return null;
+
+  try {
+    return `/incidents/${encodeURIComponent(id)}`;
+  } catch (error) {
+    if (error instanceof URIError) return null;
+    throw error;
+  }
+}
+
 function formatRelativeTime(occurredAt: string, now: Date) {
   const minutes = Math.floor(
     (now.getTime() - new Date(occurredAt).getTime()) / 60_000,
@@ -45,12 +56,10 @@ export function IncidentList(props: IncidentListProps) {
 
   return (
     <div className={styles.list}>
-      {props.incidents.map((incident) => (
-        <article className={styles.item} key={incident.id}>
-          <Link
-            className={styles.card}
-            href={`/incidents/${encodeURIComponent(incident.id)}`}
-          >
+      {props.incidents.map((incident) => {
+        const href = getIncidentHref(incident.id);
+        const content = (
+          <>
             {incident.imageUrl ? (
               <Image
                 className={styles.thumbnail}
@@ -87,10 +96,25 @@ export function IncidentList(props: IncidentListProps) {
                 </time>
               </p>
               <p className={styles.summary}>{incident.summary}</p>
+              {href === null && (
+                <p className={styles.messageHint}>상세 정보 없음</p>
+              )}
             </div>
-          </Link>
-        </article>
-      ))}
+          </>
+        );
+
+        return (
+          <article className={styles.item} key={incident.id}>
+            {href === null ? (
+              <div className={styles.card}>{content}</div>
+            ) : (
+              <Link className={styles.card} href={href}>
+                {content}
+              </Link>
+            )}
+          </article>
+        );
+      })}
     </div>
   );
 }

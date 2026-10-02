@@ -163,7 +163,7 @@ test('incidentTimeBoundaries', () => {
 });
 ```
 
-- [ ] incidentUnsafeIds — 잘못된 ID는 카드를 유지하되 상세 이동을 제공하지 않는다
+- [x] incidentUnsafeIds — 잘못된 ID는 카드를 유지하되 상세 이동을 제공하지 않는다
 
 ```ts
 test('incidentUnsafeIds', () => {
