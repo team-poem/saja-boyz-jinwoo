@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { categoryLabels, statusLabels } from '../incidents/labels';
 import type { Incident } from '../incidents/types';
+import styles from './incident-list.module.css';
 
 type IncidentListProps =
   | { state: 'loading'; now: Date }
@@ -23,42 +24,36 @@ function formatRelativeTime(occurredAt: string, now: Date) {
 export function IncidentList(props: IncidentListProps) {
   if (props.state === 'loading') {
     return (
-      <div role="status" aria-busy="true">
-        사건을 불러오는 중
+      <div className={styles.list}>
+        <div className={styles.message} role="status" aria-busy="true">
+          <p className={styles.messageTitle}>사건을 불러오는 중</p>
+        </div>
       </div>
     );
   }
 
   if (props.incidents.length === 0) {
     return (
-      <div role="status">
-        <p>조건에 맞는 사건이 없어요</p>
-        <p>검색어나 필터를 바꿔보세요</p>
+      <div className={styles.list}>
+        <div className={styles.message} role="status">
+          <p className={styles.messageTitle}>조건에 맞는 사건이 없어요</p>
+          <p className={styles.messageHint}>검색어나 필터를 바꿔보세요</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className={styles.list}>
       {props.incidents.map((incident) => (
-        <article key={incident.id}>
-          <Link href={`/incidents/${encodeURIComponent(incident.id)}`}>
-            <h2>{incident.title}</h2>
-            <p>
-              <span>{categoryLabels[incident.category]}</span>
-              {' · '}
-              <span>{statusLabels[incident.status]}</span>
-            </p>
-            <p>
-              {incident.location.address}
-              {' · '}
-              <time dateTime={incident.occurredAt}>
-                {formatRelativeTime(incident.occurredAt, props.now)}
-              </time>
-            </p>
-            <p>{incident.summary}</p>
+        <article className={styles.item} key={incident.id}>
+          <Link
+            className={styles.card}
+            href={`/incidents/${encodeURIComponent(incident.id)}`}
+          >
             {incident.imageUrl ? (
               <Image
+                className={styles.thumbnail}
                 src={incident.imageUrl}
                 alt=""
                 width={80}
@@ -66,8 +61,33 @@ export function IncidentList(props: IncidentListProps) {
                 unoptimized
               />
             ) : (
-              <span>사진 없음</span>
+              <span className={styles.placeholder}>사진 없음</span>
             )}
+            <div className={styles.content}>
+              <div className={styles.badges}>
+                <span
+                  className={styles.badge}
+                  data-category={incident.category}
+                >
+                  {categoryLabels[incident.category]}
+                </span>
+                <span className={styles.badge} data-status={incident.status}>
+                  {statusLabels[incident.status]}
+                </span>
+              </div>
+              <h2 className={styles.title}>{incident.title}</h2>
+              <p className={styles.metadata}>
+                <span aria-hidden="true">📍</span>
+                <span className={styles.address}>
+                  {incident.location.address}
+                </span>
+                <span aria-hidden="true">·</span>
+                <time className={styles.time} dateTime={incident.occurredAt}>
+                  {formatRelativeTime(incident.occurredAt, props.now)}
+                </time>
+              </p>
+              <p className={styles.summary}>{incident.summary}</p>
+            </div>
           </Link>
         </article>
       ))}
