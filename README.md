@@ -9,7 +9,7 @@ pnpm install --frozen-lockfile
 pnpm run dev
 ```
 
-[프로젝트 방향](docs/project.md) · [Figma 분석·노드 인덱스](docs/figma-analysis.md) · [개발 구조와 검증](docs/architecture.md)
+[구현 분담](docs/work-split.md) · [공용 UI 계약](docs/ui-contract.md) · [프로젝트 방향](docs/project.md) · [Figma 분석·노드 인덱스](docs/figma-analysis.md) · [개발 구조와 검증](docs/architecture.md)
 
 ---
 
