@@ -116,3 +116,20 @@ test('incidentLoading', () => {
   expect(html).not.toContain('<article');
   expect(html).not.toContain('href="/incidents/');
 });
+
+test('incidentTimeBoundaries', () => {
+  const cases = [
+    [0, '방금 전'],
+    [59_999, '방금 전'],
+    [60_000, '1분 전'],
+    [3_599_999, '59분 전'],
+    [3_600_000, '1시간 전'],
+    [86_399_999, '23시간 전'],
+    [86_400_000, '1일 전'],
+  ] as const;
+  for (const [elapsed, label] of cases) {
+    const occurredAt = new Date(now.getTime() - elapsed).toISOString();
+    const html = renderReady([{ ...incidents[0], occurredAt }]);
+    expect(readTimes(html)).toEqual([[occurredAt, label]]);
+  }
+});

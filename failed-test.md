@@ -142,7 +142,7 @@ test('incidentLoading', () => {
 });
 ```
 
-- [ ] incidentTimeBoundaries — 상대 시각의 분·시간·일 경계를 구분한다
+- [x] incidentTimeBoundaries — 상대 시각의 분·시간·일 경계를 구분한다
 
 ```ts
 test('incidentTimeBoundaries', () => {
