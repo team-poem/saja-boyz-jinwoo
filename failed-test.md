@@ -162,3 +162,23 @@ test('incidentTimeBoundaries', () => {
   }
 });
 ```
+
+- [ ] incidentUnsafeIds — 잘못된 ID는 카드를 유지하되 상세 이동을 제공하지 않는다
+
+```ts
+test('incidentUnsafeIds', () => {
+  for (const id of ['', '.', '..', '\uD800', '\uDC00']) {
+    let html = '';
+    expect(() => {
+      html = renderReady([{ ...incidents[0], id }]);
+    }).not.toThrow();
+    const cards: string[] =
+      html.match(/<article\b[^>]*>[\s\S]*?<\/article>/g) ?? [];
+    expect(cards).toHaveLength(1);
+    expect(cards[0]).toContain(incidents[0].title);
+    expect(cards[0]).toContain(incidents[0].summary);
+    expect(cards[0]).toContain('상세 정보 없음');
+    expect(cards[0]).not.toMatch(/<a\b/);
+  }
+});
+```

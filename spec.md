@@ -25,3 +25,7 @@ Figma [사건 목록 본문 11:2153](https://www.figma.com/design/TCSILMzViAVqeH
 - DOM 이벤트/화면 크기/이미지 실재/스타일은 정적 렌더 테스트가 보증하지 않는다. 구현 후 393px 브라우저 확인과 실제 링크 이동 확인이 필요하다.
 - 최종 완료는 전체 테스트·lint·format·typecheck·build, Sobaya gate와 별도 컨텍스트의 HEAD 기준 review가 통과한 뒤 판정한다.
 
+
+## 사건 ID 예외 처리 — 추가 승인 제안
+
+사건 상세 연결 요구의 예외를 명시한다. id가 빈 문자열, `.` 또는 `..`, 혹은 올바르지 않은 Unicode 문자열이면 카드의 사건 정보와 입력 순서는 유지하되 상세 링크를 만들지 않고 “상세 정보 없음”을 표시한다. 이 입력으로 목록 렌더가 실패해서는 안 된다. 그 외 id의 상세 URL은 기존 encodeURIComponent 규칙을 유지한다. 공유 Incident 타입과 실제 상세/API 연결 정책은 이번 변경에서 수정하지 않는다.
