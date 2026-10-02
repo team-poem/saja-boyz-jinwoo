@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { categoryLabels, statusLabels } from '../incidents/labels';
 import type { Incident } from '../incidents/types';
@@ -41,6 +42,17 @@ export function IncidentList(props: IncidentListProps) {
               </time>
             </p>
             <p>{incident.summary}</p>
+            {incident.imageUrl ? (
+              <Image
+                src={incident.imageUrl}
+                alt=""
+                width={80}
+                height={80}
+                unoptimized
+              />
+            ) : (
+              <span>사진 없음</span>
+            )}
           </Link>
         </article>
       ))}

@@ -93,7 +93,7 @@ test('incidentCards', () => {
 });
 ```
 
-- [ ] incidentImages — 사진 유무와 관계없이 카드와 링크를 유지한다
+- [x] incidentImages — 사진 유무와 관계없이 카드와 링크를 유지한다
 
 ```ts
 test('incidentImages', () => {

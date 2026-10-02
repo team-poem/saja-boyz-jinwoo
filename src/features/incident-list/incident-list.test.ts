@@ -79,3 +79,16 @@ test('incidentCards', () => {
   expect(html).not.toContain('<header');
   expect(html).not.toContain('<nav');
 });
+
+test('incidentImages', () => {
+  const html = renderReady();
+  const cards = html.match(/<article\b[^>]*>[\s\S]*?<\/article>/g) ?? [];
+  expect(cards).toHaveLength(2);
+  expect(cards[0]).toContain('src="/fixtures/sample-one.png"');
+  expect(cards[1]).toContain('사진 없음');
+  expect(cards[1]).not.toContain('<img');
+  expect(cards[1]).toContain('샘플: 지역 행사 종료');
+  expect(cards[1]).toContain(
+    'href="/incidents/sample%2F%EC%84%9C%EC%9A%B8%20%3F"',
+  );
+});
