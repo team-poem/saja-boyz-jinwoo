@@ -72,31 +72,57 @@ const publicationFormatter = new Intl.DateTimeFormat('en-CA', {
 
 function publicationDate(value: string) {
   const input = value.trim();
-  const iso = input.match(/^([+-]\d{6}|\d{4})-(\d{1,2})-(\d{1,2})(?:$|[Tt\s])/);
-  const rfc = input.match(
-    /^(?:[a-z]{3},?\s+)?(\d{1,2})\s+([a-z]{3})\s+(\d{4})(?:\s|$)/i,
+  const iso = input.match(
+    /^([+-]\d{6}|\d{4})-(\d{2})-(\d{2})(?:[Tt ](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?(Z|[+-]\d{2}:?\d{2}))?$/i,
   );
-  const calendar = iso
-    ? [Number(iso[1]), Number(iso[2]), Number(iso[3])]
-    : rfc
-      ? [
-          Number(rfc[3]),
-          'jan feb mar apr may jun jul aug sep oct nov dec'
-            .split(' ')
-            .indexOf(rfc[2].toLowerCase()) + 1,
-          Number(rfc[1]),
-        ]
-      : null;
+  const rfc = input.match(
+    /^(?:(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s+)?(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{4})\s+(\d{2}):(\d{2})(?::(\d{2}))?\s+(UT|UTC|GMT|[+-]\d{2}:?\d{2})$/i,
+  );
+  if (!iso && !rfc) return new Date(NaN);
 
-  // Validate API RFC dates and ISO dates before native timezone conversion.
-  // Other formats are ambiguous and may silently roll into another month.
-  if (!calendar) return new Date(NaN);
-  const [year, month, day] = calendar;
+  const parts = iso ?? rfc!;
+  const year = Number(parts[iso ? 1 : 3]);
+  const month = iso
+    ? Number(parts[2])
+    : 'jan feb mar apr may jun jul aug sep oct nov dec'
+        .split(' ')
+        .indexOf(parts[2].toLowerCase()) + 1;
+  const day = Number(parts[iso ? 3 : 1]);
+  const hour = Number(parts[4] ?? 0);
+  const minute = Number(parts[5] ?? 0);
+  const second = Number(parts[6] ?? 0);
+  const fraction = iso ? (parts[7] ?? '') : '';
+  const millisecond = Number(fraction.padEnd(3, '0').slice(0, 3));
+  const zone = (parts[iso ? 8 : 7] ?? 'Z').replace(':', '');
+  const offsetHour = /^[+-]/.test(zone) ? Number(zone.slice(1, 3)) : 0;
+  const offsetMinute = /^[+-]/.test(zone) ? Number(zone.slice(3, 5)) : 0;
   const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
   const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  if (day < 1 || day > (days[month - 1] ?? 0)) return new Date(NaN);
+  if (
+    day < 1 ||
+    day > (days[month - 1] ?? 0) ||
+    hour > (iso ? 24 : 23) ||
+    minute > 59 ||
+    second > 59 ||
+    offsetHour > 23 ||
+    offsetMinute > 59 ||
+    (hour === 24 && (minute !== 0 || second !== 0 || /[1-9]/.test(fraction)))
+  ) {
+    return new Date(NaN);
+  }
 
-  return new Date(value);
+  // Do not let Date.parse reinterpret invalid offsets or trailing text.
+  const date = new Date(0);
+  date.setUTCFullYear(year, month - 1, day);
+  date.setUTCHours(hour, minute, second, millisecond);
+  if (rfc) {
+    const weekday = 'sun mon tue wed thu fri sat'
+      .split(' ')
+      .indexOf(input.slice(0, 3).toLowerCase());
+    if (weekday >= 0 && date.getUTCDay() !== weekday) return new Date(NaN);
+  }
+  const offset = (offsetHour * 60 + offsetMinute) * (zone[0] === '-' ? -1 : 1);
+  return new Date(date.getTime() - offset * 60_000);
 }
 
 function publicationText(date: Date) {
