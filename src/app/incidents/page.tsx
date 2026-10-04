@@ -18,7 +18,7 @@ export default async function IncidentsPage() {
   return (
     <section aria-label="사건 목록">
       <h1>사건 목록</h1>
-      <ArticleList items={items} />
+      <ArticleList items={items} apiOrigin={url.origin} />
     </section>
   );
 }

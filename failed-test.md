@@ -206,7 +206,7 @@ test('articleTextAndSourceSafety', async () => {
 });
 ```
 
-- [ ] articleImageStates — 준비 완료된 같은 기사 이미지에만 AI 표시를 붙인다
+- [x] articleImageStates — 준비 완료된 같은 기사 이미지에만 AI 표시를 붙인다
 
 ```ts
 test('articleImageStates', async () => {

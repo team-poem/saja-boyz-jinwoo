@@ -26,6 +26,36 @@
   overflow-wrap: anywhere;
 }
 
+.image {
+  display: flex;
+  width: 80px;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.thumbnail,
+.placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+}
+
+.thumbnail {
+  object-fit: cover;
+}
+
+.placeholder {
+  display: grid;
+  place-items: center;
+  background: var(--color-background);
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
 .summary {
   margin: 0;
   color: var(--color-muted);

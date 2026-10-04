@@ -1,7 +1,10 @@
+import Image from 'next/image';
 import styles from './article-list.module.css';
 
 export type ArticleCollectionItem = {
   article_id: string;
+  image_status: string;
+  image_url: string | null;
   article: {
     title: string;
     description: string;
@@ -75,8 +78,10 @@ function publicationText(date: Date) {
 
 export function ArticleList({
   items,
+  apiOrigin,
 }: {
   items: readonly ArticleCollectionItem[];
+  apiOrigin: string;
 }) {
   const seen = new Set<string>();
   const articles = items.filter(({ article_id }) => {
@@ -87,13 +92,34 @@ export function ArticleList({
 
   return (
     <div className={styles.list}>
-      {articles.map(({ article_id, article }) => {
+      {articles.map(({ article_id, article, image_status, image_url }) => {
         const publishedAt = new Date(article.pubDate);
         const sourceUrl =
           safeSourceUrl(article.originallink) ?? safeSourceUrl(article.link);
+        const imageUrl =
+          image_status === 'ready' &&
+          /^[a-f0-9]{64}$/.test(article_id) &&
+          image_url === `/images/${article_id}.jpg`
+            ? new URL(image_url, apiOrigin).href
+            : null;
 
         return (
           <article className={styles.card} key={article_id}>
+            {imageUrl ? (
+              <figure className={styles.image}>
+                <Image
+                  className={styles.thumbnail}
+                  src={imageUrl}
+                  alt=""
+                  width={80}
+                  height={80}
+                  unoptimized
+                />
+                <figcaption>AI 생성 이미지</figcaption>
+              </figure>
+            ) : (
+              <span className={styles.placeholder}>이미지 없음</span>
+            )}
             <h2 className={styles.title}>{articleText(article.title)}</h2>
             <p className={styles.summary}>{articleText(article.description)}</p>
             <p className={styles.publication}>
