@@ -300,3 +300,19 @@ test('articleRequestTimeout', async () => {
     clearTimeout(deadline);
   }
 }, 10000);
+
+test('articleLoading', async () => {
+  const load = loadingRoutes['./loading.tsx'];
+  expect(load).toBeTypeOf('function');
+  const loadingModule = await load();
+  assert(isLoadingModule(loadingModule));
+  const html = renderToStaticMarkup(createElement(loadingModule.default));
+  const status = readRole(html, 'status');
+  expect(status).not.toBeNull();
+  expect(status?.[2]).toContain('aria-busy="true"');
+  expect(status?.[3]).toContain('사건을 불러오는 중');
+  expect(html).not.toContain('아직 수집된 기사가 없어요');
+  expect(html).not.toContain('기사를 불러오지 못했어요');
+  expect(cards(html)).toHaveLength(0);
+  expect(fetchMock).not.toHaveBeenCalled();
+});

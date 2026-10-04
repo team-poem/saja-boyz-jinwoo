@@ -337,7 +337,7 @@ test('articleRequestTimeout', async () => {
 }, 10000);
 ```
 
-- [ ] articleLoading — 실제 loading 라우트가 기존 로딩 상태를 표시한다
+- [x] articleLoading — 실제 loading 라우트가 기존 로딩 상태를 표시한다
 
 ```ts
 test('articleLoading', async () => {
