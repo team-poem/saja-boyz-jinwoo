@@ -97,3 +97,47 @@ test('articleApiRequest', async () => {
   expect(init?.body).toBeUndefined();
   expect(init?.signal).toBeInstanceOf(AbortSignal);
 });
+
+test('articleCardsIdentityAndPublication', async () => {
+  respond(
+    [
+      item,
+      {
+        ...item,
+        article_id: idB,
+        article: {
+          ...item.article,
+          originallink: 'https://example.invalid/news/b',
+          pubDate: 'Fri, 18 Sep 2099 12:00:00 +0900',
+        },
+      },
+      {
+        ...item,
+        collection_id: 'older-collection',
+        article: { ...item.article, title: '오래된 중복 제목' },
+      },
+    ],
+    987654,
+  );
+  const html = await renderPage();
+  const rows = cards(html);
+  expect(html).toContain('사건 목록');
+  expect(rows).toHaveLength(2);
+  expect(rows[0]).toContain('샘플: 교통 안내 &amp; 점검');
+  expect(rows[1]).toContain('샘플: 교통 안내 &amp; 점검');
+  expect(rows[0]).toContain('가상 &quot;안내&quot; &#x27;검증&#x27; 가');
+  expect(rows[0]).toContain('href="https://example.invalid/news/a"');
+  expect(rows[1]).toContain('href="https://example.invalid/news/b"');
+  expect(rows[0]).toContain('기사 발행');
+  expect(rows[0]).toContain('dateTime="2026-09-17T00:00:00.000Z"');
+  expect(rows[0]).toContain('2026-09-17 09:00 KST');
+  expect(rows[1]).toContain('2099-09-18 12:00 KST');
+  expect(html).not.toContain('987654');
+  expect(html).not.toContain('987,654');
+  expect(html).not.toContain('오래된 중복 제목');
+  expect(html).not.toMatch(
+    /data-category|data-status|📍|진행 중|발생 시각|전체 사건/,
+  );
+  expect(html).not.toContain('href="/incidents/');
+  expect(html).not.toMatch(/<header\b|<nav\b/);
+});

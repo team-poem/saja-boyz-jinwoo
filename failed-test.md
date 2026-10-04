@@ -110,7 +110,7 @@ test('articleApiRequest', async () => {
 });
 ```
 
-- [ ] articleCardsIdentityAndPublication — 기사 ID 중복만 제거하고 제목·요약·발행 시각·원문을 표시한다
+- [x] articleCardsIdentityAndPublication — 기사 ID 중복만 제거하고 제목·요약·발행 시각·원문을 표시한다
 
 ```ts
 test('articleCardsIdentityAndPublication', async () => {
