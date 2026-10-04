@@ -1,5 +1,15 @@
 import { FoundationPanel } from '@/components/layout/foundation-panel';
-export default function IncidentsPage() {
+export default async function IncidentsPage() {
+  const url = new URL('/news', process.env.NEWS_API_BASE_URL);
+  url.searchParams.set('offset', '0');
+  url.searchParams.set('limit', '20');
+
+  await fetch(url, {
+    method: 'GET',
+    cache: 'no-store',
+    signal: AbortSignal.timeout(5000),
+  });
+
   return (
     <FoundationPanel
       title="사건 목록"

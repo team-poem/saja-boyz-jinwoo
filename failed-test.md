@@ -88,7 +88,7 @@ function expectError(html: string) {
 }
 ```
 
-- [ ] articleApiRequest — 서버에서 최근 20개 수집 행을 GET으로 한 번 조회한다
+- [x] articleApiRequest — 서버에서 최근 20개 수집 행을 GET으로 한 번 조회한다
 
 ```ts
 test('articleApiRequest', async () => {
