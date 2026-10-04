@@ -215,3 +215,16 @@ test('articleImageStates', async () => {
     expect(row).not.toContain('AI 생성 이미지');
   }
 });
+
+test('articleEmpty', async () => {
+  respond([]);
+  const html = await renderPage();
+  const status = readRole(html, 'status');
+  expect(status).not.toBeNull();
+  expect(status?.[3]).toContain('아직 수집된 기사가 없어요');
+  expect(html).not.toContain('role="alert"');
+  expect(html).not.toContain('기사를 불러오지 못했어요');
+  expect(html).not.toContain('사건을 불러오는 중');
+  expect(html).not.toContain('검색어나 필터를 바꿔보세요');
+  expect(cards(html)).toHaveLength(0);
+});

@@ -240,7 +240,7 @@ test('articleImageStates', async () => {
 });
 ```
 
-- [ ] articleEmpty — 조회 성공 0건의 안내를 상태 영역에 표시한다
+- [x] articleEmpty — 조회 성공 0건의 안내를 상태 영역에 표시한다
 
 ```ts
 test('articleEmpty', async () => {

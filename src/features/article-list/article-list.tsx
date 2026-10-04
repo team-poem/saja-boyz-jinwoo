@@ -92,6 +92,7 @@ export function ArticleList({
 
   return (
     <div className={styles.list}>
+      {articles.length === 0 && <p role="status">아직 수집된 기사가 없어요</p>}
       {articles.map(({ article_id, article, image_status, image_url }) => {
         const publishedAt = new Date(article.pubDate);
         const sourceUrl =
