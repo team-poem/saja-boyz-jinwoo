@@ -257,7 +257,7 @@ test('articleEmpty', async () => {
 });
 ```
 
-- [ ] articleErrors — 설정·통신·JSON·응답 오류를 빈 결과와 구분한다
+- [x] articleErrors — 설정·통신·JSON·응답 오류를 빈 결과와 구분한다
 
 ```ts
 test('articleErrors', async () => {

@@ -228,3 +228,48 @@ test('articleEmpty', async () => {
   expect(html).not.toContain('검색어나 필터를 바꿔보세요');
   expect(cards(html)).toHaveLength(0);
 });
+
+test('articleErrors', async () => {
+  for (const baseUrl of [
+    '',
+    'not-a-url',
+    'file:///tmp/news',
+    'https://user:password@news.example.invalid',
+  ]) {
+    vi.stubEnv('NEWS_API_BASE_URL', baseUrl);
+    expectError(await renderPage());
+  }
+  expect(fetchMock).not.toHaveBeenCalled();
+  vi.stubEnv('NEWS_API_BASE_URL', apiOrigin);
+  fetchMock.mockResolvedValueOnce(
+    new Response('upstream-secret', { status: 503 }),
+  );
+  const unavailable = await renderPage();
+  expectError(unavailable);
+  expect(unavailable).not.toContain('upstream-secret');
+  fetchMock.mockRejectedValueOnce(new Error('private-network-detail'));
+  const disconnected = await renderPage();
+  expectError(disconnected);
+  expect(disconnected).not.toContain('private-network-detail');
+  fetchMock.mockResolvedValueOnce(new Response('invalid-json'));
+  expectError(await renderPage());
+  for (const payload of [
+    null,
+    { total: -1, items: [] },
+    { total: 1, items: null },
+    { total: 1, items: [{ ...item, article_id: '' }] },
+    { total: 1, items: [{ ...item, article_id: 'not-an-article-id' }] },
+    { total: 1, items: [{ ...item, article: { ...item.article, title: 42 } }] },
+    {
+      total: 1,
+      items: [{ ...item, article: { ...item.article, description: null } }],
+    },
+    {
+      total: 1,
+      items: [{ ...item, article: { ...item.article, pubDate: 42 } }],
+    },
+  ]) {
+    fetchMock.mockResolvedValueOnce(Response.json(payload));
+    expectError(await renderPage());
+  }
+});
