@@ -88,12 +88,13 @@ function publicationDate(value: string) {
         ]
       : null;
 
-  if (calendar) {
-    const [year, month, day] = calendar;
-    const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
-    const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    if (day < 1 || day > (days[month - 1] ?? 0)) return new Date(NaN);
-  }
+  // Validate API RFC dates and ISO dates before native timezone conversion.
+  // Other formats are ambiguous and may silently roll into another month.
+  if (!calendar) return new Date(NaN);
+  const [year, month, day] = calendar;
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (day < 1 || day > (days[month - 1] ?? 0)) return new Date(NaN);
 
   return new Date(value);
 }
