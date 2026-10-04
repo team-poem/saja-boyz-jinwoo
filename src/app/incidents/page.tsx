@@ -4,6 +4,9 @@ import {
   type ArticleCollectionItem,
 } from '@/features/article-list/article-list';
 
+// Read runtime configuration on every request, including configuration errors.
+export const dynamic = 'force-dynamic';
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }

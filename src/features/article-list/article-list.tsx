@@ -25,7 +25,10 @@ const namedEntities: Record<string, string> = {
 
 function articleText(value: string) {
   return value
-    .replace(/<[^>]*>/g, '')
+    .replace(
+      /<!--[\s\S]*?-->|<\/?[a-z][a-z0-9:-]*(?=[\s/>])(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi,
+      '',
+    )
     .replace(
       /&(amp|quot|apos|lt|gt|nbsp|#\d+|#x[\da-f]+);/gi,
       (entity, code: string) => {
@@ -67,6 +70,34 @@ const publicationFormatter = new Intl.DateTimeFormat('en-CA', {
   hourCycle: 'h23',
 });
 
+function publicationDate(value: string) {
+  const input = value.trim();
+  const iso = input.match(/^([+-]\d{6}|\d{4})-(\d{1,2})-(\d{1,2})(?:$|[Tt\s])/);
+  const rfc = input.match(
+    /^(?:[a-z]{3},?\s+)?(\d{1,2})\s+([a-z]{3})\s+(\d{4})(?:\s|$)/i,
+  );
+  const calendar = iso
+    ? [Number(iso[1]), Number(iso[2]), Number(iso[3])]
+    : rfc
+      ? [
+          Number(rfc[3]),
+          'jan feb mar apr may jun jul aug sep oct nov dec'
+            .split(' ')
+            .indexOf(rfc[2].toLowerCase()) + 1,
+          Number(rfc[1]),
+        ]
+      : null;
+
+  if (calendar) {
+    const [year, month, day] = calendar;
+    const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+    const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if (day < 1 || day > (days[month - 1] ?? 0)) return new Date(NaN);
+  }
+
+  return new Date(value);
+}
+
 function publicationText(date: Date) {
   const parts = Object.fromEntries(
     publicationFormatter
@@ -94,7 +125,7 @@ export function ArticleList({
     <div className={styles.list}>
       {articles.length === 0 && <p role="status">아직 수집된 기사가 없어요</p>}
       {articles.map(({ article_id, article, image_status, image_url }) => {
-        const publishedAt = new Date(article.pubDate);
+        const publishedAt = publicationDate(article.pubDate);
         const sourceUrl =
           safeSourceUrl(article.originallink) ?? safeSourceUrl(article.link);
         const imageUrl =
