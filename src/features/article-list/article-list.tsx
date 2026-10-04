@@ -6,6 +6,7 @@ export type ArticleCollectionItem = {
     title: string;
     description: string;
     originallink: string;
+    link: string;
     pubDate: string;
   };
 };
@@ -35,6 +36,22 @@ function articleText(value: string) {
         return String.fromCodePoint(point);
       },
     );
+}
+
+function safeSourceUrl(value: string) {
+  try {
+    const url = new URL(value);
+    if (
+      (url.protocol === 'http:' || url.protocol === 'https:') &&
+      !url.username &&
+      !url.password
+    ) {
+      return url.href;
+    }
+  } catch {
+    return null;
+  }
+  return null;
 }
 
 const publicationFormatter = new Intl.DateTimeFormat('en-CA', {
@@ -72,20 +89,32 @@ export function ArticleList({
     <div className={styles.list}>
       {articles.map(({ article_id, article }) => {
         const publishedAt = new Date(article.pubDate);
+        const sourceUrl =
+          safeSourceUrl(article.originallink) ?? safeSourceUrl(article.link);
 
         return (
           <article className={styles.card} key={article_id}>
             <h2 className={styles.title}>{articleText(article.title)}</h2>
             <p className={styles.summary}>{articleText(article.description)}</p>
             <p className={styles.publication}>
-              기사 발행{' '}
-              <time dateTime={publishedAt.toISOString()}>
-                {publicationText(publishedAt)}
-              </time>
+              {Number.isNaN(publishedAt.getTime()) ? (
+                '발행 시각 미확인'
+              ) : (
+                <>
+                  기사 발행{' '}
+                  <time dateTime={publishedAt.toISOString()}>
+                    {publicationText(publishedAt)}
+                  </time>
+                </>
+              )}
             </p>
-            <a className={styles.source} href={article.originallink}>
-              기사 원문
-            </a>
+            {sourceUrl ? (
+              <a className={styles.source} href={sourceUrl}>
+                기사 원문
+              </a>
+            ) : (
+              <span className={styles.source}>원문 링크 없음</span>
+            )}
           </article>
         );
       })}

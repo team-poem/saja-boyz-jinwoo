@@ -158,7 +158,7 @@ test('articleCardsIdentityAndPublication', async () => {
 });
 ```
 
-- [ ] articleTextAndSourceSafety — 텍스트·위험한 출처·잘못된 발행 시각을 안전하게 표시한다
+- [x] articleTextAndSourceSafety — 텍스트·위험한 출처·잘못된 발행 시각을 안전하게 표시한다
 
 ```ts
 test('articleTextAndSourceSafety', async () => {

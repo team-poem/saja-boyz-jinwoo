@@ -141,3 +141,47 @@ test('articleCardsIdentityAndPublication', async () => {
   expect(html).not.toContain('href="/incidents/');
   expect(html).not.toMatch(/<header\b|<nav\b/);
 });
+
+test('articleTextAndSourceSafety', async () => {
+  for (const unsafe of [
+    'javascript:alert(1)',
+    'data:text/html,test',
+    '/relative',
+    '//other.invalid/a',
+    'https://user:password@example.invalid/a',
+  ]) {
+    respond([
+      {
+        ...item,
+        article: {
+          ...item.article,
+          title: '태그 <b>강조</b> &lt;img src=x onerror=alert(1)&gt;',
+          description: '&apos;인용&apos;&nbsp;&#128240; &#x110000; &#xD800;',
+          originallink: unsafe,
+          link: 'https://portal.example.invalid/fallback',
+          pubDate: 'invalid-date',
+        },
+      },
+    ]);
+    const row = singleCard(await renderPage());
+    expect(row).toContain('태그 강조 &lt;img src=x onerror=alert(1)&gt;');
+    expect(row).toContain('&#x27;인용&#x27;');
+    expect(row).toContain('📰');
+    expect(row).toContain('&amp;#x110000;');
+    expect(row).toContain('&amp;#xD800;');
+    expect(row).toContain('href="https://portal.example.invalid/fallback"');
+    expect(row).toContain('기사 원문');
+    expect(row).toContain('발행 시각 미확인');
+    expect(row).not.toMatch(/<img\b|<b\b|<script\b|<time\b/);
+    respond([
+      {
+        ...item,
+        article: { ...item.article, originallink: unsafe, link: unsafe },
+      },
+    ]);
+    const unlinked = singleCard(await renderPage());
+    expect(unlinked).toContain('샘플: 교통 안내');
+    expect(unlinked).toContain('원문 링크 없음');
+    expect(unlinked).not.toMatch(/<a\b/);
+  }
+});
