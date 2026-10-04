@@ -306,7 +306,7 @@ test('articleErrors', async () => {
 });
 ```
 
-- [ ] articleRequestTimeout — 지연된 요청을 취소하고 오류로 전환한다
+- [x] articleRequestTimeout — 지연된 요청을 취소하고 오류로 전환한다
 
 ```ts
 test('articleRequestTimeout', async () => {

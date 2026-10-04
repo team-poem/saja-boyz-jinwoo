@@ -273,3 +273,30 @@ test('articleErrors', async () => {
     expectError(await renderPage());
   }
 });
+
+test('articleRequestTimeout', async () => {
+  let requestSignal: AbortSignal | null | undefined;
+  fetchMock.mockImplementationOnce((_input, init) => {
+    requestSignal = init?.signal;
+    return new Promise<Response>((_resolve, reject) => {
+      requestSignal?.addEventListener(
+        'abort',
+        () => reject(new DOMException('timeout', 'AbortError')),
+        { once: true },
+      );
+    });
+  });
+  let deadline: ReturnType<typeof setTimeout> | undefined;
+  try {
+    const result = await Promise.race([
+      renderPage(),
+      new Promise<string>((resolve) => {
+        deadline = setTimeout(() => resolve('REQUEST_DID_NOT_FINISH'), 7000);
+      }),
+    ]);
+    expectError(result);
+    expect(requestSignal?.aborted).toBe(true);
+  } finally {
+    clearTimeout(deadline);
+  }
+}, 10000);
