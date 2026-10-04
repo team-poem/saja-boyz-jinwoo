@@ -2,7 +2,9 @@
 
 검증한 기능 소스: `fec482341f83561706b1cf176bb6d1d66aa81463`.
 승인 기준선: `7f05d14cf62812a69bcd8318983f5f07e49847e6`.
-이후 이 보고서를 추가한 커밋은 `collab/active/codex--article-list-api/` 안의 문서·증거만 변경한다. 독립 리뷰는 이 보고서와 별개로 현재 HEAD에 묶여야 한다.
+독립 완료 리뷰 HEAD: `6c17ea0a79807b3d5bb1b15eb4707631faca5328`. canonical status는 complete, active=null, pending=[], dirty=false이며 review.head=HEAD였다. [완료 상태 원본 필드와 승인 항목](evidence/completion-6c17ea0.json), [최종 gate·리뷰 실행 로그](evidence/final-review-6c17ea0.txt).
+
+그 뒤 마지막 커밋은 협업 문서·증거·claim 갱신과 승인 plan 보관만 수행한다. 기능 소스와 승인 테스트는 변경하지 않으며, 보관 뒤 이 브랜치에서 Sobaya 명령을 다시 실행하지 않는다.
 
 ## 공식 검사
 
@@ -35,7 +37,7 @@
 
 - ready 이미지 파일이 404면 카드·원문 링크는 남지만 깨진 이미지와 AI 캡션이 표시된다. 자동 placeholder 전환은 별도 개선 사항이다.
 - Figma의 카드 배치·간격·80px 이미지·글자 크기는 반영했다. 발행·원문·AI 캡션으로 카드 높이는 122–123px이며 원본 120px과 완전 일치하지 않는다. 공용 폰트·기존 배지·헤더·필터는 이번 범위 밖이다.
-- 외부 언론사 사이트의 콘텐츠·응답은 별도 검증하지 않았다. 실제 링크 이동과 키보드 동작은 로컬 합성 원문으로 검증했다.
+- 실제 API 첫 카드의 원문 링크를 클릭해 한국금융경제신문의 해당 기사 제목·응답 화면에 도착하고 앱으로 돌아왔다. [관찰 기록](evidence/browser-original-link-fec4823.md). 나머지 3개 외부 원문은 방문하지 않았고, 키보드 Tab/Enter는 로컬 합성 원문으로 검증했다.
 - PR #2는 외부 리뷰 대기다. 기능 PR 대상은 dev이며 선행 PR 의존성을 명시해야 한다. 다른 claim을 지우거나 협업 검사를 완화하지 않는다.
 - 로컬 실행은 `.env.example`의 `NEWS_API_BASE_URL`을 `.env.local` 또는 실행 환경에 설정한다. 이 작업에서 API 수집 POST·운영 설정 변경·PR 병합은 하지 않았다.
 
