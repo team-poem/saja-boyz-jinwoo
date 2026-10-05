@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { ArticleImage } from './article-image';
 import styles from './article-list.module.css';
 
 export type ArticleCollectionItem = {
@@ -164,21 +164,7 @@ export function ArticleList({
 
         return (
           <article className={styles.card} key={article_id}>
-            {imageUrl ? (
-              <figure className={styles.image}>
-                <Image
-                  className={styles.thumbnail}
-                  src={imageUrl}
-                  alt=""
-                  width={80}
-                  height={80}
-                  unoptimized
-                />
-                <figcaption>AI 생성 이미지</figcaption>
-              </figure>
-            ) : (
-              <span className={styles.placeholder}>이미지 없음</span>
-            )}
+            <ArticleImage src={imageUrl} />
             <h2 className={styles.title}>{articleText(article.title)}</h2>
             <p className={styles.summary}>{articleText(article.description)}</p>
             <p className={styles.publication}>
