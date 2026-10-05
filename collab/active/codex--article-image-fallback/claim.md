@@ -4,7 +4,7 @@ owner: amazon
 started: 2026-10-05
 status: active
 goal: fix(incidents): 기사 이미지 로딩 실패 시 대체 표시
-next: 기사 이미지 error 처리의 명세·DOM 테스트·지원 설정 초안 검토와 실패 재현; 승인 후 src/features/article-list/ 구현
+next: review.md의 신규 정확 입력 승인 대기; 승인 뒤 src/features/article-list/ 이미지 실패 처리 구현
 base: codex/article-list-api
 ---
 
