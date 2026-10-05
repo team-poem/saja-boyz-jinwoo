@@ -2,9 +2,9 @@
 branch: codex/article-image-fallback
 owner: amazon
 started: 2026-10-05
-status: active
+status: done
 goal: fix(incidents): 기사 이미지 로딩 실패 시 대체 표시
-next: 2026-10-05 정확 입력 승인 완료; 이미지 실패 처리 2개 항목 구현·전체 검증·독립 리뷰
+next: 이미지 실패 처리 완료; dev 대상 PR 외부 리뷰 대기
 base: dev
 ---
 
@@ -15,3 +15,5 @@ base: dev
 - 2026-10-05 원격 확인: PR #2·#3 모두 외부 승인 뒤 dev에 squash 병합됐다. dev@3af4459를 merge로 반영했으며 기존 기능 소스 차이는 없다.
 - 공용 필터·UI·URL 어댑터는 솔피 담당이다. 더 보기·상세·제보·수집·배포는 준비 문서에서 확정 사항과 미정 사항을 구분한다.
 - 테스트 DOM 환경에 새 개발 의존성이 필요하면 package.json·pnpm-lock.yaml 지원안을 별도 파일로 제시한다. 승인 전 실제 패키지 설정은 변경하지 않는다.
+
+- 2026-10-05 완료: 두 승인 항목 RED→GREEN, 전체23개·format/lint/typecheck/build·실제404/손상 이미지·desktop/mobile 검증 PASS. 독립 리뷰7d020f2 추가 지적 없음. 승인 plan 보관 후 이 브랜치의 Sobaya 실행은 종료한다.

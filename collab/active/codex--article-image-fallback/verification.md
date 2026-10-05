@@ -2,6 +2,7 @@
 
 승인 기준선: `bac5e625fc7fc8e1b73e3f73dcdac03ebfd70a6e`.
 검증한 기능 소스: `1b8805391c12bc342e8e57419cd9fc8e141cf705`.
+독립 완료 리뷰 HEAD: `7d020f288ed353462d720f2f6be597d23736487c`.
 production build ID: `OWbzFd4lTer-d0zTE9Ulj`.
 
 ## 동작과 범위
@@ -22,7 +23,7 @@ production build ID: `OWbzFd4lTer-d0zTE9Ulj`.
 - `pnpm run typecheck`: exit0. [로그](evidence/implementation/typecheck-1b88053.txt).
 - `pnpm run build`: exit0. `/incidents`는 dynamic route. [로그](evidence/implementation/build-1b88053.txt).
 - 기존21개 테스트·Vitest 설정이 기준선과 같고 spec/package/lock이 승인 proposed 파일과 일치함을 다시 확인했다. 승인 계획에는 런타임이 검증한 두 체크박스만 바뀌었다.
-- 최종 `review.sh`는 이 증거를 커밋한 clean HEAD에서 전체 gate를 먼저 실행하고, 성공해야 새 읽기 전용 reviewer를 호출한다. 최종 결과와 리뷰 HEAD는 완료 후 별도 기록한다. 내부 Vitest 임시 JSON은 정상 정리되므로 경로 부재를 미실행으로 해석하지 않는다.
+- 최종 `review.sh`가 clean HEAD7d020f2에서 전체 gate를 통과한 뒤 읽기 전용 독립 리뷰를 수행했고 **PASS**했다. 23개 통과·실패0·skip0이며 추가 actionable finding은 없었다. [현재 host gate 원본](evidence/implementation/host-final-gate-7d020f2.json), [최종 실행 로그](evidence/implementation/final-review-7d020f2.txt), [독립 리뷰 결과](evidence/implementation/independent-review-7d020f2.json), [clean HEAD와 완료 상태](evidence/implementation/completion-7d020f2.json). 이후 커밋은 완료 증거·협업 기록·plan 보관만 수행하며 기능 소스와 테스트는 동일하다. 내부 Vitest 임시 JSON은 정상 정리되므로 경로 부재를 미실행으로 해석하지 않는다.
 
 ## 소스 독립 검토와 환경 진단
 
@@ -53,3 +54,9 @@ Brain: 기존 원칙을 적용하고 실행 환경 누출의 구체 진단은 �
 Skills: 변경 없음. React best practices를 적용해 상태·client 전달값·접근성을 점검했다.
 Structural: 승인 기준선과 보호된 입력·테스트·훅·정책을 보존했다.
 Todos: 더 보기·공용 UI·상세·제보·배포는 별도 제안에 남기며 이번 구현에 포함하지 않았다.
+
+## 최종 인수인계
+
+- spec.md·failed-test.md는 gate·review 뒤 `collab/journal/plans/2026-10-05-amazon-article-image-fallback/`에 보관한다. 이후 이 브랜치에서 Sobaya 명령을 다시 실행하지 않는다.
+- [브라우저 독립 보고서](evidence/browser/browser-review.md), [본문·원문 비교 결과](evidence/browser/content-comparison.json). 이 메모는 리뷰 이후 보존했으며 underlying 관찰·소스·스크린샷은 리뷰된 버전과 같다.
+- 로컬 실제 API 서버는3005/PID44977, 오류 재현3004/39072는 종료했다. 기존39071은 보존했다.
