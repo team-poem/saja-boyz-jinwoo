@@ -4,8 +4,8 @@ owner: amazon
 started: 2026-10-04
 status: done
 goal: feat(incidents): 기사 API를 사건 목록 페이지에 연결
-next: PR #2 외부 리뷰·dev 통합 후 이 후속 초안 PR의 협업 검사 재확인
-base: codex/incident-list
+next: PR #3 새 CI 결과 확인 후 외부 리뷰·dev 통합 대기
+base: dev
 ---
 
 ## 메모
@@ -16,3 +16,4 @@ base: codex/incident-list
 - 사용자 승인 기준선 7f05d14에서 8개 항목 구현, 전체 gate 및 독립 완료 리뷰를 마쳤다.
 - 2026-10-04 완료: 실제 /incidents에 기사 API를 연결했다. 전체 21개 테스트, format/lint/typecheck/build, 최종 gate와 6c17ea0 독립 완료 리뷰 PASS. 상세 증거는 verification.md.
 - Figma 카드 배치·80px 이미지·단일 16px 여백을 반영했다. 공용 폰트·배지·헤더는 범위 밖이며, ready 이미지의 파일 404 시 자동 대체 표시는 후속 개선 사항이다.
+- 2026-10-05 PR #2의 squash 통합(dd4515e)을 dev merge로 반영했다. 기존 승인·구현 이력을 보존하며 소스와 테스트는 변경하지 않았다. 이번 승인은 PR #3 브랜치 갱신과 CI 확인까지이며 dev로의 PR 병합은 포함하지 않는다.
