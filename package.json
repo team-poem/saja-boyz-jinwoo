@@ -12,7 +12,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
-    "test": "vitest run && pnpm run test:harness",
+    "test": "vitest run",
     "test:unit": "vitest run",
     "test:harness": "sh tests/hooks.sh && sh tests/loop.sh && sh tests/sobaya.sh",
     "format": "prettier --write src docs/project.md docs/architecture.md docs/figma-analysis.md *.json *.mjs *.ts",
