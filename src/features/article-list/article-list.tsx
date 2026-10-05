@@ -164,7 +164,7 @@ export function ArticleList({
 
         return (
           <article className={styles.card} key={article_id}>
-            <ArticleImage src={imageUrl} />
+            <ArticleImage key={imageUrl} src={imageUrl} />
             <h2 className={styles.title}>{articleText(article.title)}</h2>
             <p className={styles.summary}>{articleText(article.description)}</p>
             <p className={styles.publication}>

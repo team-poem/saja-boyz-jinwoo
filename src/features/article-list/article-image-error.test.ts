@@ -102,3 +102,35 @@ test('articleImageErrorPreservesCards', async () => {
   expect(cards[2].textContent).toContain('이미지 없음');
   expect(container.querySelectorAll('article')).toHaveLength(3);
 });
+
+test('articleImageRecoversForNewSource', async () => {
+  const articles = [item(idA, 'A')];
+  await render(articles);
+  const initialImage = container.querySelector('img');
+  assert(initialImage);
+  await failImage(initialImage);
+  expect(container.querySelector('img')).toBeNull();
+  expect(container.textContent).toContain('이미지 없음');
+
+  const nextOrigin = 'https://updated-news.example.invalid';
+  await render(articles, nextOrigin);
+
+  const nextImage = container.querySelector('img');
+  assert(nextImage);
+  expect(nextImage.src).toBe(`${nextOrigin}/images/${idA}.jpg`);
+  expect(nextImage.getAttribute('alt')).toBe('');
+  expect(container.textContent).not.toContain('이미지 없음');
+  expect(container.querySelector('figcaption')?.textContent).toBe(
+    'AI 생성 이미지',
+  );
+  expect(container.querySelector('a')?.getAttribute('href')).toBe(
+    'https://publisher.example.invalid/A',
+  );
+
+  await failImage(nextImage);
+
+  expect(container.querySelector('img')).toBeNull();
+  expect(container.querySelector('figcaption')).toBeNull();
+  expect(container.textContent).toContain('이미지 없음');
+  expect(container.querySelectorAll('article')).toHaveLength(1);
+});

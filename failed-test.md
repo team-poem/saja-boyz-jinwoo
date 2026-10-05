@@ -115,7 +115,7 @@ test('articleImageErrorPreservesCards', async () => {
 });
 ```
 
-- [ ] articleImageRecoversForNewSource — 동일 카드에 새 이미지 URL이 들어오면 다시 표시하고 새 오류에도 대체 표시한다.
+- [x] articleImageRecoversForNewSource — 동일 카드에 새 이미지 URL이 들어오면 다시 표시하고 새 오류에도 대체 표시한다.
 
 ```ts
 test('articleImageRecoversForNewSource', async () => {
