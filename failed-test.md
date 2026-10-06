@@ -58,7 +58,7 @@ async function boundaries() {
 }
 ```
 
-- [ ] featureErrorClassifiesAndPropagates — 지정 오류 분류와 미지정 오류의 상위 전파
+- [x] featureErrorClassifiesAndPropagates — 지정 오류 분류와 미지정 오류의 상위 전파
 
 ```ts
 test('featureErrorClassifiesAndPropagates', async () => {
