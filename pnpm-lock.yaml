@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@suspensive/react':
+        specifier: 3.21.4
+        version: 3.21.4(react@19.3.0)
       next:
         specifier: 16.3.8
         version: 16.3.8(@babel/core@7.29.7)(@types/node@24.19.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -611,6 +614,11 @@ packages:
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
+
+  '@suspensive/react@3.21.4':
+    resolution: {integrity: sha512-o5otqY2qy5HejEx2zt4O/ZlCvwNAWT/nFY8H3wodXUePR0RoyGPudjNne3lYPKR54v2zezV5eTOsIIEgMehhKg==}
+    peerDependencies:
+      react: ^18 || ^19
 
   '@swc/helpers@0.5.23':
     resolution: {integrity: sha512-5lSsMOTXURePglDfvuAQUqkGek9Hg2kksOYay2m0+XR++b2NWYL/4sWyuvVBIs8oKnJaxkdi9whaL/sqN13afw==}
@@ -2804,6 +2812,10 @@ snapshots:
   '@rolldown/pluginutils@1.0.1': {}
 
   '@rtsao/scc@1.1.0': {}
+
+  '@suspensive/react@3.21.4(react@19.3.0)':
+    dependencies:
+      react: 19.3.0
 
   '@swc/helpers@0.5.23':
     dependencies:
