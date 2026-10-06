@@ -240,7 +240,7 @@ async function draw(node: ReturnType<typeof createElement> | null) {
 }
 ```
 
-- [ ] nextBoundaryPreservesFeatureClassification — 설치된 Next ErrorBoundaryHandler가 AppShell 안쪽에서 페이지 오류를 먼저 잡는 실제 경계 순서로 세 분류·로그·재시도·경로 복구를 검증
+- [x] nextBoundaryPreservesFeatureClassification — 설치된 Next ErrorBoundaryHandler가 AppShell 안쪽에서 페이지 오류를 먼저 잡는 실제 경계 순서로 세 분류·로그·재시도·경로 복구를 검증
 
 ```ts
 test('nextBoundaryPreservesFeatureClassification', async () => {

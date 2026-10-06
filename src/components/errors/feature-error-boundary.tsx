@@ -6,7 +6,7 @@ import type { ReactNode } from 'react';
 
 type FeatureErrorReason = 'network' | 'configuration' | 'invalid-response';
 
-const messages: Record<FeatureErrorReason, string> = {
+export const featureErrorMessages: Record<FeatureErrorReason, string> = {
   network: '연결을 확인해 주세요.',
   configuration: '서비스 설정을 확인해 주세요.',
   'invalid-response': '응답을 확인할 수 없어요. 잠시 후 다시 시도해 주세요.',
@@ -39,7 +39,7 @@ export function FeatureErrorBoundary({ children }: { children: ReactNode }) {
         shouldCatch={FeatureError}
         fallback={({ error, reset }) => (
           <div role="alert">
-            {messages[error.reason]}
+            {featureErrorMessages[error.reason]}
             <button type="button" onClick={reset}>
               다시 시도
             </button>
