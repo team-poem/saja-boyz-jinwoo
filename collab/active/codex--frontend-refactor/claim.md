@@ -1,9 +1,9 @@
 branch: codex/frontend-refactor
 owner: easter721
 started: 2026-10-06
-status: active
+status: done
 goal: refactor(frontend): 컴포넌트별 구조 정리와 Tailwind 전환
-next: 기준 테스트 검증 후 sobaya 구조 리팩터링 및 API 규약 확인 요청
+next: dev 대상 PR 리뷰 및 amazon API 규약 답변 대기
 base: dev
 ---
 ## 범위
