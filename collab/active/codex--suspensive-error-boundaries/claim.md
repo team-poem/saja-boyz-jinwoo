@@ -2,9 +2,9 @@
 branch: codex/suspensive-error-boundaries
 owner: easter721
 started: 2026-10-06
-status: active
+status: done
 goal: feat(errors): Suspensive 오류 경계와 재시도 적용
-next: PR #5 아마존 리뷰의 Next 경계 연결 수정과 통합 검증 후 재리뷰 요청
+next: PR #5 리뷰 수정·28개 테스트·실제 Next 통합 검증·독립 리뷰 완료; 아마존 재리뷰·승인 대기
 base: dev
 ---
 
