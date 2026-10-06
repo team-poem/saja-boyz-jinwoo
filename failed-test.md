@@ -297,7 +297,7 @@ test('nextBoundaryPreservesFeatureClassification', async () => {
 });
 ```
 
-- [ ] routeErrorKeepsServerFallbackAndRetry — 클래스가 없는 서버 오류의 일반 안내·비밀 정보 비노출·retry 우선·reset 호환을 검증
+- [x] routeErrorKeepsServerFallbackAndRetry — 클래스가 없는 서버 오류의 일반 안내·비밀 정보 비노출·retry 우선·reset 호환을 검증
 
 ```ts
 test('routeErrorKeepsServerFallbackAndRetry', async () => {
