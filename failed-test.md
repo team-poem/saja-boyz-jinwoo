@@ -98,7 +98,7 @@ test('featureErrorClassifiesAndPropagates', async () => {
 });
 ```
 
-- [ ] featureBoundaryRetriesAndResetsOnNavigation — 재시도·경로 복구 및 AppShell 내비게이션 보존
+- [x] featureBoundaryRetriesAndResetsOnNavigation — 재시도·경로 복구 및 AppShell 내비게이션 보존
 
 ```ts
 test('featureBoundaryRetriesAndResetsOnNavigation', async () => {
