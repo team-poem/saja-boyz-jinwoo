@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { FeatureErrorBoundary } from '../errors/feature-error-boundary';
+import { FeatureErrorBoundary } from '../../errors/feature-error-boundary/feature-error-boundary';
 export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="app-shell">

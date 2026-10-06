@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { categoryLabels, statusLabels } from '../incidents/labels';
-import type { Incident } from '../incidents/types';
+import {
+  categoryLabels,
+  statusLabels,
+} from '@/features/incidents/model/labels';
+import type { Incident } from '@/features/incidents/model/types';
 import styles from './incident-list.module.css';
 
 type IncidentListProps =

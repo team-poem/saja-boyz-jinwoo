@@ -1,12 +1,12 @@
-// file: src/components/errors/next-error-boundary.test.ts
+// file: src/components/errors/feature-error-boundary/next-error-boundary.test.ts
 // @vitest-environment jsdom
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { act, createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { ErrorBoundaryHandler } from 'next/dist/client/components/error-boundary';
-import { AppShell } from '../layout/app-shell';
-import { FeatureError } from './feature-error-boundary';
-import RouteError from '../../app/error';
+import { AppShell } from '../../layout/app-shell/app-shell';
+import { FeatureError } from '../model/feature-error';
+import RouteError from '../../../app/error';
 
 let pathname = '/incidents';
 vi.mock('next/navigation', () => ({ usePathname: () => pathname }));

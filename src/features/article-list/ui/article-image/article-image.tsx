@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import styles from './article-list.module.css';
+import styles from './article-image.module.css';
 
 export function ArticleImage({ src }: { src: string | null }) {
   const [failed, setFailed] = useState(false);

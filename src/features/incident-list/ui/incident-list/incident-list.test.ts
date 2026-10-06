@@ -1,8 +1,8 @@
-// file: src/features/incident-list/incident-list.test.ts
+// file: src/features/incident-list/ui/incident-list/incident-list.test.ts
 import { expect, test } from 'vitest';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import type { Incident } from '../incidents/types';
+import type { Incident } from '@/features/incidents/model/types';
 import { IncidentList } from './incident-list';
 
 const now = new Date('2026-10-02T03:00:00.000Z');

@@ -1,9 +1,10 @@
-// file: src/features/article-list/article-image-error.test.ts
+// file: src/features/article-list/ui/article-list/article-list.test.ts
 // @vitest-environment jsdom
 import { afterEach, assert, beforeEach, expect, test, vi } from 'vitest';
 import { act, createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
-import { ArticleList, type ArticleCollectionItem } from './article-list';
+import { ArticleList } from './article-list';
+import type { ArticleCollectionItem } from '../../model/article.types';
 
 const apiOrigin = 'https://news.example.invalid';
 const idA = 'a'.repeat(64);
