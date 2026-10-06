@@ -259,14 +259,15 @@ test('nextBoundaryPreservesFeatureClassification', async () => {
       return createElement('p', null, '정상 페이지');
     }
     function tree() {
+      const boundaryProps = {
+        pathname,
+        errorComponent: RouteError,
+        children: createElement(Page),
+      };
       return createElement(
         AppShell,
         null,
-        createElement(ErrorBoundaryHandler, {
-          pathname,
-          errorComponent: RouteError,
-          children: createElement(Page),
-        }),
+        createElement(ErrorBoundaryHandler, boundaryProps),
       );
     }
     await draw(tree());
