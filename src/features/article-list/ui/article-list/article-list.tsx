@@ -1,6 +1,5 @@
 import { ArticleCard } from '../article-card/article-card';
 import type { ArticleCollectionItem } from '../../model/article.types';
-import styles from './article-list.module.css';
 
 export function ArticleList({
   items,
@@ -17,8 +16,12 @@ export function ArticleList({
   });
 
   return (
-    <div className={styles.list}>
-      {articles.length === 0 && <p role="status">아직 수집된 기사가 없어요</p>}
+    <div className="flex flex-col gap-3 py-2">
+      {articles.length === 0 && (
+        <p className="text-muted leading-[1.7]" role="status">
+          아직 수집된 기사가 없어요
+        </p>
+      )}
       {articles.map((item) => (
         <ArticleCard key={item.article_id} item={item} apiOrigin={apiOrigin} />
       ))}

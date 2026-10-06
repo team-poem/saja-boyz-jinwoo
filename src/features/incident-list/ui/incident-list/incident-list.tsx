@@ -38,9 +38,15 @@ function formatRelativeTime(occurredAt: string, now: Date) {
 export function IncidentList(props: IncidentListProps) {
   if (props.state === 'loading') {
     return (
-      <div className={styles.list}>
-        <div className={styles.message} role="status" aria-busy="true">
-          <p className={styles.messageTitle}>사건을 불러오는 중</p>
+      <div className="flex flex-col gap-3 px-4 py-2">
+        <div
+          className="flex min-h-40 flex-col items-center justify-center gap-2 rounded-card border border-solid border-border bg-surface px-4 py-6 text-center"
+          role="status"
+          aria-busy="true"
+        >
+          <p className="m-0 text-[14px]/[1.5] font-bold text-text">
+            사건을 불러오는 중
+          </p>
         </div>
       </div>
     );
@@ -48,24 +54,31 @@ export function IncidentList(props: IncidentListProps) {
 
   if (props.incidents.length === 0) {
     return (
-      <div className={styles.list}>
-        <div className={styles.message} role="status">
-          <p className={styles.messageTitle}>조건에 맞는 사건이 없어요</p>
-          <p className={styles.messageHint}>검색어나 필터를 바꿔보세요</p>
+      <div className="flex flex-col gap-3 px-4 py-2">
+        <div
+          className="flex min-h-40 flex-col items-center justify-center gap-2 rounded-card border border-solid border-border bg-surface px-4 py-6 text-center"
+          role="status"
+        >
+          <p className="m-0 text-[14px]/[1.5] font-bold text-text">
+            조건에 맞는 사건이 없어요
+          </p>
+          <p className="m-0 text-[12px]/4 text-muted">
+            검색어나 필터를 바꿔보세요
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={styles.list}>
+    <div className="flex flex-col gap-3 px-4 py-2">
       {props.incidents.map((incident) => {
         const href = getIncidentHref(incident.id);
         const content = (
           <>
             {incident.imageUrl ? (
               <Image
-                className={styles.thumbnail}
+                className="block size-20 rounded-lg object-cover"
                 src={incident.imageUrl}
                 alt=""
                 width={80}
@@ -73,10 +86,12 @@ export function IncidentList(props: IncidentListProps) {
                 unoptimized
               />
             ) : (
-              <span className={styles.placeholder}>사진 없음</span>
+              <span className="grid size-20 place-items-center rounded-lg bg-background text-[11px] text-muted">
+                사진 없음
+              </span>
             )}
-            <div className={styles.content}>
-              <div className={styles.badges}>
+            <div className="flex min-w-0 flex-col gap-1.5">
+              <div className="flex flex-wrap gap-1">
                 <span
                   className={styles.badge}
                   data-category={incident.category}
@@ -87,31 +102,43 @@ export function IncidentList(props: IncidentListProps) {
                   {statusLabels[incident.status]}
                 </span>
               </div>
-              <h2 className={styles.title}>{incident.title}</h2>
-              <p className={styles.metadata}>
+              <h2 className="m-0 truncate text-[14px]/[normal] font-extrabold text-text">
+                {incident.title}
+              </h2>
+              <p className="m-0 flex min-w-0 items-baseline gap-1 text-[11px]/[normal] text-muted">
                 <span aria-hidden="true">📍</span>
-                <span className={styles.address}>
+                <span className="min-w-0 truncate">
                   {incident.location.address}
                 </span>
                 <span aria-hidden="true">·</span>
-                <time className={styles.time} dateTime={incident.occurredAt}>
+                <time
+                  className="shrink-0 whitespace-nowrap"
+                  dateTime={incident.occurredAt}
+                >
                   {formatRelativeTime(incident.occurredAt, props.now)}
                 </time>
               </p>
-              <p className={styles.summary}>{incident.summary}</p>
+              <p className="m-0 line-clamp-2 text-[12px]/4 text-muted [overflow-wrap:anywhere]">
+                {incident.summary}
+              </p>
               {href === null && (
-                <p className={styles.messageHint}>상세 정보 없음</p>
+                <p className="m-0 text-[12px]/4 text-muted">상세 정보 없음</p>
               )}
             </div>
           </>
         );
 
         return (
-          <article className={styles.item} key={incident.id}>
+          <article className="min-w-0" key={incident.id}>
             {href === null ? (
-              <div className={styles.card}>{content}</div>
+              <div className="grid grid-cols-[80px_minmax(0,1fr)] items-start gap-3 rounded-card border border-solid border-border bg-surface p-3 shadow-[0_4px_8px_rgb(0_0_0/3%)]">
+                {content}
+              </div>
             ) : (
-              <Link className={styles.card} href={href}>
+              <Link
+                className="grid grid-cols-[80px_minmax(0,1fr)] items-start gap-3 rounded-card border border-solid border-border bg-surface p-3 shadow-[0_4px_8px_rgb(0_0_0/3%)]"
+                href={href}
+              >
                 {content}
               </Link>
             )}

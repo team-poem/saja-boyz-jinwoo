@@ -14,7 +14,7 @@ PROTECTED_BRANCH_ALLOW="collab/ harness/ docs/ .claude/ .codex/ .agents/ .githoo
 CLAIM_EXEMPT=".claude/settings.local.json"
 
 # 허브 파일: 동료가 지금 만지고 있으면 차단한다 (그 외 파일의 겹침은 알림만). 디렉토리는 / 로 끝낸다.
-HOTSPOTS="package.json pnpm-lock.yaml src/app/layout.tsx src/app/globals.css src/features/incidents/types.ts"
+HOTSPOTS="package.json pnpm-lock.yaml src/app/layout.tsx src/app/globals.css src/features/incidents/model/types.ts"
 
 # pulse(원격 당겨오기 + 내 작업 트리 스냅샷 올리기) 주기: 수정 N회마다, 또는 마지막 pulse 후 S초
 PULSE_EVERY_EDITS=15

@@ -6,7 +6,6 @@ import {
   publicationDate,
   publicationText,
 } from '../../model/article-presentation';
-import styles from './article-card.module.css';
 
 export function ArticleCard({
   item,
@@ -27,11 +26,15 @@ export function ArticleCard({
       : null;
 
   return (
-    <article className={styles.card}>
+    <article className="grid min-w-0 grid-cols-[80px_minmax(0,1fr)] items-start gap-x-3 gap-y-1.5 rounded-card border border-solid border-border bg-surface p-3 shadow-[0_4px_8px_rgb(0_0_0/3%)]">
       <ArticleImage key={imageUrl} src={imageUrl} />
-      <h2 className={styles.title}>{articleText(article.title)}</h2>
-      <p className={styles.summary}>{articleText(article.description)}</p>
-      <p className={styles.publication}>
+      <h2 className="col-start-2 row-start-1 m-0 min-w-0 truncate text-[14px]/[17px] font-extrabold text-text">
+        {articleText(article.title)}
+      </h2>
+      <p className="col-start-2 row-start-3 m-0 min-w-0 line-clamp-2 text-[12px]/4 text-muted [overflow-wrap:anywhere]">
+        {articleText(article.description)}
+      </p>
+      <p className="col-start-2 row-start-2 m-0 min-w-0 text-[11px]/[13px] text-muted [overflow-wrap:anywhere]">
         {Number.isNaN(publishedAt.getTime()) ? (
           '발행 시각 미확인'
         ) : (
@@ -44,11 +47,16 @@ export function ArticleCard({
         )}
       </p>
       {sourceUrl ? (
-        <a className={styles.source} href={sourceUrl}>
+        <a
+          className="col-start-2 row-start-4 justify-self-start text-[12px]/4 underline underline-offset-[3px]"
+          href={sourceUrl}
+        >
           기사 원문
         </a>
       ) : (
-        <span className={styles.source}>원문 링크 없음</span>
+        <span className="col-start-2 row-start-4 justify-self-start text-[12px]/4 underline underline-offset-[3px]">
+          원문 링크 없음
+        </span>
       )}
     </article>
   );
