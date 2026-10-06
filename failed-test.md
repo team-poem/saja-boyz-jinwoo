@@ -142,7 +142,7 @@ test('featureBoundaryRetriesAndResetsOnNavigation', async () => {
 });
 ```
 
-- [ ] nextRouteErrorBridgesResetSafely — Next.js 오류 경계·최상위 문서 구조와 reset 연결
+- [x] nextRouteErrorBridgesResetSafely — Next.js 오류 경계·최상위 문서 구조와 reset 연결
 
 ```ts
 test('nextRouteErrorBridgesResetSafely', async () => {
