@@ -114,6 +114,7 @@ test('featureBoundaryRetriesAndResetsOnNavigation', async () => {
   expect(container.textContent).toContain('정상 내용');
   expect(container.querySelector('[role="alert"]')).toBeNull();
   await draw(null);
+  pathname = '/incidents';
   const { AppShell } = await import('../../layout/app-shell/app-shell');
   await draw(
     createElement(
