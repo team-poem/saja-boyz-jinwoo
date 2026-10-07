@@ -1,4 +1,4 @@
-import { FoundationPanel } from '@/components/layout/foundation-panel';
+import { FoundationPanel } from '@/components/layout/foundation-panel/foundation-panel';
 export default function HomePage() {
   return (
     <FoundationPanel

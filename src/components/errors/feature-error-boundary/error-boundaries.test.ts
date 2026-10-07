@@ -1,4 +1,4 @@
-// file: src/components/errors/error-boundaries.test.ts
+// file: src/components/errors/feature-error-boundary/error-boundaries.test.ts
 // @vitest-environment jsdom
 import { afterEach, assert, beforeEach, expect, test, vi } from 'vitest';
 import { act, createElement, type ComponentType, type ReactNode } from 'react';
@@ -8,8 +8,8 @@ let pathname = '/incidents';
 vi.mock('next/navigation', () => ({ usePathname: () => pathname }));
 const modules = import.meta.glob([
   './feature-error-boundary.tsx',
-  '../../app/error.tsx',
-  '../../app/global-error.tsx',
+  '../../../app/error.tsx',
+  '../../../app/global-error.tsx',
 ]);
 let container: HTMLDivElement;
 let root: Root;
@@ -114,7 +114,7 @@ test('featureBoundaryRetriesAndResetsOnNavigation', async () => {
   expect(container.textContent).toContain('정상 내용');
   expect(container.querySelector('[role="alert"]')).toBeNull();
   await draw(null);
-  const { AppShell } = await import('../layout/app-shell');
+  const { AppShell } = await import('../../layout/app-shell/app-shell');
   await draw(
     createElement(
       AppShell,
@@ -129,7 +129,10 @@ test('featureBoundaryRetriesAndResetsOnNavigation', async () => {
 });
 
 test('nextRouteErrorBridgesResetSafely', async () => {
-  for (const path of ['../../app/error.tsx', '../../app/global-error.tsx']) {
+  for (const path of [
+    '../../../app/error.tsx',
+    '../../../app/global-error.tsx',
+  ]) {
     await draw(null);
     const load = modules[path];
     expect(load, `${path}가 있어야 한다`).toBeTypeOf('function');

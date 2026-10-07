@@ -1,19 +1,3 @@
-import { ArticleImage } from './article-image';
-import styles from './article-list.module.css';
-
-export type ArticleCollectionItem = {
-  article_id: string;
-  image_status: string;
-  image_url: string | null;
-  article: {
-    title: string;
-    description: string;
-    originallink: string;
-    link: string;
-    pubDate: string;
-  };
-};
-
 const namedEntities: Record<string, string> = {
   amp: '&',
   quot: '"',
@@ -23,7 +7,7 @@ const namedEntities: Record<string, string> = {
   nbsp: '\u00a0',
 };
 
-function articleText(value: string) {
+export function articleText(value: string) {
   return value
     .replace(
       /<!--[\s\S]*?-->|<\/?[a-z][a-z0-9:-]*(?=[\s/>])(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi,
@@ -44,7 +28,7 @@ function articleText(value: string) {
     );
 }
 
-function safeSourceUrl(value: string) {
+export function safeSourceUrl(value: string) {
   try {
     const url = new URL(value);
     if (
@@ -70,7 +54,7 @@ const publicationFormatter = new Intl.DateTimeFormat('en-CA', {
   hourCycle: 'h23',
 });
 
-function publicationDate(value: string) {
+export function publicationDate(value: string) {
   const input = value.trim();
   const iso = input.match(
     /^([+-]\d{6}|\d{4})-(\d{2})-(\d{2})(?:[Tt ](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?(Z|[+-]\d{2}:?\d{2}))?$/i,
@@ -80,7 +64,8 @@ function publicationDate(value: string) {
   );
   if (!iso && !rfc) return new Date(NaN);
 
-  const parts = iso ?? rfc!;
+  const parts = iso ?? rfc;
+  if (!parts) return new Date(NaN);
   const year = Number(parts[iso ? 1 : 3]);
   const month = iso
     ? Number(parts[2])
@@ -125,70 +110,11 @@ function publicationDate(value: string) {
   return new Date(date.getTime() - offset * 60_000);
 }
 
-function publicationText(date: Date) {
+export function publicationText(date: Date) {
   const parts = Object.fromEntries(
     publicationFormatter
       .formatToParts(date)
       .map(({ type, value }) => [type, value]),
   );
   return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute} KST`;
-}
-
-export function ArticleList({
-  items,
-  apiOrigin,
-}: {
-  items: readonly ArticleCollectionItem[];
-  apiOrigin: string;
-}) {
-  const seen = new Set<string>();
-  const articles = items.filter(({ article_id }) => {
-    if (seen.has(article_id)) return false;
-    seen.add(article_id);
-    return true;
-  });
-
-  return (
-    <div className={styles.list}>
-      {articles.length === 0 && <p role="status">아직 수집된 기사가 없어요</p>}
-      {articles.map(({ article_id, article, image_status, image_url }) => {
-        const publishedAt = publicationDate(article.pubDate);
-        const sourceUrl =
-          safeSourceUrl(article.originallink) ?? safeSourceUrl(article.link);
-        const imageUrl =
-          image_status === 'ready' &&
-          /^[a-f0-9]{64}$/.test(article_id) &&
-          image_url === `/images/${article_id}.jpg`
-            ? new URL(image_url, apiOrigin).href
-            : null;
-
-        return (
-          <article className={styles.card} key={article_id}>
-            <ArticleImage key={imageUrl} src={imageUrl} />
-            <h2 className={styles.title}>{articleText(article.title)}</h2>
-            <p className={styles.summary}>{articleText(article.description)}</p>
-            <p className={styles.publication}>
-              {Number.isNaN(publishedAt.getTime()) ? (
-                '발행 시각 미확인'
-              ) : (
-                <>
-                  기사 발행{' '}
-                  <time dateTime={publishedAt.toISOString()}>
-                    {publicationText(publishedAt)}
-                  </time>
-                </>
-              )}
-            </p>
-            {sourceUrl ? (
-              <a className={styles.source} href={sourceUrl}>
-                기사 원문
-              </a>
-            ) : (
-              <span className={styles.source}>원문 링크 없음</span>
-            )}
-          </article>
-        );
-      })}
-    </div>
-  );
 }

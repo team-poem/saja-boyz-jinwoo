@@ -11,7 +11,7 @@
 | IncidentFilterControls | src/components/ui/incident-filter-controls.tsx | URL 필터를 읽고 변경. useSearchParams를 쓰므로 Suspense 안에 배치         |
 | IncidentBadges         | src/components/ui/incident-badges.tsx          | category, status; 공용 한글 라벨과 색상                                   |
 | BottomNav              | src/components/ui/bottom-nav.tsx               | 현재 경로에 따른 활성 표시·지도/목록/제보 이동. 지도↔목록은 URL 필터 유지 |
-| AppShell               | src/components/layout/app-shell.tsx            | 공용 레이아웃. 지도·목록에 검색/필터, 상세·제보에서는 검색/메뉴 숨김      |
+| AppShell               | src/components/layout/app-shell/app-shell.tsx  | 공용 레이아웃. 지도·목록에 검색/필터, 상세·제보에서는 검색/메뉴 숨김      |
 
 Figma 기준 노드: 검색 헤더 `18:2360`, 필터 행 `18:2368`, 상태 드롭다운 `45:3691`, 배지 `18:2408`·`18:2410`, 메뉴 `18:2428`. 정적 SVG는 `public/figma/shared/`에 로컬 보관하며 원본 치수를 유지한다.
 
@@ -44,7 +44,7 @@ const results = filterIncidents(incidents, toIncidentFilters(selection));
 
 ## 사건 모델
 
-`src/features/incidents/types.ts`의 기존 Incident와 IncidentFilters를 유지한다. id, title, summary, category, status, occurredAt, location, source, timeline이 필수이며 imageUrl은 선택이다. 날짜는 시간대가 있는 ISO 8601 문자열이다. 출처 URL은 실제 기사 링크가 확인됐을 때 사용한다.
+`src/features/incidents/model/types.ts`의 기존 Incident와 IncidentFilters를 유지한다. id, title, summary, category, status, occurredAt, location, source, timeline이 필수이며 imageUrl은 선택이다. 날짜는 시간대가 있는 ISO 8601 문자열이다. 출처 URL은 실제 기사 링크가 확인됐을 때 사용한다.
 
 한글 라벨은 `labels.ts`에서 가져온다. 소방·교통·미제 등 다른 시안의 표현을 독립적으로 enum에 추가하지 않고 공용 계약 변경으로 조율한다. 브랜드도 최종 확인 전까지 흉흉을 기본값으로 유지한다.
 

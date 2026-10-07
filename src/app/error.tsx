@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import {
   FeatureError,
   featureErrorMessages,
-} from '../components/errors/feature-error-boundary';
+} from '../components/errors/model/feature-error';
 
 export default function RouteError({
   error,
