@@ -114,7 +114,7 @@ test('searchInitialStateUsesRealGetFormWithoutFetching', async () => {
 });
 ```
 
-- [ ] searchUrlRendersApiResultsAndKeepsInputInSync — 검색 페이지 계약 검증
+- [x] searchUrlRendersApiResultsAndKeepsInputInSync — 검색 페이지 계약 검증
 
 ```ts
 test('searchUrlRendersApiResultsAndKeepsInputInSync', async () => {

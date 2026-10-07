@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { fetchArticleList } from '@/features/article-list/api/fetch-articles';
+import { ArticleList } from '@/features/article-list/ui/article-list/article-list';
 
 const suggestedKeywords = [
   { keyword: '대형화재', symbol: '🔥' },
@@ -9,7 +11,15 @@ const suggestedKeywords = [
   { keyword: '테러경보', symbol: '' },
 ];
 
-export default function SearchPage() {
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string | string[] }>;
+}) {
+  const { q } = await searchParams;
+  const keyword = (Array.isArray(q) ? q[0] : q)?.trim() ?? '';
+  const result = keyword ? await fetchArticleList(keyword) : null;
+
   return (
     <div className="flex flex-col gap-5 py-5 text-sm">
       <div className="flex items-center gap-3">
@@ -27,13 +37,23 @@ export default function SearchPage() {
         >
           <span aria-hidden="true">🔍</span>
           <input
+            key={keyword}
             type="search"
             name="q"
-            defaultValue=""
+            defaultValue={keyword}
             aria-label="기사 키워드 검색"
             placeholder="기사 키워드 검색"
             className="min-w-0 flex-1 border-0 bg-transparent"
           />
+          {keyword && (
+            <Link
+              href="/search"
+              aria-label="검색어 초기화"
+              className="shrink-0 text-muted"
+            >
+              ×
+            </Link>
+          )}
           <button
             type="submit"
             className="shrink-0 cursor-pointer border-0 bg-transparent p-0 text-brand"
@@ -42,7 +62,19 @@ export default function SearchPage() {
           </button>
         </form>
       </div>
-      <p className="m-0 text-muted">궁금한 기사의 키워드를 검색해 보세요.</p>
+      {keyword ? (
+        result && (
+          <section aria-label="기사 검색 결과">
+            <p className="m-0 text-xs text-muted">
+              검색 결과의 첫 20행 범위를 표시합니다. 중복 기사는 한 번만
+              표시합니다.
+            </p>
+            <ArticleList items={result.items} apiOrigin={result.apiOrigin} />
+          </section>
+        )
+      ) : (
+        <p className="m-0 text-muted">궁금한 기사의 키워드를 검색해 보세요.</p>
+      )}
       <section
         aria-labelledby="suggested-keywords"
         className="flex flex-col gap-3"
