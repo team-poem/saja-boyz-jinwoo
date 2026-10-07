@@ -141,7 +141,7 @@ test('searchUrlRendersApiResultsAndKeepsInputInSync', async () => {
 });
 ```
 
-- [ ] searchDistinguishesEmptyFailureAndLoading — 검색 페이지 계약 검증
+- [x] searchDistinguishesEmptyFailureAndLoading — 검색 페이지 계약 검증
 
 ```ts
 test('searchDistinguishesEmptyFailureAndLoading', async () => {

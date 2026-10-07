@@ -63,14 +63,30 @@ export default async function SearchPage({
         </form>
       </div>
       {keyword ? (
-        result && (
+        result ? (
           <section aria-label="기사 검색 결과">
             <p className="m-0 text-xs text-muted">
               검색 결과의 첫 20행 범위를 표시합니다. 중복 기사는 한 번만
               표시합니다.
             </p>
-            <ArticleList items={result.items} apiOrigin={result.apiOrigin} />
+            {result.items.length === 0 ? (
+              <p role="status" className="text-muted leading-[1.7]">
+                검색 결과가 없어요
+              </p>
+            ) : (
+              <ArticleList items={result.items} apiOrigin={result.apiOrigin} />
+            )}
           </section>
+        ) : (
+          <div role="alert" className="flex flex-col gap-3">
+            <p className="m-0">검색 결과를 불러오지 못했어요</p>
+            <a
+              href={`/search?q=${encodeURIComponent(keyword)}`}
+              className="text-brand underline"
+            >
+              다시 시도
+            </a>
+          </div>
         )
       ) : (
         <p className="m-0 text-muted">궁금한 기사의 키워드를 검색해 보세요.</p>
