@@ -3,7 +3,7 @@ owner: easter721
 started: 2026-10-07
 status: active
 goal: feat(search): Figma 기반 기사 키워드 검색 구현
-next: Figma 검색 2개 화면 기준 명세·테스트 초안 작성 및 승인 후 sobaya 실행
+next: spec-proposal.md 및 failed-test-proposal.md 정확 초안 승인 후 sobaya 구현
 base: dev
 ---
 ## 범위
