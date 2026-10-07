@@ -21,7 +21,7 @@ export default async function SearchPage({
   const result = keyword ? await fetchArticleList(keyword) : null;
 
   return (
-    <div className="flex flex-col gap-5 py-5 text-sm">
+    <div className="flex flex-col gap-5 pb-5 text-sm">
       <div className="flex items-center gap-3">
         <Link
           href="/"
@@ -33,7 +33,7 @@ export default async function SearchPage({
         <form
           action="/search"
           method="get"
-          className="flex min-w-0 flex-1 items-center gap-2 rounded-card border-[1.5px] border-solid border-brand bg-surface px-3.5 py-2.5 shadow-[0_4px_8px_rgb(0_0_0/5%)]"
+          className="flex h-9 min-w-0 flex-1 items-center gap-2 rounded-card border-[1.5px] border-solid border-brand bg-surface px-3.5 shadow-[0_4px_8px_rgb(0_0_0/5%)]"
         >
           <span aria-hidden="true">🔍</span>
           <input
@@ -51,7 +51,7 @@ export default async function SearchPage({
               aria-label="검색어 초기화"
               className="shrink-0 text-muted"
             >
-              ×
+              ✕
             </Link>
           )}
           <button
@@ -66,8 +66,7 @@ export default async function SearchPage({
         result ? (
           <section aria-label="기사 검색 결과">
             <p className="m-0 text-xs text-muted">
-              검색 결과의 첫 20행 범위를 표시합니다. 중복 기사는 한 번만
-              표시합니다.
+              최대 20개의 기사를 보여드려요. 중복 기사는 한 번만 표시해요.
             </p>
             {result.items.length === 0 ? (
               <p role="status" className="text-muted leading-[1.7]">

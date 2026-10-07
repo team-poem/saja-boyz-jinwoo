@@ -197,7 +197,7 @@ afterEach(() => {
 });
 ```
 
-- [ ] searchShellAvoidsDuplicateHeaderAndPreservesOtherRoutes — 경로별 헤더 계약 검증
+- [x] searchShellAvoidsDuplicateHeaderAndPreservesOtherRoutes — 경로별 헤더 계약 검증
 
 ```ts
 test('searchShellAvoidsDuplicateHeaderAndPreservesOtherRoutes', async () => {
