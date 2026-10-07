@@ -14,7 +14,7 @@ afterEach(() => {
 });
 ```
 
-- [ ] searchKeywordRequestPreservesListContract — 서버 요청 계약 검증
+- [x] searchKeywordRequestPreservesListContract — 서버 요청 계약 검증
 
 ```ts
 test('searchKeywordRequestPreservesListContract', async () => {
