@@ -3,7 +3,7 @@ owner: easter721
 started: 2026-10-07
 status: active
 goal: docs(audit): 미구현 기능과 API 연동 현황 공동 점검
-next: docs/product-gap-audit.md에 대한 amazon 답변 후 검색/API·상세 분담과 공유 파일 owner 확정
+next: next-work-split.md 분담 답변 확인 및 우리 검색 기능의 sobaya 테스트 초안 준비
 base: dev
 ---
 ## 범위
