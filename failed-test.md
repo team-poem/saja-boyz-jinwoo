@@ -149,9 +149,7 @@ test('searchDistinguishesEmptyFailureAndLoading', async () => {
   const empty = await renderSearch('화재');
   const status = empty.querySelector('[role="status"]');
   assert(status);
-  expect(status.textContent).toContain(
-    '검색 결과가 없어요',
-  );
+  expect(status.textContent).toContain('검색 결과가 없어요');
   expect(empty.querySelector('[role="alert"]')).toBeNull();
   mock.mockRejectedValueOnce(new Error('PRIVATE_SERVER_DETAIL'));
   const failed = await renderSearch('서울 & 화재');
@@ -171,9 +169,11 @@ test('searchDistinguishesEmptyFailureAndLoading', async () => {
   expect(url.searchParams.get('q')).toBe('서울 & 화재');
   const load = loadingModules['./loading.tsx'];
   assert(load);
-  const module = (await load()) as { default: ComponentType };
+  const loadingModule = (await load()) as { default: ComponentType };
   const loading = document.createElement('div');
-  loading.innerHTML = renderToStaticMarkup(createElement(module.default));
+  loading.innerHTML = renderToStaticMarkup(
+    createElement(loadingModule.default),
+  );
   expect(
     loading.querySelector('[role="status"][aria-busy="true"]'),
   ).not.toBeNull();
