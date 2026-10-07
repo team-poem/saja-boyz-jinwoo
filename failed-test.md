@@ -82,7 +82,7 @@ async function renderSearch(q?: string | string[]) {
 }
 ```
 
-- [ ] searchInitialStateUsesRealGetFormWithoutFetching — 검색 페이지 계약 검증
+- [x] searchInitialStateUsesRealGetFormWithoutFetching — 검색 페이지 계약 검증
 
 ```ts
 test('searchInitialStateUsesRealGetFormWithoutFetching', async () => {
