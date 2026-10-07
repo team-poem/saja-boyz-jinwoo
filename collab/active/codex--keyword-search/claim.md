@@ -1,9 +1,9 @@
 branch: codex/keyword-search
 owner: easter721
 started: 2026-10-07
-status: active
+status: done
 goal: feat(search): Figma 기반 기사 키워드 검색 구현
-next: spec-proposal.md 및 failed-test-proposal.md 정확 초안 승인 후 sobaya 구현
+next: dev 대상 PR 리뷰 및 API 미확인 계약 문서화 조율
 base: dev
 ---
 ## 범위

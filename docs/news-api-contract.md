@@ -5,7 +5,7 @@
 ## 현재 프런트엔드 요청
 
 - 서버에서 환경변수 `NEWS_API_BASE_URL`을 읽는다. 인증정보 없는 HTTP/HTTPS URL만 허용한다.
-- `GET /news?offset=0&limit=20`. 기준 URL의 하위 경로는 `/news`로 교체한다.
+- `GET /news?offset=0&limit=20`. 검색은 선택적 `keyword`를 trim해 URLSearchParams로 전달한다. 빈 keyword와 기본 목록 호출은 기존 요청을 유지한다. 기준 URL의 하위 경로는 `/news`로 교체한다.
 - `cache: no-store`, 요청 제한 시간 5초. 인증 헤더·쿠키는 별도로 전달하지 않는다.
 - 현재 페이지네이션 UI는 없으며 첫 20개 요청만 한다.
 
@@ -40,6 +40,10 @@ type NewsResponse = {
 - 이미지는 `image_status === "ready"`이고 `image_url === "/images/{article_id}.jpg"`일 때만 API와 같은 origin에서 표시한다. 이외에는 ‘이미지 없음’을 표시한다.
 - 이미지 요청 실패 시 해당 이미지만 대체하고 다른 기사 내용은 유지한다. 성공 이미지에는 ‘AI 생성 이미지’를 표시한다.
 - 설정 누락, HTTP 실패, 시간 초과, JSON/응답 검증 실패는 같은 목록 오류 화면과 `/incidents` 재진입 링크로 처리한다. 오류 경계로 throw하는 정책은 아니다.
+
+## 검색 연결에서 확인한 명세
+
+[서버 Swagger](https://poem-news.168.107.37.12.sslip.io/docs)와 [OpenAPI](https://poem-news.168.107.37.12.sslip.io/openapi.json)에서 `/news`의 선택적 keyword 검색 지원을 확인했다. `/search?q=...`는 배열의 첫 검색어를 trim해 이 keyword로 전달하며 검색어가 없으면 API를 호출하지 않는다. 제목·설명 키워드 검색 외 주소·좌표·사건 분류와 상세 API는 이번 화면 계약에 포함하지 않는다. offset/limit 경계·정렬·필수/nullable 필드·인증·오류 응답의 미확인 계약은 아래 항목대로 서버 담당자가 확정해야 한다.
 
 ## 기존에 공유된 정보
 
