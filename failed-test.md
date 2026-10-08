@@ -285,7 +285,7 @@ async function ready(origin: string, app: ChildProcess, output: () => string) {
 }
 ```
 
-- [ ] recommendedKeywordShowsPendingUntilResultsArrive — 추천 클릭 후 응답 대기·새 결과 전환을 실제 브라우저로 검증
+- [x] recommendedKeywordShowsPendingUntilResultsArrive — 추천 클릭 후 응답 대기·새 결과 전환을 실제 브라우저로 검증
 
 ```ts
 test('recommendedKeywordShowsPendingUntilResultsArrive', async () => {

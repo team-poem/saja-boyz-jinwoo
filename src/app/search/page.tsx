@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { fetchArticleList } from '@/features/article-list/api/fetch-articles';
 import { ArticleList } from '@/features/article-list/ui/article-list/article-list';
+import { KeywordLinkStatus } from './keyword-link-status';
 
 const suggestedKeywords = [
   { keyword: '대형화재', symbol: '🔥' },
@@ -109,6 +110,7 @@ export default async function SearchPage({
             >
               {symbol && <span aria-hidden="true">{symbol} </span>}
               {keyword}
+              <KeywordLinkStatus />
             </Link>
           ))}
         </div>
