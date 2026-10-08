@@ -1,20 +1,27 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { FeatureErrorBoundary } from '../../errors/feature-error-boundary/feature-error-boundary';
 export function AppShell({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+
   return (
     <div className="mx-auto min-h-dvh max-w-[640px] px-4 pt-6 pb-[110px]">
-      <header className="flex items-center justify-between rounded-2xl bg-floating p-4 shadow-floating">
-        <Link
-          href="/"
-          className="text-[20px]/[normal] font-extrabold before:mr-2 before:inline-block before:size-2 before:rounded-full before:bg-brand before:content-['']"
-        >
-          흉흉
-        </Link>
-        <Link href="/search" className="text-[14px]/[normal] text-muted">
-          사건 검색
-        </Link>
-      </header>
+      {pathname !== '/search' && (
+        <header className="flex items-center justify-between rounded-2xl bg-floating p-4 shadow-floating">
+          <Link
+            href="/"
+            className="text-[20px]/[normal] font-extrabold before:mr-2 before:inline-block before:size-2 before:rounded-full before:bg-brand before:content-['']"
+          >
+            흉흉
+          </Link>
+          <Link href="/search" className="text-[14px]/[normal] text-muted">
+            사건 검색
+          </Link>
+        </header>
+      )}
       <main id="main-content">
         <FeatureErrorBoundary>{children}</FeatureErrorBoundary>
       </main>

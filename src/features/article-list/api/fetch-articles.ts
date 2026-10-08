@@ -22,7 +22,7 @@ function isArticleCollectionItem(
   );
 }
 
-export async function fetchArticleList() {
+export async function fetchArticleList(keyword?: string) {
   try {
     const baseUrl = process.env.NEWS_API_BASE_URL;
     if (!baseUrl) return null;
@@ -39,6 +39,8 @@ export async function fetchArticleList() {
     const url = new URL('/news', base);
     url.searchParams.set('offset', '0');
     url.searchParams.set('limit', '20');
+    const normalizedKeyword = keyword?.trim();
+    if (normalizedKeyword) url.searchParams.set('keyword', normalizedKeyword);
 
     const response = await fetch(url, {
       method: 'GET',
