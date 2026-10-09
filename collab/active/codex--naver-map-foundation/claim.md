@@ -1,9 +1,9 @@
 branch: codex/naver-map-foundation
 owner: easter721
 started: 2026-10-09
-status: active
+status: done
 goal: feat(map): 네이버 지도 홈과 내 위치 기본 흐름 구현
-next: 신규 6개 정확 테스트와 명세 승인 후 sobaya 구현·실제 지도/브라우저 검증·dev 대상 PR
+next: dev 대상 PR의 amazon7737 리뷰 대기; 사건 좌표 API 계약 이후 마커·필터 연결
 base: dev
 ---
 ## 범위
