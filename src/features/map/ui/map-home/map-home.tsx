@@ -1,9 +1,22 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-type MapInstance = { destroy(): void };
+type MapInstance = {
+  destroy(): void;
+  setCenter(point: unknown): void;
+  setSize(size: unknown): void;
+};
+type MarkerInstance = { setMap(map: MapInstance | null): void };
 type NaverMaps = {
+  Size: new (width: number, height: number) => unknown;
+  Point: new (x: number, y: number) => unknown;
+  Marker: new (options: {
+    map: MapInstance;
+    position: unknown;
+    icon: { url: string; size: unknown; anchor: unknown };
+  }) => MarkerInstance;
   LatLng: new (latitude: number, longitude: number) => unknown;
   Map: new (
     element: HTMLElement,
@@ -13,6 +26,9 @@ type NaverMaps = {
 
 export function MapHome({ clientId }: { clientId: string }) {
   const canvas = useRef<HTMLDivElement>(null);
+  const locate = useRef<(() => void) | null>(null);
+  const [locating, setLocating] = useState(false);
+  const [locationError, setLocationError] = useState('');
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
@@ -21,6 +37,22 @@ export function MapHome({ clientId }: { clientId: string }) {
     let disposed = false;
     let loadFailed = false;
     let map: MapInstance | undefined;
+    let marker: MarkerInstance | undefined;
+    let pending = false;
+    let requestId = 0;
+    let observer: ResizeObserver | undefined;
+    const resize = () => {
+      const maps = (window as Window & { naver?: { maps: NaverMaps } }).naver
+        ?.maps;
+      if (!disposed && !loadFailed && map && maps && canvas.current) {
+        map.setSize(
+          new maps.Size(
+            canvas.current.clientWidth,
+            canvas.current.clientHeight,
+          ),
+        );
+      }
+    };
     const sdkWindow = window as Window & { navermap_authFailure?: () => void };
     const previousAuthFailure = sdkWindow.navermap_authFailure;
     const initialize = () => {
@@ -31,6 +63,63 @@ export function MapHome({ clientId }: { clientId: string }) {
         center: new maps.LatLng(37.5665, 126.978),
         zoom: 12,
       });
+      if (typeof ResizeObserver !== 'undefined') {
+        observer = new ResizeObserver(resize);
+        observer.observe(canvas.current);
+      }
+      window.addEventListener('resize', resize);
+      locate.current = () => {
+        if (disposed || loadFailed || !map || pending) return;
+        setLocationError('');
+        if (!navigator.geolocation) {
+          setLocationError('이 브라우저는 위치 확인을 지원하지 않습니다.');
+          return;
+        }
+        const currentRequest = ++requestId;
+        pending = true;
+        setLocating(true);
+        const activeMap = map;
+        const isActive = () =>
+          !disposed &&
+          !loadFailed &&
+          map === activeMap &&
+          currentRequest === requestId &&
+          pending;
+        const reject = () => {
+          if (!isActive()) return;
+          pending = false;
+          setLocating(false);
+          setLocationError('위치를 확인하지 못했습니다. 다시 시도해 주세요.');
+        };
+        try {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              if (!isActive()) return;
+              const point = new maps.LatLng(
+                position.coords.latitude,
+                position.coords.longitude,
+              );
+              marker?.setMap(null);
+              marker = new maps.Marker({
+                map: activeMap,
+                position: point,
+                icon: {
+                  url: '/naver-map-location.svg',
+                  size: new maps.Size(24, 24),
+                  anchor: new maps.Point(12, 12),
+                },
+              });
+              activeMap.setCenter(point);
+              pending = false;
+              setLocating(false);
+            },
+            reject,
+            { timeout: 10_000 },
+          );
+        } catch {
+          reject();
+        }
+      };
       clearTimeout(timeout);
       setReady(true);
     };
@@ -50,6 +139,14 @@ export function MapHome({ clientId }: { clientId: string }) {
       if (disposed || loadFailed) return;
       loadFailed = true;
       clearTimeout(timeout);
+      locate.current = null;
+      pending = false;
+      setLocating(false);
+      setLocationError('');
+      observer?.disconnect();
+      window.removeEventListener('resize', resize);
+      marker?.setMap(null);
+      marker = undefined;
       map?.destroy();
       map = undefined;
       script.remove();
@@ -66,6 +163,10 @@ export function MapHome({ clientId }: { clientId: string }) {
 
     return () => {
       disposed = true;
+      locate.current = null;
+      observer?.disconnect();
+      window.removeEventListener('resize', resize);
+      marker?.setMap(null);
       clearTimeout(timeout);
       if (sdkWindow.navermap_authFailure === fail) {
         if (previousAuthFailure === undefined) {
@@ -86,6 +187,24 @@ export function MapHome({ clientId }: { clientId: string }) {
         ref={canvas}
         className="h-[calc(100dvh-240px)] min-h-[320px] overflow-hidden rounded-card"
       />
+      <button
+        type="button"
+        aria-label="내 위치"
+        aria-busy={locating}
+        disabled={!ready || locating}
+        onClick={() => locate.current?.()}
+        className="absolute right-4 bottom-12 flex size-11 items-center justify-center rounded-full bg-white shadow-floating disabled:opacity-50"
+      >
+        <Image src="/naver-map-crosshair.svg" alt="" width={20} height={20} />
+      </button>
+      {locationError && (
+        <p
+          role="status"
+          className="absolute top-4 right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
+        >
+          {locationError}
+        </p>
+      )}
       {failed && (
         <div
           role="alert"
