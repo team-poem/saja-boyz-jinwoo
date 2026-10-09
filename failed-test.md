@@ -160,7 +160,7 @@ test('mapMissingKeyExplainsSetupWithoutSdkRequest', async () => {
 });
 ```
 
-- [ ] mapLoadsNaverSdkAndPreservesHomeNavigation — 지도 상태와 내 위치 사용자 흐름 검증
+- [x] mapLoadsNaverSdkAndPreservesHomeNavigation — 지도 상태와 내 위치 사용자 흐름 검증
 
 ```ts
 test('mapLoadsNaverSdkAndPreservesHomeNavigation', async () => {
