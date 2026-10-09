@@ -1,5 +1,10 @@
 import { FoundationPanel } from '@/components/layout/foundation-panel/foundation-panel';
+import { MapSetupNotice } from '@/features/map/ui/map-home/map-setup-notice';
 export default function HomePage() {
+  if (!process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID?.trim()) {
+    return <MapSetupNotice />;
+  }
+
   return (
     <FoundationPanel
       title="우리 주변의 사건을 한눈에"
