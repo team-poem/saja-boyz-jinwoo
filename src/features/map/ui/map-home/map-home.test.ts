@@ -191,3 +191,22 @@ test('mapSdkFailureRetriesAndRecovers', async () => {
     ),
   ).toHaveLength(1);
 });
+
+test('mapSdkTimeoutAndAuthenticationFailureAreVisible', async () => {
+  vi.useFakeTimers();
+  await mount();
+  await act(async () => vi.advanceTimersByTime(10001));
+  expect(container.querySelector('[role="alert"]')?.textContent).toMatch(
+    /지도/,
+  );
+  await act(async () => button('다시 시도').click());
+  const callback = Reflect.get(dom.window, 'navermap_authFailure');
+  expect(typeof callback).toBe('function');
+  await act(async () => callback());
+  expect(container.querySelector('[role="alert"]')?.textContent).toMatch(
+    /지도/,
+  );
+  expect(
+    container.querySelector('[role="status"][aria-busy="true"]'),
+  ).toBeNull();
+});

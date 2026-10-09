@@ -21,6 +21,8 @@ export function MapHome({ clientId }: { clientId: string }) {
     let disposed = false;
     let loadFailed = false;
     let map: MapInstance | undefined;
+    const sdkWindow = window as Window & { navermap_authFailure?: () => void };
+    const previousAuthFailure = sdkWindow.navermap_authFailure;
     const initialize = () => {
       const maps = (window as Window & { naver?: { maps: NaverMaps } }).naver
         ?.maps;
@@ -29,6 +31,7 @@ export function MapHome({ clientId }: { clientId: string }) {
         center: new maps.LatLng(37.5665, 126.978),
         zoom: 12,
       });
+      clearTimeout(timeout);
       setReady(true);
     };
 
@@ -44,11 +47,17 @@ export function MapHome({ clientId }: { clientId: string }) {
       script.async = true;
     }
     const fail = () => {
-      if (disposed || map || loadFailed) return;
+      if (disposed || loadFailed) return;
       loadFailed = true;
+      clearTimeout(timeout);
+      map?.destroy();
+      map = undefined;
       script.remove();
+      setReady(false);
       setFailed(true);
     };
+    sdkWindow.navermap_authFailure = fail;
+    const timeout = setTimeout(fail, 10_000);
     script.addEventListener('load', initialize);
     script.addEventListener('error', fail);
     if (!existing) document.head.append(script);
@@ -57,6 +66,14 @@ export function MapHome({ clientId }: { clientId: string }) {
 
     return () => {
       disposed = true;
+      clearTimeout(timeout);
+      if (sdkWindow.navermap_authFailure === fail) {
+        if (previousAuthFailure === undefined) {
+          delete sdkWindow.navermap_authFailure;
+        } else {
+          sdkWindow.navermap_authFailure = previousAuthFailure;
+        }
+      }
       script.removeEventListener('load', initialize);
       script.removeEventListener('error', fail);
       map?.destroy();

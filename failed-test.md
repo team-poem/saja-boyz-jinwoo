@@ -212,7 +212,7 @@ test('mapSdkFailureRetriesAndRecovers', async () => {
 });
 ```
 
-- [ ] mapSdkTimeoutAndAuthenticationFailureAreVisible — 지도 상태와 내 위치 사용자 흐름 검증
+- [x] mapSdkTimeoutAndAuthenticationFailureAreVisible — 지도 상태와 내 위치 사용자 흐름 검증
 
 ```ts
 test('mapSdkTimeoutAndAuthenticationFailureAreVisible', async () => {
