@@ -188,10 +188,10 @@ export function MapHome({ clientId }: { clientId: string }) {
   }, [clientId, attempt]);
 
   return (
-    <section aria-label="주변 지도" className="relative mt-6">
+    <section aria-label="주변 지도" className="relative">
       <div
         ref={canvas}
-        className="h-[calc(100dvh-240px)] min-h-[320px] overflow-hidden rounded-card"
+        className="h-[calc(100dvh-max(110px,env(safe-area-inset-bottom)_+_90px))] min-h-[320px] overflow-hidden"
       />
       <button
         type="button"
@@ -206,7 +206,7 @@ export function MapHome({ clientId }: { clientId: string }) {
       {locationError && (
         <p
           role="status"
-          className="absolute top-4 right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
+          className="absolute top-26 right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
         >
           {locationError}
         </p>
@@ -214,7 +214,7 @@ export function MapHome({ clientId }: { clientId: string }) {
       {failed && (
         <div
           role="alert"
-          className="absolute top-4 right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
+          className="absolute top-26 right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
         >
           <p>지도를 불러오지 못했습니다. 다시 시도해 주세요.</p>
           <button
@@ -234,7 +234,7 @@ export function MapHome({ clientId }: { clientId: string }) {
         <div
           role="status"
           aria-busy="true"
-          className="absolute top-4 right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
+          className="absolute top-26 right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
         >
           지도를 불러오는 중입니다.
         </div>
