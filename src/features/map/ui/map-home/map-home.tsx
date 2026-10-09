@@ -191,7 +191,7 @@ export function MapHome({ clientId }: { clientId: string }) {
     <section aria-label="주변 지도" className="relative">
       <div
         ref={canvas}
-        className="h-[calc(100dvh-max(110px,env(safe-area-inset-bottom)_+_90px))] min-h-[320px] overflow-hidden"
+        className="h-[calc(100dvh-max(110px,env(safe-area-inset-bottom)_+_90px))] overflow-hidden"
       />
       <button
         type="button"
