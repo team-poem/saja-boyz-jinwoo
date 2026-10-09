@@ -85,11 +85,17 @@ export function MapHome({ clientId }: { clientId: string }) {
           map === activeMap &&
           currentRequest === requestId &&
           pending;
-        const reject = () => {
+        const reject = (error?: GeolocationPositionError) => {
           if (!isActive()) return;
           pending = false;
           setLocating(false);
-          setLocationError('위치를 확인하지 못했습니다. 다시 시도해 주세요.');
+          setLocationError(
+            error?.code === 1
+              ? '위치 권한이 거부되었습니다. 브라우저 설정에서 위치 권한을 허용해 주세요.'
+              : error?.code === 3
+                ? '위치 확인 시간이 초과되었습니다. 다시 시도해 주세요.'
+                : '위치를 확인하지 못했습니다. 다시 시도해 주세요.',
+          );
         };
         try {
           navigator.geolocation.getCurrentPosition(
