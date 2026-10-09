@@ -6,43 +6,24 @@
 
 ```ts
 // file: src/features/map/ui/map-home/map-home.test.ts
+// @vitest-environment jsdom
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
-import { JSDOM } from 'jsdom';
 import { afterEach, expect, test, vi } from 'vitest';
 import HomePage from '@/app/page';
 
-let dom: JSDOM;
+const dom = { window };
 let root: Root;
 let container: HTMLDivElement;
 let oldId: string | undefined;
-const previous = new Map<string, PropertyDescriptor | undefined>();
 
 async function mount(id = 'map-test-id') {
   oldId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
   if (id) process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID = id;
   else delete process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
-  dom = new JSDOM('<!doctype html><div id="root"></div>', {
-    url: 'http://localhost:3000',
-  });
-  const values = {
-    window: dom.window,
-    self: dom.window,
-    document: dom.window.document,
-    navigator: dom.window.navigator,
-    HTMLElement: dom.window.HTMLElement,
-    IS_REACT_ACT_ENVIRONMENT: true,
-  };
-  for (const [key, value] of Object.entries(values)) {
-    previous.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
-    Object.defineProperty(globalThis, key, {
-      value,
-      writable: true,
-      configurable: true,
-    });
-  }
-  previous.set('naver', Object.getOwnPropertyDescriptor(globalThis, 'naver'));
-  container = document.querySelector<HTMLDivElement>('#root')!;
+  vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
+  container = document.createElement('div');
+  document.body.append(container);
   root = createRoot(container);
   const page = await HomePage();
   await act(async () => root.render(page));
@@ -50,12 +31,14 @@ async function mount(id = 'map-test-id') {
 
 afterEach(async () => {
   if (root) await act(async () => root.unmount());
-  dom?.window.close();
-  for (const [key, value] of previous) {
-    if (value) Object.defineProperty(globalThis, key, value);
-    else Reflect.deleteProperty(globalThis, key);
-  }
-  previous.clear();
+  container?.remove();
+  document
+    .querySelectorAll('script[src*="oapi.map.naver.com/openapi/v3/maps.js"]')
+    .forEach((node) => node.remove());
+  Reflect.deleteProperty(window, 'naver');
+  Reflect.deleteProperty(window, 'navermap_authFailure');
+  Reflect.deleteProperty(navigator, 'geolocation');
+  vi.unstubAllGlobals();
   if (oldId === undefined) delete process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
   else process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID = oldId;
   vi.useRealTimers();
@@ -146,11 +129,7 @@ function sdk() {
     },
   };
   Object.assign(dom.window, { naver });
-  Object.defineProperty(globalThis, 'naver', {
-    value: naver,
-    configurable: true,
-    writable: true,
-  });
+  vi.stubGlobal('naver', naver);
   return { centers, created, destroy, markers, setMap };
 }
 async function loaded() {
