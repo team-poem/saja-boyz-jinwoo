@@ -174,3 +174,20 @@ test('mapLoadsNaverSdkAndPreservesHomeNavigation', async () => {
   await act(async () => root.unmount());
   expect(fixture.destroy).toHaveBeenCalledTimes(1);
 });
+
+test('mapSdkFailureRetriesAndRecovers', async () => {
+  await mount();
+  await act(async () => script().dispatchEvent(new dom.window.Event('error')));
+  expect(container.querySelector('[role="alert"]')?.textContent).toMatch(
+    /지도/,
+  );
+  await act(async () => button('다시 시도').click());
+  const fixture = await loaded();
+  expect(fixture.created).toHaveBeenCalledTimes(1);
+  expect(container.querySelector('[role="alert"]')).toBeNull();
+  expect(
+    document.querySelectorAll(
+      'script[src*="oapi.map.naver.com/openapi/v3/maps.js"]',
+    ),
+  ).toHaveLength(1);
+});
