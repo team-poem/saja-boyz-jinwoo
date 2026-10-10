@@ -92,7 +92,7 @@ export default async function SearchPage({
       ) : (
         <p className="m-0 text-muted">궁금한 기사의 키워드를 검색해 보세요.</p>
       )}
-      {!keyword && <RecentSearches />}
+      <RecentSearches executedKeyword={keyword} />
       <section
         aria-labelledby="suggested-keywords"
         className="flex flex-col gap-3"

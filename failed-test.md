@@ -87,7 +87,7 @@ test('recentSearchesRestoreStoredKeywordsWithoutFetching', async () => {
 });
 ```
 
-- [ ] recentSearchesRecordExecutedKeywordAndDeduplicate — 실행 검색 기록·최신 순·중복 정리·추천과 재진입
+- [x] recentSearchesRecordExecutedKeywordAndDeduplicate — 실행 검색 기록·최신 순·중복 정리·추천과 재진입
 
 ```ts
 test('recentSearchesRecordExecutedKeywordAndDeduplicate', async () => {

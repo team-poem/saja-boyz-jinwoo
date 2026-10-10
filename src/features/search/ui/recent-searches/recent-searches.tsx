@@ -20,14 +20,30 @@ function readKeywords(): string[] {
   }
 }
 
-export function RecentSearches() {
+export function RecentSearches({ executedKeyword = '' }) {
   const [keywords, setKeywords] = useState<string[]>([]);
 
   useEffect(() => {
+    const storedKeywords = readKeywords();
+    const nextKeywords = executedKeyword
+      ? [...new Set([executedKeyword, ...storedKeywords])]
+      : storedKeywords;
+    if (executedKeyword) {
+      try {
+        localStorage.setItem(
+          'hh:recent-searches:v1',
+          JSON.stringify(nextKeywords),
+        );
+      } catch {
+        // 저장소를 사용할 수 없어도 기사 검색은 유지한다.
+      }
+    }
     // 서버와 첫 렌더를 일치시키고 마운트 후 브라우저 저장소를 복원한다.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setKeywords(readKeywords());
-  }, []);
+    setKeywords(nextKeywords);
+  }, [executedKeyword]);
+
+  if (executedKeyword) return null;
 
   return (
     <section aria-label="최근 검색" className="flex flex-col gap-3">
