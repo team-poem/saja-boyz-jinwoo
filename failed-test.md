@@ -66,7 +66,7 @@ function stored() {
 }
 ```
 
-- [ ] recentSearchesRestoreStoredKeywordsWithoutFetching — 저장 기록 복원·입력만으로 저장하지 않음
+- [x] recentSearchesRestoreStoredKeywordsWithoutFetching — 저장 기록 복원·입력만으로 저장하지 않음
 
 ```ts
 test('recentSearchesRestoreStoredKeywordsWithoutFetching', async () => {
