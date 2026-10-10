@@ -4,17 +4,22 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { KeywordLinkStatus } from '@/app/search/keyword-link-status';
 
+function normalizeKeywords(values: unknown): string[] {
+  if (!Array.isArray(values)) return [];
+
+  const keywords = values
+    .filter((value): value is string => typeof value === 'string')
+    .map((keyword) => keyword.trim())
+    .filter((keyword) => keyword.length > 0);
+  return [...new Set(keywords)].slice(0, 10);
+}
+
 function readKeywords(): string[] {
   try {
     const stored: unknown = JSON.parse(
       localStorage.getItem('hh:recent-searches:v1') ?? '[]',
     );
-    return Array.isArray(stored)
-      ? stored.filter(
-          (keyword): keyword is string =>
-            typeof keyword === 'string' && keyword.trim().length > 0,
-        )
-      : [];
+    return normalizeKeywords(stored);
   } catch {
     return [];
   }
@@ -33,11 +38,10 @@ export function RecentSearches({ executedKeyword = '' }) {
 
   useEffect(() => {
     const storedKeywords = readKeywords();
-    const nextKeywords = (
-      executedKeyword
-        ? [...new Set([executedKeyword, ...storedKeywords])]
-        : storedKeywords
-    ).slice(0, 10);
+    const nextKeywords = normalizeKeywords([
+      executedKeyword,
+      ...storedKeywords,
+    ]);
     if (executedKeyword) {
       writeKeywords(nextKeywords);
     }
@@ -47,7 +51,9 @@ export function RecentSearches({ executedKeyword = '' }) {
   }, [executedKeyword]);
 
   function removeKeyword(keyword: string) {
-    const nextKeywords = keywords.filter((stored) => stored !== keyword);
+    const nextKeywords = normalizeKeywords(keywords).filter(
+      (stored) => stored !== keyword,
+    );
     setKeywords(nextKeywords);
     writeKeywords(nextKeywords);
   }
@@ -64,7 +70,7 @@ export function RecentSearches({ executedKeyword = '' }) {
           {keywords.map((keyword, index) => (
             <li
               key={`${keyword}-${index}`}
-              className="flex items-center justify-between gap-2 border-b border-solid border-border py-2 text-sm"
+              className="flex items-center justify-between gap-2 border-0 border-b border-solid border-border py-2 text-sm"
             >
               <Link
                 href={`/search?q=${encodeURIComponent(keyword)}`}
@@ -73,7 +79,7 @@ export function RecentSearches({ executedKeyword = '' }) {
                 <span aria-hidden="true" className="shrink-0 text-muted">
                   🕒
                 </span>
-                <span className="min-w-0 break-words">{keyword}</span>
+                <span className="min-w-0 truncate">{keyword}</span>
                 <KeywordLinkStatus />
               </Link>
               <button

@@ -149,8 +149,10 @@ test('recentSearchesKeepLinksEncodedAndUserContentSafe', async () => {
     '/search?q=' + encodeURIComponent(keywords[0]),
   );
   expect(
-    section.querySelector('button[aria-label="서울 & 화재 삭제"]'),
-  ).not.toBeNull();
+    Array.from(section.querySelectorAll('button')).find(
+      (button) => button.getAttribute('aria-label') === '서울 & 화재 삭제',
+    ),
+  ).toBeDefined();
   expect(request).not.toHaveBeenCalled();
 });
 ```

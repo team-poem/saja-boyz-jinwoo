@@ -112,3 +112,23 @@ test('recentSearchesBoundHistoryAndDeleteOneKeyword', async () => {
   await mount();
   expect(terms()).toEqual(older.slice(0, 9));
 });
+
+test('recentSearchesKeepLinksEncodedAndUserContentSafe', async () => {
+  const keywords = ['서울 & 화재', '<img src=x onerror=alert(1)>'];
+  localStorage.setItem(storageKey, JSON.stringify(keywords));
+  await mount();
+  expect(terms()).toEqual(keywords);
+  const section = recent();
+  expect(section.textContent).toContain(keywords[1]);
+  expect(section.querySelector('img, script')).toBeNull();
+  const first = section.querySelector('a');
+  expect(first!.getAttribute('href')).toBe(
+    '/search?q=' + encodeURIComponent(keywords[0]),
+  );
+  expect(
+    Array.from(section.querySelectorAll('button')).find(
+      (button) => button.getAttribute('aria-label') === '서울 & 화재 삭제',
+    ),
+  ).toBeDefined();
+  expect(request).not.toHaveBeenCalled();
+});

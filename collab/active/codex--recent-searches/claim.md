@@ -3,7 +3,7 @@ owner: easter721
 started: 2026-10-10
 status: active
 goal: feat(search): Figma 최근 검색 저장·재검색·개별 삭제 구현
-next: 사용자 제품 구현 지시에 따라 준비한 정확 초안으로 sobaya Astra 구현·전체 검증·독립 리뷰 후 PR #9 갱신.
+next: 승인한 조회 문법을 새 기준으로 기록하고 남은 두 항목·전체 gate·독립 리뷰·실제 Chrome 검증 후 PR #9 갱신.
 base: dev
 ---
 
