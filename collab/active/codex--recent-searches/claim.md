@@ -3,7 +3,7 @@ owner: easter721
 started: 2026-10-10
 status: active
 goal: feat(search): Figma 최근 검색 저장·재검색·개별 삭제 구현
-next: 승인한 조회 문법을 새 기준으로 기록하고 남은 두 항목·전체 gate·독립 리뷰·실제 Chrome 검증 후 PR #9 갱신.
+next: unicode-test-proposal.md의 정확 명세·회귀 테스트 1개 승인 대기. 승인 후 sobaya Astra 수정·전체 46개 검증·독립 리뷰·Chrome 및 PR #9 반영.
 base: dev
 ---
 
