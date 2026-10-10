@@ -133,7 +133,7 @@ test('recentSearchesBoundHistoryAndDeleteOneKeyword', async () => {
 });
 ```
 
-- [ ] recentSearchesKeepLinksEncodedAndUserContentSafe — 재검색 URL 인코딩·텍스트 안전성·동일 기사 검색 경로
+- [x] recentSearchesKeepLinksEncodedAndUserContentSafe — 재검색 URL 인코딩·텍스트 안전성·동일 기사 검색 경로
 
 ```ts
 test('recentSearchesKeepLinksEncodedAndUserContentSafe', async () => {
