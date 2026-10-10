@@ -1,9 +1,9 @@
 branch: codex/recent-searches
 owner: easter721
 started: 2026-10-10
-status: done
+status: active
 goal: feat(search): Figma 최근 검색 저장·재검색·개별 삭제 구현
-next: 드래프트 PR에서 정확 명세·실패 테스트 초안 승인 후 구현 재개. 제품 구현·전체 검증·독립 리뷰는 미완료.
+next: 사용자 제품 구현 지시에 따라 준비한 정확 초안으로 sobaya Astra 구현·전체 검증·독립 리뷰 후 PR #9 갱신.
 base: dev
 ---
 
