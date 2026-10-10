@@ -1,0 +1,29 @@
+# 네이버 지도 연결
+
+홈(`/`)은 네이버 Maps Dynamic Map을 실제 배경 지도로 사용한다. 기본 중심은 서울시청(37.5665, 126.9780), zoom 12다. 기본 중심을 사용자나 사건 위치로 해석하지 않는다.
+
+## 실행 설정
+
+1. `.env.example`을 참고해 ignored `.env.local`에 `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID`를 설정한다. 웹 SDK는 Client Secret을 사용하지 않는다.
+2. 네이버 콘솔에서 Dynamic Map을 활성화하고 Web 서비스 URL에 개발 주소 `http://localhost:3000`과 실제 배포 주소를 등록한다.
+3. 개발 서버는 `pnpm dev`로 실행한다. 공개 환경변수는 빌드 때 포함되므로 배포 설정을 바꿨다면 다시 빌드한다. 키가 없는 빌드는 지도 대신 관리자 문의 안내를 표시한다.
+
+SDK 주소는 `https://oapi.map.naver.com/openapi/v3/maps.js`이며 쿼리 키는 `ncpKeyId`다. 레거시 `ncpClientId`를 사용하지 않는다. 실제 자격 값은 저장소나 문서에 기록하지 않는다.
+
+## 구현과 동작
+
+- `src/features/map/ui/map-home/`에 지도 컴포넌트·설정 안내·관련 테스트를 모았다. SDK 연결은 이 기능 안에 있으며 제품 의존성이나 전역 store를 추가하지 않았다.
+- 홈에서만 AppShell 헤더를 지도 위에 배치한다. 기존 사건 검색(`/search`), 목록, 제보 메뉴와 오류 경계는 유지한다.
+- SDK 스크립트를 재사용하며 실패한 스크립트는 재시도 때 교체한다. 로딩·스크립트 실패·10초 시간 초과·인증 실패를 표시하고 재시도를 제공한다. 크기 변경 시 지도를 갱신하며 언마운트 때 지도·위치 표시·타이머·리스너·관찰자를 정리한다.
+- 내 위치는 클릭할 때만 요청한다. 처리 중 중복 요청을 막고 성공 시 중심을 이동하며 Figma 위치 표시를 하나만 유지한다. 권한 거부·시간 초과·미지원 안내 후에도 기본 지도는 유지한다. 늦은 응답은 무시하며 위치를 서버에 보내거나 저장하지 않는다.
+- 네이버 로고와 출처를 가리지 않도록 하단 메뉴 공간을 확보했다. 지도 이미지로 실제 SDK를 대체하지 않는다.
+
+Figma 근거: [지도 기본 18:2348](https://www.figma.com/design/TCSILMzViAVqeHRphoyHCH?node-id=18-2348), [선택 필터 45:3317](https://www.figma.com/design/TCSILMzViAVqeHRphoyHCH?node-id=45-3317). 위치 아이콘은 해당 Figma 원본 SVG를 사용한다. iOS 상태바와 지도 배경 이미지는 제품 자산에 포함하지 않는다.
+
+## 후속 API 범위
+
+현재 기사 API에는 사건 좌표 계약이 없다. 사건 마커·클러스터·분류/기간/상태 필터·핫한 사건·선택 카드·바텀시트는 사건 식별자, WGS84 좌표, 출처/정확도, 좌표 누락 정책과 분류·발생 시각 계약을 정한 뒤 연결한다. 기사 제목에서 좌표를 임의 추정하거나 테스트 사건을 실제 사건으로 표시하지 않는다. 협업 요청은 지도 작업 저널에 기록돼 있다.
+
+2026-10-10 실제 Chrome에서 localhost SDK·인증·지도 타일 HTTP 200, 내 위치 이동, 오류 재시도, 320/393/1280px 화면과 검색 왕복 후 스크립트 1개를 확인했다. 배포 도메인의 등록 여부·인증과 콘솔 요금/한도는 별도 확인이 필요하다.
+
+공급자 근거: [SDK 시작 가이드](https://navermaps.github.io/maps.js.ncp/docs/tutorial-2-Getting-Started.html), [Client ID 및 서비스 설정](https://navermaps.github.io/maps.js.ncp/docs/tutorial-1-Getting-Client-ID.html).
