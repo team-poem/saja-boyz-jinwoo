@@ -6,14 +6,17 @@
 
 - 목록·검색은 실제 `/news` API와 연결돼 있다. 공유 ArticleCard는 원문 링크만 표시하고 내부 상세 링크는 없다.
 - `/incidents/[id]`는 항상 `notFound()`를 실행한다. `/report`는 준비 안내 화면이며 접수 API도 연결되지 않았다.
-- 로컬 Go API와 운영 `/openapi.json`에 기사 단건 조회 경로가 없다. `/collections/{id}`는 수집 묶음 조회이며 기사 ID 조회와 다르다.
+- 선행 Go API `GET /news/{article_id}`는 `527532c`로 OCI에 배포했다. 실제 기사와 준비된 이미지 URL이 반환되는 것을 다시 확인했다.
 - 소유권은 기존 분담을 따른다. amazon은 목록·상세·제보, easter721은 지도·검색·공용 기반이다.
 
 ## 진행 순서
 
-1. **단건 조회 API**: 별도 `poem-news-collector`의 `codex/article-detail-api` 작업 공간에서 `GET /news/{article_id}` 계약·실행 테스트 초안을 작성하고 probe한다. 제안 문서는 그 저장소의 `docs/drafts/article-detail-api/proposal.md`에 둔다. 기존 목록 항목 schema를 재사용하고 최신 수집본을 조회한다.
-2. **상세 화면**: 선행 API 확정 후 Figma 상세 노드 `11:2043`을 다시 확인하고 구체적인 화면 테스트를 제안한다. 표시 데이터는 이미지와 AI 생성 표시, 제목, 기사 발행 시각, description 요약, 원문 링크다. 기사 전문·사건 타임라인·좌표는 제공된 것으로 오해하게 만들지 않는다.
-3. **진입·공유**: 목록 카드에서 `/incidents/{article_id}`로 진입하고 URL로 직접 열어도 조회되게 한다. 공유는 해당 상세 URL을 대상으로 한다. 공유 카드는 검색 결과에서도 사용되므로 기존 keyword 전달·목록·원문 링크 동작을 보존한다.
+1. **검토본 승인**: `docs/drafts/article-detail/proposal.md`, `review.ko.md`와 `existing-tests.patch`에 명세·실행 입력·기존 4개 테스트의 변경점을 준비했다. 새 기능은 승인받았지만 정확한 신규 테스트와 대체 baseline의 승인은 아직 없다.
+2. **명세와 baseline 등록**: 승인 후 명세를 새 `spec.md`, 신규 계획을 `failed-test.md`로 등록하고 승인된 기존 테스트 패치를 적용한다. 대체한 기존 테스트 4개는 현재 구현에서도 GREEN이므로 baseline을 먼저 RED로 만들지 않는다. 다른 테스트·헤더·헬퍼는 보존한다.
+3. **순차 구현**: 팀 고정 Sobaya `83af28d`와 `scripts/collab.sh run -- ...`을 사용해 8개 항목을 구현한다. 사용할 런타임은 `/Users/kangminkim/.codex/worktrees/jinwoo-pinned-runtime/sobaya`다. 상세→오류→안전한 표시→타임아웃→이미지 오류→공유→목록/검색 진입→로딩/404 순서다.
+4. **완료·PR**: 전체 테스트·포맷·lint·타입·빌드, 실제 API·브라우저 확인, gate·독립 리뷰 후 plan을 보관하고 `dev` 대상 PR을 연다. 사용자가 PR 생성을 이미 요청했다.
+
+Figma 상세 `11:2043`과 공유 `34:3311`을 다시 확인했다. 표시 데이터는 이미지와 AI 생성 표시, 제목, 기사 발행 시각, description 요약, 원문 링크다. 공유는 기본 Web Share와 클립보드/수동 URL 대체를 사용한다.
 
 확인해야 할 화면 동작은 loading, 실제 404와 API 장애의 구분, 재시도, 이미지 실패 대체, 안전한 원문 URL, 좁은 화면의 배치다. 공유 API helper와 레이아웃의 변경 필요성은 화면 명세 시점에 결정하며 현재는 수정하지 않는다.
 
@@ -25,4 +28,6 @@ PR #8에 대해 재현한 네이버 지도 인증 실패 시 오류 안내/재�
 
 ## 현재 단계
 
-작업 브랜치·의존성 준비 완료. API 테스트는 승인 전 초안이며 제품 구현·배포는 아직 하지 않았다. 기존 `spec.md`·승인 테스트·하네스 설정은 보존한다.
+기존 40개 테스트 PASS. 신규 8개 probe RED, 기존 4개 대체안 probe GREEN. 단계별 lint와 가상 TypeScript 검사 및 독립 초안 리뷰 완료. 프런트 제품 코드·기존 테스트·spec.md는 아직 변경하지 않았다. 증거와 한계는 `docs/drafts/article-detail/verification.md`에 기록한다.
+
+직접 `doctor.sh`를 실행하면 `.githooks/pre-commit`을 사용자 훅으로 경고한다. 이 앱의 기존 협업 훅은 공통 git-dir의 Sobaya 관리 훅으로 연결하며, 그 훅은 이미 고정 런타임을 가리킨다. 훅·루트 하네스·팀 lock을 덮어쓰지 않는다. 현재 baseline 미등록은 승인 전 상태이므로 정상이다.
