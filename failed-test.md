@@ -157,7 +157,7 @@ test('recentSearchesKeepLinksEncodedAndUserContentSafe', async () => {
 });
 ```
 
-- [ ] recentSearchesTolerateInvalidOrUnavailableStorage — 손상/잘못된 형태·저장소 접근/쓰기 실패에서도 검색 유지
+- [x] recentSearchesTolerateInvalidOrUnavailableStorage — 손상/잘못된 형태·저장소 접근/쓰기 실패에서도 검색 유지
 
 ```ts
 test('recentSearchesTolerateInvalidOrUnavailableStorage', async () => {
