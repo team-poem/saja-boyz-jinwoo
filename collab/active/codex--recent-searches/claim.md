@@ -1,9 +1,9 @@
 branch: codex/recent-searches
 owner: easter721
 started: 2026-10-10
-status: active
+status: done
 goal: feat(search): Figma 최근 검색 저장·재검색·개별 삭제 구현
-next: 정확 명세·실패 테스트 초안 및 지도용 API 계약 확인 항목 준비 후 사용자 승인
+next: 드래프트 PR에서 정확 명세·실패 테스트 초안 승인 후 구현 재개. 제품 구현·전체 검증·독립 리뷰는 미완료.
 base: dev
 ---
 
