@@ -109,7 +109,7 @@ test('recentSearchesRecordExecutedKeywordAndDeduplicate', async () => {
 });
 ```
 
-- [ ] recentSearchesBoundHistoryAndDeleteOneKeyword — 최대 10개·개별 삭제·저장 반영·삭제 시 검색 미실행
+- [x] recentSearchesBoundHistoryAndDeleteOneKeyword — 최대 10개·개별 삭제·저장 반영·삭제 시 검색 미실행
 
 ```ts
 test('recentSearchesBoundHistoryAndDeleteOneKeyword', async () => {
