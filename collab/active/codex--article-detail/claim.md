@@ -1,9 +1,9 @@
 branch: codex/article-detail
 owner: amazon
 started: 2026-10-10
-status: active
+status: done
 goal: feat(articles): 기사 상세 조회 화면과 목록 연결
-next: docs/drafts/article-detail/review.ko.md의 신규 8개 테스트·기존 4개 대체안 승인 후 상세·진입·공유 구현 및 dev 대상 PR
+next: dev 대상 기사 상세 PR 리뷰·병합. 승인 항목 8개와 전체 48개 테스트, Chrome 흐름, 최종 gate·독립 리뷰 완료.
 base: dev
 ---
 
