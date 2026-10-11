@@ -112,7 +112,7 @@ test('searchPageRequestValidatesOffsetAndRetainsRawTotal', async () => {
 });
 ```
 
-- [ ] searchMoreAppendsDeduplicatedPagesWithRawOffsets — 원본 행 offset·누적 중복 제거·마지막 결과 종료
+- [x] searchMoreAppendsDeduplicatedPagesWithRawOffsets — 원본 행 offset·누적 중복 제거·마지막 결과 종료
 
 ```ts
 test('searchMoreAppendsDeduplicatedPagesWithRawOffsets', async () => {
