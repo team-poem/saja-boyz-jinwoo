@@ -221,3 +221,34 @@ test('articleDetailSafePresentation', async () => {
   expect(view.textContent).toContain('원문 링크 없음');
   expect(view.querySelector('a[href^="//"], a[href^="data:"]')).toBeNull();
 });
+
+test('articleDetailTimeout', async () => {
+  let signal: AbortSignal | null | undefined;
+  fetchMock.mockImplementationOnce((_input, init) => {
+    signal = init?.signal;
+    return new Promise<Response>((_resolve, reject) => {
+      signal?.addEventListener(
+        'abort',
+        () => reject(new DOMException('PRIVATE_DETAIL', 'AbortError')),
+        { once: true },
+      );
+    });
+  });
+  let deadline: ReturnType<typeof setTimeout> | undefined;
+  try {
+    const result = await Promise.race([
+      detailMarkup(),
+      new Promise<null>((resolve) => {
+        deadline = setTimeout(() => resolve(null), 7000);
+      }),
+    ]);
+    assert(result);
+    expect(result.querySelector('[role="alert"]')?.textContent).toContain(
+      '기사를 불러오지 못했어요',
+    );
+    expect(result.textContent).not.toContain('PRIVATE_DETAIL');
+    expect(signal?.aborted).toBe(true);
+  } finally {
+    clearTimeout(deadline);
+  }
+}, 10000);

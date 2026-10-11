@@ -242,7 +242,7 @@ test('articleDetailSafePresentation', async () => {
 });
 ```
 
-- [ ] articleDetailTimeout — 응답이 멈춘 단건 조회를 중단하고 오류를 표시한다.
+- [x] articleDetailTimeout — 응답이 멈춘 단건 조회를 중단하고 오류를 표시한다.
 
 ```ts
 test('articleDetailTimeout', async () => {
