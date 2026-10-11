@@ -212,7 +212,7 @@ test('searchMorePendingFailureAndRetryPreserveLoadedArticles', async () => {
 });
 ```
 
-- [ ] searchMoreResetsOnKeywordChangeAndIgnoresLatePages — 검색어 초기화·늦은 응답 무시·빈 다음 페이지 종료
+- [x] searchMoreResetsOnKeywordChangeAndIgnoresLatePages — 검색어 초기화·늦은 응답 무시·빈 다음 페이지 종료
 
 ```ts
 test('searchMoreResetsOnKeywordChangeAndIgnoresLatePages', async () => {
