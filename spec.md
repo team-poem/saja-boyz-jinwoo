@@ -27,3 +27,7 @@ src/features/search/ui/recent-searches/에 UI와 관련 테스트를 모으고 �
 
 Figma: https://www.figma.com/design/TCSILMzViAVqeHRphoyHCH?node-id=11-1814
 
+
+## 승인된 Unicode 보완
+
+최근 검색 기록의 문자열 검증에서 URL로 인코딩할 수 없는 고립 surrogate를 무시한다. 유효한 Unicode 문자열과 정상 surrogate pair인 이모지는 그대로 보존한다. 기존 검색 폼·추천·URL·API와 저장소 예외 처리를 유지한다.
