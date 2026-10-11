@@ -3,7 +3,7 @@ owner: amazon
 started: 2026-10-11
 status: active
 goal: feat(articles): 기사 목록 더 보기와 페이지별 재시도 구현
-next: review.ko.md의 명세·정확 테스트 3개 승인 대기. 기존 58개 통과·새 3개 행동 RED·단계별 타입/린트·독립 초안 리뷰 완료. 승인 후 항목별 구현과 브라우저 검증.
+next: 2026-10-11 명세·정확 테스트 3개 승인 완료. 목록 페이지네이션을 항목별 구현·전체 suite checkpoint 후 브라우저 검증·독립 리뷰·dev PR로 마무리.
 base: dev
 ---
 
