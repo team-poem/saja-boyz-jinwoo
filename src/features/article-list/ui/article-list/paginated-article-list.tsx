@@ -13,6 +13,7 @@ export function PaginatedArticleList({
 }) {
   const [page, setPage] = useState(initialPage);
   const [offset, setOffset] = useState(initialPage.items.length);
+  const [exhausted, setExhausted] = useState(initialPage.items.length === 0);
   const [pending, setPending] = useState(false);
   const [failed, setFailed] = useState(false);
   const inFlight = useRef(false);
@@ -33,6 +34,7 @@ export function PaginatedArticleList({
         items: [...previous.items, ...nextPage.items],
       }));
       setOffset(offset + nextPage.items.length);
+      setExhausted(nextPage.items.length === 0);
     } catch {
       setFailed(true);
     } finally {
@@ -50,7 +52,7 @@ export function PaginatedArticleList({
         </p>
       )}
       {failed && <p role="alert">추가 기사를 불러오지 못했어요</p>}
-      {offset < page.total && (
+      {!exhausted && offset < page.total && (
         <button
           type="button"
           disabled={pending}

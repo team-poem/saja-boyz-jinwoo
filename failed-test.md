@@ -234,7 +234,7 @@ test('articleListMorePendingFailuresAndRetryPreserveArticles', async () => {
 });
 ```
 
-- [ ] articleListMoreStopsOnEmptyPageAndDoesNotOfferFinishedLists — 빈 다음 페이지 종료·빈 초기 결과·이미 끝난 목록의 더 보기 숨김
+- [x] articleListMoreStopsOnEmptyPageAndDoesNotOfferFinishedLists — 빈 다음 페이지 종료·빈 초기 결과·이미 끝난 목록의 더 보기 숨김
 
 ```ts
 test('articleListMoreStopsOnEmptyPageAndDoesNotOfferFinishedLists', async () => {
