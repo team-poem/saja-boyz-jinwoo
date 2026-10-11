@@ -165,7 +165,7 @@ test('articleListMoreAppendsWithRawOffsetsAndFirstSeenIdentity', async () => {
 });
 ```
 
-- [ ] articleListMorePendingFailuresAndRetryPreserveArticles — 중복 클릭 방지·로딩·실패 시 기존 기사 유지·동일 페이지 재시도
+- [x] articleListMorePendingFailuresAndRetryPreserveArticles — 중복 클릭 방지·로딩·실패 시 기존 기사 유지·동일 페이지 재시도
 
 ```ts
 test('articleListMorePendingFailuresAndRetryPreserveArticles', async () => {

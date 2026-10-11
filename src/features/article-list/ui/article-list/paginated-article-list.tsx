@@ -14,20 +14,27 @@ export function PaginatedArticleList({
   const [page, setPage] = useState(initialPage);
   const [offset, setOffset] = useState(initialPage.items.length);
   const [pending, setPending] = useState(false);
+  const [failed, setFailed] = useState(false);
   const inFlight = useRef(false);
 
   async function loadMore() {
     if (inFlight.current) return;
     inFlight.current = true;
     setPending(true);
+    setFailed(false);
     try {
       const nextPage = await loadArticlePage(offset);
-      if (!nextPage) return;
+      if (!nextPage) {
+        setFailed(true);
+        return;
+      }
       setPage((previous) => ({
         ...nextPage,
         items: [...previous.items, ...nextPage.items],
       }));
       setOffset(offset + nextPage.items.length);
+    } catch {
+      setFailed(true);
     } finally {
       inFlight.current = false;
       setPending(false);
@@ -37,6 +44,12 @@ export function PaginatedArticleList({
   return (
     <>
       <ArticleList items={page.items} apiOrigin={page.apiOrigin} />
+      {pending && (
+        <p role="status" aria-busy="true">
+          추가 기사를 불러오는 중이에요
+        </p>
+      )}
+      {failed && <p role="alert">추가 기사를 불러오지 못했어요</p>}
       {offset < page.total && (
         <button
           type="button"
@@ -44,7 +57,7 @@ export function PaginatedArticleList({
           onClick={loadMore}
           className="rounded-lg border border-solid border-border bg-surface px-3 py-2 text-brand disabled:opacity-50"
         >
-          더 보기
+          {failed ? '다시 시도' : '더 보기'}
         </button>
       )}
     </>
