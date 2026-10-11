@@ -101,3 +101,61 @@ test('articleDetailRequestAndContent', async () => {
   expect(view.querySelector('a[href="/incidents"]')).not.toBeNull();
   expect(view.querySelector('a[href="/"]')).not.toBeNull();
 });
+
+test('articleDetailFailureStates', async () => {
+  for (const invalidId of [
+    'short',
+    'A'.repeat(64),
+    '../news',
+    'a'.repeat(65),
+  ]) {
+    await expect(detailTree(invalidId)).rejects.toThrow(
+      'TEST_ARTICLE_NOT_FOUND',
+    );
+  }
+  expect(fetchMock).not.toHaveBeenCalled();
+  fetchMock.mockResolvedValueOnce(new Response('', { status: 404 }));
+  await expect(detailTree()).rejects.toThrow('TEST_ARTICLE_NOT_FOUND');
+  expect(fetchMock).toHaveBeenCalledTimes(1);
+  fetchMock.mockReset();
+  const expectFailure = (view: HTMLDivElement) => {
+    const alert = view.querySelector('[role="alert"]');
+    assert(alert);
+    expect(alert.textContent).toContain('기사를 불러오지 못했어요');
+    expect(
+      alert.querySelector(`a[href="/incidents/${id}"]`)?.textContent,
+    ).toContain('다시 시도');
+    expect(view.textContent).not.toMatch(
+      /PRIVATE_DETAIL|기사를 찾을 수 없어요/,
+    );
+    expect(view.querySelector('h1')?.textContent).not.toBe('교통 안내 & 점검');
+  };
+  for (const base of [
+    '',
+    'file:///tmp/news',
+    'https://user:secret@news.example.invalid',
+  ]) {
+    vi.stubEnv('NEWS_API_BASE_URL', base);
+    expectFailure(await detailMarkup());
+  }
+  expect(fetchMock).not.toHaveBeenCalled();
+  vi.stubEnv('NEWS_API_BASE_URL', apiOrigin);
+  fetchMock.mockRejectedValueOnce(new Error('PRIVATE_DETAIL'));
+  expectFailure(await detailMarkup());
+  fetchMock.mockResolvedValueOnce(
+    new Response('PRIVATE_DETAIL', { status: 503 }),
+  );
+  expectFailure(await detailMarkup());
+  fetchMock.mockResolvedValueOnce(new Response('invalid-json'));
+  expectFailure(await detailMarkup());
+  for (const payload of [
+    null,
+    { ...item, article_id: 'b'.repeat(64) },
+    { ...item, article: null },
+    { ...item, article: { ...item.article, description: 42 } },
+    { ...item, image_url: 42 },
+  ]) {
+    fetchMock.mockResolvedValueOnce(Response.json(payload));
+    expectFailure(await detailMarkup());
+  }
+});

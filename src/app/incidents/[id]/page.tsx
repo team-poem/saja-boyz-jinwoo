@@ -11,22 +11,71 @@ import {
 
 export const dynamic = 'force-dynamic';
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function isDetailItem(
+  value: unknown,
+  id: string,
+): value is ArticleCollectionItem {
+  if (!isRecord(value) || !isRecord(value.article)) return false;
+  return (
+    value.article_id === id &&
+    typeof value.article.title === 'string' &&
+    typeof value.article.description === 'string' &&
+    typeof value.article.pubDate === 'string' &&
+    typeof value.article.originallink === 'string' &&
+    typeof value.article.link === 'string' &&
+    typeof value.image_status === 'string' &&
+    (value.image_url === null || typeof value.image_url === 'string')
+  );
+}
+
+async function fetchDetail(id: string) {
+  try {
+    const base = new URL(process.env.NEWS_API_BASE_URL ?? '');
+    if (
+      (base.protocol !== 'http:' && base.protocol !== 'https:') ||
+      base.username ||
+      base.password
+    ) {
+      return { status: 'error' } as const;
+    }
+    const url = new URL(`/news/${id}`, base);
+    const response = await fetch(url, {
+      method: 'GET',
+      cache: 'no-store',
+      signal: AbortSignal.timeout(5000),
+    });
+    if (response.status === 404) return { status: 'not-found' } as const;
+    if (!response.ok) return { status: 'error' } as const;
+    const item: unknown = await response.json();
+    if (!isDetailItem(item, id)) return { status: 'error' } as const;
+    return { status: 'success', item, apiOrigin: url.origin } as const;
+  } catch {
+    return { status: 'error' } as const;
+  }
+}
+
 export default async function IncidentDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const url = new URL(`/news/${id}`, process.env.NEWS_API_BASE_URL);
-  const response = await fetch(url, {
-    method: 'GET',
-    cache: 'no-store',
-    signal: AbortSignal.timeout(5000),
-  });
-  if (response.status === 404) notFound();
-  if (!response.ok) throw new Error('기사를 불러오지 못했어요');
-
-  const item: ArticleCollectionItem = await response.json();
+  if (!/^[a-f0-9]{64}$/.test(id)) notFound();
+  const result = await fetchDetail(id);
+  if (result.status === 'not-found') notFound();
+  if (result.status === 'error') {
+    return (
+      <div role="alert" className="mx-auto max-w-3xl bg-surface p-4 text-text">
+        <p>기사를 불러오지 못했어요</p>
+        <Link href={`/incidents/${id}`}>다시 시도</Link>
+      </div>
+    );
+  }
+  const { item, apiOrigin } = result;
   const { article } = item;
   const publishedAt = publicationDate(article.pubDate);
   const sourceUrl =
@@ -34,7 +83,7 @@ export default async function IncidentDetailPage({
   const imageUrl =
     item.image_status === 'ready' &&
     item.image_url === `/images/${item.article_id}.jpg`
-      ? new URL(item.image_url, url.origin).href
+      ? new URL(item.image_url, apiOrigin).href
       : null;
 
   return (

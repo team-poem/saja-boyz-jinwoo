@@ -114,7 +114,7 @@ test('articleDetailRequestAndContent', async () => {
 });
 ```
 
-- [ ] articleDetailFailureStates — 잘못된 ID·404와 설정·통신·응답 오류를 구분하고 안전한 재시도를 제공한다.
+- [x] articleDetailFailureStates — 잘못된 ID·404와 설정·통신·응답 오류를 구분하고 안전한 재시도를 제공한다.
 
 ```ts
 test('articleDetailFailureStates', async () => {
