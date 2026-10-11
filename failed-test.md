@@ -176,7 +176,7 @@ test('articleDetailFailureStates', async () => {
 });
 ```
 
-- [ ] articleDetailSafePresentation — 기사 문자열·원문·날짜·이미지 상태를 안전하게 표시한다.
+- [x] articleDetailSafePresentation — 기사 문자열·원문·날짜·이미지 상태를 안전하게 표시한다.
 
 ```ts
 test('articleDetailSafePresentation', async () => {
