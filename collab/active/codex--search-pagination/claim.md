@@ -1,9 +1,9 @@
 branch: codex/search-pagination
 owner: easter721
 started: 2026-10-11
-status: active
+status: done
 goal: feat(search): 검색 결과 더 보기와 페이지별 재시도 구현
-next: 검색 더 보기 명세·행동 테스트 probe 후 sobaya Astra 구현. 공유 fetch-articles.ts의 offset·total 확장과 검색 결과 UI; 목록 화면·기존 테스트·의존성은 유지.
+next: dev 대상 PR의 amazon7737 리뷰 후 squash merge. 목록 페이지네이션은 이번 offset/total 계약을 재사용할 수 있음.
 base: dev
 ---
 
