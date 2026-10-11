@@ -1,9 +1,9 @@
 branch: codex/code-conventions
 owner: easter721
 started: 2026-10-11
-status: active
+status: done
 goal: refactor(frontend): 코드 작성 컨벤션과 가독성 통일
-next: PR #13 피드백에 따라 별도 CI 컨벤션 검사와 문서 검사를 추가하고 검증 후 재리뷰 요청.
+next: PR #13의 추가 CI 결과 확인과 amazon7737 재리뷰 후 dev에 squash merge.
 base: dev
 ---
 

@@ -55,3 +55,9 @@ JSX는 헤더·본문·탐색 등 의미 있는 책임을 기준으로 읽히게
 새 스타일 규칙은 `src`의 제품 TS/TSX에만 적용한다. `.test.ts`, `.test.tsx`, `src/test-support`에는 기존 Next/TypeScript lint만 유지하고 새 스타일 규칙을 적용하지 않는다. 승인된 테스트·헤더·fixture는 형식 정리를 위해 수정하지 않는다.
 
 현재 설치된 ESLint 9.39.5의 내장 `padding-line-between-statements`를 재사용한다. 이 규칙은 8.53.0부터 폐기 예정이며 설치된 규칙 메타데이터의 지원 한계는 ESLint 11.0.0이다. 향후 ESLint를 올릴 때 별도 이전 검토가 필요하다. ESLint가 안내하는 대체 규칙은 ESLint Stylistic 플러그인에 있지만 이번 변경에서는 패키지나 커스텀 플러그인을 추가하지 않는다. Next가 이미 등록한 import 플러그인을 그대로 사용한다.
+
+## CI 검사
+
+PR과 `dev`·`main` push에서 `app-check` workflow의 **코드 컨벤션 검사** job이 실행된다. `pnpm run lint`로 ESLint 규칙을 검사하고, `pnpm run format:check`로 코드 형식을 검사한다. 컨벤션 문서와 해당 CI 설정도 `pnpm exec prettier --check docs/code-conventions.md .github/workflows/app-check.yml`로 확인한다. 수정 없이 검사만 수행하며 규칙 위반은 실패로 표시한다.
+
+기존 필수 체크인 **앱 lint·타입·테스트·빌드**의 lint·포맷 검사도 유지한다. 별도 컨벤션 체크를 추가하면서 기존 브랜치 보호의 필수 검사 범위를 줄이지 않는다. 로컬에서 같은 명령으로 확인한 뒤 커밋한다. 의미상 구획과 이름·책임은 계속 사람의 리뷰로 확인한다.
