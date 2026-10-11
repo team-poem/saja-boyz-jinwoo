@@ -305,7 +305,7 @@ test('articleDetailImageFailure', async () => {
 });
 ```
 
-- [ ] articleDetailShareUrl — 직접 상세 URL을 공유·복사하고 취소·실패를 구분한다.
+- [x] articleDetailShareUrl — 직접 상세 URL을 공유·복사하고 취소·실패를 구분한다.
 
 ```ts
 test('articleDetailShareUrl', async () => {

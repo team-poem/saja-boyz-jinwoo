@@ -276,3 +276,66 @@ test('articleDetailImageFailure', async () => {
     ),
   ).toBe(true);
 });
+
+test('articleDetailShareUrl', async () => {
+  window.history.replaceState(
+    null,
+    '',
+    `/incidents/${id}?tracking=test#summary`,
+  );
+  const share = vi.fn().mockResolvedValue(undefined);
+  const writeText = vi.fn().mockResolvedValue(undefined);
+  vi.stubGlobal('navigator', { share, clipboard: { writeText } });
+  fetchMock.mockResolvedValueOnce(Response.json(item));
+  const tree = await detailTree();
+  await act(async () => root.render(tree));
+  const button = Array.from(container.querySelectorAll('button')).find(
+    (entry) => entry.textContent?.includes('공유'),
+  );
+  assert(button);
+  const url = `${window.location.origin}/incidents/${id}`;
+  await act(async () => button.click());
+  expect(share).toHaveBeenCalledExactlyOnceWith(
+    expect.objectContaining({ title: '교통 안내 & 점검', url }),
+  );
+  expect(writeText).not.toHaveBeenCalled();
+  share.mockRejectedValueOnce(new DOMException('user canceled', 'AbortError'));
+  await act(async () => button.click());
+  expect(writeText).not.toHaveBeenCalled();
+  expect(container.querySelector('[role="alert"]')).toBeNull();
+  share.mockRejectedValueOnce(new Error('PRIVATE_SHARE_FAILURE'));
+  await act(async () => button.click());
+  expect(writeText).toHaveBeenLastCalledWith(url);
+  expect(container.querySelector('[role="status"]')?.textContent).toContain(
+    '링크를 복사했어요',
+  );
+  writeText.mockClear();
+  vi.stubGlobal('navigator', { clipboard: { writeText } });
+  let completeCopy = () => {};
+  writeText.mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        completeCopy = resolve;
+      }),
+  );
+  await act(async () => button.click());
+  expect(writeText).toHaveBeenCalledExactlyOnceWith(url);
+  expect(container.textContent).not.toContain('링크를 복사했어요');
+  await act(async () => completeCopy());
+  expect(container.querySelector('[role="status"]')?.textContent).toContain(
+    '링크를 복사했어요',
+  );
+  writeText.mockRejectedValueOnce(new Error('PRIVATE_CLIPBOARD_FAILURE'));
+  await act(async () => button.click());
+  const manual = container.querySelector('input[aria-label="공유 링크"]');
+  assert(manual instanceof HTMLInputElement);
+  expect(manual.value).toBe(url);
+  expect(manual.readOnly).toBe(true);
+  expect(container.textContent).not.toMatch(/PRIVATE_|링크를 복사했어요/);
+  vi.stubGlobal('navigator', {});
+  await act(async () => button.click());
+  expect(
+    container.querySelector('input[aria-label="공유 링크"]'),
+  ).not.toBeNull();
+  expect(fetchMock).toHaveBeenCalledTimes(1);
+});

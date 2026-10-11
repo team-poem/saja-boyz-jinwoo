@@ -1,4 +1,5 @@
 import { DetailImage } from './detail-image';
+import { DetailShare } from './detail-share';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { ArticleCollectionItem } from '@/features/article-list/model/article.types';
@@ -121,7 +122,7 @@ export default async function IncidentDetailPage({
       ) : (
         <p>원문 링크 없음</p>
       )}
-      <button type="button">공유</button>
+      <DetailShare id={id} title={articleText(article.title)} />
     </article>
   );
 }
