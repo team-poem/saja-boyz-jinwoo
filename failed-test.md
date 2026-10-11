@@ -80,7 +80,7 @@ async function detailMarkup() {
 }
 ```
 
-- [ ] articleDetailRequestAndContent — 상세 URL의 ID로 단건 조회하고 실제 필드만 표시한다.
+- [x] articleDetailRequestAndContent — 상세 URL의 ID로 단건 조회하고 실제 필드만 표시한다.
 
 ```ts
 test('articleDetailRequestAndContent', async () => {
