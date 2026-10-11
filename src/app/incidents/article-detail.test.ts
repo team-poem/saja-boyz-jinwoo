@@ -339,3 +339,61 @@ test('articleDetailShareUrl', async () => {
   ).not.toBeNull();
   expect(fetchMock).toHaveBeenCalledTimes(1);
 });
+
+test('articleDetailLinksFromListAndSearch', async () => {
+  const { default: IncidentsPage } = await import('./page');
+  const { default: SearchPage } = await import('../search/page');
+  for (const page of [
+    () => IncidentsPage(),
+    () => SearchPage({ searchParams: Promise.resolve({ q: '  도로 점검  ' }) }),
+  ]) {
+    fetchMock.mockResolvedValueOnce(
+      Response.json({ total: 2, items: [item, item] }),
+    );
+    const view = document.createElement('div');
+    const html = renderToStaticMarkup(await page());
+    expect(html).not.toMatch(/<a\b[^>]*>(?:(?!<\/a>)[\s\S])*<a\b/);
+    view.innerHTML = html;
+    expect(view.querySelectorAll('article')).toHaveLength(1);
+    const title = view.querySelector('article h2');
+    assert(title);
+    const detailLink = title.querySelector('a') ?? title.closest('a');
+    expect(detailLink?.getAttribute('href')).toBe(`/incidents/${id}`);
+    expect(detailLink?.textContent).toContain('교통 안내 & 점검');
+    expect(
+      view.querySelector(
+        'article a[href="https://publisher.example.invalid/article"]',
+      )?.textContent,
+    ).toBe('기사 원문');
+  }
+  expect(fetchMock).toHaveBeenCalledTimes(2);
+  const [input] = fetchMock.mock.calls[1];
+  const url = new URL(input instanceof Request ? input.url : String(input));
+  expect(url.searchParams.get('keyword')).toBe('도로 점검');
+  fetchMock.mockResolvedValueOnce(
+    Response.json({
+      total: 1,
+      items: [
+        {
+          ...item,
+          article: {
+            ...item.article,
+            originallink: 'javascript:alert(1)',
+            link: '/unsafe-relative',
+          },
+        },
+      ],
+    }),
+  );
+  const view = document.createElement('div');
+  view.innerHTML = renderToStaticMarkup(await IncidentsPage());
+  const title = view.querySelector('article h2');
+  assert(title);
+  const detailLink = title.querySelector('a') ?? title.closest('a');
+  expect(detailLink?.getAttribute('href')).toBe(`/incidents/${id}`);
+  expect(view.textContent).toContain('원문 링크 없음');
+  expect(
+    view.querySelector('a[href^="javascript:"], a[href="/unsafe-relative"]'),
+  ).toBeNull();
+  expect(fetchMock).toHaveBeenCalledTimes(3);
+});

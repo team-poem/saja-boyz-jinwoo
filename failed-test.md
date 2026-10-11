@@ -372,7 +372,7 @@ test('articleDetailShareUrl', async () => {
 });
 ```
 
-- [ ] articleDetailLinksFromListAndSearch — 목록·검색 카드 제목은 내부 상세로, 원문은 외부 기사로 연결한다.
+- [x] articleDetailLinksFromListAndSearch — 목록·검색 카드 제목은 내부 상세로, 원문은 외부 기사로 연결한다.
 
 ```ts
 test('articleDetailLinksFromListAndSearch', async () => {
