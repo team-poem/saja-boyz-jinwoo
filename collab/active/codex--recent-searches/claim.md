@@ -1,9 +1,9 @@
 branch: codex/recent-searches
 owner: easter721
 started: 2026-10-10
-status: active
+status: done
 goal: feat(search): Figma 최근 검색 저장·재검색·개별 삭제 구현
-next: 승인된 Unicode 회귀 항목을 sobaya Astra로 구현·검증한 뒤 PR #9 ready 전환과 amazon7737 리뷰 요청.
+next: PR #9의 amazon7737 리뷰 후 dev에 squash merge. 지도용 좌표·분류 API 규약은 별도 확인.
 base: dev
 ---
 
