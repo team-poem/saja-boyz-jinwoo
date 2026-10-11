@@ -434,7 +434,7 @@ test('articleDetailLinksFromListAndSearch', async () => {
 });
 ```
 
-- [ ] articleDetailRouteBoundaries — 상세 로딩과 기사 없음 화면은 서로 다른 안내와 복귀 경로를 제공한다.
+- [x] articleDetailRouteBoundaries — 상세 로딩과 기사 없음 화면은 서로 다른 안내와 복귀 경로를 제공한다.
 
 ```ts
 test('articleDetailRouteBoundaries', async () => {
