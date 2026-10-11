@@ -3,7 +3,7 @@ export default function ArticleDetailLoading() {
     <div
       role="status"
       aria-busy="true"
-      className="mx-auto max-w-3xl bg-surface p-4 text-text"
+      className="mt-6 rounded-card bg-surface p-6 text-sm text-muted"
     >
       기사를 불러오는 중
     </div>

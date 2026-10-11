@@ -43,15 +43,28 @@ export function DetailShare({ id, title }: { id: string; title: string }) {
   }
 
   return (
-    <div>
-      <button type="button" onClick={share}>
-        공유
+    <div className="mt-1">
+      <button
+        type="button"
+        onClick={share}
+        className="min-h-12 w-full cursor-pointer rounded-card border border-solid border-brand bg-surface px-4 py-3 font-bold text-brand hover:bg-background"
+      >
+        기사 공유하기
       </button>
-      {copied && <p role="status">링크를 복사했어요</p>}
+      {copied && (
+        <p role="status" className="mb-0 text-sm text-muted">
+          링크를 복사했어요
+        </p>
+      )}
       {manualUrl && (
         <div>
-          <p>아래 링크를 직접 복사해 주세요.</p>
-          <input aria-label="공유 링크" value={manualUrl} readOnly />
+          <p className="text-sm text-muted">아래 링크를 직접 복사해 주세요.</p>
+          <input
+            aria-label="공유 링크"
+            value={manualUrl}
+            readOnly
+            className="w-full rounded-lg border border-solid border-border bg-background p-3 text-sm text-text"
+          />
         </div>
       )}
     </div>

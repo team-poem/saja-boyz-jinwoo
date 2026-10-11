@@ -70,9 +70,14 @@ export default async function IncidentDetailPage({
   if (result.status === 'not-found') notFound();
   if (result.status === 'error') {
     return (
-      <div role="alert" className="mx-auto max-w-3xl bg-surface p-4 text-text">
-        <p>기사를 불러오지 못했어요</p>
-        <Link href={`/incidents/${id}`}>다시 시도</Link>
+      <div role="alert" className="mt-6 rounded-card bg-surface p-6 text-text">
+        <p className="mt-0 font-bold">기사를 불러오지 못했어요</p>
+        <Link
+          href={`/incidents/${id}`}
+          className="text-sm font-bold text-brand underline underline-offset-4"
+        >
+          다시 시도
+        </Link>
       </div>
     );
   }
@@ -88,16 +93,36 @@ export default async function IncidentDetailPage({
       : null;
 
   return (
-    <article className="mx-auto flex max-w-3xl flex-col gap-6 bg-surface p-4 text-text">
-      <nav aria-label="기사 상세 탐색" className="flex justify-between">
-        <Link href="/incidents">목록으로</Link>
-        <Link href="/">닫기</Link>
+    <article className="mt-6 flex min-w-0 flex-col gap-5 rounded-card bg-surface p-4 text-text sm:p-6">
+      <nav
+        aria-label="기사 상세 탐색"
+        className="flex items-center justify-between border-0 border-b border-solid border-border pb-3"
+      >
+        <Link
+          href="/incidents"
+          aria-label="목록으로"
+          className="flex min-h-11 items-center gap-2 font-bold"
+        >
+          <span aria-hidden="true" className="text-2xl">
+            ←
+          </span>
+          기사 상세
+        </Link>
+        <Link
+          href="/"
+          aria-label="닫기"
+          className="grid size-11 place-items-center rounded-lg"
+        >
+          <span
+            aria-hidden="true"
+            className="block size-6 bg-[url('/article-detail-close.svg')] bg-center bg-no-repeat"
+          />
+        </Link>
       </nav>
-      <h1 className="m-0 text-2xl font-bold [overflow-wrap:anywhere]">
+      <h1 className="m-0 text-[22px]/[30px] font-extrabold [overflow-wrap:anywhere]">
         {articleText(article.title)}
       </h1>
-      <DetailImage key={imageUrl} src={imageUrl} />
-      <p className="m-0 text-sm text-muted">
+      <p className="-mt-2 mb-0 text-[12px]/5 text-muted">
         {Number.isNaN(publishedAt.getTime()) ? (
           '발행 시각 미확인'
         ) : (
@@ -109,19 +134,23 @@ export default async function IncidentDetailPage({
           </>
         )}
       </p>
+      <DetailImage key={imageUrl} src={imageUrl} />
+      {sourceUrl ? (
+        <a
+          href={sourceUrl}
+          className="self-start text-sm text-muted underline underline-offset-4"
+        >
+          기사 원문 보기
+        </a>
+      ) : (
+        <p className="m-0 text-sm text-muted">원문 링크 없음</p>
+      )}
       <section aria-label="기사 요약">
-        <h2 className="mt-0 text-lg font-bold">기사 요약</h2>
-        <p className="whitespace-pre-line [overflow-wrap:anywhere]">
+        <h2 className="mt-0 mb-2 text-sm font-extrabold">기사 요약</h2>
+        <p className="m-0 text-[14px]/[22px] whitespace-pre-line text-muted [overflow-wrap:anywhere]">
           {articleText(article.description)}
         </p>
       </section>
-      {sourceUrl ? (
-        <a href={sourceUrl} className="underline underline-offset-4">
-          기사 원문
-        </a>
-      ) : (
-        <p>원문 링크 없음</p>
-      )}
       <DetailShare id={id} title={articleText(article.title)} />
     </article>
   );
