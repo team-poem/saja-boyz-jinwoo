@@ -77,7 +77,7 @@ function offsets() {
 }
 ```
 
-- [ ] searchPageRequestValidatesOffsetAndRetainsRawTotal — 서버 페이지 요청·raw total·잘못된 offset 차단
+- [x] searchPageRequestValidatesOffsetAndRetainsRawTotal — 서버 페이지 요청·raw total·잘못된 offset 차단
 
 ```ts
 test('searchPageRequestValidatesOffsetAndRetainsRawTotal', async () => {
