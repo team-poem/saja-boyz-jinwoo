@@ -157,7 +157,7 @@ test('searchMoreAppendsDeduplicatedPagesWithRawOffsets', async () => {
 });
 ```
 
-- [ ] searchMorePendingFailureAndRetryPreserveLoadedArticles — 연속 클릭 방지·기존 결과 유지·동일 페이지 재시도
+- [x] searchMorePendingFailureAndRetryPreserveLoadedArticles — 연속 클릭 방지·기존 결과 유지·동일 페이지 재시도
 
 ```ts
 test('searchMorePendingFailureAndRetryPreserveLoadedArticles', async () => {
