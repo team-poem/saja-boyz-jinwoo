@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { DetailImage } from './detail-image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { ArticleCollectionItem } from '@/features/article-list/model/article.types';
@@ -95,23 +95,7 @@ export default async function IncidentDetailPage({
       <h1 className="m-0 text-2xl font-bold [overflow-wrap:anywhere]">
         {articleText(article.title)}
       </h1>
-      {imageUrl ? (
-        <figure className="m-0">
-          <Image
-            src={imageUrl}
-            alt=""
-            width={768}
-            height={512}
-            unoptimized
-            className="h-auto w-full rounded-lg"
-          />
-          <figcaption className="mt-2 text-sm text-muted">
-            AI 생성 이미지
-          </figcaption>
-        </figure>
-      ) : (
-        <p>이미지 없음</p>
-      )}
+      <DetailImage key={imageUrl} src={imageUrl} />
       <p className="m-0 text-sm text-muted">
         {Number.isNaN(publishedAt.getTime()) ? (
           '발행 시각 미확인'
@@ -137,6 +121,7 @@ export default async function IncidentDetailPage({
       ) : (
         <p>원문 링크 없음</p>
       )}
+      <button type="button">공유</button>
     </article>
   );
 }

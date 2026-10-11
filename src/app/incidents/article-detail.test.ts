@@ -252,3 +252,27 @@ test('articleDetailTimeout', async () => {
     clearTimeout(deadline);
   }
 }, 10000);
+
+test('articleDetailImageFailure', async () => {
+  fetchMock.mockResolvedValueOnce(Response.json(item));
+  const tree = await detailTree();
+  await act(async () => root.render(tree));
+  const image = container.querySelector('img');
+  assert(image);
+  await act(async () => image.dispatchEvent(new Event('error')));
+  expect(container.querySelector('img')).toBeNull();
+  expect(container.textContent).toContain('이미지 없음');
+  expect(container.textContent).not.toContain('AI 생성 이미지');
+  expect(container.querySelector('h1')?.textContent).toBe('교통 안내 & 점검');
+  expect(container.textContent).toContain(item.article.description);
+  expect(
+    container.querySelector(
+      'a[href="https://publisher.example.invalid/article"]',
+    ),
+  ).not.toBeNull();
+  expect(
+    Array.from(container.querySelectorAll('button')).some((button) =>
+      button.textContent?.includes('공유'),
+    ),
+  ).toBe(true);
+});

@@ -277,7 +277,7 @@ test('articleDetailTimeout', async () => {
 }, 10000);
 ```
 
-- [ ] articleDetailImageFailure — 상세 이미지 로딩 실패 후에도 제목·요약·원문·공유가 남는다.
+- [x] articleDetailImageFailure — 상세 이미지 로딩 실패 후에도 제목·요약·원문·공유가 남는다.
 
 ```ts
 test('articleDetailImageFailure', async () => {
