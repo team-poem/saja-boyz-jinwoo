@@ -88,7 +88,7 @@ function offsets() {
 }
 ```
 
-- [ ] articleListMoreAppendsWithRawOffsetsAndFirstSeenIdentity — 원본 행 기준 페이지 이동·중복 제거·짧은 페이지·최신 total 종료·추가 카드 연결
+- [x] articleListMoreAppendsWithRawOffsetsAndFirstSeenIdentity — 원본 행 기준 페이지 이동·중복 제거·짧은 페이지·최신 total 종료·추가 카드 연결
 
 ```ts
 test('articleListMoreAppendsWithRawOffsetsAndFirstSeenIdentity', async () => {
