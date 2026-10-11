@@ -187,7 +187,7 @@ test('recentSearchesTolerateInvalidOrUnavailableStorage', async () => {
 });
 ```
 
-- [ ] recentSearchesIgnoreMalformedUnicodeWithoutBreakingSearch — 손상 Unicode 무시·정상 문자열/이모지 유지·검색 지속
+- [x] recentSearchesIgnoreMalformedUnicodeWithoutBreakingSearch — 손상 Unicode 무시·정상 문자열/이모지 유지·검색 지속
 
 ```ts
 test('recentSearchesIgnoreMalformedUnicodeWithoutBreakingSearch', async () => {

@@ -10,7 +10,10 @@ function normalizeKeywords(values: unknown): string[] {
   const keywords = values
     .filter((value): value is string => typeof value === 'string')
     .map((keyword) => keyword.trim())
-    .filter((keyword) => keyword.length > 0);
+    // Unicode 모드에서는 정상 surrogate 쌍을 하나의 코드 포인트로 처리한다.
+    .filter(
+      (keyword) => keyword.length > 0 && !/[\uD800-\uDFFF]/u.test(keyword),
+    );
   return [...new Set(keywords)].slice(0, 10);
 }
 

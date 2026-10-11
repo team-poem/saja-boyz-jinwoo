@@ -158,3 +158,17 @@ test('recentSearchesTolerateInvalidOrUnavailableStorage', async () => {
   expect(container.querySelector('form[action="/search"]')).not.toBeNull();
   expect(container.textContent).toContain('추천 검색어');
 });
+
+test('recentSearchesIgnoreMalformedUnicodeWithoutBreakingSearch', async () => {
+  localStorage.setItem(
+    storageKey,
+    JSON.stringify(['\ud800', '정상 검색어', '\udc00', '🔥 화재']),
+  );
+  await mount();
+  expect(terms()).toEqual(['정상 검색어', '🔥 화재']);
+  expect(container.querySelector('form[action="/search"]')).not.toBeNull();
+  expect(request).not.toHaveBeenCalled();
+  await mount('소방');
+  expect(stored()).toEqual(['소방', '정상 검색어', '🔥 화재']);
+  expect(request).toHaveBeenCalledTimes(1);
+});
