@@ -1,9 +1,9 @@
 branch: codex/code-conventions
 owner: easter721
 started: 2026-10-11
-status: active
+status: done
 goal: refactor(frontend): 코드 작성 컨벤션과 가독성 통일
-next: 기존 전체 테스트를 기준으로 컨벤션 문서·ESLint 검사와 제품 소스의 구획을 정리하고 소바야 gate·독립 리뷰·dev PR로 검증.
+next: dev PR에서 amazon7737 리뷰 후 squash merge. 컨벤션 문서와 제품 전용 ESLint 기준을 새 코드에도 적용.
 base: dev
 ---
 
