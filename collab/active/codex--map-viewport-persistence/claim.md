@@ -1,9 +1,9 @@
 branch: codex/map-viewport-persistence
 owner: easter721
 started: 2026-10-12
-status: active
+status: done
 goal: feat(map): 화면 이동 후 지도 위치와 확대 수준 복원
-next: spec-proposal.md와 failed-test-proposal.md 정확 초안 승인 후 sobaya 구현·검증·dev PR 진행
+next: dev 대상 PR에서 amazon7737 재리뷰 후 squash merge. 주소·장소 검색은 별도 명세와 API 사용 계약 검토 후 진행.
 base: dev
 ---
 
