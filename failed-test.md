@@ -26,20 +26,36 @@ beforeEach(async () => {
   created = vi.fn();
   destroy = vi.fn();
   class LatLng {
-    constructor(private latitude: number, private longitude: number) {}
-    lat() { return this.latitude; }
-    lng() { return this.longitude; }
+    constructor(
+      private latitude: number,
+      private longitude: number,
+    ) {}
+    lat() {
+      return this.latitude;
+    }
+    lng() {
+      return this.longitude;
+    }
   }
   class MapFixture {
-    constructor(_element: HTMLElement, options: { center: LatLng; zoom: number }) {
-      current = { latitude: options.center.lat(), longitude: options.center.lng(), zoom: options.zoom };
+    constructor(
+      _element: HTMLElement,
+      options: { center: LatLng; zoom: number },
+    ) {
+      current = {
+        latitude: options.center.lat(),
+        longitude: options.center.lng(),
+        zoom: options.zoom,
+      };
       created(current);
     }
     getCenter() {
       if (broken) throw new Error('unavailable center');
       return new LatLng(current.latitude, current.longitude);
     }
-    getZoom() { return current.zoom; }
+    getZoom() {
+      return current.zoom;
+    }
     setSize() {}
     destroy = destroy;
   }
@@ -51,7 +67,9 @@ beforeEach(async () => {
 async function visit(clientId = 'viewport-test-id') {
   root = createRoot(container);
   await act(async () => root!.render(createElement(MapHome, { clientId })));
-  const script = document.querySelector<HTMLScriptElement>('script[src*="oapi.map.naver.com"]');
+  const script = document.querySelector<HTMLScriptElement>(
+    'script[src*="oapi.map.naver.com"]',
+  );
   expect(script).not.toBeNull();
   await act(async () => script!.dispatchEvent(new Event('load')));
 }
@@ -64,7 +82,9 @@ async function leave() {
 afterEach(async () => {
   if (root) await leave();
   container.remove();
-  document.querySelectorAll('script[src*="oapi.map.naver.com"]').forEach(node => node.remove());
+  document
+    .querySelectorAll('script[src*="oapi.map.naver.com"]')
+    .forEach((node) => node.remove());
   Reflect.deleteProperty(window, 'naver');
   Reflect.deleteProperty(window, 'navermap_authFailure');
   vi.restoreAllMocks();
@@ -77,12 +97,20 @@ afterEach(async () => {
 test('mapReturnRestoresViewportWithoutBrowserStorage', async () => {
   const storage = vi.spyOn(Storage.prototype, 'setItem');
   await visit();
-  expect(created).toHaveBeenLastCalledWith({ latitude: 37.5665, longitude: 126.978, zoom: 12 });
+  expect(created).toHaveBeenLastCalledWith({
+    latitude: 37.5665,
+    longitude: 126.978,
+    zoom: 12,
+  });
   current = { latitude: 35.1796, longitude: 129.0756, zoom: 15 };
   await leave();
   expect(destroy).toHaveBeenCalledTimes(1);
   await visit();
-  expect(created).toHaveBeenLastCalledWith({ latitude: 35.1796, longitude: 129.0756, zoom: 15 });
+  expect(created).toHaveBeenLastCalledWith({
+    latitude: 35.1796,
+    longitude: 129.0756,
+    zoom: 15,
+  });
   expect(storage).not.toHaveBeenCalled();
 });
 ```
@@ -97,11 +125,19 @@ test('mapRepeatedVisitsKeepLatestViewport', async () => {
   current = { latitude: 33.4996, longitude: 126.5312, zoom: 10 };
   await leave();
   await visit();
-  expect(created).toHaveBeenLastCalledWith({ latitude: 33.4996, longitude: 126.5312, zoom: 10 });
+  expect(created).toHaveBeenLastCalledWith({
+    latitude: 33.4996,
+    longitude: 126.5312,
+    zoom: 10,
+  });
   await leave();
   const anotherClientId = 'another-client-id';
   await visit(anotherClientId);
-  expect(created).toHaveBeenLastCalledWith({ latitude: 37.5665, longitude: 126.978, zoom: 12 });
+  expect(created).toHaveBeenLastCalledWith({
+    latitude: 37.5665,
+    longitude: 126.978,
+    zoom: 12,
+  });
 });
 ```
 
@@ -115,12 +151,20 @@ test('mapUnreadableViewportKeepsLastValidPosition', async () => {
   current = { latitude: Number.NaN, longitude: 181, zoom: Infinity };
   await leave();
   await visit();
-  expect(created).toHaveBeenLastCalledWith({ latitude: 35.1796, longitude: 129.0756, zoom: 15 });
+  expect(created).toHaveBeenLastCalledWith({
+    latitude: 35.1796,
+    longitude: 129.0756,
+    zoom: 15,
+  });
   broken = true;
   await leave();
   broken = false;
   await visit();
-  expect(created).toHaveBeenLastCalledWith({ latitude: 35.1796, longitude: 129.0756, zoom: 15 });
+  expect(created).toHaveBeenLastCalledWith({
+    latitude: 35.1796,
+    longitude: 129.0756,
+    zoom: 15,
+  });
   expect(destroy).toHaveBeenCalledTimes(3);
 });
 ```
