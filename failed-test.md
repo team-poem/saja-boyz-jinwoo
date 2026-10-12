@@ -92,7 +92,7 @@ afterEach(async () => {
 });
 ```
 
-- [ ] mapReturnRestoresViewportWithoutBrowserStorage — 지도 재진입과 안전한 스냅샷 보존
+- [x] mapReturnRestoresViewportWithoutBrowserStorage — 지도 재진입과 안전한 스냅샷 보존
 ```tsx
 test('mapReturnRestoresViewportWithoutBrowserStorage', async () => {
   const storage = vi.spyOn(Storage.prototype, 'setItem');
