@@ -141,7 +141,7 @@ test('mapRepeatedVisitsKeepLatestViewport', async () => {
 });
 ```
 
-- [ ] mapUnreadableViewportKeepsLastValidPosition — 지도 재진입과 안전한 스냅샷 보존
+- [x] mapUnreadableViewportKeepsLastValidPosition — 지도 재진입과 안전한 스냅샷 보존
 ```tsx
 test('mapUnreadableViewportKeepsLastValidPosition', async () => {
   await visit();
