@@ -153,6 +153,19 @@ export function MapHome({ clientId }: { clientId: string }) {
     const url = new URL('https://oapi.map.naver.com/openapi/v3/maps.js');
 
     url.searchParams.set('ncpKeyId', clientId);
+
+    for (const element of document.querySelectorAll('script[src]')) {
+      const scriptUrl = new URL((element as HTMLScriptElement).src);
+
+      if (
+        scriptUrl.origin === url.origin &&
+        scriptUrl.pathname === url.pathname &&
+        scriptUrl.searchParams.get('ncpKeyId') !== clientId
+      ) {
+        element.remove();
+      }
+    }
+
     let script = [...document.querySelectorAll('script')].find(
       (element) => element.src === url.href,
     );

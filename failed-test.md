@@ -115,7 +115,7 @@ test('mapReturnRestoresViewportWithoutBrowserStorage', async () => {
 });
 ```
 
-- [ ] mapRepeatedVisitsKeepLatestViewport — 지도 재진입과 안전한 스냅샷 보존
+- [x] mapRepeatedVisitsKeepLatestViewport — 지도 재진입과 안전한 스냅샷 보존
 ```tsx
 test('mapRepeatedVisitsKeepLatestViewport', async () => {
   await visit();
