@@ -3,7 +3,7 @@ owner: easter721
 started: 2026-10-12
 status: active
 goal: feat(map): 화면 이동 후 지도 위치와 확대 수준 복원
-next: 지도 생명주기와 기존 테스트 확인 후 정확 명세·신규 테스트 초안 준비
+next: spec-proposal.md와 failed-test-proposal.md 정확 초안 승인 후 sobaya 구현·검증·dev PR 진행
 base: dev
 ---
 
