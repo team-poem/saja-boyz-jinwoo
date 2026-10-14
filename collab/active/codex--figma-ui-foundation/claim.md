@@ -4,7 +4,7 @@ owner: easter721
 started: 2026-10-14
 status: done
 goal: feat(ui): Figma 공통 디자인 기반과 화면별 레이아웃 재구축
-next: dev PR 검토 후 별도 브랜치에서 지역 고정 좌표·기사 수 숫자 원과 가로 기사 카드 구현
+next: PR19 상세 오류 복귀 회귀 수정102개 검증·CI 확인 후 리뷰, 지역 숫자 원·카드는 별도 후속
 base: dev
 ---
 

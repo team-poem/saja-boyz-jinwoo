@@ -11,6 +11,7 @@ import {
 
 import { DetailShare } from './detail-share';
 import { DetailImage } from './detail-image';
+import { DetailNavigation } from './detail-navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -81,14 +82,17 @@ export default async function IncidentDetailPage({
 
   if (result.status === 'error') {
     return (
-      <div role="alert" className="bg-surface p-4 text-text">
-        <p className="mt-0 font-bold">기사를 불러오지 못했어요</p>
-        <Link
-          href={`/incidents/${id}`}
-          className="text-sm font-bold text-brand underline underline-offset-4"
-        >
-          다시 시도
-        </Link>
+      <div className="bg-surface px-4 text-text">
+        <DetailNavigation />
+        <div role="alert" className="py-4">
+          <p className="mt-0 font-bold">기사를 불러오지 못했어요</p>
+          <Link
+            href={`/incidents/${id}`}
+            className="text-sm font-bold text-brand underline underline-offset-4"
+          >
+            다시 시도
+          </Link>
+        </div>
       </div>
     );
   }
@@ -106,31 +110,7 @@ export default async function IncidentDetailPage({
 
   return (
     <article className="flex min-w-0 flex-col gap-5 bg-surface px-4 pb-6 text-text">
-      <nav
-        aria-label="기사 상세 탐색"
-        className="flex items-center justify-between border-0 border-b border-solid border-border -mx-4 px-4"
-      >
-        <Link
-          href="/incidents"
-          aria-label="목록으로"
-          className="flex min-h-11 items-center gap-2 font-bold"
-        >
-          <span aria-hidden="true" className="text-2xl">
-            ←
-          </span>
-          기사 상세
-        </Link>
-        <Link
-          href="/"
-          aria-label="닫기"
-          className="grid size-11 place-items-center rounded-lg"
-        >
-          <span
-            aria-hidden="true"
-            className="block size-6 bg-[url('/article-detail-close.svg')] bg-center bg-no-repeat"
-          />
-        </Link>
-      </nav>
+      <DetailNavigation />
       <h1 className="m-0 text-[22px]/[30px] font-extrabold [overflow-wrap:anywhere]">
         {articleText(article.title)}
       </h1>
