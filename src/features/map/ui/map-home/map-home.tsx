@@ -4,9 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
-import { ArticleCard } from '@/features/article-list/ui/article-card/article-card';
 import { articleText } from '@/features/article-list/model/article-presentation';
 
+import { createArticleMarker } from './map-article-marker';
+import { MapArticleSheet } from './map-article-sheet';
 import type {
   LocatedArticle,
   MapArticleResult,
@@ -21,6 +22,7 @@ type MapInstance = {
   getCenter?(): { lat(): number; lng(): number };
   getZoom?(): number;
   setCenter(point: unknown): void;
+  setZoom(zoom: number, effect?: boolean): void;
   fitBounds(
     points: unknown[],
     options: {
@@ -72,6 +74,9 @@ export function MapHome({
   );
   const canvas = useRef<HTMLDivElement>(null);
   const fitArticles = useRef<(() => void) | null>(null);
+  const clearSelection = useRef<((restoreFocus?: boolean) => void) | null>(
+    null,
+  );
   const locate = useRef<(() => void) | null>(null);
   const [locating, setLocating] = useState(false);
   const [locationError, setLocationError] = useState('');
@@ -85,7 +90,12 @@ export function MapHome({
     let loadFailed = false;
     let map: MapInstance | undefined;
     let marker: MarkerInstance | undefined;
-    const articleMarkers: { marker: MarkerInstance; listener: unknown }[] = [];
+    let selectedMarker: HTMLButtonElement | undefined;
+    const articleMarkers: {
+      marker: MarkerInstance;
+      listener: unknown;
+      setSelected(selected: boolean): void;
+    }[] = [];
     let removeArticleListener: ((listener: unknown) => void) | undefined;
     const clearArticles = () => {
       for (const entry of articleMarkers.splice(0)) {
@@ -121,18 +131,14 @@ export function MapHome({
         zoom: viewport.zoom,
       });
 
-      fitArticles.current = () => {
-        if (disposed || loadFailed || !map || !articles?.items.length) return;
-        map.fitBounds(
-          articles.items.map(
-            (item) =>
-              new maps.LatLng(item.location.latitude, item.location.longitude),
-          ),
-          { top: 150, right: 60, bottom: 180, left: 60, maxZoom: 15 },
-        );
+      removeArticleListener = (listener) => maps.Event.removeListener(listener);
+
+      clearSelection.current = (restoreFocus = false) => {
+        for (const entry of articleMarkers) entry.setSelected(false);
+        if (restoreFocus) selectedMarker?.focus({ preventScroll: true });
+        selectedMarker = undefined;
       };
 
-      removeArticleListener = (listener) => maps.Event.removeListener(listener);
       const groups = new Map<string, LocatedArticle[]>();
 
       for (const item of articles?.items ?? []) {
@@ -143,24 +149,45 @@ export function MapHome({
         groups.set(key, group);
       }
 
+      fitArticles.current = () => {
+        if (disposed || loadFailed || !map || !groups.size) return;
+        const points = [...groups.values()].map(
+          ([item]) =>
+            new maps.LatLng(item.location.latitude, item.location.longitude),
+        );
+
+        // The SDK ignores coordinate arrays shorter than two; repeated
+        // representative coordinates also do not define an area to fit.
+        if (points.length === 1) {
+          map.setCenter(points[0]);
+          map.setZoom(15, false);
+
+          return;
+        }
+
+        map.fitBounds(points, {
+          top: 150,
+          right: 60,
+          bottom: 180,
+          left: 60,
+          maxZoom: 15,
+        });
+      };
+
       for (const group of groups.values()) {
         const item = group[0];
         const title =
           group.length === 1
             ? articleText(item.article.title)
             : `${item.location.label} · 기사 ${group.length}건`;
-        let icon: { content: HTMLElement; anchor: unknown } | undefined;
-
-        if (group.length > 1) {
-          const content = document.createElement('button');
-
-          content.type = 'button';
-          content.textContent = String(group.length);
-          content.setAttribute('aria-label', title);
-          content.className =
-            'flex size-10 items-center justify-center rounded-full border-2 border-solid border-white bg-text text-sm font-bold text-white shadow-floating';
-          icon = { content, anchor: new maps.Point(20, 20) };
-        }
+        const positionLabel =
+          item.location.precision === 'address'
+            ? '기사에 언급된 주소'
+            : '지역 대표 위치';
+        const visual = createArticleMarker(
+          group.length,
+          `${positionLabel}: ${item.location.label} · ${title}`,
+        );
 
         const articleMarker = new maps.Marker({
           map,
@@ -169,13 +196,32 @@ export function MapHome({
             item.location.longitude,
           ),
           title,
-          ...(icon ? { icon } : {}),
+          icon: {
+            content: visual.content,
+            anchor: new maps.Point(visual.side / 2, visual.side / 2),
+          },
         });
-        const listener = maps.Event.addListener(articleMarker, 'click', () => {
-          if (!disposed && !loadFailed) setSelectedArticles(group);
+        const select = () => {
+          if (disposed || loadFailed) return;
+          clearSelection.current?.();
+          visual.setSelected(true);
+          selectedMarker = visual.content;
+          setSelectedArticles(group);
+        };
+        const listener = maps.Event.addListener(articleMarker, 'click', select);
+
+        visual.content.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            select();
+          }
         });
 
-        articleMarkers.push({ marker: articleMarker, listener });
+        articleMarkers.push({
+          marker: articleMarker,
+          listener,
+          setSelected: visual.setSelected,
+        });
       }
 
       if (typeof ResizeObserver !== 'undefined') {
@@ -287,6 +333,7 @@ export function MapHome({
       clearTimeout(timeout);
       locate.current = null;
       fitArticles.current = null;
+      clearSelection.current = null;
       pending = false;
       setLocating(false);
       setLocationError('');
@@ -315,6 +362,7 @@ export function MapHome({
       disposed = true;
       locate.current = null;
       fitArticles.current = null;
+      clearSelection.current = null;
       observer?.disconnect();
       window.removeEventListener('resize', resize);
       clearArticles();
@@ -405,37 +453,14 @@ export function MapHome({
         </div>
       )}
       {ready && selectedArticles.length > 0 && articles && (
-        <section
-          aria-label="선택한 기사"
-          className="absolute right-4 bottom-28 left-4 rounded-2xl bg-floating p-3 shadow-floating"
-        >
-          <div className="mb-2 flex items-center justify-between gap-2 text-xs text-muted">
-            <p className="m-0">
-              선택한 위치의 기사 {selectedArticles.length}건
-            </p>
-            <button
-              type="button"
-              aria-label="기사 선택 닫기"
-              onClick={() => setSelectedArticles([])}
-              className="shrink-0 rounded-lg px-2 py-1 text-text"
-            >
-              닫기
-            </button>
-          </div>
-          <div className="grid max-h-[45dvh] gap-3 overflow-y-auto">
-            {selectedArticles.map((item) => (
-              <div key={item.article_id}>
-                <p className="mt-0 mb-2 text-xs text-muted">
-                  {item.location.label} ·{' '}
-                  {item.location.precision === 'address'
-                    ? '기사에 언급된 주소 기준 위치'
-                    : '지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다'}
-                </p>
-                <ArticleCard item={item} apiOrigin={articles.apiOrigin} />
-              </div>
-            ))}
-          </div>
-        </section>
+        <MapArticleSheet
+          items={selectedArticles}
+          apiOrigin={articles.apiOrigin}
+          onClose={() => {
+            clearSelection.current?.(true);
+            setSelectedArticles([]);
+          }}
+        />
       )}
       {locationError && (
         <p

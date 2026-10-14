@@ -43,6 +43,8 @@ async function mount(result: MapArticleResult | null = data) {
   const removed = vi.fn();
   const off = vi.fn();
   const fitBounds = vi.fn();
+  const setCenter = vi.fn();
+  const setZoom = vi.fn();
   const selected: (() => void)[] = [];
   class LatLng {
     constructor(
@@ -57,10 +59,24 @@ async function mount(result: MapArticleResult | null = data) {
     }
   }
   class Marker {
-    constructor(public options: { position: unknown; title: string }) {
+    constructor(
+      public options: {
+        position: unknown;
+        title: string;
+        icon?: { content: HTMLElement };
+      },
+    ) {
       positions.push(options);
+      if (options.icon?.content) {
+        container
+          .querySelector('[aria-label="주변 지도"] > div')
+          ?.append(options.icon.content);
+      }
     }
-    setMap = removed;
+    setMap(map: unknown) {
+      removed(map);
+      if (map === null) this.options.icon?.content.remove();
+    }
   }
   Object.assign(window, {
     naver: {
@@ -72,7 +88,8 @@ async function mount(result: MapArticleResult | null = data) {
         Map: class {
           destroy = vi.fn();
           setSize = vi.fn();
-          setCenter = vi.fn();
+          setCenter = setCenter;
+          setZoom = setZoom;
           fitBounds = fitBounds;
         },
         Event: {
@@ -100,7 +117,7 @@ async function mount(result: MapArticleResult | null = data) {
       .querySelector('script[src*="oapi.map.naver.com"]')!
       .dispatchEvent(new Event('load')),
   );
-  return { positions, selected, removed, off, fitBounds };
+  return { positions, selected, removed, off, fitBounds, setCenter, setZoom };
 }
 
 afterEach(async () => {
@@ -123,14 +140,14 @@ test('draws a marker at the server coordinates and opens a plain-text article su
     title: '장림동 공장 화재',
   });
   await act(async () => fixture.selected[0]());
-  expect(container.textContent).toContain(
+  expect(document.body.textContent).toContain(
     '지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다',
   );
   expect(
-    container.querySelector('a[href="/incidents/' + 'a'.repeat(64) + '"]')
+    document.querySelector('a[href="/incidents/' + 'a'.repeat(64) + '"]')
       ?.textContent,
   ).toBe('장림동 공장 화재');
-  expect(container.querySelector('b')).toBeNull();
+  expect(document.querySelector('b')).toBeNull();
   await act(async () => root!.unmount());
   root = undefined;
   expect(fixture.removed).toHaveBeenCalledWith(null);
@@ -200,7 +217,7 @@ test('detaches article listeners on SDK authentication failure and ignores old m
   expect(fixture.off).toHaveBeenCalledTimes(1);
   expect(container.textContent).toContain('지도를 불러오지 못했습니다');
   await act(async () => fixture.selected[0]());
-  expect(container.querySelector('[aria-label="선택한 기사"]')).toBeNull();
+  expect(document.querySelector('[aria-label="선택한 기사"]')).toBeNull();
   await act(async () => root!.unmount());
   root = undefined;
   expect(fixture.removed).toHaveBeenCalledTimes(1);
@@ -226,12 +243,12 @@ test('groups articles at the same representative coordinate and keeps every arti
   expect(marker.icon?.content.textContent).toBe('2');
   expect(marker.title).toContain('2건');
   await act(async () => fixture.selected[0]());
-  const links = container.querySelectorAll('a[href^="/incidents/"]');
+  const links = document.querySelectorAll('a[href^="/incidents/"]');
   expect([...links].map((link) => link.getAttribute('href'))).toEqual([
     '/incidents/' + 'a'.repeat(64),
     '/incidents/' + 'b'.repeat(64),
   ]);
-  expect(container.textContent).toContain('지역 대표 위치');
+  expect(document.body.textContent).toContain('지역 대표 위치');
 });
 
 test('attributes the representative coordinate catalog beside the region marker summary', async () => {
@@ -240,4 +257,133 @@ test('attributes the representative coordinate catalog beside the region marker 
     'a[href="https://www.data.go.kr/data/15084084/openapi.do"]',
   );
   expect(source?.textContent).toBe('지역 좌표: 기상청');
+});
+
+test('centers a single unique article position instead of sending a degenerate array to fitBounds', async () => {
+  for (const items of [
+    data.items,
+    [...data.items, { ...data.items[0], article_id: 'b'.repeat(64) }],
+  ]) {
+    const fixture = await mount({ ...data, total: items.length, items });
+    const button = [...container.querySelectorAll('button')].find((node) =>
+      node.textContent?.includes('기사 위치 보기'),
+    );
+    expect(fixture.setCenter).not.toHaveBeenCalled();
+    await act(async () => button!.click());
+    expect(fixture.setCenter).toHaveBeenCalledWith({
+      latitude: 35.083,
+      longitude: 128.968,
+    });
+    expect(fixture.setZoom).toHaveBeenCalledWith(15, false);
+    expect(fixture.fitBounds).not.toHaveBeenCalled();
+    await act(async () => root!.unmount());
+    root = undefined;
+    container.remove();
+    document
+      .querySelectorAll('script[src*="oapi.map.naver.com"]')
+      .forEach((node) => node.remove());
+  }
+});
+
+test('uses the original Figma article marker and restores its unselected appearance when the sheet closes', async () => {
+  const fixture = await mount();
+  const marker = fixture.positions[0] as {
+    icon?: { content: HTMLButtonElement };
+  };
+  const button = marker.icon?.content;
+  expect(button?.getAttribute('aria-label')).toContain('지역 대표 위치');
+  expect(button?.querySelector('img')?.getAttribute('src')).toBe(
+    '/map/article-marker.svg',
+  );
+  await act(async () => fixture.selected[0]());
+  expect(button?.getAttribute('aria-pressed')).toBe('true');
+  expect(button?.querySelector('img')?.getAttribute('src')).toBe(
+    '/map/article-selected.svg',
+  );
+  await act(async () =>
+    document
+      .querySelector<HTMLButtonElement>('button[aria-label="기사 선택 닫기"]')!
+      .click(),
+  );
+  expect(button?.getAttribute('aria-pressed')).toBe('false');
+  expect(button?.querySelector('img')?.getAttribute('src')).toBe(
+    '/map/article-marker.svg',
+  );
+  expect(document.querySelector('[aria-label="선택한 기사"]')).toBeNull();
+});
+
+test('shows the selected article in the Figma sheet with its real image and publication time', async () => {
+  const fixture = await mount({
+    ...data,
+    items: [
+      {
+        ...data.items[0],
+        image_status: 'ready',
+        image_url: `/images/${'a'.repeat(64)}.jpg`,
+      },
+    ],
+  });
+  await act(async () => fixture.selected[0]());
+  const sheet = document.querySelector('[aria-label="선택한 기사"]');
+  const close = sheet?.querySelector('button[aria-label="기사 선택 닫기"]');
+  expect(close?.querySelector('img')?.getAttribute('src')).toBe(
+    '/map/sheet-close.svg',
+  );
+  expect(sheet?.querySelector('h2 a')?.textContent).toBe('장림동 공장 화재');
+  expect(sheet?.querySelector('article img')?.getAttribute('src')).toBe(
+    `https://news.example.com/images/${'a'.repeat(64)}.jpg`,
+  );
+  expect(sheet?.textContent).toContain('AI 생성 이미지');
+  expect(sheet?.textContent).toContain('기사 발행');
+  expect(sheet?.querySelector('time')?.getAttribute('dateTime')).toBe(
+    '2026-10-13T23:00:00.000Z',
+  );
+  expect(sheet?.textContent).toContain(
+    '지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다',
+  );
+  expect(sheet?.textContent).not.toMatch(/진행 중|10분 전 발생|320m 앞/);
+});
+
+test('allows Enter and Space to select markers and restores focus without scrolling when the sheet closes', async () => {
+  const second = {
+    ...data.items[0],
+    article_id: 'b'.repeat(64),
+    article: { ...data.items[0].article, title: '다른 지역 기사' },
+    location: { ...data.items[0].location, latitude: 37.55 },
+  };
+  const fixture = await mount({
+    ...data,
+    total: 2,
+    items: [...data.items, second],
+  });
+  const buttons = fixture.positions.map(
+    (position) =>
+      (position as { icon: { content: HTMLButtonElement } }).icon.content,
+  );
+
+  for (const [index, key] of ['Enter', ' '].entries()) {
+    const button = buttons[index];
+    button.focus();
+    await act(async () =>
+      button.dispatchEvent(
+        new KeyboardEvent('keydown', { key, bubbles: true }),
+      ),
+    );
+    expect(
+      document.querySelector('[aria-label="선택한 기사"] h2')?.textContent,
+    ).toBe(index === 0 ? '장림동 공장 화재' : '다른 지역 기사');
+    const close = document.querySelector<HTMLButtonElement>(
+      'button[aria-label="기사 선택 닫기"]',
+    )!;
+    expect(document.activeElement).toBe(close);
+    const focus = vi.spyOn(button, 'focus');
+    await act(async () =>
+      close.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+      ),
+    );
+    expect(document.activeElement).toBe(button);
+    expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+    expect(button.getAttribute('aria-pressed')).toBe('false');
+  }
 });
