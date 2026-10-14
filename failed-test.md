@@ -54,7 +54,7 @@ async function detailView() {
 }
 ```
 
-- [ ] articleDetailErrorsKeepExitNavigationAndRetry — 정상 상세와 6종 API 오류에서 전용 목록·지도 복귀 및 오류 재시도를 유지하고 공통 메뉴를 중복하지 않는다
+- [x] articleDetailErrorsKeepExitNavigationAndRetry — 정상 상세와 6종 API 오류에서 전용 목록·지도 복귀 및 오류 재시도를 유지하고 공통 메뉴를 중복하지 않는다
 
 ```ts
 test('articleDetailErrorsKeepExitNavigationAndRetry', async () => {
