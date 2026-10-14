@@ -62,7 +62,7 @@ async function withShell(
 }
 ```
 
-- [ ] foundationDedicatedScreensPreserveTheirContent — 상세·제보의 공통 헤더/메뉴 중복을 없애도 실제 자식 콘텐츠와 버튼 동작은 유지한다.
+- [x] foundationDedicatedScreensPreserveTheirContent — 상세·제보의 공통 헤더/메뉴 중복을 없애도 실제 자식 콘텐츠와 버튼 동작은 유지한다.
 
 ```ts
 test('foundationDedicatedScreensPreserveTheirContent', async () => {

@@ -81,7 +81,7 @@ export default async function IncidentDetailPage({
 
   if (result.status === 'error') {
     return (
-      <div role="alert" className="mt-6 rounded-card bg-surface p-6 text-text">
+      <div role="alert" className="bg-surface p-4 text-text">
         <p className="mt-0 font-bold">기사를 불러오지 못했어요</p>
         <Link
           href={`/incidents/${id}`}
@@ -105,10 +105,10 @@ export default async function IncidentDetailPage({
       : null;
 
   return (
-    <article className="mt-6 flex min-w-0 flex-col gap-5 rounded-card bg-surface p-4 text-text sm:p-6">
+    <article className="flex min-w-0 flex-col gap-5 bg-surface px-4 pb-6 text-text">
       <nav
         aria-label="기사 상세 탐색"
-        className="flex items-center justify-between border-0 border-b border-solid border-border pb-3"
+        className="flex items-center justify-between border-0 border-b border-solid border-border -mx-4 px-4"
       >
         <Link
           href="/incidents"
