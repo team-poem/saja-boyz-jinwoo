@@ -18,14 +18,16 @@
 
 ### 현재 공개 테스트 주소
 
-- [웹앱](https://saja-boyz-jinwoo.vercel.app), [뉴스 목록](https://saja-boyz-jinwoo.vercel.app/incidents)
+- [웹앱](https://hyunghyung.vercel.app), [뉴스 목록](https://hyunghyung.vercel.app/incidents)
 - [개인 fork](https://github.com/amazon7737/saja-boyz-jinwoo-web), [Vercel 프로젝트](https://vercel.com/amazon7737s-projects/saja-boyz-jinwoo)
-- 2026-10-14 최초 CLI 배포: `dev`의 `20b9471d839fa2b96ca6c1c255890faf27d8367c`, 상태 `READY`. 플랜은 기존 Hobby를 유지했다.
-- 공개 브라우저에서 기사 4건, 기존 생성 이미지 1건, 목록 → 상세 → 뒤로가기, 상세 직접 진입·새로고침, 키워드 검색을 확인했다. 주요 경로 5개가 HTTPS 200을 반환했다.
-- 메인 지도는 Client ID가 없어 **지도 설정이 필요합니다**를 표시한다. 지도 Client ID와 Web 서비스 URL 등록 후 재배포·실기기 확인이 필요하다.
-- Git 자동 배포 연결은 GitHub 패스키 인증 대기다. 현재 배포가 성공했다는 사실과 자동 배포가 연결됐다는 사실은 구분한다. 제보는 **제보 접수 준비 중** 화면이며 아직 실제 접수를 제공하지 않는다.
+- 2026-10-14 지도 키 반영 후 Git 소스로 재배포: `dev`의 `20b9471d839fa2b96ca6c1c255890faf27d8367c`, 배포 `dpl_7Sj4jtRngvm2qZzuXHdsDhrAXrV6`, 상태 `READY`. 플랜은 기존 Hobby를 유지했다.
+- 최초 CLI 배포에서는 공개 브라우저로 기사 4건, 기존 생성 이미지 1건, 목록 → 상세 → 뒤로가기, 상세 직접 진입·새로고침, 키워드 검색을 확인했고 주요 경로 5개가 HTTPS 200을 반환했다.
+- 현재 `hyunghyung.vercel.app`에서는 `/`·`/incidents`·`/search`의 HTTPS 200과 실제 브라우저의 지도 → 목록 → 지도 왕복·새로고침을 확인했다.
+- 지도 Client ID를 Preview·Production에 등록하고 Ncloud Maps의 Web 서비스 URL에 현재 운영 주소를 추가했다. 공개 브라우저에서 실제 지도 타일과 NAVER 출처 표시를 확인했다. 위치 권한 허용·거부와 실기기 검증은 별도로 남아 있다.
+- 개인 fork의 Git 연결과 Production Branch `dev` 설정이 완료됐다. 이번 빌드는 API로 요청한 Git 소스 배포이며, 실제 push 이벤트가 자동 배포를 만드는 흐름은 아직 별도로 검증하지 않았다. 제보는 **제보 접수 준비 중** 화면이며 아직 실제 접수를 제공하지 않는다.
+- 현재 프로젝트 도메인은 `hyunghyung.vercel.app`이다. 최초 배포 때 사용한 `saja-boyz-jinwoo.vercel.app`는 프로젝트에서 빠져 404를 반환하므로 현재 링크로 대체한다.
 
-자세한 배포 ID·소스·검증 결과는 [배포 기록](../collab/active/codex--vercel-preparation/deployment.md)에 남긴다.
+자세한 배포 ID·소스·검증 결과는 [Git·지도 연결 기록](../collab/active/codex--vercel-preparation/map-deployment.md)에 남긴다. [최초 CLI 배포 기록](../collab/active/codex--vercel-preparation/deployment.md)은 당시 상태를 보존한 과거 체크포인트다.
 
 ## Vercel 프로젝트 설정
 
@@ -39,7 +41,7 @@
 - 조직 저장소를 직접 연결하는 팀 운영은 Pro에서 준비할 수 있다. 플랜 변경이나 결제는 별도 선택 사항이다.
 - Hobby는 개인 비상업적 사용 범위이므로 실제 서비스 용도에 맞는 플랜도 확인한다. [Hobby 사용 범위](https://vercel.com/docs/plans/hobby)
 
-사용자가 개인 fork의 Hobby 배포를 선택해 아래 프로젝트를 생성했다. 개인 fork의 기본 브랜치는 최신 기능이 들어 있는 `dev`다. 조직 원본의 기본 브랜치·PR·머지 상태는 변경하지 않았다. GitHub 앱의 새 fork 접근 설정에는 패스키 본인 인증이 필요해, 최초 배포는 fork를 별도로 clone한 뒤 CLI로 수행한다. Git 자동 배포가 연결됐다고 간주하지 않는다.
+사용자가 개인 fork의 Hobby 배포를 선택해 아래 프로젝트를 생성했다. 개인 fork의 기본 브랜치는 최신 기능이 들어 있는 `dev`다. 조직 원본의 기본 브랜치·PR·머지 상태는 변경하지 않았다. 최초 배포는 CLI로 수행했고, 사용자 본인 인증 후 기존 Vercel GitHub 앱에 새 fork만 추가해 프로젝트에 연결했다. 연결 직후 Production Branch가 `main`으로 잡혀 `dev`로 수정하고 실제 Git 소스 SHA를 확인했다.
 
 | 설정             | 값                                                      |
 | ---------------- | ------------------------------------------------------- |
@@ -54,7 +56,7 @@
 | Build Command    | `pnpm run build`                                        |
 | Output Directory | Next.js 기본값, Override 끄기                           |
 | 이번 배포 소스   | 개인 fork의 `dev`, `20b9471`                            |
-| Git 자동 배포    | GitHub 앱 접근 연결 후 개인 fork의 `dev`로 설정         |
+| Git 자동 배포    | 개인 fork 연결 완료, Production Branch `dev`            |
 
 Vercel 환경변수에 `ENABLE_EXPERIMENTAL_COREPACK=1`을 Preview와 Production 모두 추가해 고정된 pnpm 버전을 사용한다. 빌드 로그에서 Node 24와 pnpm 10.34.6을 확인한다. [Vercel Corepack 설정](https://vercel.com/docs/builds/configure-a-build#corepack)
 
@@ -71,22 +73,24 @@ gh repo sync amazon7737/saja-boyz-jinwoo-web --source team-poem/saja-boyz-jinwoo
 gh api repos/amazon7737/saja-boyz-jinwoo-web/branches/dev --jq '.commit.sha'
 ```
 
-충돌하면 강제로 덮어쓰지 않고 원인을 확인한다. Git 자동 배포 연결 전에는 동기화만으로 사이트가 바뀌지 않으므로 해당 SHA를 checkout한 뒤 같은 Vercel 프로젝트로 CLI 배포해야 한다. 연결 후에는 GitHub 앱 접근 범위, Production Branch `dev`, 실제 배포 SHA가 일치하는지 확인한다. 원본 개발과 기능 PR은 계속 `team-poem/saja-boyz-jinwoo`에서 진행한다.
+충돌하면 강제로 덮어쓰지 않고 원인을 확인한다. 현재는 Git 연결이 완료됐으므로 동기화로 fork의 `dev`가 갱신되면 Vercel의 자동 배포를 확인한다. GitHub 앱 접근 범위, Production Branch `dev`, 실제 배포 SHA가 일치하는지 확인하고, 동기화가 변경 없는 작업이었다면 새 배포가 생성되지 않을 수 있다. 원본 개발과 기능 PR은 계속 `team-poem/saja-boyz-jinwoo`에서 진행한다.
 
 ## 환경변수
 
 Settings의 Environment Variables에서 프로젝트 단위로 등록한다. 아래 값은 주소·공개 식별자·빌드 설정이므로 Config로 관리할 수 있다. 실제 Client ID는 문서나 Git에 복사하지 않는다.
 
-| 이름                              | 값                                         | 환경 / 용도                                      |
-| --------------------------------- | ------------------------------------------ | ------------------------------------------------ |
-| `NEWS_API_BASE_URL`               | `https://poem-news.168.107.37.12.sslip.io` | Preview·Production, Next.js 서버에서 뉴스 조회   |
-| `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID` | 기존 Naver Maps 웹 Client ID               | 지도 검증할 환경에 설정, 빌드 시 브라우저에 포함 |
-| `ENABLE_EXPERIMENTAL_COREPACK`    | `1`                                        | Preview·Production, pnpm 버전 고정               |
-| `NEXT_PUBLIC_REPORT_API_BASE_URL` | 제보 활성화 후 위 API의 HTTPS 주소         | **PR #16 포함 + 서버 준비 완료 시에만** 설정     |
+| 이름                              | 값                                         | 환경 / 용도                                           |
+| --------------------------------- | ------------------------------------------ | ----------------------------------------------------- |
+| `NEWS_API_BASE_URL`               | `https://poem-news.168.107.37.12.sslip.io` | Preview·Production, Next.js 서버에서 뉴스 조회        |
+| `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID` | 기존 Naver Maps 웹 Client ID               | Preview·Production 등록 완료, 빌드 시 브라우저에 포함 |
+| `ENABLE_EXPERIMENTAL_COREPACK`    | `1`                                        | Preview·Production, pnpm 버전 고정                    |
+| `NEXT_PUBLIC_REPORT_API_BASE_URL` | 제보 활성화 후 위 API의 HTTPS 주소         | **PR #16 포함 + 서버 준비 완료 시에만** 설정          |
 
 `NEWS_API_BASE_URL`은 서버 전용으로 유지한다. 네이버 뉴스 검색 Secret, Cloudflare 토큰, 수집 API 인증키는 OCI에만 두며 프런트로 옮기지 않는다. `NEXT_PUBLIC_` 값은 공개되는 값이고 빌드 후 바뀌지 않으므로 수정 후 새 배포가 필요하다. Vercel의 환경변수 수정은 기존 배포에 소급 적용되지 않는다. [환경변수와 환경별 범위](https://vercel.com/docs/environment-variables)
 
 로컬은 `.env.example`을 참고한 ignored `.env.local`을 사용한다. `.env` 파일 전체를 Vercel로 업로드하지 않는다. CLI 연결 정보와 내려받은 환경 파일이 담기는 `.vercel/`도 Git에서 제외한다.
+
+이번 Client ID는 사용자가 로컬 `.env.local`에 입력한 값을 해당 변수만 읽어 반영했다. Client Secret은 필요하지 않으며 키 값과 환경 파일은 Git에 넣지 않았다.
 
 ## 네이버 지도 도메인
 
@@ -96,6 +100,14 @@ Settings의 Environment Variables에서 프로젝트 단위로 등록한다. 아
 4. 해당 환경의 Client ID를 넣고 새로 빌드한 뒤 `/`에서 지도 타일·네이버 출처와 내 위치 권한 허용/거부를 확인한다.
 
 매번 달라지는 배포 URL까지 자동으로 인증되는 것은 아니다. 초기에는 등록한 고정 Preview 주소로 QA한다. Client Secret은 웹 SDK에 넣지 않는다. 상세 동작은 [지도 연결 가이드](map-integration.md)를 참고한다.
+
+2026-10-14 `poem-map` 애플리케이션은 Dynamic Map을 사용하며 기존 일 1,000회 한도를 유지했다. Web 서비스 URL은 기존 `http://localhost:3000`과 아래 주소로 설정했다.
+
+- `https://hyunghyung.vercel.app` — 현재 공개 운영 주소, 실제 지도 표시 검증 완료
+- `https://saja-boyz-jinwoo-amazon7737s-projects.vercel.app` — 고정 계정 별칭
+- `https://saja-boyz-jinwoo-git-dev-amazon7737s-projects.vercel.app` — 고정 브랜치 별칭
+
+계정·브랜치 별칭의 Vercel 인증 보호는 유지한다. 네이버 허용 도메인 등록은 Vercel 접근 인증을 해제하지 않는다. 향후 도메인 변경 시 Vercel의 실제 프로젝트 도메인과 Ncloud 등록을 함께 갱신한다. 배포 메타데이터에 남은 과거 alias 목록만으로 현재 주소를 판단하지 않는다.
 
 ## 실제 제보 활성화 — PR #16 포함 이후
 

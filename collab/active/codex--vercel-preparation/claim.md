@@ -4,7 +4,7 @@ owner: amazon
 started: 2026-10-14
 status: done
 goal: docs(deploy): 개인 fork의 Vercel Hobby 배포와 운영 연결 절차 정리
-next: After user GitHub passkey authentication and map Client ID input, finish Git auto-deployment and verify the live map. CLI Hobby deployment is READY.
+next: Review PR 17; verify a push-triggered build on the next intentional fork dev update. Live map deployment at hyunghyung.vercel.app is verified; report intake remains separate.
 base: dev
 ---
 
