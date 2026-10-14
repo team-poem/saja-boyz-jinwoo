@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  />
+  <title>흉흉 SVG 로고 제안</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f8fafc;
+      color: #0f172a;
+      font-family: system-ui, sans-serif;
+      padding: 40px;
+    }
+    main {
+      max-width: 720px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 22px;
+    }
+    p {
+      color: #64748b;
+      line-height: 1.7;
+    }
+    .card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 28px;
+      margin: 20px 0;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 361px;
+      box-shadow: 0 8px 24px #00000012;
+      padding: 10px 16px;
+      border-radius: 16px;
+      background: white;
+    }
+    .tag {
+      font-size: 13px;
+      color: #64748b;
+    }
+    .dark {
+      background: #0f172a;
+    }
+    .dark img {
+      background: #fff;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .symbol {
+      width: 40px;
+      height: 40px;
+      background: url(brand-proposal.svg) left center/106.666px 40px no-repeat;
+    }
+    small {
+      color: #64748b;
+    }
+  </style>
+  <main>
+    <h1>흉흉 · SVG 로고 초안</h1>
+    <p>
+      지역을 관측하는 원과 중심의 빨간 신호. 글자는 SVG path로 그려 폰트 없이
+      표시합니다. 제품에 아직 적용하지 않은 디자인 제안입니다.
+    </p>
+    <div class="card">
+      <img src="brand-proposal.svg" alt="흉흉" width="256" height="96" />
+    </div>
+    <div class="card">
+      <small>헤더 축소 크기</small>
+      <p></p>
+      <div class="header">
+        <img src="brand-proposal.svg" alt="흉흉" width="64" height="24" /><span
+          class="tag"
+          >기사 검색</span
+        >
+      </div>
+    </div>
+    <div class="card">
+      <small>기호 단독 크기 확인</small>
+      <p></p>
+      <div class="symbol" role="img" aria-label="지역 관측 신호"></div>
+    </div>
+    <div class="card dark">
+      <img src="brand-proposal.svg" alt="흉흉" width="128" height="48" />
+    </div>
+  </main>
+</html>

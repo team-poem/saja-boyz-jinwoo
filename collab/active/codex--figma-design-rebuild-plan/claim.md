@@ -2,9 +2,9 @@
 branch: codex/figma-design-rebuild-plan
 owner: easter721
 started: 2026-10-14
-status: active
+status: paused
 goal: docs(design): 전체 Figma 화면 대조와 UI 재구축 계획 수립
-next: 전체 디자인 분석과 계획만 작성하며 제품 코드·테스트·의존성은 변경하지 않는다
+next: 분석·계획 작성 완료. 후속 구현은 dev 기반 새 워크트리에서 화면별 명세와 정확한 테스트 초안부터 준비한다
 base: dev
 ---
 
