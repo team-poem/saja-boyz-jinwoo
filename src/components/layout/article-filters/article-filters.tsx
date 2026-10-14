@@ -7,7 +7,7 @@ export function ArticleFilters({ isHome }: { isHome: boolean }) {
     <div
       role="group"
       aria-label="기사 필터"
-      className={`flex items-start gap-1.5 ${isHome ? 'absolute top-[calc(68px_+_env(safe-area-inset-top))] right-4 left-4 z-20' : 'mt-3 mb-5'}`}
+      className={`flex items-start gap-1.5 ${isHome ? 'absolute top-[calc(68px_+_env(safe-area-inset-top))] right-4 left-4 z-20' : 'mt-3 mb-3'}`}
     >
       {isHome && (
         <button
