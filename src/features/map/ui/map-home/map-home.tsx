@@ -403,7 +403,7 @@ export function MapHome({
       {ready && articles !== undefined && !articles?.items.length && (
         <div
           role="status"
-          className="absolute top-26 right-4 left-4 rounded-2xl bg-floating p-3 text-sm text-muted shadow-floating"
+          className="absolute top-[calc(112px_+_env(safe-area-inset-top))] right-4 left-4 rounded-2xl bg-floating p-3 text-sm text-muted shadow-floating"
         >
           {articles === null ? (
             <>
@@ -429,7 +429,7 @@ export function MapHome({
         </div>
       )}
       {ready && Boolean(articles?.items.length) && (
-        <div className="absolute top-26 right-4 left-4 flex items-center justify-between gap-2 rounded-2xl bg-floating p-3 shadow-floating">
+        <div className="absolute top-[calc(112px_+_env(safe-area-inset-top))] right-4 left-4 flex items-center justify-between gap-2 rounded-2xl bg-floating p-3 shadow-floating">
           <div className="text-xs text-muted">
             <p className="m-0">지도 기사 {articles!.items.length}건</p>
             {articles!.items.some(
@@ -465,7 +465,7 @@ export function MapHome({
       {locationError && (
         <p
           role="status"
-          className="absolute top-26 right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
+          className="absolute top-[calc(112px_+_env(safe-area-inset-top))] right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
         >
           {locationError}
         </p>
@@ -473,7 +473,7 @@ export function MapHome({
       {failed && (
         <div
           role="alert"
-          className="absolute top-26 right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
+          className="absolute top-[calc(112px_+_env(safe-area-inset-top))] right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
         >
           <p>지도를 불러오지 못했습니다. 다시 시도해 주세요.</p>
           <button
@@ -493,7 +493,7 @@ export function MapHome({
         <div
           role="status"
           aria-busy="true"
-          className="absolute top-26 right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
+          className="absolute top-[calc(112px_+_env(safe-area-inset-top))] right-4 left-4 rounded-2xl bg-floating p-4 shadow-floating"
         >
           지도를 불러오는 중입니다.
         </div>

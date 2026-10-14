@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 import { FeatureErrorBoundary } from '../../errors/feature-error-boundary/feature-error-boundary';
+import { ArticleFilters } from '../article-filters/article-filters';
 import { BottomNavigation } from '../bottom-navigation/bottom-navigation';
 import { SearchHeader } from '../search-header/search-header';
 
@@ -22,6 +23,9 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className={shellClassName}>
       {showHeader && <SearchHeader isHome={isHome} />}
+      {(isHome || pathname === '/incidents') && (
+        <ArticleFilters isHome={isHome} />
+      )}
       <main id="main-content" className={isHome ? 'relative z-0' : undefined}>
         <FeatureErrorBoundary>{children}</FeatureErrorBoundary>
       </main>

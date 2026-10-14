@@ -142,7 +142,7 @@ test('foundationBrandHasALocalAccessibleSvgAndSearchLink', async () => {
 });
 ```
 
-- [ ] foundationUnconnectedArticleFiltersCannotPretendToFilter — 지도·목록에서 실제 기사 필터가 연결되기 전 비활성 칩과 준비 상태를 표시하고 검색 화면에 중복 필터를 넣지 않는다.
+- [x] foundationUnconnectedArticleFiltersCannotPretendToFilter — 지도·목록에서 실제 기사 필터가 연결되기 전 비활성 칩과 준비 상태를 표시하고 검색 화면에 중복 필터를 넣지 않는다.
 
 ```ts
 test('foundationUnconnectedArticleFiltersCannotPretendToFilter', async () => {
