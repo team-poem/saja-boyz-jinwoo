@@ -3,12 +3,13 @@ branch: codex/vercel-preparation
 owner: amazon
 started: 2026-10-14
 status: done
-goal: docs(deploy): Vercel 배포 설정과 운영 연결 절차 준비
-next: Vercel 계정·프로젝트 확정 후 dev Preview 연결, 지도 도메인 등록, 운영 전 dev → main 통합 PR
+goal: docs(deploy): 개인 fork의 Vercel Hobby 배포와 운영 연결 절차 정리
+next: After user GitHub passkey authentication and map Client ID input, finish Git auto-deployment and verify the live map. CLI Hobby deployment is READY.
 base: dev
 ---
 
 ## 메모
-- Prepare the frontend for native Next.js deployment on Vercel from current dev. No production release or OCI mutation is included.
+- Initial scope was deployment preparation. On 2026-10-14 the user additionally authorized a personal GitHub fork and deployment to the existing Vercel Hobby account. OCI remains unchanged.
+- Personal fork: amazon7737/saja-boyz-jinwoo-web; its default branch is dev at 20b9471. Do not merge upstream PRs or alter upstream branch settings for this deployment.
 - PR #16 is still open. Report intake requires its merge and the separately deployed Go reports API before activation.
 - Use the current user-authorized Canon TDD workflow; no product behavior changes or spec.md edits are planned.

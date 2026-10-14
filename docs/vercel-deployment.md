@@ -1,6 +1,6 @@
 # Vercel 배포 가이드
 
-프런트 `team-poem/saja-boyz-jinwoo`를 Vercel의 Next.js 프로젝트로 배포한다. 뉴스 수집·이미지 생성·파일 저장은 기존 OCI의 `team-poem/poem-news`가 계속 담당한다.
+프런트 원본은 `team-poem/saja-boyz-jinwoo`이고, 개인 테스트 배포는 fork `amazon7737/saja-boyz-jinwoo-web`의 `dev`를 Vercel Hobby의 Next.js 프로젝트로 배포한다. 뉴스 수집·이미지 생성·파일 저장은 기존 OCI의 `team-poem/poem-news`가 계속 담당한다.
 
 ## 현재 배포 기준
 
@@ -8,13 +8,24 @@
 
 | 대상          | 확인한 상태                                        | 배포할 때 필요한 작업                     |
 | ------------- | -------------------------------------------------- | ----------------------------------------- |
-| 프런트 `dev`  | `20b9471`, PR #1~#15 반영                          | 이 브랜치의 Preview부터 검증              |
+| 프런트 `dev`  | `20b9471`, PR #1~#15 반영                          | 개인 fork의 같은 SHA로 테스트 배포        |
 | 프런트 `main` | `c8ee953`, 위 기능 PR 미반영                       | 검증 후 별도 `dev → main` 통합 PR 필요    |
 | 프런트 PR #16 | `7cf4d32`, 실제 제보 접수 구현, 아직 열림          | 제보를 제공하려면 먼저 `dev`에 병합       |
 | 운영 뉴스 API | HTTPS `/health` 정상, `/news`·`/map/articles` 제공 | 기존 공개 조회 API에 연결                 |
 | 운영 제보 API | `/openapi.json`에 `/reports` 없음                  | Go 제보 기능 재배포·활성화 후 프런트 연결 |
 
 현재 `dev`의 제보 화면은 입력·첨부 선택 화면이다. 실제 접수 기능이 배포됐다고 안내하지 않는다. PR #16의 제보 연결 설정은 아래에서 별도 단계로 다룬다.
+
+### 현재 공개 테스트 주소
+
+- [웹앱](https://saja-boyz-jinwoo.vercel.app), [뉴스 목록](https://saja-boyz-jinwoo.vercel.app/incidents)
+- [개인 fork](https://github.com/amazon7737/saja-boyz-jinwoo-web), [Vercel 프로젝트](https://vercel.com/amazon7737s-projects/saja-boyz-jinwoo)
+- 2026-10-14 최초 CLI 배포: `dev`의 `20b9471d839fa2b96ca6c1c255890faf27d8367c`, 상태 `READY`. 플랜은 기존 Hobby를 유지했다.
+- 공개 브라우저에서 기사 4건, 기존 생성 이미지 1건, 목록 → 상세 → 뒤로가기, 상세 직접 진입·새로고침, 키워드 검색을 확인했다. 주요 경로 5개가 HTTPS 200을 반환했다.
+- 메인 지도는 Client ID가 없어 **지도 설정이 필요합니다**를 표시한다. 지도 Client ID와 Web 서비스 URL 등록 후 재배포·실기기 확인이 필요하다.
+- Git 자동 배포 연결은 GitHub 패스키 인증 대기다. 현재 배포가 성공했다는 사실과 자동 배포가 연결됐다는 사실은 구분한다. 제보는 **제보 접수 준비 중** 화면이며 아직 실제 접수를 제공하지 않는다.
+
+자세한 배포 ID·소스·검증 결과는 [배포 기록](../collab/active/codex--vercel-preparation/deployment.md)에 남긴다.
 
 ## Vercel 프로젝트 설정
 
@@ -28,26 +39,39 @@
 - 조직 저장소를 직접 연결하는 팀 운영은 Pro에서 준비할 수 있다. 플랜 변경이나 결제는 별도 선택 사항이다.
 - Hobby는 개인 비상업적 사용 범위이므로 실제 서비스 용도에 맞는 플랜도 확인한다. [Hobby 사용 범위](https://vercel.com/docs/plans/hobby)
 
-아래 표는 원본을 직접 연결하는 설정이다. 개인 fork를 선택하면 Git Repository만 승인한 fork 경로로 바꾸고 나머지 빌드 설정과 배포 전 검증은 동일하게 적용한다. 현재는 fork 생성·플랜 변경·프로젝트 연결을 수행하지 않았다.
+사용자가 개인 fork의 Hobby 배포를 선택해 아래 프로젝트를 생성했다. 개인 fork의 기본 브랜치는 최신 기능이 들어 있는 `dev`다. 조직 원본의 기본 브랜치·PR·머지 상태는 변경하지 않았다. GitHub 앱의 새 fork 접근 설정에는 패스키 본인 인증이 필요해, 최초 배포는 fork를 별도로 clone한 뒤 CLI로 수행한다. Git 자동 배포가 연결됐다고 간주하지 않는다.
 
-| 설정              | 값                                                      |
-| ----------------- | ------------------------------------------------------- |
-| Git Repository    | `team-poem/saja-boyz-jinwoo`                            |
-| Framework Preset  | Next.js                                                 |
-| Root Directory    | 저장소 루트, 비워 두기                                  |
-| Node.js Version   | `24.x` — `package.json`의 `>=24 <25`와 일치             |
-| Package manager   | `pnpm@10.34.6` — `package.json`의 `packageManager` 사용 |
-| Install Command   | `pnpm install --frozen-lockfile`                        |
-| Build Command     | `pnpm run build`                                        |
-| Output Directory  | Next.js 기본값, Override 끄기                           |
-| Production Branch | `main`                                                  |
-| Preview           | `dev` 및 기능 브랜치                                    |
+| 설정             | 값                                                      |
+| ---------------- | ------------------------------------------------------- |
+| 소스 저장소      | `amazon7737/saja-boyz-jinwoo-web`                       |
+| Vercel 계정      | `amazon7737s-projects` — Hobby                          |
+| Vercel 프로젝트  | `saja-boyz-jinwoo`                                      |
+| Framework Preset | Next.js                                                 |
+| Root Directory   | 저장소 루트, 비워 두기                                  |
+| Node.js Version  | `24.x` — `package.json`의 `>=24 <25`와 일치             |
+| Package manager  | `pnpm@10.34.6` — `package.json`의 `packageManager` 사용 |
+| Install Command  | `pnpm install --frozen-lockfile`                        |
+| Build Command    | `pnpm run build`                                        |
+| Output Directory | Next.js 기본값, Override 끄기                           |
+| 이번 배포 소스   | 개인 fork의 `dev`, `20b9471`                            |
+| Git 자동 배포    | GitHub 앱 접근 연결 후 개인 fork의 `dev`로 설정         |
 
 Vercel 환경변수에 `ENABLE_EXPERIMENTAL_COREPACK=1`을 Preview와 Production 모두 추가해 고정된 pnpm 버전을 사용한다. 빌드 로그에서 Node 24와 pnpm 10.34.6을 확인한다. [Vercel Corepack 설정](https://vercel.com/docs/builds/configure-a-build#corepack)
 
 `next.config.ts`는 그대로 사용한다. 목록·상세의 서버 렌더링과 더 보기의 Server Actions가 필요하므로 `output: 'export'`, 정적 `out` 디렉터리, SPA 전체 rewrite를 설정하지 않는다. 별도 `vercel.json`이나 배포 전용 GitHub Actions도 필요하지 않다. [Next.js 지원](https://vercel.com/docs/frameworks/full-stack/nextjs)
 
-프로젝트 Import의 첫 배포도 대상 브랜치·커밋을 확인한다. 아직 오래된 `main`을 최신 기능의 운영판으로 배포하지 않는다. 먼저 `dev`를 명시한 Preview를 만들고, 통합 PR이 병합된 뒤 `main`을 운영 배포한다. Git 연동 후에는 브랜치 push가 자동 배포를 만들 수 있다. [Git 배포](https://vercel.com/docs/git)
+프로젝트 Import의 첫 배포도 대상 브랜치·커밋을 확인한다. 이번 개인 테스트 배포는 사용자의 선택에 따라 `dev`를 Production URL에 배포한다. 아직 오래된 `main`을 최신 기능으로 오인하지 않는다. 향후 조직 원본의 `main`을 정식 배포 기준으로 전환하려면 별도 통합 PR과 검증이 필요하다. Git 연동 후에는 연결된 fork 브랜치의 push가 자동 배포를 만들 수 있다. [Git 배포](https://vercel.com/docs/git)
+
+### 원본 변경을 fork에 반영
+
+원본에 PR이 머지돼도 개인 fork는 자동으로 갱신되지 않는다. 배포할 기능이 원본 `dev`에 병합됐는지 확인한 뒤 아래처럼 동기화한다.
+
+```sh
+gh repo sync amazon7737/saja-boyz-jinwoo-web --source team-poem/saja-boyz-jinwoo --branch dev
+gh api repos/amazon7737/saja-boyz-jinwoo-web/branches/dev --jq '.commit.sha'
+```
+
+충돌하면 강제로 덮어쓰지 않고 원인을 확인한다. Git 자동 배포 연결 전에는 동기화만으로 사이트가 바뀌지 않으므로 해당 SHA를 checkout한 뒤 같은 Vercel 프로젝트로 CLI 배포해야 한다. 연결 후에는 GitHub 앱 접근 범위, Production Branch `dev`, 실제 배포 SHA가 일치하는지 확인한다. 원본 개발과 기능 PR은 계속 `team-poem/saja-boyz-jinwoo`에서 진행한다.
 
 ## 환경변수
 
@@ -113,7 +137,7 @@ pnpm run build
 
 Preview 보호는 유지하고 팀이 접근 가능한 방식으로 검증한다. 읽기 검증 때문에 수집 API를 호출하거나 이미지를 새로 생성할 필요는 없다. CORS preflight 성공만으로 제보 저장 성공을 판정하지 않는다.
 
-운영 배포 전 `dev → main` 통합 PR의 기능 범위와 CI, Vercel 환경변수, 네이버 도메인, 필요한 경우 제보 CORS를 최종 확인한다. 배포 후에도 위 화면들을 확인하고 실패하면 Vercel의 이전 정상 배포로 복구한다. 프런트 rollback은 OCI의 데이터·설정·서버 버전을 되돌리지 않으므로 서버 문제는 별도 처리한다.
+배포 전 선택한 브랜치의 기능 범위와 CI, Vercel 환경변수, 네이버 도메인, 필요한 경우 제보 CORS를 최종 확인한다. 조직 원본의 `main`으로 정식 전환할 때는 별도 `dev → main` 통합 PR도 확인한다. 배포 후에도 위 화면들을 확인하고 실패하면 Vercel의 이전 정상 배포로 복구한다. 프런트 rollback은 OCI의 데이터·설정·서버 버전을 되돌리지 않으므로 서버 문제는 별도 처리한다.
 
 ## 공식 근거
 
