@@ -2,9 +2,9 @@
 branch: codex/map-article-markers
 owner: amazon
 started: 2026-10-14
-status: active
+status: done
 goal: feat(map): 실제 기사 좌표를 지도 마커와 상세 화면에 연결
-next: 피그마 적용·97테스트와 빌드 완료; 부모 세션에서 운영 브라우저 확인·배포와 PR 본문 갱신
+next: PR #18 리뷰·병합 대기; 6b21aac 운영 배포와 실제 모바일 SDK 검증 완료
 base: dev
 ---
 
