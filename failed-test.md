@@ -112,7 +112,7 @@ test('foundationNavigationAnnouncesItsCurrentDestination', async () => {
 });
 ```
 
-- [ ] foundationBrandHasALocalAccessibleSvgAndSearchLink — 흉흉 홈 링크의 로고가 실제 로컬 SVG 파일이며 검색 링크도 유지된다.
+- [x] foundationBrandHasALocalAccessibleSvgAndSearchLink — 흉흉 홈 링크의 로고가 실제 로컬 SVG 파일이며 검색 링크도 유지된다.
 
 ```ts
 test('foundationBrandHasALocalAccessibleSvgAndSearchLink', async () => {
