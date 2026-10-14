@@ -2,9 +2,9 @@
 branch: codex/article-detail-error-navigation
 owner: easter721
 started: 2026-10-14
-status: active
+status: done
 goal: fix(article): 상세 API 오류에서도 복귀 탐색 유지
-next: 실제 상세 오류 상태의 목록·지도 복귀와 재시도 회귀 테스트를 소바야로 추가하고 PR19에 반영
+next: 검증한 세 src 파일을 기존 PR19에 반영하고 소스 일치·CI·게시 전 코멘트 문구 확인
 base: codex/figma-ui-foundation
 ---
 
