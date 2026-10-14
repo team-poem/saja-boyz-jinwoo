@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "mode": "selected",
+  "default_worker": "astra",
+  "max_calls": 8,
+  "timeout_seconds": 900,
+  "workers": {
+    "astra": {
+      "adapter": "command",
+      "model": "gpt-6-astra",
+      "guidance": "guided",
+      "command": ["/bin/bash", "collab/active/codex--article-detail-error-navigation/execution-adapter.sh"]
+    }
+  },
+  "escalation": []
+}

@@ -1,0 +1,72 @@
+test('articleDetailErrorsKeepExitNavigationAndRetry', async () => {
+  fetchMock.mockResolvedValueOnce(Response.json(item));
+  const success = await detailView();
+  const successNav = success.querySelector('nav[aria-label="기사 상세 탐색"]');
+  expect(successNav).not.toBeNull();
+  expect(
+    successNav?.querySelector('a[aria-label="목록으로"]')?.getAttribute('href'),
+  ).toBe('/incidents');
+  expect(
+    successNav?.querySelector('a[aria-label="닫기"]')?.getAttribute('href'),
+  ).toBe('/');
+
+  for (const failure of [
+    '500',
+    'network',
+    'timeout',
+    'json',
+    'contract',
+    'configuration',
+  ]) {
+    fetchMock.mockReset();
+    vi.stubEnv('NEWS_API_BASE_URL', 'https://news.example.invalid');
+    if (failure === '500')
+      fetchMock.mockResolvedValueOnce(
+        new Response('PRIVATE_DETAIL', { status: 500 }),
+      );
+    if (failure === 'network')
+      fetchMock.mockRejectedValueOnce(new Error('PRIVATE_DETAIL'));
+    if (failure === 'timeout')
+      fetchMock.mockRejectedValueOnce(
+        new DOMException('PRIVATE_DETAIL', 'TimeoutError'),
+      );
+    if (failure === 'json')
+      fetchMock.mockResolvedValueOnce(new Response('PRIVATE_DETAIL'));
+    if (failure === 'contract')
+      fetchMock.mockResolvedValueOnce(
+        Response.json({ ...item, article_id: 'b'.repeat(64) }),
+      );
+    if (failure === 'configuration') vi.stubEnv('NEWS_API_BASE_URL', '');
+
+    const view = await detailView();
+    const navigation = view.querySelector('nav[aria-label="기사 상세 탐색"]');
+    expect(navigation, failure).not.toBeNull();
+    expect(
+      view.querySelectorAll('nav[aria-label="기사 상세 탐색"]'),
+      failure,
+    ).toHaveLength(1);
+    expect(
+      navigation
+        ?.querySelector('a[aria-label="목록으로"]')
+        ?.getAttribute('href'),
+      failure,
+    ).toBe('/incidents');
+    expect(
+      navigation?.querySelector('a[aria-label="닫기"]')?.getAttribute('href'),
+      failure,
+    ).toBe('/');
+    const alert = view.querySelector('[role="alert"]');
+    expect(alert?.textContent, failure).toContain('기사를 불러오지 못했어요');
+    expect(
+      alert?.querySelector(`a[href="/incidents/${id}"]`)?.textContent,
+      failure,
+    ).toContain('다시 시도');
+    expect(view.querySelector('nav[aria-label="주 메뉴"]'), failure).toBeNull();
+    expect(view.querySelector('header img[alt="흉흉"]'), failure).toBeNull();
+    expect(view.textContent, failure).not.toContain('PRIVATE_DETAIL');
+    expect(view.querySelector('h1'), failure).toBeNull();
+    expect(fetchMock, failure).toHaveBeenCalledTimes(
+      failure === 'configuration' ? 0 : 1,
+    );
+  }
+});
