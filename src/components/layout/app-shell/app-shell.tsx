@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 import { FeatureErrorBoundary } from '../../errors/feature-error-boundary/feature-error-boundary';
+import { BottomNavigation } from '../bottom-navigation/bottom-navigation';
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -37,28 +38,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <main id="main-content" className={isHome ? 'relative z-0' : undefined}>
         <FeatureErrorBoundary>{children}</FeatureErrorBoundary>
       </main>
-      {!isDedicatedScreen && (
-        <nav
-          className="fixed bottom-[max(20px,env(safe-area-inset-bottom))] left-1/2 flex w-[min(calc(100%_-_32px),608px)] -translate-x-1/2 items-center justify-around rounded-pill border border-solid border-border bg-floating p-3 shadow-floating backdrop-blur-[20px]"
-          aria-label="주 메뉴"
-        >
-          <Link href="/" className="px-4 py-3 text-[14px]/[normal] font-bold">
-            지도
-          </Link>
-          <Link
-            href="/report"
-            className="rounded-3xl bg-brand px-4 py-3 text-[14px]/[normal] font-bold text-white"
-          >
-            제보하기
-          </Link>
-          <Link
-            href="/incidents"
-            className="px-4 py-3 text-[14px]/[normal] font-bold"
-          >
-            목록
-          </Link>
-        </nav>
-      )}
+      {!isDedicatedScreen && <BottomNavigation pathname={pathname} />}
     </div>
   );
 }

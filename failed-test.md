@@ -82,7 +82,7 @@ test('foundationDedicatedScreensPreserveTheirContent', async () => {
 });
 ```
 
-- [ ] foundationNavigationAnnouncesItsCurrentDestination — 지도/목록 이동 목적지와 현재 화면 표시를 유지하고 검색 화면도 지도 영역임을 접근성 정보로 전달한다.
+- [x] foundationNavigationAnnouncesItsCurrentDestination — 지도/목록 이동 목적지와 현재 화면 표시를 유지하고 검색 화면도 지도 영역임을 접근성 정보로 전달한다.
 
 ```ts
 test('foundationNavigationAnnouncesItsCurrentDestination', async () => {
