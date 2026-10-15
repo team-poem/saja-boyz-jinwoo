@@ -324,3 +324,25 @@ test('mapRegionDisplayClustersSplitAndRejoinOnZoom', async () => {
   expect(fixture.setCenter).not.toHaveBeenCalled();
   expect(fixture.setZoom).not.toHaveBeenCalled();
 });
+
+test('mapDisplayClustersFollowPeriodAndDisposeListeners', async () => {
+  const fixture = await mount([nearby(1), nearby(2, 2), item(3)]);
+  expect(counts(fixture)).toEqual(['1', '2']);
+  await click('기간');
+  await click('최근 24시간');
+  expect(counts(fixture)).toEqual(['1', '1']);
+  expect(carousel().querySelectorAll('a[href^="/incidents/"]')).toHaveLength(2);
+  const stale = [...fixture.callbacks.values()].flatMap((events) => [
+    ...events.values(),
+  ]);
+  await act(async () => root!.unmount());
+  root = undefined;
+  expect(fixture.destroy).toHaveBeenCalledTimes(1);
+  expect(fixture.active.size).toBe(0);
+  expect(
+    [...fixture.callbacks.values()].every((events) => events.size === 0),
+  ).toBe(true);
+  await act(async () => stale.forEach((callback) => callback()));
+  expect(fixture.active.size).toBe(0);
+  expect(fixture.created).toHaveBeenCalledTimes(1);
+});

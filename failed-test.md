@@ -581,7 +581,7 @@ test('mapRegionDisplayClustersSplitAndRejoinOnZoom', async () => {
 });
 ```
 
-- [ ] mapDisplayClustersFollowPeriodAndDisposeListeners
+- [x] mapDisplayClustersFollowPeriodAndDisposeListeners
 
 ```ts
 test('mapDisplayClustersFollowPeriodAndDisposeListeners', async () => {
