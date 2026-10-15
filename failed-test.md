@@ -204,7 +204,7 @@ afterEach(async () => {
 
 ```
 
-- [ ] mapRegionCirclesCountUniqueArticlesAtFixedPoints — 같은 좌표의 표시 원을 합치되 대표점과 카메라를 유지
+- [x] mapRegionCirclesCountUniqueArticlesAtFixedPoints — 같은 좌표의 표시 원을 합치되 대표점과 카메라를 유지
 
 ```ts
 test('mapRegionCirclesCountUniqueArticlesAtFixedPoints', async () => {

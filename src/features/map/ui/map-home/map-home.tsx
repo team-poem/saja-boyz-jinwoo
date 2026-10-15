@@ -18,6 +18,7 @@ import type {
   MapArticleResult,
 } from '../../model/map-article.types';
 import { groupMapArticles } from '../../model/map-region-groups';
+import { groupMapDisplayPoints } from '../../model/map-display-groups';
 import {
   captureMapViewport,
   restoreMapViewport,
@@ -320,7 +321,9 @@ export function MapHome({
           });
         };
 
-        for (const group of groups.values()) {
+        for (const { items: group, regionCount } of groupMapDisplayPoints(
+          groups,
+        ).values()) {
           const item = group[0];
           const title =
             group.length === 1
@@ -334,7 +337,8 @@ export function MapHome({
                 : '기사에 언급된 동네';
           const visual = createArticleMarker(
             group.length,
-            `${positionLabel}: ${item.location.label} · ${title}`,
+            `${positionLabel}: ${item.location.label} · ${title}${regionCount > 1 ? ' · 지역 묶음' : ''}`,
+            regionCount > 1,
           );
 
           const articleMarker = new maps.Marker({
