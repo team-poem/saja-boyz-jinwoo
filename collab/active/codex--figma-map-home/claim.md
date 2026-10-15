@@ -4,7 +4,7 @@ owner: easter721
 started: 2026-10-15
 status: active
 goal: feat(map): Figma 지도 홈의 지역 숫자 원·기사 카드·필터 구현
-next: 지도 전용 지역 집계·숫자 원·가로 기사 카드·필터 및 공통 필터 연결, 다른 화면은 대조 기록만
+next: 정확 명세·신규7개·기존3개 변경 초안 승인 대기. 승인 후 지도 전용 집계·카드·필터와 AppShell 연결 구현
 base: dev
 ---
 
