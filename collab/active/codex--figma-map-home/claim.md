@@ -2,9 +2,9 @@
 branch: codex/figma-map-home
 owner: easter721
 started: 2026-10-15
-status: active
+status: done
 goal: feat(ui): 지도 홈과 연관 화면의 Figma 디자인·인터랙션 정렬
-next: 승인된 지도 표시 묶음·출처 정렬·검색 강조 수정을 Sobaya로 구현하고 PR23 검증·반영
+next: PR23 리뷰·머지 및 GitHub 코멘트 문구 승인 대기
 base: dev
 ---
 
