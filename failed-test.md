@@ -497,7 +497,7 @@ function counts(fixture: Awaited<ReturnType<typeof mount>>) {
 }
 ```
 
-- [ ] mapOverlappingRegionMarkersCombineUniqueArticles
+- [x] mapOverlappingRegionMarkersCombineUniqueArticles
 
 ```ts
 test('mapOverlappingRegionMarkersCombineUniqueArticles', async () => {
