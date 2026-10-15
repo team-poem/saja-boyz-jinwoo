@@ -2,9 +2,9 @@
 branch: codex/report-figma-polish
 owner: amazon
 started: 2026-10-15
-status: active
+status: done
 goal: style(report): 피그마 제보 화면의 필드와 제출 영역 마감
-next: src/app/report/page.tsx 시각 배치·접근성 검증, 제출 로직 유지
+next: dev 대상 PR 리뷰·병합 대기, 검증은 verification.md 참조
 base: dev
 ---
 
