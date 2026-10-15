@@ -46,12 +46,7 @@ export function MapPeriodFilter({
   }, [open]);
 
   return (
-    <div
-      ref={container}
-      role="group"
-      aria-label="기사 필터"
-      className="absolute top-[calc(68px_+_env(safe-area-inset-top))] right-4 left-4 z-20 flex items-center gap-1.5"
-    >
+    <div ref={container} className="relative flex items-center gap-1.5">
       <button
         ref={trigger}
         type="button"

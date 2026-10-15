@@ -361,7 +361,7 @@ test('mapPeriodFiltersSynchronizeMarkersAndCardsWithoutResettingMap', async () =
 });
 ```
 
-- [ ] mapUnavailableFiltersExplainMissingMetadataAndCloseAccessibly — 분류·상태 드롭다운과 선택 불가 안내·Escape 포커스 복원
+- [x] mapUnavailableFiltersExplainMissingMetadataAndCloseAccessibly — 분류·상태 드롭다운과 선택 불가 안내·Escape 포커스 복원
 ```ts
 test('mapUnavailableFiltersExplainMissingMetadataAndCloseAccessibly', async () => {
   await mount([item(1)]);

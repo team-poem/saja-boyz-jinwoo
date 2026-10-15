@@ -8,6 +8,7 @@ import { articleText } from '@/features/article-list/model/article-presentation'
 
 import { filterMapPeriod, type MapPeriod } from '../../model/map-period-filter';
 import { MapPeriodFilter } from '../map-period-filter/map-period-filter';
+import { MapUnavailableFilter } from '../map-unavailable-filter/map-unavailable-filter';
 import { createArticleMarker } from './map-article-marker';
 import { MapArticleSheet } from './map-article-sheet';
 import { MapArticleCarousel } from '../map-article-carousel/map-article-carousel';
@@ -554,15 +555,23 @@ export function MapHome({
 
   return (
     <section aria-label="주변 지도" className="relative">
-      <MapPeriodFilter
-        value={period}
-        onChange={(value) => {
-          clearSelection.current?.();
-          setSelectedArticles([]);
-          setPeriodNow(Date.now());
-          setPeriod(value);
-        }}
-      />
+      <div
+        role="group"
+        aria-label="기사 필터"
+        className="absolute top-[calc(68px_+_env(safe-area-inset-top))] right-4 left-4 z-20 flex flex-wrap items-center gap-1.5"
+      >
+        <MapUnavailableFilter kind="category" />
+        <MapUnavailableFilter kind="status" />
+        <MapPeriodFilter
+          value={period}
+          onChange={(value) => {
+            clearSelection.current?.();
+            setSelectedArticles([]);
+            setPeriodNow(Date.now());
+            setPeriod(value);
+          }}
+        />
+      </div>
       <div ref={canvas} className="h-dvh overflow-hidden" />
       <div
         ref={controlClearance}
