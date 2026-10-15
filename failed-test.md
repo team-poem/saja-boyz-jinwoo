@@ -391,7 +391,7 @@ test('mapUnavailableFiltersExplainMissingMetadataAndCloseAccessibly', async () =
 });
 ```
 
-- [ ] mapAllFiltersApplyOrDiscardDraftAndReset — 전체 필터 시트의 임시 선택·취소·적용·초기화
+- [x] mapAllFiltersApplyOrDiscardDraftAndReset — 전체 필터 시트의 임시 선택·취소·적용·초기화
 ```ts
 test('mapAllFiltersApplyOrDiscardDraftAndReset', async () => {
   const fixture = await mount([item(1, 0.5), item(2, 8)]);
