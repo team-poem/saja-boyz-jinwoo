@@ -144,6 +144,7 @@ export function MapHome({
     let pending = false;
     let requestId = 0;
     let observer: ResizeObserver | undefined;
+    let refreshDisplay: (() => void) | undefined;
     const controlListeners: unknown[] = [];
     let removeControlListener: ((listener: unknown) => void) | undefined;
     let controlFrame: number | undefined;
@@ -220,6 +221,7 @@ export function MapHome({
           ),
         );
         positionControls();
+        refreshDisplay?.();
       }
     };
     const sdkWindow = window as Window & { navermap_authFailure?: () => void };
@@ -344,6 +346,7 @@ export function MapHome({
         if (sameMapDisplayGroups(displayGroups, nextGroups)) return;
         displayGroups = nextGroups;
         clearSelection.current?.();
+        setSelectedArticles([]);
         clearArticles();
 
         for (const { items: group, regionCount } of displayGroups.values()) {
@@ -377,7 +380,7 @@ export function MapHome({
             },
           });
           const select = () => {
-            if (disposed || loadFailed) return;
+            if (disposed || loadFailed || displayGroups !== nextGroups) return;
             clearSelection.current?.();
             visual.setSelected(true);
             selectedMarker = visual.content;
@@ -404,7 +407,7 @@ export function MapHome({
         }
       };
 
-      const refreshDisplay = () => {
+      refreshDisplay = () => {
         if (disposed || loadFailed) return;
         updateArticles.current?.(currentItems);
       };
@@ -679,13 +682,13 @@ export function MapHome({
       )}
       {ready && Boolean(articles?.items.length) && (
         <div className="absolute top-[calc(112px_+_env(safe-area-inset-top))] left-4 flex items-center gap-2 rounded-xl bg-floating px-3 py-1.5 shadow-floating">
-          <div className="text-xs text-muted">
+          <div className="flex items-center text-muted">
             {articles!.items.some(
               (item) => item.location.precision === 'region',
             ) && (
               <a
                 href="https://www.data.go.kr/data/15084084/openapi.do"
-                className="mt-1 inline-block text-[11px] underline"
+                className="flex items-center text-[11px]/[16px] underline"
               >
                 지역 좌표: 기상청
               </a>
@@ -694,7 +697,7 @@ export function MapHome({
           <button
             type="button"
             onClick={() => fitArticles.current?.()}
-            className="rounded-lg border-0 bg-transparent px-2 py-1 text-[11px] text-text"
+            className="flex items-center justify-center rounded-lg border-0 bg-transparent px-2 py-1 text-[11px]/[16px] text-text"
           >
             기사 위치 보기
           </button>

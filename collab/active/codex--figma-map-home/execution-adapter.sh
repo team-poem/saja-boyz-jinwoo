@@ -12,6 +12,7 @@ CONTEXT
 if [ "$SOBAYA_ROLE" = review ]; then
 cat >> "$task_dir/prompt.txt" <<'REVIEW'
 Fresh independent read-only review: inspect exact diff from approved baseline and previous product HEAD89a013f, check correctness, lifecycle, deterministic geometric grouping, unique count, coordinates, keyboard/selection/focus, resize/period changes, stale callbacks and native SDK/API/camera preservation. Check highlighted text preserves original case and treats regex metacharacters literally for title and description, existing articleText safety preserved. Check original108 tests byte-identical and only approved one replacement. Do not edit/run write-producing builds/tests/commit/publish. Gate and browser checks are coordinator-owned. Report actionable defects with exact file/line evidence; return done only if none remain.
+Upstream integration: HEAD preserves remote feature merge21920e6 (amazon merged dev bf299905 / PR22). The report/page.tsx upstream change is not this followup implementation; it must remain byte-identical to origin/dev. Use the graph and origin/dev...HEAD to distinguish inherited changes. Review the current source after repair, including alignment, same-group retention, changed-group sheet dismissal and stale marker callback guard.
 REVIEW
 fi
 sandbox=workspace-write
