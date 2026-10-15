@@ -242,7 +242,7 @@ test('mapRegionCirclesCountUniqueArticlesAtFixedPoints', async () => {
 });
 ```
 
-- [ ] mapRegionCirclesGrowWithCountAndKeepSelection — 1·5·7·12건 원의 크기와 숫자 선택·닫기
+- [x] mapRegionCirclesGrowWithCountAndKeepSelection — 1·5·7·12건 원의 크기와 숫자 선택·닫기
 ```ts
 test('mapRegionCirclesGrowWithCountAndKeepSelection', async () => {
   const items = [1, 5, 7, 12].flatMap((count, group) =>
