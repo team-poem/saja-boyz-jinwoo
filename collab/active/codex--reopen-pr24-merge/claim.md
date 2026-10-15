@@ -2,9 +2,9 @@
 branch: codex/reopen-pr24-merge
 owner: amazon
 started: 2026-10-15
-status: active
+status: paused
 goal: fix(release): main 이력을 dev에 연결해 기존 PR24 복구
-next: main merge의 내용 보존과 전체 검증 후 정상 dev push 및 PR24 재개
+next: 검증된 merge의 dev 반영을 막는 선형 이력·PR 필수 규칙에 대한 사용자 결정
 base: dev
 ---
 

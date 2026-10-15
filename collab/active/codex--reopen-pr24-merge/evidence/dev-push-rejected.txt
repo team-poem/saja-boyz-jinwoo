@@ -1,0 +1,13 @@
+remote: error: GH006: Protected branch update failed for refs/heads/dev.
+remote:
+remote: - This branch must not contain merge commits.
+remote:   Found 1 violation:
+remote:
+remote:   81de32043e56d0aa7625000d88ce607d03eb8d16
+remote:
+remote: - Changes must be made through a pull request.
+remote:
+remote: - 3 of 3 required status checks are expected.
+To https://github.com/team-poem/saja-boyz-jinwoo.git
+ ! [remote rejected] HEAD -> dev (protected branch hook declined)
+error: failed to push some refs to 'https://github.com/team-poem/saja-boyz-jinwoo.git'
