@@ -1,0 +1,76 @@
+Auto-merging docs/architecture.md
+CONFLICT (content): Merge conflict in docs/architecture.md
+Auto-merging docs/figma-analysis.md
+CONFLICT (content): Merge conflict in docs/figma-analysis.md
+Auto-merging docs/map-api-contract.md
+CONFLICT (add/add): Merge conflict in docs/map-api-contract.md
+Auto-merging docs/ui-contract.md
+CONFLICT (add/add): Merge conflict in docs/ui-contract.md
+Auto-merging docs/work-split.md
+CONFLICT (add/add): Merge conflict in docs/work-split.md
+Auto-merging public/filters/README.md
+CONFLICT (add/add): Merge conflict in public/filters/README.md
+Auto-merging src/app/globals.css
+CONFLICT (content): Merge conflict in src/app/globals.css
+Auto-merging src/app/incidents/[id]/detail-image.tsx
+CONFLICT (add/add): Merge conflict in src/app/incidents/[id]/detail-image.tsx
+Auto-merging src/app/incidents/[id]/detail-navigation.tsx
+CONFLICT (add/add): Merge conflict in src/app/incidents/[id]/detail-navigation.tsx
+Auto-merging src/app/incidents/[id]/detail-share.tsx
+CONFLICT (add/add): Merge conflict in src/app/incidents/[id]/detail-share.tsx
+Auto-merging src/app/incidents/[id]/page.tsx
+CONFLICT (content): Merge conflict in src/app/incidents/[id]/page.tsx
+Auto-merging src/app/report/page.tsx
+CONFLICT (content): Merge conflict in src/app/report/page.tsx
+Auto-merging src/app/search/page.tsx
+CONFLICT (content): Merge conflict in src/app/search/page.tsx
+Auto-merging src/components/layout/app-shell/app-shell-foundation.test.ts
+CONFLICT (add/add): Merge conflict in src/components/layout/app-shell/app-shell-foundation.test.ts
+Auto-merging src/components/layout/app-shell/app-shell.tsx
+CONFLICT (add/add): Merge conflict in src/components/layout/app-shell/app-shell.tsx
+Auto-merging src/components/layout/bottom-navigation/bottom-navigation.tsx
+CONFLICT (add/add): Merge conflict in src/components/layout/bottom-navigation/bottom-navigation.tsx
+Auto-merging src/features/article-list/ui/article-card/article-card.tsx
+CONFLICT (add/add): Merge conflict in src/features/article-list/ui/article-card/article-card.tsx
+Auto-merging src/features/article-list/ui/article-image/article-image.tsx
+CONFLICT (add/add): Merge conflict in src/features/article-list/ui/article-image/article-image.tsx
+Auto-merging src/features/map/ui/map-home/map-article-marker.ts
+CONFLICT (add/add): Merge conflict in src/features/map/ui/map-home/map-article-marker.ts
+Auto-merging src/features/map/ui/map-home/map-article-sheet.tsx
+CONFLICT (add/add): Merge conflict in src/features/map/ui/map-home/map-article-sheet.tsx
+Auto-merging src/features/map/ui/map-home/map-articles.test.ts
+CONFLICT (add/add): Merge conflict in src/features/map/ui/map-home/map-articles.test.ts
+Auto-merging src/features/map/ui/map-home/map-home.tsx
+CONFLICT (add/add): Merge conflict in src/features/map/ui/map-home/map-home.tsx
+Auto-merging src/features/search/api/load-search-page.tsx
+CONFLICT (add/add): Merge conflict in src/features/search/api/load-search-page.tsx
+Auto-merging src/features/search/ui/recent-searches/recent-searches.tsx
+CONFLICT (add/add): Merge conflict in src/features/search/ui/recent-searches/recent-searches.tsx
+Auto-merging src/features/search/ui/search-results/search-results.tsx
+CONFLICT (add/add): Merge conflict in src/features/search/ui/search-results/search-results.tsx
+Recorded preimage for 'docs/architecture.md'
+Recorded preimage for 'docs/figma-analysis.md'
+Recorded preimage for 'docs/map-api-contract.md'
+Recorded preimage for 'docs/ui-contract.md'
+Recorded preimage for 'docs/work-split.md'
+Recorded preimage for 'public/filters/README.md'
+Recorded preimage for 'src/app/globals.css'
+Recorded preimage for 'src/app/incidents/[id]/detail-image.tsx'
+Recorded preimage for 'src/app/incidents/[id]/detail-navigation.tsx'
+Recorded preimage for 'src/app/incidents/[id]/detail-share.tsx'
+Recorded preimage for 'src/app/incidents/[id]/page.tsx'
+Recorded preimage for 'src/app/report/page.tsx'
+Recorded preimage for 'src/app/search/page.tsx'
+Recorded preimage for 'src/components/layout/app-shell/app-shell-foundation.test.ts'
+Recorded preimage for 'src/components/layout/app-shell/app-shell.tsx'
+Recorded preimage for 'src/components/layout/bottom-navigation/bottom-navigation.tsx'
+Recorded preimage for 'src/features/article-list/ui/article-card/article-card.tsx'
+Recorded preimage for 'src/features/article-list/ui/article-image/article-image.tsx'
+Recorded preimage for 'src/features/map/ui/map-home/map-article-marker.ts'
+Recorded preimage for 'src/features/map/ui/map-home/map-article-sheet.tsx'
+Recorded preimage for 'src/features/map/ui/map-home/map-articles.test.ts'
+Recorded preimage for 'src/features/map/ui/map-home/map-home.tsx'
+Recorded preimage for 'src/features/search/api/load-search-page.tsx'
+Recorded preimage for 'src/features/search/ui/recent-searches/recent-searches.tsx'
+Recorded preimage for 'src/features/search/ui/search-results/search-results.tsx'
+Automatic merge failed; fix conflicts and then commit the result.
