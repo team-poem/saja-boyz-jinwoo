@@ -2,9 +2,9 @@
 branch: codex/release-figma-ui
 owner: amazon
 started: 2026-10-15
-status: active
+status: done
 goal: chore(release): 지도·제보 최신 개발분을 충돌 없이 통합
-next: main 기반 배포 변경의 내용 일치와 CI 확인 후 PR24 대체안 제시
+next: main 대상 대체 통합 PR의 필수 리뷰·CI 확인 후 병합
 base: main
 ---
 
