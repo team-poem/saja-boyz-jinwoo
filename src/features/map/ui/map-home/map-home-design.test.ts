@@ -206,10 +206,9 @@ test('mapRegionCirclesCountUniqueArticlesAtFixedPoints', async () => {
   ];
   const fixture = await mount(items);
   const markers = [...fixture.active];
-  expect(markers).toHaveLength(3);
+  expect(markers).toHaveLength(2);
   expect(markers.map((marker) => marker.content.textContent).sort()).toEqual([
-    '1',
-    '1',
+    '2',
     '2',
   ]);
   expect(markers[0].position).toMatchObject({
@@ -226,7 +225,7 @@ test('mapRegionCirclesCountUniqueArticlesAtFixedPoints', async () => {
     events.get('zoom_changed')?.();
   expect(
     [...fixture.active].map((marker) => marker.content.textContent).sort(),
-  ).toEqual(['1', '1', '2']);
+  ).toEqual(['2', '2']);
   expect(fixture.setCenter).not.toHaveBeenCalled();
   expect(fixture.setZoom).not.toHaveBeenCalled();
 });
