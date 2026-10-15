@@ -424,7 +424,7 @@ test('mapAllFiltersApplyOrDiscardDraftAndReset', async () => {
 });
 ```
 
-- [ ] mapFilteredEmptyAndApiFailureKeepRecoveryAndLocation — 필터 빈 결과·API 실패 안내와 지도·내 위치 유지
+- [x] mapFilteredEmptyAndApiFailureKeepRecoveryAndLocation — 필터 빈 결과·API 실패 안내와 지도·내 위치 유지
 ```ts
 test('mapFilteredEmptyAndApiFailureKeepRecoveryAndLocation', async () => {
   const fixture = await mount([item(1, 8)]);
