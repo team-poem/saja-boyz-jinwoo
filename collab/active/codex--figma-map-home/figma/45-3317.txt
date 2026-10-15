@@ -1,4 +1,4 @@
-const assetPathPrefix = "https://www.figma.com/api/mcp/asset/0e9a9151-0924-4be3-acea-52d1ee4c1464";
+const assetPathPrefix = "[temporary download source omitted; use local assets]";
 const imgScreenMapMain = `${assetPathPrefix}/a0907.png`;
 const imgRectangle = `${assetPathPrefix}/8b591.png`;
 const imgIosSignal = `${assetPathPrefix}/0cce4.svg`;

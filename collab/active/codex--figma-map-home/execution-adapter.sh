@@ -17,6 +17,10 @@ CONTEXT
 if [ "$SOBAYA_ROLE" = review ]; then
 cat >> "$task_dir/prompt.txt" <<'REVIEW'
 
+Latest user also explicitly requested restrained interaction motion: read collab/active/codex--figma-map-home/motion-addendum.md. The scoped CSS in globals.css and small interaction classes are now requested. Review reduced-motion behavior, native/SDK positioning, disabled feedback, focus/close behavior and absence of layout or data changes. No JS animation dependency or delayed unmount is authorized.
+
+Latest user scope addendum supersedes the earlier map-only scope restriction for review: read collab/active/codex--figma-map-home/related-screens-addendum.md and the actual Figma contexts 11-1797,11-1864,11-2123,19-3061. The user explicitly pointed out search/list/detail visual differences and missing screenshots. Existing search/list/detail behavior, API contracts, test and approved plans must remain unchanged. Review the extra presentation source diff as well; no false category/status/location/timeline/citation values, no lost source/detail links or pagination/retry/recent search/image safety/share recovery. Report is still out of scope and owned by PR22.
+
 Fresh independent read-only source review bound to HEAD: inspect exact approved spec and diff, existing test preservation, region identity/count/dedup/coordinate stability and singleton/count styles, sorted safe article cards/images, period inclusive boundaries and unknown/future dates, sync of marker counts/cards/selection without SDK or camera reset, dialogs/outside click/Escape/focus/scroll/inert cleanup, SDK lifecycle/listener cleanup/retry and source attribution clearance. Category/status values are unavailable and must not be selectable/inferred. Keep original site behavior outside home. Runtime has run the full gate at this HEAD. Do not run write-producing tests/build, edit, commit or publish. Return done only when no actionable source defect remains, with file/line evidence for any finding.
 REVIEW
 fi

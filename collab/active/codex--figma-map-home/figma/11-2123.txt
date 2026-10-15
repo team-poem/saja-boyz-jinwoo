@@ -1,4 +1,4 @@
-const assetPathPrefix = "https://www.figma.com/api/mcp/asset/2f34038b-5328-460f-8cb7-362afb1880c1";
+const assetPathPrefix = "[temporary download source omitted; use local assets]";
 const imgThumbnail = `${assetPathPrefix}/89d9b.png`;
 const imgThumbnail1 = `${assetPathPrefix}/be50d.png`;
 const imgThumbnail2 = `${assetPathPrefix}/43bb6.png`;

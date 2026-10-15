@@ -7,13 +7,13 @@ export function MapCarouselImage({ src }: { src: string | null }) {
   const [failed, setFailed] = useState(false);
 
   return (
-    <figure className="relative m-0 h-20 w-full overflow-hidden rounded-lg bg-background">
+    <figure className="relative m-0 h-20 w-full overflow-hidden rounded-lg bg-background [@media(max-height:550px)]:hidden">
       {src && !failed ? (
         <>
           <Image
             src={src}
             alt=""
-            width={174}
+            width={176}
             height={80}
             unoptimized
             onError={() => setFailed(true)}

@@ -62,10 +62,10 @@ export function MapUnavailableFilter({ kind }: { kind: keyof typeof filters }) {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1 rounded-[20px] border border-[rgba(200,210,220,0.6)] bg-floating px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-text backdrop-blur-[8px]"
+        className={`ui-control flex h-[27px] items-center justify-center gap-1 rounded-[20px] border border-solid border-[rgba(200,210,220,0.6)] bg-floating px-[11px] py-[5px] text-[12px]/[15px] font-semibold whitespace-nowrap text-text backdrop-blur-[8px] ${kind === 'category' ? 'w-[82px]' : 'w-[60px]'}`}
       >
         {label}
-        <span aria-hidden="true" className="text-[8px] text-muted">
+        <span aria-hidden="true" className="text-[8px]/[10px] text-muted">
           ▼
         </span>
       </button>
@@ -75,7 +75,7 @@ export function MapUnavailableFilter({ kind }: { kind: keyof typeof filters }) {
           role="group"
           aria-label={`${label} 선택`}
           aria-describedby={explanationId}
-          className="absolute top-full left-0 z-10 mt-2 w-40 overflow-hidden rounded-[14px] bg-white/97 shadow-[0px_8px_32px_rgba(0,0,0,0.14)] ring-1 ring-white/70 backdrop-blur-[20px]"
+          className={`ui-dropdown-enter absolute top-full z-10 mt-2 w-40 overflow-hidden rounded-[14px] bg-white/97 shadow-[0px_8px_32px_rgba(0,0,0,0.14)] backdrop-blur-[20px] ${kind === 'category' ? 'left-0' : 'left-[min(0px,calc(100vw_-_394px))]'}`}
         >
           {['전체', ...options].map((option, index) => (
             <button
@@ -86,7 +86,7 @@ export function MapUnavailableFilter({ kind }: { kind: keyof typeof filters }) {
               aria-pressed={index === 0}
               aria-describedby={index > 0 ? explanationId : undefined}
               onClick={close}
-              className={`flex w-full items-center gap-2.5 border-b border-black/4 px-4 py-3 text-left text-sm leading-[21px] text-muted ${index === 0 ? 'bg-muted/7 font-semibold' : 'cursor-not-allowed'}`}
+              className={`ui-control flex h-[46px] w-full items-center gap-2.5 border-0 border-b border-solid border-black/4 px-4 py-3 text-left text-sm leading-[21px] text-muted ${index === 0 ? 'bg-muted/7 font-semibold' : 'cursor-not-allowed bg-transparent'}`}
             >
               <span
                 aria-hidden="true"
@@ -100,7 +100,7 @@ export function MapUnavailableFilter({ kind }: { kind: keyof typeof filters }) {
               )}
             </button>
           ))}
-          <p id={explanationId} className="px-4 py-2 text-xs text-muted">
+          <p id={explanationId} className="m-0 px-4 py-2 text-xs text-muted">
             {explanation}
           </p>
         </div>

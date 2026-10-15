@@ -6,7 +6,7 @@ import {
   publicationText,
 } from '@/features/article-list/model/article-presentation';
 
-import { MapCarouselImage } from './map-carousel-image';
+import { MapCarouselImage } from '../map-carousel-image/map-carousel-image';
 import type { LocatedArticle } from '../../model/map-article.types';
 
 export function MapCarouselCard({
@@ -25,9 +25,9 @@ export function MapCarouselCard({
       : null;
 
   return (
-    <article className="flex w-[200px] shrink-0 snap-start flex-col gap-2.5 rounded-card border border-solid border-white bg-floating p-3 shadow-[0_4px_16px_rgb(0_0_0/5%)]">
+    <article className="relative flex h-[152px] w-[200px] shrink-0 snap-start flex-col gap-2.5 rounded-card ring-1 ring-white ring-inset bg-floating p-3 shadow-[0_4px_16px_rgb(0_0_0/5%)] [@media(max-height:550px)]:h-[62px]">
       <div className="flex min-w-0 flex-col gap-1.5">
-        <p className="m-0 text-[11px]/[normal] text-muted">
+        <p className="m-0 h-4 text-right text-[11px]/4 text-muted">
           {Number.isNaN(publishedAt.getTime()) ? (
             '발행 시각 미확인'
           ) : (
@@ -36,8 +36,11 @@ export function MapCarouselCard({
             </time>
           )}
         </p>
-        <h3 className="m-0 truncate text-[13px]/[normal] font-bold text-text">
-          <Link href={`/incidents/${item.article_id}`}>
+        <h3 className="m-0 truncate text-[13px]/4 font-bold text-text">
+          <Link
+            href={`/incidents/${item.article_id}`}
+            className="after:absolute after:inset-0 after:z-10 after:rounded-card after:content-['']"
+          >
             {articleText(item.article.title)}
           </Link>
         </h3>

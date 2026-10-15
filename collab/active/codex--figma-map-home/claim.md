@@ -3,8 +3,8 @@ branch: codex/figma-map-home
 owner: easter721
 started: 2026-10-15
 status: active
-goal: feat(map): Figma 지도 홈의 지역 숫자 원·기사 카드·필터 구현
-next: 승인한7개 항목을 Sobaya로 순차 구현한 뒤 실제 SDK/Figma 대조·독립 리뷰·dev PR
+goal: feat(ui): 지도 홈과 연관 화면의 Figma 디자인·인터랙션 정렬
+next: 지도7개 구현 및 추가 화면 보정 후 실제 SDK/Figma 대조·109개 전체 gate·독립 리뷰·dev PR
 base: dev
 ---
 
@@ -14,3 +14,7 @@ base: dev
 - 기존 지도 SDK·내 위치·뷰포트·상세 이동·API 실패 처리를 유지한다.
 - 제보 본문은 amazon7737의 report-figma-polish 소유 범위로 이번 수정에서 제외한다.
 - 정확 명세·신규 테스트 초안을 준비·probe한 뒤 사용자의 승인에 따라 Sobaya 구현을 시작한다.
+
+- 사용자 추가 지적에 따른 검색·목록·상세 시각 보정은 related-screens-addendum.md를 따른다. 승인 테스트와 기능/API 계약은 유지한다.
+
+- 사용자 추가 요청의 절제된 인터랙션은 motion-addendum.md를 따른다. 기존 레이아웃/기능과 동작 줄이기 설정을 보존한다.

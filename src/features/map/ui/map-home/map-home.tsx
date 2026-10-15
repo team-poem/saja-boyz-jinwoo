@@ -566,12 +566,12 @@ export function MapHome({
       <div
         role="group"
         aria-label="기사 필터"
-        className="absolute top-[calc(68px_+_env(safe-area-inset-top))] right-4 left-4 z-20 flex flex-wrap items-center gap-1.5"
+        className="absolute top-[calc(68px_+_env(safe-area-inset-top))] right-4 left-4 z-20 flex h-[30px] items-start gap-1.5"
       >
         <MapAllFilters value={period} onChange={applyPeriod} />
+        <MapPeriodFilter value={period} onChange={applyPeriod} />
         <MapUnavailableFilter kind="category" />
         <MapUnavailableFilter kind="status" />
-        <MapPeriodFilter value={period} onChange={applyPeriod} />
       </div>
       <div ref={canvas} className="h-dvh overflow-hidden" />
       <div
@@ -585,7 +585,7 @@ export function MapHome({
       />
       <div
         ref={carouselOverlay}
-        className="pointer-events-none absolute right-0 bottom-0 left-0 pb-[calc(84px_+_env(safe-area-inset-bottom))]"
+        className="pointer-events-none absolute right-0 bottom-0 left-0 pb-[calc(86px_+_env(safe-area-inset-bottom))]"
       >
         <div className="pointer-events-auto relative">
           <button
@@ -594,7 +594,7 @@ export function MapHome({
             aria-busy={locating}
             disabled={!ready || locating}
             onClick={() => locate.current?.()}
-            className="absolute right-4 -top-14 flex size-11 items-center justify-center rounded-full bg-white shadow-floating disabled:opacity-50"
+            className="absolute right-4 -top-[58px] flex size-11 items-center justify-center rounded-full border-0 bg-white p-0 shadow-floating disabled:opacity-50"
           >
             <Image
               src="/naver-map-crosshair.svg"
