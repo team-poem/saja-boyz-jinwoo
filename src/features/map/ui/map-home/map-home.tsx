@@ -8,6 +8,7 @@ import { articleText } from '@/features/article-list/model/article-presentation'
 
 import { createArticleMarker } from './map-article-marker';
 import { MapArticleSheet } from './map-article-sheet';
+import { MapArticleCarousel } from '../map-article-carousel/map-article-carousel';
 import type {
   LocatedArticle,
   MapArticleResult,
@@ -82,6 +83,7 @@ export function MapHome({
   );
   const canvas = useRef<HTMLDivElement>(null);
   const controlClearance = useRef<HTMLDivElement>(null);
+  const carouselOverlay = useRef<HTMLDivElement>(null);
   const updateControls = useRef<(() => void) | null>(null);
   const fitArticles = useRef<(() => void) | null>(null);
   const clearSelection = useRef<((restoreFocus?: boolean) => void) | null>(
@@ -147,7 +149,10 @@ export function MapHome({
         .naver?.maps.Position;
 
       if (!map?.controls || !positions) return;
-      const clearance = controlClearance.current?.clientHeight || 84;
+      const clearance = Math.max(
+        controlClearance.current?.clientHeight || 84,
+        carouselOverlay.current?.clientHeight || 0,
+      );
 
       for (const position of [
         positions.BOTTOM_LEFT,
@@ -285,7 +290,8 @@ export function MapHome({
         map.fitBounds(points, {
           top: 150,
           right: 60,
-          bottom: 180,
+          bottom:
+            Math.max(180, carouselOverlay.current?.clientHeight ?? 0) + 24,
           left: 60,
           maxZoom: 15,
         });
@@ -346,6 +352,7 @@ export function MapHome({
       if (typeof ResizeObserver !== 'undefined') {
         observer = new ResizeObserver(resize);
         observer.observe(canvas.current);
+        if (carouselOverlay.current) observer.observe(carouselOverlay.current);
         if (controlClearance.current)
           observer.observe(controlClearance.current);
       }
@@ -525,16 +532,31 @@ export function MapHome({
             : 'h-[calc(84px_+_env(safe-area-inset-bottom))]'
         }`}
       />
-      <button
-        type="button"
-        aria-label="내 위치"
-        aria-busy={locating}
-        disabled={!ready || locating}
-        onClick={() => locate.current?.()}
-        className="absolute right-4 bottom-[calc(132px_+_env(safe-area-inset-bottom))] flex size-11 items-center justify-center rounded-full bg-white shadow-floating disabled:opacity-50"
+      <div
+        ref={carouselOverlay}
+        className="pointer-events-none absolute right-0 bottom-0 left-0 pb-[calc(84px_+_env(safe-area-inset-bottom))]"
       >
-        <Image src="/naver-map-crosshair.svg" alt="" width={20} height={20} />
-      </button>
+        <div className="pointer-events-auto relative">
+          <button
+            type="button"
+            aria-label="내 위치"
+            aria-busy={locating}
+            disabled={!ready || locating}
+            onClick={() => locate.current?.()}
+            className="absolute right-4 -top-14 flex size-11 items-center justify-center rounded-full bg-white shadow-floating disabled:opacity-50"
+          >
+            <Image
+              src="/naver-map-crosshair.svg"
+              alt=""
+              width={20}
+              height={20}
+            />
+          </button>
+          {ready && articles && articles.items.length > 0 && (
+            <MapArticleCarousel articles={articles} />
+          )}
+        </div>
+      </div>
       {ready && articles !== undefined && !articles?.items.length && (
         <div
           role="status"
@@ -564,9 +586,8 @@ export function MapHome({
         </div>
       )}
       {ready && Boolean(articles?.items.length) && (
-        <div className="absolute top-[calc(112px_+_env(safe-area-inset-top))] right-4 left-4 flex items-center justify-between gap-2 rounded-2xl bg-floating p-3 shadow-floating">
+        <div className="absolute top-[calc(112px_+_env(safe-area-inset-top))] left-4 flex items-center gap-2 rounded-xl bg-floating px-3 py-1.5 shadow-floating">
           <div className="text-xs text-muted">
-            <p className="m-0">지도 기사 {articles!.items.length}건</p>
             {articles!.items.some(
               (item) => item.location.precision === 'region',
             ) && (
@@ -581,7 +602,7 @@ export function MapHome({
           <button
             type="button"
             onClick={() => fitArticles.current?.()}
-            className="rounded-lg border border-border px-3 py-2 text-sm text-text"
+            className="rounded-lg border-0 bg-transparent px-2 py-1 text-[11px] text-text"
           >
             기사 위치 보기
           </button>

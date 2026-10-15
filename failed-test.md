@@ -285,7 +285,7 @@ test('mapRegionCirclesGrowWithCountAndKeepSelection', async () => {
 });
 ```
 
-- [ ] mapCarouselUsesRealArticlesAndSafeImages — 실제 기사 순서·고유 링크·HTML 텍스트·이미지 실패·전체보기
+- [x] mapCarouselUsesRealArticlesAndSafeImages — 실제 기사 순서·고유 링크·HTML 텍스트·이미지 실패·전체보기
 ```ts
 test('mapCarouselUsesRealArticlesAndSafeImages', async () => {
   const recent = item(2);
