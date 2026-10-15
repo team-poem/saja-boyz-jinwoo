@@ -201,7 +201,6 @@ afterEach(async () => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
-
 ```
 
 - [x] mapRegionCirclesCountUniqueArticlesAtFixedPoints — 같은 좌표의 표시 원을 합치되 대표점과 카메라를 유지
@@ -241,7 +240,6 @@ test('mapRegionCirclesCountUniqueArticlesAtFixedPoints', async () => {
   expect(fixture.setCenter).not.toHaveBeenCalled();
   expect(fixture.setZoom).not.toHaveBeenCalled();
 });
-
 ```
 
 ## Node — 화면 겹침 묶음
@@ -497,7 +495,6 @@ function nearby(index: number, daysAgo = 0) {
 function counts(fixture: Awaited<ReturnType<typeof mount>>) {
   return [...fixture.active].map((entry) => entry.content.textContent).sort();
 }
-
 ```
 
 - [ ] mapOverlappingRegionMarkersCombineUniqueArticles
@@ -540,7 +537,7 @@ test('mapOverlappingRegionMarkersCombineUniqueArticles', async () => {
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
     ),
   );
-  const sheet = host.querySelector('[aria-label="선택한 기사"]');
+  const sheet = document.querySelector('[aria-label="선택한 기사"]');
   assert(sheet);
   expect(
     [...sheet.querySelectorAll('a[href^="/incidents/"]')]
@@ -557,7 +554,6 @@ test('mapOverlappingRegionMarkersCombineUniqueArticles', async () => {
   expect(fixture.setCenter).not.toHaveBeenCalled();
   expect(fixture.setZoom).not.toHaveBeenCalled();
 });
-
 ```
 
 - [ ] mapRegionDisplayClustersSplitAndRejoinOnZoom
@@ -583,7 +579,6 @@ test('mapRegionDisplayClustersSplitAndRejoinOnZoom', async () => {
   expect(fixture.setCenter).not.toHaveBeenCalled();
   expect(fixture.setZoom).not.toHaveBeenCalled();
 });
-
 ```
 
 - [ ] mapDisplayClustersFollowPeriodAndDisposeListeners
@@ -623,7 +618,6 @@ import { expect, test } from 'vitest';
 
 import { SearchResultCard } from './search-result-card';
 import type { ArticleCollectionItem } from '@/features/article-list/model/article.types';
-
 ```
 
 - [ ] searchHighlightIgnoresCaseAndPreservesOriginalLiteralText

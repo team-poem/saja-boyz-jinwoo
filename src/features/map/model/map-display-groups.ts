@@ -1,11 +1,20 @@
 import type { LocatedArticle } from './map-article.types';
 
-// Keep logical regions intact; only combine their display at coincident points.
-export function groupMapDisplayPoints(groups: Map<string, LocatedArticle[]>) {
-  const points = new Map<
-    string,
-    { items: LocatedArticle[]; regionCount: number }
-  >();
+type DisplayGroup = { items: LocatedArticle[]; regionCount: number };
+type PixelPoint = { x: number; y: number };
+type ProjectLocation = (location: LocatedArticle['location']) => PixelPoint;
+
+export function mapDisplayDiameter(count: number, cluster = false) {
+  return count <= 5 && !cluster ? 38.4 : count < 10 ? 48 : 72;
+}
+
+// Logical regions retain their representative points. Projection only decides
+// which circles share a display marker, never a new geographical location.
+export function groupMapDisplayPoints(
+  groups: Map<string, LocatedArticle[]>,
+  project?: ProjectLocation,
+) {
+  const points = new Map<string, DisplayGroup>();
 
   for (const group of groups.values()) {
     const { latitude, longitude } = group[0].location;
@@ -23,5 +32,60 @@ export function groupMapDisplayPoints(groups: Map<string, LocatedArticle[]>) {
     points.set(key, point);
   }
 
-  return points;
+  if (!project) return points;
+
+  const displays = [...points].map(([key, group]) => ({
+    key,
+    group,
+    circles: [
+      {
+        point: project(group.items[0].location),
+        radius:
+          mapDisplayDiameter(group.items.length, group.regionCount > 1) / 2,
+      },
+    ],
+  }));
+  const overlaps = (
+    left: (typeof displays)[number],
+    right: (typeof displays)[number],
+  ) =>
+    left.circles.some((a) =>
+      right.circles.some(
+        (b) =>
+          Math.hypot(a.point.x - b.point.x, a.point.y - b.point.y) <=
+          a.radius + b.radius,
+      ),
+    );
+
+  // Retain original circles for transitive overlap, and include each enlarged
+  // representative circle. Restart after merging so growth cannot leave a
+  // previously checked circle overlapping the resulting display marker.
+  for (let left = 0; left < displays.length; left += 1) {
+    for (let right = left + 1; right < displays.length; right += 1) {
+      const first = displays[left];
+      const second = displays[right];
+
+      if (!overlaps(first, second)) continue;
+      const seen = new Set(first.group.items.map((item) => item.article_id));
+
+      first.group.items.push(
+        ...second.group.items.filter((item) => {
+          if (seen.has(item.article_id)) return false;
+          seen.add(item.article_id);
+
+          return true;
+        }),
+      );
+      first.group.regionCount += second.group.regionCount;
+      first.circles.push(...second.circles, {
+        point: first.circles[0].point,
+        radius: mapDisplayDiameter(first.group.items.length, true) / 2,
+      });
+      displays.splice(right, 1);
+      left = -1;
+      break;
+    }
+  }
+
+  return new Map(displays.map(({ key, group }) => [key, group]));
 }

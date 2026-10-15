@@ -30,6 +30,9 @@ type MapInstance = {
   destroy(): void;
   getCenter?(): { lat(): number; lng(): number };
   getZoom?(): number;
+  getProjection?(): {
+    fromCoordToOffset(point: unknown): { x: number; y: number };
+  };
   setCenter(point: unknown): void;
   setZoom(zoom: number, effect?: boolean): void;
   fitBounds(
@@ -321,8 +324,16 @@ export function MapHome({
           });
         };
 
+        const projection = map.getProjection?.();
+
         for (const { items: group, regionCount } of groupMapDisplayPoints(
           groups,
+          projection
+            ? ({ latitude, longitude }) =>
+                projection.fromCoordToOffset(
+                  new maps.LatLng(latitude, longitude),
+                )
+            : undefined,
         ).values()) {
           const item = group[0];
           const title =

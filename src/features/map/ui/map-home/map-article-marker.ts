@@ -1,3 +1,5 @@
+import { mapDisplayDiameter } from '../../model/map-display-groups';
+
 // Naver's HTML icon API owns this DOM subtree outside the React tree.
 export function createArticleMarker(
   count: number,
@@ -5,7 +7,7 @@ export function createArticleMarker(
   cluster = false,
 ) {
   const content = document.createElement('button');
-  const side = count <= 5 && !cluster ? 38.4 : count < 10 ? 48 : 72;
+  const side = mapDisplayDiameter(count, cluster);
 
   content.type = 'button';
   content.setAttribute('aria-label', label);
