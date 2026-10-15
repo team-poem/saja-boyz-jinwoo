@@ -45,3 +45,7 @@
 ## 독립 리뷰의 검색 입력 회귀 수정
 
 fc05b5e에서 전체109개는모두통과했지만 독립리뷰는 제출전검색어지우기 회귀1개를P2로확인했다. native search cancel을숨긴클래스1개를삭제해기존브라우저입력동작을복구했다. 새기능/상태/테스트는추가하지않았다. 기본빌드와기존search-page3개가통과했고 실제Chrome에서제출전native X로지우기와제출후URL초기화를모두재현해성공했다. 다른제품파일hash는동일하다. 이후커밋에서전체gate/독립리뷰를다시수행한다.
+
+## 최종 소스 검증
+
+소스 HEAD 89a013fc362af218903643ccc64d6652c1c20632에서 전체109개/실패0/건너뜀0, format:check와 lint, 새 Astra 독립 리뷰가 통과했다. 기본 production build·typecheck와 실제 Chrome의 지도/연관 화면/모션/동작 줄이기/native 검색 지우기도 검증했다. 이후 커밋은 plan 보관·저널·claim 등 메타데이터만 포함한다. 모든 제품 파일은 browser-verified-source-files.json과 같다.

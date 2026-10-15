@@ -2,9 +2,9 @@
 branch: codex/figma-map-home
 owner: easter721
 started: 2026-10-15
-status: active
+status: done
 goal: feat(ui): 지도 홈과 연관 화면의 Figma 디자인·인터랙션 정렬
-next: 지도7개 구현 및 추가 화면 보정 후 실제 SDK/Figma 대조·109개 전체 gate·독립 리뷰·dev PR
+next: dev 대상 PR 리뷰·병합 대기, 검증·데이터 제약은 verification.md 참조
 base: dev
 ---
 
