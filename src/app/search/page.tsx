@@ -55,7 +55,7 @@ export default async function SearchPage({
             defaultValue={keyword}
             aria-label="기사 키워드 검색"
             placeholder="기사 키워드 검색"
-            className="min-w-0 flex-1 border-0 bg-transparent p-0 text-[14px]/[17px] font-semibold text-text [&::-webkit-search-cancel-button]:appearance-none"
+            className="min-w-0 flex-1 border-0 bg-transparent p-0 text-[14px]/[17px] font-semibold text-text"
           />
           {keyword && (
             <Link

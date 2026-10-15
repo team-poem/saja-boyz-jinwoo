@@ -41,3 +41,7 @@
 기본 next build 성공 후 실제 Naver SDK 지도10개 검증 그룹, 운영 공개GET4회/쓰기0회/82개중좌표3개, 검색·목록·실제이미지 상세7개 검증 그룹, 모션/동작줄이기3개 검증 그룹이 모두 성공했다. 모든 실제브라우저 pageErrors는0이다. 모션은 computedStyle로120/140/190ms, reduce의animation:none/transition:0s/scale:none을 확인했다. 관련 화면은320/393/667가로/1440폭에서 넘침이 없고 상세사진은190px다. 영상의clipboard검증은브라우저메모리mock으로시스템클립보드를변경하지않았다.
 
 최종 브라우저 소스 hash는 browser-verified-source-files.json, 화면과 영상은 evidence/에 보관한다. 최종 전체 gate와 독립 리뷰는 소스 커밋 뒤 다시 실행하며, 결과를 추측해 통과로 기록하지 않는다.
+
+## 독립 리뷰의 검색 입력 회귀 수정
+
+fc05b5e에서 전체109개는모두통과했지만 독립리뷰는 제출전검색어지우기 회귀1개를P2로확인했다. native search cancel을숨긴클래스1개를삭제해기존브라우저입력동작을복구했다. 새기능/상태/테스트는추가하지않았다. 기본빌드와기존search-page3개가통과했고 실제Chrome에서제출전native X로지우기와제출후URL초기화를모두재현해성공했다. 다른제품파일hash는동일하다. 이후커밋에서전체gate/독립리뷰를다시수행한다.

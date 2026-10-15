@@ -1,5 +1,5 @@
 {
-  "source": "실제 Chrome 검증이 끝난 작업 트리 소스/렌더 자산. 이후 제품 파일의 hash 일치를 확인한다.",
+  "source": "실제 Chrome 검증이 끝난 작업 트리 소스/렌더 자산. 이후 제품 파일의 hash 일치를 확인한다. 검색 native clear 복구1개 클래스는 별도 재빌드/실제 Chrome 회귀 검증으로 갱신했다. 나머지 제품 파일은 모두 동일하다.",
   "files": {
     "src/app/error.tsx": "fba8710da25eac6d8b8e8284c8ce4d2511508434c1487270a5418388bd99c996",
     "src/app/global-error.tsx": "a05321f53f37d2a05d25bbdc60ccf522e1aa0b6870a7f932cfe1accc1be4acae",
@@ -24,7 +24,7 @@
     "src/app/report/report-recovery.test.ts": "95fa4c53e498be31795766cf2a31d81b417dcbce0c52d7b7581bb7bd9157b8f6",
     "src/app/search/keyword-link-status.tsx": "526b28d4cd5f83b2d8dd50f4c8f65e31a0bc5797cfb0f06092416325b7287710",
     "src/app/search/loading.tsx": "43526fdd3f7da2611944952a82b6c917721bdc5fa570063aef5f1317e06c2fb6",
-    "src/app/search/page.tsx": "cae28f6843192880cf5944d6b56d63900a63ac2bb1bc63c80527413c92be5a21",
+    "src/app/search/page.tsx": "481f6ef71023f22f8d4382dfa118ef984cfe2e211e18012963d3fea057cdf15e",
     "src/app/search/recommendation-loading.test.ts": "5772740139b05ab50c21a9b0cd36536b1492866aae7f1f64dac8bf42961409b1",
     "src/app/search/search-page.test.ts": "e064a07049c441ddee81f2b15e253d27c61bbae129728a9f15b74d00abd1f313",
     "src/components/errors/feature-error-boundary/error-boundaries.test.ts": "8f37cdc77bdb61cfeca7aa5ce8343ad886768f4535ce1affd14dbfd89a37f389",
