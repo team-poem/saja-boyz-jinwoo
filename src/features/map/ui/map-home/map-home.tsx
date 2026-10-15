@@ -12,6 +12,7 @@ import type {
   LocatedArticle,
   MapArticleResult,
 } from '../../model/map-article.types';
+import { groupMapArticles } from '../../model/map-region-groups';
 import {
   captureMapViewport,
   restoreMapViewport,
@@ -257,21 +258,19 @@ export function MapHome({
         selectedMarker = undefined;
       };
 
-      const groups = new Map<string, LocatedArticle[]>();
-
-      for (const item of articles?.items ?? []) {
-        const key = `${item.location.latitude},${item.location.longitude}`;
-        const group = groups.get(key) ?? [];
-
-        group.push(item);
-        groups.set(key, group);
-      }
+      const groups = groupMapArticles(articles?.items ?? []);
 
       fitArticles.current = () => {
         if (disposed || loadFailed || !map || !groups.size) return;
-        const points = [...groups.values()].map(
-          ([item]) =>
-            new maps.LatLng(item.location.latitude, item.location.longitude),
+        const coordinates = new Map(
+          [...groups.values()].map(([item]) => {
+            const { latitude, longitude } = item.location;
+
+            return [`${latitude},${longitude}`, item.location];
+          }),
+        );
+        const points = [...coordinates.values()].map(
+          ({ latitude, longitude }) => new maps.LatLng(latitude, longitude),
         );
 
         // The SDK ignores coordinate arrays shorter than two; repeated
@@ -299,9 +298,11 @@ export function MapHome({
             ? articleText(item.article.title)
             : `${item.location.label} · 기사 ${group.length}건`;
         const positionLabel =
-          item.location.precision === 'address'
-            ? '기사에 언급된 주소'
-            : '지역 대표 위치';
+          item.location.precision === 'region'
+            ? '지역 대표 위치'
+            : item.location.precision === 'address'
+              ? '기사에 언급된 주소'
+              : '기사에 언급된 동네';
         const visual = createArticleMarker(
           group.length,
           `${positionLabel}: ${item.location.label} · ${title}`,

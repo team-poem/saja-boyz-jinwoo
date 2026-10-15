@@ -203,7 +203,7 @@ afterEach(async () => {
 });
 ```
 
-- [ ] mapRegionCirclesCountUniqueArticlesAtFixedPoints — 대표점별 고유 기사 수·1건 숫자 원·크기 단계·줌 불변
+- [x] mapRegionCirclesCountUniqueArticlesAtFixedPoints — 대표점별 고유 기사 수·1건 숫자 원·크기 단계·줌 불변
 ```ts
 test('mapRegionCirclesCountUniqueArticlesAtFixedPoints', async () => {
   const first = item(1);
