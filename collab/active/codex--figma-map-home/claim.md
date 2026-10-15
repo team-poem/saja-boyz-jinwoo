@@ -4,7 +4,7 @@ owner: easter721
 started: 2026-10-15
 status: active
 goal: feat(map): Figma 지도 홈의 지역 숫자 원·기사 카드·필터 구현
-next: 정확 명세·신규7개·기존3개 변경 초안 승인 대기. 승인 후 지도 전용 집계·카드·필터와 AppShell 연결 구현
+next: 승인한7개 항목을 Sobaya로 순차 구현한 뒤 실제 SDK/Figma 대조·독립 리뷰·dev PR
 base: dev
 ---
 
