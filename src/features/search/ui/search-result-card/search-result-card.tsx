@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Fragment } from 'react';
 
 import type { ArticleCollectionItem } from '@/features/article-list/model/article.types';
 import {
@@ -14,12 +13,18 @@ function highlightedText(text: string, keyword: string) {
 
   if (!query) return text;
 
-  return text.split(query).map((part, index) => (
-    <Fragment key={index}>
-      {index > 0 && <mark className="bg-transparent text-brand">{query}</mark>}
-      {part}
-    </Fragment>
-  ));
+  const literalQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const matches = new RegExp(`(${literalQuery})`, 'gi');
+
+  return text.split(matches).map((part, index) =>
+    index % 2 === 1 ? (
+      <mark key={index} className="bg-transparent text-brand">
+        {part}
+      </mark>
+    ) : (
+      part
+    ),
+  );
 }
 
 export function SearchResultCard({

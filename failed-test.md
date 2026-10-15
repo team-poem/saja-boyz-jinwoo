@@ -620,7 +620,7 @@ import { SearchResultCard } from './search-result-card';
 import type { ArticleCollectionItem } from '@/features/article-list/model/article.types';
 ```
 
-- [ ] searchHighlightIgnoresCaseAndPreservesOriginalLiteralText
+- [x] searchHighlightIgnoresCaseAndPreservesOriginalLiteralText
 
 ```ts
 test('searchHighlightIgnoresCaseAndPreservesOriginalLiteralText', () => {
