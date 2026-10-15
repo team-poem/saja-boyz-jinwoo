@@ -556,7 +556,7 @@ test('mapOverlappingRegionMarkersCombineUniqueArticles', async () => {
 });
 ```
 
-- [ ] mapRegionDisplayClustersSplitAndRejoinOnZoom
+- [x] mapRegionDisplayClustersSplitAndRejoinOnZoom
 
 ```ts
 test('mapRegionDisplayClustersSplitAndRejoinOnZoom', async () => {

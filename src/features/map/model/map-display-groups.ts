@@ -4,6 +4,23 @@ type DisplayGroup = { items: LocatedArticle[]; regionCount: number };
 type PixelPoint = { x: number; y: number };
 type ProjectLocation = (location: LocatedArticle['location']) => PixelPoint;
 
+export function sameMapDisplayGroups(
+  previous: Map<string, DisplayGroup>,
+  next: Map<string, DisplayGroup>,
+) {
+  if (previous.size !== next.size) return false;
+
+  return [...next].every(([key, group]) => {
+    const before = previous.get(key);
+
+    return (
+      before?.regionCount === group.regionCount &&
+      before.items.length === group.items.length &&
+      before.items.every((item, index) => item === group.items[index])
+    );
+  });
+}
+
 export function mapDisplayDiameter(count: number, cluster = false) {
   return count <= 5 && !cluster ? 38.4 : count < 10 ? 48 : 72;
 }

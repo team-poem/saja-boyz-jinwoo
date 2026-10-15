@@ -18,7 +18,10 @@ import type {
   MapArticleResult,
 } from '../../model/map-article.types';
 import { groupMapArticles } from '../../model/map-region-groups';
-import { groupMapDisplayPoints } from '../../model/map-display-groups';
+import {
+  groupMapDisplayPoints,
+  sameMapDisplayGroups,
+} from '../../model/map-display-groups';
 import {
   captureMapViewport,
   restoreMapViewport,
@@ -286,10 +289,12 @@ export function MapHome({
         selectedMarker = undefined;
       };
 
+      let currentItems: LocatedArticle[] = [];
+      let displayGroups: ReturnType<typeof groupMapDisplayPoints> = new Map();
+
       updateArticles.current = (items) => {
         if (disposed || loadFailed || !map) return;
-        clearSelection.current?.();
-        clearArticles();
+        currentItems = items;
         const groups = groupMapArticles(items);
 
         fitArticles.current = () => {
@@ -326,7 +331,7 @@ export function MapHome({
 
         const projection = map.getProjection?.();
 
-        for (const { items: group, regionCount } of groupMapDisplayPoints(
+        const nextGroups = groupMapDisplayPoints(
           groups,
           projection
             ? ({ latitude, longitude }) =>
@@ -334,7 +339,14 @@ export function MapHome({
                   new maps.LatLng(latitude, longitude),
                 )
             : undefined,
-        ).values()) {
+        );
+
+        if (sameMapDisplayGroups(displayGroups, nextGroups)) return;
+        displayGroups = nextGroups;
+        clearSelection.current?.();
+        clearArticles();
+
+        for (const { items: group, regionCount } of displayGroups.values()) {
           const item = group[0];
           const title =
             group.length === 1
@@ -391,6 +403,20 @@ export function MapHome({
           });
         }
       };
+
+      const refreshDisplay = () => {
+        if (disposed || loadFailed) return;
+        updateArticles.current?.(currentItems);
+      };
+
+      // Without projection support, coordinate-only groups cannot vary by zoom.
+      if (map.getProjection) {
+        for (const event of ['zoom_changed', 'idle']) {
+          controlListeners.push(
+            maps.Event.addListener(map, event, refreshDisplay),
+          );
+        }
+      }
 
       if (typeof ResizeObserver !== 'undefined') {
         observer = new ResizeObserver(resize);
