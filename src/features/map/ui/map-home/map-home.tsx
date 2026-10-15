@@ -2,10 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { articleText } from '@/features/article-list/model/article-presentation';
 
+import { filterMapPeriod, type MapPeriod } from '../../model/map-period-filter';
+import { MapPeriodFilter } from '../map-period-filter/map-period-filter';
 import { createArticleMarker } from './map-article-marker';
 import { MapArticleSheet } from './map-article-sheet';
 import { MapArticleCarousel } from '../map-article-carousel/map-article-carousel';
@@ -80,6 +82,21 @@ export function MapHome({
 }) {
   const [selectedArticles, setSelectedArticles] = useState<LocatedArticle[]>(
     [],
+  );
+  const [period, setPeriod] = useState<MapPeriod>('all');
+  const [periodNow, setPeriodNow] = useState(() => Date.now());
+  const filteredArticles = useMemo(
+    () =>
+      articles
+        ? {
+            ...articles,
+            items: filterMapPeriod(articles.items, period, periodNow),
+          }
+        : articles,
+    [articles, period, periodNow],
+  );
+  const updateArticles = useRef<((items: LocatedArticle[]) => void) | null>(
+    null,
   );
   const canvas = useRef<HTMLDivElement>(null);
   const controlClearance = useRef<HTMLDivElement>(null);
@@ -263,91 +280,100 @@ export function MapHome({
         selectedMarker = undefined;
       };
 
-      const groups = groupMapArticles(articles?.items ?? []);
+      updateArticles.current = (items) => {
+        if (disposed || loadFailed || !map) return;
+        clearSelection.current?.();
+        clearArticles();
+        const groups = groupMapArticles(items);
 
-      fitArticles.current = () => {
-        if (disposed || loadFailed || !map || !groups.size) return;
-        const coordinates = new Map(
-          [...groups.values()].map(([item]) => {
-            const { latitude, longitude } = item.location;
+        fitArticles.current = () => {
+          if (disposed || loadFailed || !map || !groups.size) return;
+          const coordinates = new Map(
+            [...groups.values()].map(([item]) => {
+              const { latitude, longitude } = item.location;
 
-            return [`${latitude},${longitude}`, item.location];
-          }),
-        );
-        const points = [...coordinates.values()].map(
-          ({ latitude, longitude }) => new maps.LatLng(latitude, longitude),
-        );
+              return [`${latitude},${longitude}`, item.location];
+            }),
+          );
+          const points = [...coordinates.values()].map(
+            ({ latitude, longitude }) => new maps.LatLng(latitude, longitude),
+          );
 
-        // The SDK ignores coordinate arrays shorter than two; repeated
-        // representative coordinates also do not define an area to fit.
-        if (points.length === 1) {
-          map.setCenter(points[0]);
-          map.setZoom(15, false);
+          // The SDK ignores coordinate arrays shorter than two; repeated
+          // representative coordinates also do not define an area to fit.
+          if (points.length === 1) {
+            map.setCenter(points[0]);
+            map.setZoom(15, false);
 
-          return;
-        }
-
-        map.fitBounds(points, {
-          top: 150,
-          right: 60,
-          bottom:
-            Math.max(180, carouselOverlay.current?.clientHeight ?? 0) + 24,
-          left: 60,
-          maxZoom: 15,
-        });
-      };
-
-      for (const group of groups.values()) {
-        const item = group[0];
-        const title =
-          group.length === 1
-            ? articleText(item.article.title)
-            : `${item.location.label} · 기사 ${group.length}건`;
-        const positionLabel =
-          item.location.precision === 'region'
-            ? '지역 대표 위치'
-            : item.location.precision === 'address'
-              ? '기사에 언급된 주소'
-              : '기사에 언급된 동네';
-        const visual = createArticleMarker(
-          group.length,
-          `${positionLabel}: ${item.location.label} · ${title}`,
-        );
-
-        const articleMarker = new maps.Marker({
-          map,
-          position: new maps.LatLng(
-            item.location.latitude,
-            item.location.longitude,
-          ),
-          title,
-          icon: {
-            content: visual.content,
-            anchor: new maps.Point(visual.side / 2, visual.side / 2),
-          },
-        });
-        const select = () => {
-          if (disposed || loadFailed) return;
-          clearSelection.current?.();
-          visual.setSelected(true);
-          selectedMarker = visual.content;
-          setSelectedArticles(group);
-        };
-        const listener = maps.Event.addListener(articleMarker, 'click', select);
-
-        visual.content.addEventListener('keydown', (event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            select();
+            return;
           }
-        });
 
-        articleMarkers.push({
-          marker: articleMarker,
-          listener,
-          setSelected: visual.setSelected,
-        });
-      }
+          map.fitBounds(points, {
+            top: 150,
+            right: 60,
+            bottom:
+              Math.max(180, carouselOverlay.current?.clientHeight ?? 0) + 24,
+            left: 60,
+            maxZoom: 15,
+          });
+        };
+
+        for (const group of groups.values()) {
+          const item = group[0];
+          const title =
+            group.length === 1
+              ? articleText(item.article.title)
+              : `${item.location.label} · 기사 ${group.length}건`;
+          const positionLabel =
+            item.location.precision === 'region'
+              ? '지역 대표 위치'
+              : item.location.precision === 'address'
+                ? '기사에 언급된 주소'
+                : '기사에 언급된 동네';
+          const visual = createArticleMarker(
+            group.length,
+            `${positionLabel}: ${item.location.label} · ${title}`,
+          );
+
+          const articleMarker = new maps.Marker({
+            map,
+            position: new maps.LatLng(
+              item.location.latitude,
+              item.location.longitude,
+            ),
+            title,
+            icon: {
+              content: visual.content,
+              anchor: new maps.Point(visual.side / 2, visual.side / 2),
+            },
+          });
+          const select = () => {
+            if (disposed || loadFailed) return;
+            clearSelection.current?.();
+            visual.setSelected(true);
+            selectedMarker = visual.content;
+            setSelectedArticles(group);
+          };
+          const listener = maps.Event.addListener(
+            articleMarker,
+            'click',
+            select,
+          );
+
+          visual.content.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              select();
+            }
+          });
+
+          articleMarkers.push({
+            marker: articleMarker,
+            listener,
+            setSelected: visual.setSelected,
+          });
+        }
+      };
 
       if (typeof ResizeObserver !== 'undefined') {
         observer = new ResizeObserver(resize);
@@ -461,6 +487,7 @@ export function MapHome({
       clearTimeout(timeout);
       locate.current = null;
       fitArticles.current = null;
+      updateArticles.current = null;
       clearSelection.current = null;
       pending = false;
       setLocating(false);
@@ -491,6 +518,7 @@ export function MapHome({
       disposed = true;
       locate.current = null;
       fitArticles.current = null;
+      updateArticles.current = null;
       clearSelection.current = null;
       observer?.disconnect();
       window.removeEventListener('resize', resize);
@@ -512,7 +540,11 @@ export function MapHome({
       if (map) captureMapViewport(clientId, map);
       map?.destroy();
     };
-  }, [clientId, attempt, articles]);
+  }, [clientId, attempt]);
+
+  useEffect(() => {
+    if (ready) updateArticles.current?.(filteredArticles?.items ?? []);
+  }, [filteredArticles, ready]);
 
   // The sheet is bounded at 65dvh; reserve that area without measuring its DOM
   // or changing the map viewport when selection changes.
@@ -522,6 +554,15 @@ export function MapHome({
 
   return (
     <section aria-label="주변 지도" className="relative">
+      <MapPeriodFilter
+        value={period}
+        onChange={(value) => {
+          clearSelection.current?.();
+          setSelectedArticles([]);
+          setPeriodNow(Date.now());
+          setPeriod(value);
+        }}
+      />
       <div ref={canvas} className="h-dvh overflow-hidden" />
       <div
         ref={controlClearance}
@@ -553,7 +594,7 @@ export function MapHome({
             />
           </button>
           {ready && articles && articles.items.length > 0 && (
-            <MapArticleCarousel articles={articles} />
+            <MapArticleCarousel articles={filteredArticles!} />
           )}
         </div>
       </div>

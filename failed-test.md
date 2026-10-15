@@ -324,7 +324,7 @@ test('mapCarouselUsesRealArticlesAndSafeImages', async () => {
 });
 ```
 
-- [ ] mapPeriodFiltersSynchronizeMarkersAndCardsWithoutResettingMap — 발행일 기간 경계·미확인/미래 제외·집계와 카드 동기화·지도 보존
+- [x] mapPeriodFiltersSynchronizeMarkersAndCardsWithoutResettingMap — 발행일 기간 경계·미확인/미래 제외·집계와 카드 동기화·지도 보존
 ```ts
 test('mapPeriodFiltersSynchronizeMarkersAndCardsWithoutResettingMap', async () => {
   const unknown = item(4);
