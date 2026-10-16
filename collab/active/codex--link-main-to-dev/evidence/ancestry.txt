@@ -1,0 +1,16 @@
+Baseline dev: a347ed87e78ea17ce866d4bf0ad07c7a77b4d744
+Source main: 4fdbd4e3d52bb2ebc3c38ed161152bf64eae6086
+Actual merge:
+451a2f9d17ce0733922f3a7d82e7ec3025bf5faf
+75fc32aec5062620d8ab8f2ff5c5c36dd2a651fe 4fdbd4e3d52bb2ebc3c38ed161152bf64eae6086
+e6caaf83b4f1961b42a089f695aa66d91490530a
+fix(release): 최신 dev에 main 조상을 정상 merge로 연결
+First-parent and merge trees:
+e6caaf83b4f1961b42a089f695aa66d91490530a
+e6caaf83b4f1961b42a089f695aa66d91490530a
+Merge bases with current dev/main:
+a347ed87e78ea17ce866d4bf0ad07c7a77b4d744
+4fdbd4e3d52bb2ebc3c38ed161152bf64eae6086
+Existing dev files:
+    1018
+Diff excluding new task metadata (must be empty):

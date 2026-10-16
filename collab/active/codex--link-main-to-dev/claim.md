@@ -2,9 +2,9 @@
 branch: codex/link-main-to-dev
 owner: amazon
 started: 2026-10-16
-status: active
-goal: fix(release): 최신 dev에서 main 조상을 정상 merge로 연결
-next: main 정상 merge 후 원본 보존·전체 검증 및 dev 대상 PR 생성
+status: done
+goal: fix(release): main 조상 연결 (Merge commit 필수)
+next: dev 대상 PR 최신 CI와 타인 승인 확인 후 Create a merge commit으로 병합
 base: dev
 ---
 
