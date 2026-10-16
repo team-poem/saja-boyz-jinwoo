@@ -2,9 +2,9 @@
 branch: codex/recover-main-ancestry
 owner: amazon
 started: 2026-10-16
-status: active
+status: done
 goal: fix(release): 최신 main 이력을 dev에 병합해 분기 복구
-next: 양쪽 협업 기록을 보존하는 정상 merge와 전체 검증 후 draft 복구 PR
+next: draft PR의 협업 검사 실패·설정 직접 승인·사람 리뷰 조건 해결
 base: dev
 ---
 

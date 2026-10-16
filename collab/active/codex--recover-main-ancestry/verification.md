@@ -29,3 +29,11 @@
 - [변경 전](evidence/repo-settings-before.json)·[거부 후](evidence/repo-settings-after.json) merge 설정은 완전히 같고 allow_merge_commit=false다. dev 보호 설정 전체도 최초 조회 값과 동일하다. 기존 required_linear_history=false 및 PR·검사·리뷰 조건을 유지했다.
 - main 최종 merge, #24 닫기, #25 변경, 배포, 강제 push, 관리자 강제 merge, 자기 승인은 하지 않는다.
 - #25로 제품 전달이 끝났으므로 #24에는 이후 새 릴리즈 의도가 필요한지 사용자가 결정해야 한다. 이 작업은 #24를 열어 둔다.
+
+## merge 커밋과 협업 검사 결과
+
+- 정상 merge `c51140228ba28c86b20ce9b2b2e111307a6532a9`의 부모는 `a39e4ca40e75657a62f71388e0c87b1146c65b7d`(작업 선언, 부모 dev a8b7809)와 최신 main `4fdbd4e3d52bb2ebc3c38ed161152bf64eae6086`다.
+- 커밋 후 `git ls-tree -r`로 모드·blob·경로 전체를 비교했다. 새 작업 기록을 제외하면 main/dev의 1004개 파일 합집합과 정확히 동일하다. main과 dev 모두 복구 HEAD의 실제 조상이며 `git merge-base origin/main HEAD`는 4fdbd4e다.
+- `sh scripts/collab.sh check --base origin/dev`는 실패했다. main에서 그대로 가져온 `collab/active/codex--release-figma-ui/`의 claim·검증자료 5개를 다른 브랜치 claim 수정으로 판정한다. 이 파일들은 모두 main 원본 blob과 동일하다. [실패 로그](evidence/collab-check.txt).
+- 현재 check는 merge-base 이후의 경로를 보고 다른 claim 디렉터리를 금지하므로, 정상 merge로 들어온 이미 검증된 기록과 직접 편집을 구분하지 않는다. 검사를 끄거나 파일을 제거하지 않았으며 필수 CI 통과로 보고하지 않는다.
+- draft 복구 PR에서 원격 검사 결과를 확인하고, 이 정상 merge 반입을 다루는 협업 검사 수정 범위에 대한 결정을 기다린다. 기존 tests/scripts/workflow/보호 조건은 변경하지 않았다.
