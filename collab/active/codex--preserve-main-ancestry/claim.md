@@ -2,7 +2,7 @@
 branch: codex/preserve-main-ancestry
 owner: amazon
 started: 2026-10-16
-status: active
+status: done
 goal: fix(release): main 조상 복구 — squash 금지, 담당 에이전트가 merge
 next: 필수 CI와 최신 head의 타인 승인 확인 후 SHA 고정 일반 merge
 base: dev
