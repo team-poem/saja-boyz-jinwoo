@@ -212,4 +212,72 @@ check "check: 기존 저널 수정 실패"          "! sh scripts/collab.sh chec
 git reset -q --hard HEAD~1
 git switch -q main && git merge -q --no-ff --no-edit feat/login >/dev/null 2>&1
 check "prune: 머지된 claim 삭제"            "sh scripts/collab.sh prune > '$W/prune' && grep -q '삭제: collab/active/feat--login' '$W/prune'"
+
+echo "# check: 보호 브랜치에서 병합한 기록"
+C="$W/check-merge"; mkdir -p "$C"
+cp -R "$SRC/harness" "$SRC/scripts" "$C/"
+cd "$C" && git init -q -b main && git config user.email t@t && git config user.name t
+mkdir -p collab/active collab/journal
+git add -A && git commit -qm init
+git branch dev && git update-ref refs/remotes/origin/dev dev
+git switch -qc feat/recovery
+mkdir -p collab/active/feat--recovery
+printf -- '---\nbranch: feat/recovery\nowner: me\nstatus: active\ngoal: recovery\nbase: dev\n---\n' > collab/active/feat--recovery/claim.md
+printf '# recovery\n\n## 이벤트\n- done main 병합\n\n## 남은 것\n- 없음\n' > collab/journal/2026-01-02-me-recovery.md
+git add -A && git commit -qm claim
+recovery_start="$(git rev-parse HEAD)"
+git switch -q main
+peer_path=collab/active/feat--peer/claim.md
+mkdir -p "$(dirname "$peer_path")" && printf 'peer record\n' > "$peer_path"
+git add -A && git commit -qm peer
+git update-ref refs/remotes/origin/main main
+git switch -q feat/recovery && git merge -q --no-ff --no-edit main
+check_recovery() { CLAUDE_PROJECT_DIR="$C" GITHUB_HEAD_REF=feat/recovery sh scripts/collab.sh check --base origin/dev > "$W/recovery-check" 2>&1; }
+check "check: main에서 정상 merge한 동료 기록 원본 추가 허용" "check_recovery || { cat '$W/recovery-check'; false; }"
+recovery_merged="$(git rev-parse HEAD)"
+git update-ref refs/remotes/origin/feat/recovery HEAD
+git switch -q --detach dev && git merge -q --no-ff --no-edit feat/recovery
+check "check: CI 가상 merge에서도 실제 head의 정상 반입 허용" "check_recovery || { cat '$W/recovery-check'; false; }"
+reject_recovery() { ! check_recovery && grep -q '다른 브랜치의 claim' "$W/recovery-check"; }
+printf 'CI resolution tamper\n' >> "$peer_path" && git add "$peer_path" && git commit --amend -qm ci-tamper
+check "check: CI 가상 merge의 결과가 실제 head와 다르면 차단" "reject_recovery"
+git switch -q --detach "$recovery_start"
+git checkout main -- "$peer_path" && git commit -qm copy
+check "check: main과 같은 blob을 직접 복사해도 차단" "reject_recovery"
+git switch -qc feat/untrusted dev
+mkdir -p "$(dirname "$peer_path")" && printf 'untrusted record\n' > "$peer_path"
+git add "$peer_path" && git commit -qm untrusted
+git switch -q --detach "$recovery_start" && git merge -q --no-ff --no-edit feat/untrusted
+check "check: 비보호 브랜치의 기록 merge는 차단" "reject_recovery"
+git switch -q --detach "$recovery_merged"
+printf 'tampered\n' >> "$peer_path" && git add "$peer_path" && git commit -qm tamper
+git checkout main -- "$peer_path" && git commit -qm restore
+check "check: 정상 반입 뒤 변조하고 원상복구해도 차단" "reject_recovery"
+git switch -q --detach "$recovery_merged"
+chmod +x "$peer_path" && git add "$peer_path" && git commit -qm mode
+check "check: 같은 blob이어도 mode 변경은 차단" "reject_recovery"
+git update-ref refs/remotes/origin/dev main
+git switch -q --detach "$recovery_merged"
+printf 'edit existing\n' >> "$peer_path" && git add "$peer_path" && git commit -qm edit
+check "check: base에 있던 동료 기록 수정은 차단" "reject_recovery"
+git switch -q --detach "$recovery_merged"
+git rm -q "$peer_path" && git commit -qm delete
+check "check: base에 있던 동료 기록 삭제는 차단" "reject_recovery"
+git update-ref refs/remotes/origin/dev dev
+git switch -q main
+printf 'later\n' > unrelated.txt && git add unrelated.txt && git commit -qm advance
+git update-ref refs/remotes/origin/main main
+git switch -q --detach "$recovery_merged"
+check "check: 원격의 무관한 전진 뒤에도 원본 반입 허용" "check_recovery"
+git switch -q main && git rm -q "$peer_path" && git commit -qm retire
+git update-ref refs/remotes/origin/main main
+git switch -q --detach "$recovery_merged"
+check "check: 보호 원격에서 삭제된 옛 기록의 반입 차단" "reject_recovery"
+git switch -qc feat/stale main^
+printf 'stale feature\n' > stale.txt && git add stale.txt && git commit -qm stale
+git switch -q --detach "$recovery_merged" && git merge -q --no-ff --no-edit main
+git update-ref refs/remotes/origin/dev main
+git merge -q --no-ff --no-commit feat/stale
+git checkout feat/stale -- "$peer_path" && git commit -qm resurrect
+check "check: 공통 조상에서 삭제한 기록을 오래된 feature로 부활시키면 차단" "reject_recovery"
 echo; echo "통과 $pass / 실패 $fail"; [ $fail -eq 0 ]

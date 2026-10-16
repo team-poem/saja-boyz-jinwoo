@@ -1,0 +1,9 @@
+
+ RUN  v5.0.3 /Users/kangminkim/lunch/sobaya/apps/saja-boyz-jinwoo-codex--recover-main-ancestry
+
+협업: components/ui/button.tsx 를 @solp(feat--checkout) 도 바꾸는 중
+
+ Test Files  27 passed (27)
+      Tests  113 passed (113)
+   Start at  09:44:57
+   Duration  124.48s (tests 91%, environment 6%, import 1%, transform 1%)

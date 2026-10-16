@@ -63,6 +63,56 @@ replied() { for j in $(ls "$JOURNAL_DIR"/*-"$ME"-*.md 2>/dev/null); do [ "$(base
 esc() { printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'; }
 jarr() { first=1; printf '['; while IFS= read -r x; do [ -z "$x" ] && continue; [ $first = 1 ] || printf ','; first=0; printf '"%s"' "$(esc "$x")"; done; printf ']'; }
 
+# 동료 기록의 새 추가만: 보호 원격에서 실제 merge한 원본인지 이력까지 확인한다.
+# 서브셸로 격리하여 check의 branch/base/files 등 전역 변수를 보존한다.
+trusted_claim_import() (
+  path="$1"; merge_base="$2"; target_base="$(g rev-parse "$3^{commit}")" || return 1
+  check_head="$(g rev-parse HEAD)"; entry="$(g ls-tree "$check_head" -- "$path")"
+  [ -n "$entry" ] && [ -z "$(g ls-tree "$merge_base" -- "$path")" ] &&
+    [ -z "$(g ls-tree "$target_base" -- "$path")" ] || return 1
+  # GitHub의 임시 PR merge만 벗긴다. 실제 origin head/base와 부모가 일치해야 한다.
+  if [ -n "${GITHUB_HEAD_REF:-}" ]; then
+    pr_head="$(g rev-parse --verify "refs/remotes/origin/$GITHUB_HEAD_REF^{commit}" 2>/dev/null)" || pr_head=""
+    set -- $(g show -s --format=%P "$check_head")
+    if [ $# = 2 ] && [ "$1" = "$target_base" ] && [ "$2" = "$pr_head" ]; then
+      [ "$(g ls-tree "$pr_head" -- "$path")" = "$entry" ] || return 1
+      check_head="$pr_head"
+    fi
+  fi
+  set --
+  for protected in $PROTECTED_BRANCHES; do
+    ref="refs/remotes/origin/$protected"
+    tip="$(g rev-parse --verify "$ref^{commit}" 2>/dev/null)" && set -- "$@" "$tip"
+  done
+  [ $# -gt 0 ] || return 1
+  # 보호 브랜치에 이미 실린 변경은 그쪽 소유다. PR 자체 커밋은 전부 검사한다.
+  commits="$(g rev-list --parents "$merge_base..$check_head" --not "$@")" || return 1
+  printf '%s\n' "$commits" | (
+    imported=0
+    while read -r commit first parents; do
+      [ -n "$commit" ] || continue
+      before="$(g ls-tree "$first" -- "$path")"
+      after="$(g ls-tree "$commit" -- "$path")"
+      [ "$before" = "$after" ] && continue
+      # 직접 복사, 기존 내용/권한 수정, 삭제는 merge 예외에 해당하지 않는다.
+      [ -z "$before" ] && [ "$after" = "$entry" ] && [ -n "$parents" ] || exit 1
+      trusted=0
+      for parent in $parents; do
+        g merge-base --is-ancestor "$parent" "$first" && continue
+        [ "$(g ls-tree "$parent" -- "$path")" = "$entry" ] || continue
+        for ref do
+          # 원격이 전진해도 원본이 같으면 허용하되 삭제된 옛 기록은 부활시키지 않는다.
+          [ "$(g ls-tree "$ref" -- "$path")" = "$entry" ] &&
+            g merge-base --is-ancestor "$parent" "$ref" && trusted=1
+        done
+      done
+      [ "$trusted" = 1 ] || exit 1
+      imported=1
+    done
+    [ "$imported" = 1 ]
+  )
+)
+
 cmd="${1:-}"; [ $# -gt 0 ] && shift
 case "$cmd" in
 
@@ -305,7 +355,12 @@ check)
   printf '%s\n' "$changed" | awk '$1~/^[MD]/{print $2}' | grep -q "^$JOURNAL_DIR/.*\.md$" && V "기존 저널을 수정/삭제함 (append-only)"
   # sobaya 의 브랜치 산출물(spec.md, failed-test.md)이 main 으로 가면 다음 브랜치와 충돌한다
   for f in spec.md failed-test.md; do printf '%s\n' "$files" | grep -qx "$f" && V "$f 가 PR 에 포함됨. handoff 의 'plan 보관' 절차로 collab/journal/plans/ 에 옮기고 루트에서 지울 것"; done
-  others="$(printf '%s\n' "$files" | grep "^$CLAIM_DIR/" | grep -v "^$(claim_dir_for "$branch")/" | grep -v README || true)"; [ -n "$others" ] && V "다른 브랜치의 claim 을 건드림: $(echo "$others" | tr '\n' ' ')"
+  others="$(printf '%s\n' "$files" | grep "^$CLAIM_DIR/" | grep -v "^$(claim_dir_for "$branch")/" | grep -v README || true)"
+  others="$(printf '%s\n' "$others" | while IFS= read -r other; do
+    [ -n "$other" ] || continue
+    trusted_claim_import "$other" "$mb" "$base" || printf '%s\n' "$other"
+  done)"
+  [ -n "$others" ] && V "다른 브랜치의 claim 을 건드림: $(echo "$others" | tr '\n' ' ')"
   agent=false; g log --format='%(trailers:key=Assisted-by,valueonly)' "$mb..HEAD" 2>/dev/null | grep -q . && agent=true
   # 다른 열린 브랜치와 같은 파일을 바꿨는가 (정보)
   ov=""; _ov() { for f in $(g diff --name-only "$(g merge-base "$base" "$3")" "$3" 2>/dev/null | grep -v '^collab/'); do printf '%s\n' "$files" | grep -qx "$f" && ov="$ov $f(@$(claim_get "$2" owner))"; done; }; for_each_other_claim _ov
