@@ -1,0 +1,6 @@
+dev protection: identical before/after
+main protection: identical before/after
+repository merge settings: identical before/after
+9e9673b0ead46ec123fddbced710bad0a29bf901dd15d678d24c7f3d9fe5723a  /tmp/jinwoo-link-dev-protection-before.json
+1a0a6087fb8c7fbee4b0a70a86f6b08af019a77470ac84c0681789474ec40664  /tmp/jinwoo-link-main-protection-before.json
+bfcfc75744997726705ac62787e7cee589819b809f29177b670b4c1f7bbe8906  /tmp/jinwoo-link-merge-settings-before.json
