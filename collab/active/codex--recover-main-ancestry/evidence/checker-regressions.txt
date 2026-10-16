@@ -1,0 +1,42 @@
+Normal merge RED (excerpt):
+ok   check: CI(detached HEAD)에서 자기 브랜치를 남으로 안 봄
+ok   check: 이벤트 절 없는 저널 실패
+ok   check: 기존 저널 수정 실패
+ok   prune: 머지된 claim 삭제
+# check: 보호 브랜치에서 병합한 기록
+검사: feat/recovery (base origin/dev)
+✗ 다른 브랜치의 claim 을 건드림: collab/active/feat--peer/claim.md
+  에이전트 커밋: false
+위반 있음
+FAIL check: main에서 정상 merge한 동료 기록 원본 추가 허용
+
+통과 84 / 실패 1
+CI synthetic merge RED (excerpt):
+ok   check: 이벤트 절 없는 저널 실패
+ok   check: 기존 저널 수정 실패
+ok   prune: 머지된 claim 삭제
+# check: 보호 브랜치에서 병합한 기록
+ok   check: main에서 정상 merge한 동료 기록 원본 추가 허용
+검사: feat/recovery (base origin/dev)
+✗ 다른 브랜치의 claim 을 건드림: collab/active/feat--peer/claim.md
+  에이전트 커밋: false
+위반 있음
+FAIL check: CI 가상 merge에서도 실제 head의 정상 반입 허용
+
+통과 85 / 실패 1
+Final focused regression checks:
+# check: 보호 브랜치에서 병합한 기록
+ok   check: main에서 정상 merge한 동료 기록 원본 추가 허용
+ok   check: CI 가상 merge에서도 실제 head의 정상 반입 허용
+ok   check: CI 가상 merge의 결과가 실제 head와 다르면 차단
+ok   check: main과 같은 blob을 직접 복사해도 차단
+ok   check: 비보호 브랜치의 기록 merge는 차단
+ok   check: 정상 반입 뒤 변조하고 원상복구해도 차단
+ok   check: 같은 blob이어도 mode 변경은 차단
+ok   check: base에 있던 동료 기록 수정은 차단
+ok   check: base에 있던 동료 기록 삭제는 차단
+ok   check: 원격의 무관한 전진 뒤에도 원본 반입 허용
+ok   check: 보호 원격에서 삭제된 옛 기록의 반입 차단
+ok   check: 공통 조상에서 삭제한 기록을 오래된 feature로 부활시키면 차단
+
+통과 12 / 실패 0

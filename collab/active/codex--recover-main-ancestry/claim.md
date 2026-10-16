@@ -2,9 +2,9 @@
 branch: codex/recover-main-ancestry
 owner: amazon
 started: 2026-10-16
-status: active
+status: done
 goal: fix(release): 최신 main 이력을 dev에 병합해 분기 복구
-next: 정상 main merge 반입의 협업 검사 오탐을 회귀 테스트로 수정하고 PR27 CI 검증
+next: PR27 최신 head CI 확인 후 독립 사람 리뷰와 merge commit 병합
 base: dev
 ---
 

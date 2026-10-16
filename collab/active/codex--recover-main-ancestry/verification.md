@@ -1,5 +1,19 @@
 # 최신 main 조상 복구 검증
 
+## 협업 검사 수정 결과 (2026-10-16)
+
+- 사용자의 직접 `해결해` 요청에 따라 `scripts/collab.sh`의 정상 merge 반입 오탐을 수정하고 `tests/hooks.sh`에 회귀 12개를 추가했다. 제품·명세·설정·워크플로는 변경하지 않았다.
+- base와 merge-base에 없는 파일만 예외 후보다. 보호 origin 이력의 실제 merge에서 추가되고, 현재 보호 원격·병합 부모·병합 결과·최종 head의 경로·mode·blob이 모두 같아야 한다. 보호 이력 밖의 모든 커밋을 검사하므로 직접 복사·수정·삭제·변조 후 복원은 계속 차단한다.
+- GitHub 임시 merge는 두 부모가 실제 base·origin PR head와 일치하고 파일도 PR head와 같은 경우만 벗긴다. 원격에서 원본이 수정·삭제되거나 refs가 없으면 예외를 넓히지 않는다.
+- 정상 main merge와 CI 임시 merge 각각 의도한 실패(84/1, 85/1)를 관찰한 뒤 수정했다. 원본 추가·원격 무관 전진 통과, 직접 복사·비보호 merge·내용/권한 변조·기존 기록 수정/삭제·삭제 기록 부활·CI 결과 변조 차단을 확인했다. [회귀 근거](evidence/checker-regressions.txt).
+- 전체 선언된 `./node_modules/.bin/vitest run`: 27파일·113테스트 통과, 117.35초. hooks 96개, loop 48개, sobaya 32개 검사를 포함한다. [로그](evidence/checker-suite.txt).
+- Node 24.9.0 / pnpm 10.34.6에서 타입·프로덕션 빌드·린트·포맷·스타일·컨벤션·sh 문법·새 변경 whitespace 검사 통과. [타입·빌드 로그](evidence/checker-build.txt)는 콘솔 CR과 줄 끝 공백·끝 빈 줄만 정리했다. 기본 sandbox의 pnpm 버전 확인은 네트워크 제한으로 실패했고, 허용된 네트워크 환경에서 같은 명령이 통과했다.
+- 실제 `sh scripts/collab.sh check --base origin/dev` 통과. 별도 읽기 전용 검토도 필수 수정 사항이 없었다.
+- 최초 1004개 합집합 중 검사기·검사 테스트 2개만 의도적으로 수정했다. 나머지 1002개 원본 파일과 main 전용 7개 기록의 mode/blob을 보존했다. 두 기준과 비교한 collab 밖 diff는 위 2개뿐이며 제품 diff는 0이다.
+- 저장소 merge commit은 사용자가 활성화했고 PR27은 ready다. 필수 CI, 리뷰 1명, 마지막 push 승인, 관리자 보호를 유지한다. 최신 push의 원격 CI가 최종 상태가 될 때까지 확인하며 리뷰가 없으면 dev 병합은 대기한다.
+
+이하 내용은 검사 수정 전의 이력·실패 근거다. 과거 설정 거부 및 draft 상태는 당시 관찰을 보존한다.
+
 ## 최신 이력
 
 - dev: a8b7809b24572056a9b29f1f1212f785693030b2, 유일한 부모 a924bdd9417b0c207eff2c28a6920708e4f4daf5 (#26 squash).
