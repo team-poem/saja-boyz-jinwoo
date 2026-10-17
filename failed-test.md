@@ -378,7 +378,7 @@ afterEach(async () => {
 });
 ```
 
-- [ ] mapRemovedOverviewControlKeepsMultiArticleViewportUntouched — 기존 제거된 지도 컨트롤 계약 교체
+- [x] mapRemovedOverviewControlKeepsMultiArticleViewportUntouched — 기존 제거된 지도 컨트롤 계약 교체
 
 ```ts
 test('mapRemovedOverviewControlKeepsMultiArticleViewportUntouched', async () => {

@@ -326,3 +326,22 @@ test('allows Enter and Space to select markers and restores focus without scroll
     expect(button.getAttribute('aria-pressed')).toBe('false');
   }
 });
+
+test('mapRemovedOverviewControlKeepsMultiArticleViewportUntouched', async () => {
+  const second = {
+    ...data.items[0],
+    article_id: 'b'.repeat(64),
+    location: { ...data.items[0].location, latitude: 37.55, longitude: 126.97 },
+  };
+  const fixture = await mount({
+    ...data,
+    total: 2,
+    items: [...data.items, second],
+  });
+  expect(fixture.positions).toHaveLength(2);
+  expect(container.textContent).not.toContain('기사 위치 보기');
+  expect(container.textContent).not.toContain('지역 좌표: 기상청');
+  expect(fixture.fitBounds).not.toHaveBeenCalled();
+  expect(fixture.setCenter).not.toHaveBeenCalled();
+  expect(fixture.setZoom).not.toHaveBeenCalled();
+});
