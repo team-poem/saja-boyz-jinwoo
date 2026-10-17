@@ -369,3 +369,28 @@ test('mapCoordinateSourceLivesInServiceInfoWithoutMapOverlay', async () => {
   expect(source?.textContent).toContain('기상청');
   expect(info.textContent).toContain('정확한 사건 현장과 다를 수 있습니다');
 });
+
+test('mapRemovedOverviewControlDoesNotRecenterSingleOrDuplicatePositions', async () => {
+  for (const items of [
+    data.items,
+    [...data.items, { ...data.items[0], article_id: 'b'.repeat(64) }],
+  ]) {
+    const fixture = await mount({ ...data, total: items.length, items });
+    expect(fixture.positions).toHaveLength(1);
+    expect(container.textContent).not.toContain('기사 위치 보기');
+    expect(
+      container.querySelector(
+        'a[href="https://www.data.go.kr/data/15084084/openapi.do"]',
+      ),
+    ).toBeNull();
+    expect(fixture.setCenter).not.toHaveBeenCalled();
+    expect(fixture.setZoom).not.toHaveBeenCalled();
+    expect(fixture.fitBounds).not.toHaveBeenCalled();
+    await act(async () => root!.unmount());
+    root = undefined;
+    container.remove();
+    document
+      .querySelectorAll('script[src*="oapi.map.naver.com"]')
+      .forEach((node) => node.remove());
+  }
+});

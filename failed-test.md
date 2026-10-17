@@ -428,7 +428,7 @@ test('mapCoordinateSourceLivesInServiceInfoWithoutMapOverlay', async () => {
 });
 ```
 
-- [ ] mapRemovedOverviewControlDoesNotRecenterSingleOrDuplicatePositions — 기존 제거된 지도 컨트롤 계약 교체
+- [x] mapRemovedOverviewControlDoesNotRecenterSingleOrDuplicatePositions — 기존 제거된 지도 컨트롤 계약 교체
 
 ```ts
 test('mapRemovedOverviewControlDoesNotRecenterSingleOrDuplicatePositions', async () => {
