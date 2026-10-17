@@ -242,6 +242,7 @@ test('mapLocationNoticeRetriesWithoutReloadAndPreventsDuplicateRequests', async 
 ## Node — src/features/map/ui/map-home/map-articles.test.ts
 
 ```ts
+// file: src/features/map/ui/map-home/map-articles.test.ts
 // @vitest-environment jsdom
 import { act, createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
