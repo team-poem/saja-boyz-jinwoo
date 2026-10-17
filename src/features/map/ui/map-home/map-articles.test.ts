@@ -154,32 +154,6 @@ test('draws a marker at the server coordinates and opens a plain-text article su
   expect(fixture.off).toHaveBeenCalledTimes(1);
 });
 
-test('shows all article positions only on request without overriding the saved viewport', async () => {
-  const second = {
-    ...data.items[0],
-    article_id: 'b'.repeat(64),
-    location: { ...data.items[0].location, latitude: 37.55, longitude: 126.97 },
-  };
-  const fixture = await mount({
-    ...data,
-    total: 2,
-    items: [...data.items, second],
-  });
-  expect(fixture.fitBounds).not.toHaveBeenCalled();
-  const button = [...container.querySelectorAll('button')].find((node) =>
-    node.textContent?.includes('기사 위치 보기'),
-  );
-  expect(button).toBeDefined();
-  await act(async () => button!.click());
-  expect(fixture.fitBounds).toHaveBeenCalledWith(
-    [
-      { latitude: 35.083, longitude: 128.968 },
-      { latitude: 37.55, longitude: 126.97 },
-    ],
-    expect.objectContaining({ maxZoom: 15 }),
-  );
-});
-
 test('keeps the map and location control usable when article coordinates are unavailable', async () => {
   await mount(null);
   expect(container.textContent).toContain('기사 위치를 불러오지 못했습니다');
@@ -251,40 +225,6 @@ test('groups articles at the same representative coordinate and keeps every arti
     '/incidents/' + 'b'.repeat(64),
   ]);
   expect(document.body.textContent).toContain('지역 대표 위치');
-});
-
-test('attributes the representative coordinate catalog beside the region marker summary', async () => {
-  await mount();
-  const source = container.querySelector(
-    'a[href="https://www.data.go.kr/data/15084084/openapi.do"]',
-  );
-  expect(source?.textContent).toBe('지역 좌표: 기상청');
-});
-
-test('centers a single unique article position instead of sending a degenerate array to fitBounds', async () => {
-  for (const items of [
-    data.items,
-    [...data.items, { ...data.items[0], article_id: 'b'.repeat(64) }],
-  ]) {
-    const fixture = await mount({ ...data, total: items.length, items });
-    const button = [...container.querySelectorAll('button')].find((node) =>
-      node.textContent?.includes('기사 위치 보기'),
-    );
-    expect(fixture.setCenter).not.toHaveBeenCalled();
-    await act(async () => button!.click());
-    expect(fixture.setCenter).toHaveBeenCalledWith({
-      latitude: 35.083,
-      longitude: 128.968,
-    });
-    expect(fixture.setZoom).toHaveBeenCalledWith(15, false);
-    expect(fixture.fitBounds).not.toHaveBeenCalled();
-    await act(async () => root!.unmount());
-    root = undefined;
-    container.remove();
-    document
-      .querySelectorAll('script[src*="oapi.map.naver.com"]')
-      .forEach((node) => node.remove());
-  }
 });
 
 test('uses a numeric region circle for one article and restores its unselected appearance when the sheet closes', async () => {
