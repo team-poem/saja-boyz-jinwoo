@@ -1,0 +1,44 @@
+test('mapLocationRetryPreservesFocusAcrossPendingFailureAndSuccess', async () => {
+  const successes: PositionCallback[] = [];
+  const failures: PositionErrorCallback[] = [];
+  const request = vi.fn(
+    (success: PositionCallback, failure: PositionErrorCallback) => {
+      successes.push(success);
+      failures.push(failure);
+    },
+  );
+  geolocation({ getCurrentPosition: request });
+  await mount();
+  await loaded();
+  await act(async () =>
+    failures[0]({ code: 3, message: 'timeout' } as GeolocationPositionError),
+  );
+  const retry = container.querySelector<HTMLButtonElement>(
+    'button[aria-label="위치 다시 시도"]',
+  )!;
+  retry.focus();
+  expect(document.activeElement).toBe(retry);
+  await act(async () => retry.click());
+  expect(request).toHaveBeenCalledTimes(2);
+  expect(retry.isConnected).toBe(true);
+  expect(container.contains(document.activeElement)).toBe(true);
+  await act(async () =>
+    failures[1]({ code: 1, message: 'denied' } as GeolocationPositionError),
+  );
+  const availableRetry = container.querySelector<HTMLButtonElement>(
+    'button[aria-label="위치 다시 시도"]',
+  )!;
+  expect(document.activeElement).toBe(availableRetry);
+  await act(async () => availableRetry.click());
+  expect(request).toHaveBeenCalledTimes(3);
+  await act(async () =>
+    successes[2]({
+      coords: { latitude: 35.1796, longitude: 129.0756, accuracy: 10 },
+    } as GeolocationPosition),
+  );
+  expect(
+    container.querySelector('button[aria-label="위치 다시 시도"]'),
+  ).toBeNull();
+  expect(document.activeElement).toBe(button('내 위치'));
+  expect(button('내 위치').disabled).toBe(false);
+});
