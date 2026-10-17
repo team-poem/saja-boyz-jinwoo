@@ -346,3 +346,26 @@ test('mapRemovedOverviewControlKeepsMultiArticleViewportUntouched', async () => 
   expect(fixture.setCenter).not.toHaveBeenCalled();
   expect(fixture.setZoom).not.toHaveBeenCalled();
 });
+
+test('mapCoordinateSourceLivesInServiceInfoWithoutMapOverlay', async () => {
+  const fixture = await mount();
+  expect(
+    container.querySelector(
+      'a[href="https://www.data.go.kr/data/15084084/openapi.do"]',
+    ),
+  ).toBeNull();
+  expect(container.textContent).not.toContain('지역 좌표: 기상청');
+  await act(async () => fixture.selected[0]());
+  expect(
+    document.querySelector('[aria-label="선택한 기사"]')?.textContent,
+  ).toContain('지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다');
+  const { default: AboutPage } = await import('@/app/about/page');
+  const { renderToStaticMarkup } = await import('react-dom/server');
+  const info = document.createElement('div');
+  info.innerHTML = renderToStaticMarkup(createElement(AboutPage));
+  const source = info.querySelector(
+    'a[href="https://www.data.go.kr/data/15084084/openapi.do"]',
+  );
+  expect(source?.textContent).toContain('기상청');
+  expect(info.textContent).toContain('정확한 사건 현장과 다를 수 있습니다');
+});

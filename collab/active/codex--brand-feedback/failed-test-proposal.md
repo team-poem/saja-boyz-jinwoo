@@ -413,9 +413,9 @@ test('mapCoordinateSourceLivesInServiceInfoWithoutMapOverlay', async () => {
   ).toBeNull();
   expect(container.textContent).not.toContain('지역 좌표: 기상청');
   await act(async () => fixture.selected[0]());
-  expect(container.textContent).toContain(
-    '지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다',
-  );
+  expect(
+    document.querySelector('[aria-label="선택한 기사"]')?.textContent,
+  ).toContain('지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다');
   const { default: AboutPage } = await import('@/app/about/page');
   const { renderToStaticMarkup } = await import('react-dom/server');
   const info = document.createElement('div');
