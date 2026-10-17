@@ -1,0 +1,22 @@
+[
+  {
+    "name": "mapLocationNoticeRetriesWithoutReloadAndPreventsDuplicateRequests",
+    "target": "src/features/map/ui/map-home/map-home.test.ts",
+    "checked": false
+  },
+  {
+    "name": "mapRemovedOverviewControlKeepsMultiArticleViewportUntouched",
+    "target": "src/features/map/ui/map-home/map-articles.test.ts",
+    "checked": false
+  },
+  {
+    "name": "mapCoordinateSourceLivesInServiceInfoWithoutMapOverlay",
+    "target": "src/features/map/ui/map-home/map-articles.test.ts",
+    "checked": false
+  },
+  {
+    "name": "mapRemovedOverviewControlDoesNotRecenterSingleOrDuplicatePositions",
+    "target": "src/features/map/ui/map-home/map-articles.test.ts",
+    "checked": false
+  }
+]

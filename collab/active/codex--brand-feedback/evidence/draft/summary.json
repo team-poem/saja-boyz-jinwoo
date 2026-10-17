@@ -1,0 +1,28 @@
+{
+  "checks": [
+    {
+      "check": "format",
+      "exit": 0
+    },
+    {
+      "check": "lint",
+      "exit": 0
+    },
+    {
+      "check": "typecheck",
+      "exit": 0
+    },
+    {
+      "check": "probe",
+      "exit": 1
+    }
+  ],
+  "passed": 13,
+  "failed": [
+    "mapRemovedOverviewControlKeepsMultiArticleViewportUntouched",
+    "mapCoordinateSourceLivesInServiceInfoWithoutMapOverlay",
+    "mapRemovedOverviewControlDoesNotRecenterSingleOrDuplicatePositions",
+    "mapLocationNoticeRetriesWithoutReloadAndPreventsDuplicateRequests"
+  ],
+  "expectedRedOnly": true
+}
