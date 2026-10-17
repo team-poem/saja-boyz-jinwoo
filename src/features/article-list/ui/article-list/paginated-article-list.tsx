@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { Notice } from '@/components/feedback/notice';
 import { ArticleSkeleton } from '@/components/feedback/article-skeleton';
 
 import { loadArticlePage } from '../../api/load-article-page';
@@ -78,17 +79,25 @@ export function PaginatedArticleList({
     <>
       <ArticleList items={page.items} apiOrigin={page.apiOrigin} />
       {pending && <ArticleSkeleton label="추가 기사를 불러오는 중이에요" />}
-      {failed && <p role="alert">추가 기사를 불러오지 못했어요</p>}
       {hasMore && <div ref={tail} aria-hidden="true" className="h-px" />}
       {hasMore && (failed || retrying) && (
-        <button
-          type="button"
-          disabled={pending}
-          onClick={() => loadMore(true)}
-          className="ui-control rounded-lg border border-solid border-border bg-surface px-3 py-2 text-brand disabled:opacity-50"
+        <Notice
+          role={failed ? 'alert' : 'group'}
+          title={failed ? '이어지는 소식을 다시 볼까요?' : '이어지는 소식'}
+          action={
+            <button
+              type="button"
+              disabled={pending}
+              onClick={() => loadMore(true)}
+              className="ui-control rounded-lg border border-solid border-border bg-surface px-3 py-2 text-brand disabled:opacity-50"
+            >
+              다시 시도
+            </button>
+          }
         >
-          다시 시도
-        </button>
+          {failed && <p>추가 기사를 불러오지 못했어요</p>}
+          <p>읽던 내용은 그대로 있어요.</p>
+        </Notice>
       )}
     </>
   );

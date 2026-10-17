@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { Notice } from '@/components/feedback/notice';
 import { pageMetadata } from '@/app/site-metadata';
 import { loadSearchPage } from '@/features/search/api/load-search-page';
 import { SearchResults } from '@/features/search/ui/search-results/search-results';
@@ -83,15 +84,22 @@ export default async function SearchPage({
         result ? (
           <SearchResults key={keyword} keyword={keyword} initialPage={result} />
         ) : (
-          <div role="alert" className="flex flex-col gap-3">
+          <Notice
+            role="alert"
+            title="검색을 다시 이어볼까요?"
+            action={
+              <a
+                href={`/search?q=${encodeURIComponent(keyword)}`}
+                className="ui-control text-brand underline"
+              >
+                다시 시도
+              </a>
+            }
+          >
             <p className="m-0">검색 결과를 불러오지 못했어요</p>
-            <a
-              href={`/search?q=${encodeURIComponent(keyword)}`}
-              className="ui-control text-brand underline"
-            >
-              다시 시도
-            </a>
-          </div>
+
+            <p>검색어는 그대로 두었어요. 한 번 더 눌러주세요.</p>
+          </Notice>
         )
       ) : null}
       <RecentSearches executedKeyword={keyword} />

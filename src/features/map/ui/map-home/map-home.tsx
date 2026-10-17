@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { ServiceIntro } from '@/components/layout/service-intro';
 import { LoadingSpinner } from '@/components/feedback/loading-spinner';
+import { Notice } from '@/components/feedback/notice';
 import { articleText } from '@/features/article-list/model/article-presentation';
 
 import { filterMapPeriod, type MapPeriod } from '../../model/map-period-filter';
@@ -40,17 +41,6 @@ type MapInstance = {
     fromCoordToOffset(point: unknown): { x: number; y: number };
   };
   setCenter(point: unknown): void;
-  setZoom(zoom: number, effect?: boolean): void;
-  fitBounds(
-    points: unknown[],
-    options: {
-      top: number;
-      right: number;
-      bottom: number;
-      left: number;
-      maxZoom: number;
-    },
-  ): void;
   setSize(size: unknown): void;
 };
 type MarkerInstance = { setMap(map: MapInstance | null): void };
@@ -91,7 +81,10 @@ type LocationResult =
 function requestLocation(): Promise<LocationResult> {
   return new Promise((resolve) => {
     if (!navigator.geolocation) {
-      resolve({ error: '이 브라우저는 위치 확인을 지원하지 않습니다.' });
+      resolve({
+        error:
+          '이 브라우저는 위치 확인을 지원하지 않아요. 지도에서 원하는 동네를 살펴보세요.',
+      });
 
       return;
     }
@@ -100,10 +93,10 @@ function requestLocation(): Promise<LocationResult> {
       resolve({
         error:
           error?.code === 1
-            ? '위치 권한이 거부되었습니다. 브라우저 설정에서 위치 권한을 허용해 주세요.'
+            ? '위치 권한이 꺼져 있어요. 브라우저 설정에서 허용하면 내 주변부터 볼 수 있어요.'
             : error?.code === 3
-              ? '위치 확인 시간이 초과되었습니다. 다시 시도해 주세요.'
-              : '위치를 확인하지 못했습니다. 다시 시도해 주세요.',
+              ? '위치 확인 시간이 초과됐어요. 한 번 더 확인해 볼까요?'
+              : '내 위치를 확인하지 못했어요. 연결 상태를 확인한 뒤 다시 눌러주세요.',
       });
 
     try {
@@ -164,7 +157,6 @@ export function MapHome({
   const controlClearance = useRef<HTMLDivElement>(null);
   const carouselOverlay = useRef<HTMLDivElement>(null);
   const updateControls = useRef<(() => void) | null>(null);
-  const fitArticles = useRef<(() => void) | null>(null);
   const clearSelection = useRef<((restoreFocus?: boolean) => void) | null>(
     null,
   );
@@ -430,38 +422,6 @@ export function MapHome({
         currentItems = items;
         const groups = groupMapArticles(items);
 
-        fitArticles.current = () => {
-          if (disposed || loadFailed || !map || !groups.size) return;
-          const coordinates = new Map(
-            [...groups.values()].map(([item]) => {
-              const { latitude, longitude } = item.location;
-
-              return [`${latitude},${longitude}`, item.location];
-            }),
-          );
-          const points = [...coordinates.values()].map(
-            ({ latitude, longitude }) => new maps.LatLng(latitude, longitude),
-          );
-
-          // The SDK ignores coordinate arrays shorter than two; repeated
-          // representative coordinates also do not define an area to fit.
-          if (points.length === 1) {
-            map.setCenter(points[0]);
-            map.setZoom(15, false);
-
-            return;
-          }
-
-          map.fitBounds(points, {
-            top: 150,
-            right: 60,
-            bottom:
-              Math.max(180, carouselOverlay.current?.clientHeight ?? 0) + 24,
-            left: 60,
-            maxZoom: 15,
-          });
-        };
-
         const projection = map.getProjection?.();
 
         const nextGroups = groupMapDisplayPoints(
@@ -608,7 +568,6 @@ export function MapHome({
       automaticLocation.current.request = undefined;
       clearTimeout(timeout);
       locate.current = null;
-      fitArticles.current = null;
       updateArticles.current = null;
       clearSelection.current = null;
       pending = false;
@@ -640,7 +599,6 @@ export function MapHome({
     return () => {
       disposed = true;
       locate.current = null;
-      fitArticles.current = null;
       updateArticles.current = null;
       clearSelection.current = null;
       observer?.disconnect();
@@ -741,17 +699,43 @@ export function MapHome({
           className={`pointer-events-none absolute top-[calc(112px_+_env(safe-area-inset-top))] right-4 left-4 flex flex-col gap-2 [&>div]:pointer-events-auto [&>p]:pointer-events-auto ${locationError ? '[&>*]:bg-white' : '[&>*]:bg-floating'}`}
         >
           {locationError && (
-            <p
-              role="status"
-              className="rounded-2xl bg-inherit p-4 shadow-floating"
+            <Notice
+              title="위치를 한 번 더 확인할까요?"
+              action={
+                <button
+                  type="button"
+                  aria-label="위치 다시 시도"
+                  disabled={!ready || locating}
+                  onClick={() => locate.current?.()}
+                  className="ui-control min-h-11 rounded-lg border border-brand/30 px-4 py-2 text-sm font-semibold text-brand disabled:opacity-50"
+                >
+                  위치 다시 시도
+                </button>
+              }
             >
               {locationError}
-            </p>
+            </Notice>
           )}
           {ready && articles !== undefined && !articles?.items.length && (
-            <div
+            <Notice
+              title={
+                articles === null
+                  ? '주변 소식을 다시 이어볼까요?'
+                  : '다른 동네 소식도 살펴볼까요?'
+              }
               role="status"
-              className="rounded-2xl bg-inherit p-3 text-sm text-muted shadow-floating"
+              action={
+                articles === null ? (
+                  <button
+                    type="button"
+                    onClick={() => window.location.reload()}
+                  >
+                    기사 위치 다시 불러오기
+                  </button>
+                ) : (
+                  <Link href="/incidents">전체 기사 목록 보기</Link>
+                )
+              }
             >
               {articles === null ? (
                 <>
@@ -759,68 +743,37 @@ export function MapHome({
                     기사 위치를 불러오지 못했습니다. 지도는 계속 사용할 수
                     있습니다.
                   </p>
-                  <button
-                    type="button"
-                    onClick={() => window.location.reload()}
-                    className="mt-2 inline-block underline"
-                  >
-                    기사 위치 다시 불러오기
-                  </button>
+                  <p>
+                    잠시 후 다시 불러와 주세요. 다시 불러오면 페이지가
+                    새로고침됩니다.
+                  </p>
                 </>
               ) : (
-                <>
-                  <p>아직 위치가 확인된 기사가 없습니다.</p>
-                  <Link
-                    href="/incidents"
-                    className="mt-2 inline-block underline"
-                  >
-                    전체 기사 목록 보기
-                  </Link>
-                </>
+                '아직 위치가 확인된 기사가 없습니다.'
               )}
-            </div>
-          )}
-          {ready && Boolean(articles?.items.length) && (
-            <div className="self-start flex items-center gap-2 rounded-xl bg-inherit px-3 py-1.5 shadow-floating">
-              <div className="flex items-center text-muted">
-                {articles!.items.some(
-                  (item) => item.location.precision === 'region',
-                ) && (
-                  <a
-                    href="https://www.data.go.kr/data/15084084/openapi.do"
-                    className="flex items-center text-[11px]/[16px] underline"
-                  >
-                    지역 좌표: 기상청
-                  </a>
-                )}
-              </div>
-              <button
-                type="button"
-                onClick={() => fitArticles.current?.()}
-                className="flex items-center justify-center rounded-lg border-0 bg-transparent px-2 py-1 text-[11px]/[16px] text-text"
-              >
-                기사 위치 보기
-              </button>
-            </div>
+            </Notice>
           )}
           {failed && (
-            <div
+            <Notice
               role="alert"
-              className="rounded-2xl bg-inherit p-4 shadow-floating"
+              title="지도를 다시 펼쳐볼까요?"
+              action={
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFailed(false);
+                    setReady(false);
+                    setAttempt((value) => value + 1);
+                  }}
+                  className="rounded-lg border border-border px-4 py-2"
+                >
+                  다시 시도
+                </button>
+              }
             >
               <p>지도를 불러오지 못했습니다. 다시 시도해 주세요.</p>
-              <button
-                type="button"
-                onClick={() => {
-                  setFailed(false);
-                  setReady(false);
-                  setAttempt((value) => value + 1);
-                }}
-                className="rounded-lg border border-border px-4 py-2"
-              >
-                다시 시도
-              </button>
-            </div>
+              <p>연결을 확인한 뒤 다시 눌러주세요.</p>
+            </Notice>
           )}
           {!ready && !failed && (
             <div

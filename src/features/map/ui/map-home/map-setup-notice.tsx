@@ -1,5 +1,8 @@
 'use client';
 
+import Link from 'next/link';
+
+import { Notice } from '@/components/feedback/notice';
 import { ServiceIntro } from '@/components/layout/service-intro';
 
 export function MapSetupNotice() {
@@ -9,24 +12,22 @@ export function MapSetupNotice() {
         aria-label="주변 지도"
         className="min-h-[320px] bg-background px-4 pt-26 pb-4"
       >
-        <div
+        <Notice
+          titleAs="h1"
           role="alert"
-          className="rounded-2xl bg-floating p-4 shadow-floating"
+          title="지도를 잠시 열 수 없어요"
+          action={
+            <>
+              <button type="button" onClick={() => window.location.reload()}>
+                다시 시도
+              </button>
+              <Link href="/incidents">기사 목록</Link>
+              <Link href="/search">검색</Link>
+            </>
+          }
         >
-          <h1 className="mt-0 mb-3 text-2xl leading-[1.4]">
-            지도 설정이 필요합니다
-          </h1>
-          <p className="text-muted leading-[1.7]">
-            지도를 표시할 수 없습니다. 지도 설정은 관리자에게 문의해 주세요.
-          </p>
-          <button
-            type="button"
-            onClick={() => window.location.reload()}
-            className="rounded-lg border border-border px-4 py-2"
-          >
-            다시 시도
-          </button>
-        </div>
+          지도를 표시할 수 없습니다. 지도 설정은 관리자에게 문의해 주세요.
+        </Notice>
       </section>
       <ServiceIntro />
     </>

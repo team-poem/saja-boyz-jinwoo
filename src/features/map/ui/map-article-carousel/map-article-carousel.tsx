@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { Notice } from '@/components/feedback/notice';
+
 import { MapCarouselCard } from '../map-carousel-card/map-carousel-card';
 import type { MapArticleResult } from '../../model/map-article.types';
 import { recentMapArticles } from '../../model/map-carousel-articles';
@@ -30,12 +32,9 @@ export function MapArticleCarousel({
       </div>
       <div className="flex snap-x snap-proximity gap-2.5 overflow-x-auto overscroll-x-contain px-4 [scroll-padding-inline:16px]">
         {articles.items.length === 0 && (
-          <p
-            role="status"
-            className="m-0 w-full rounded-card border border-white bg-floating p-3 text-[13px] text-muted shadow-[0_4px_16px_rgb(0_0_0/5%)]"
-          >
+          <Notice title="기간을 조금 넓혀볼까요?">
             선택한 기간의 기사가 없습니다. 기간을 변경해 주세요.
-          </p>
+          </Notice>
         )}
         {recentMapArticles(articles.items).map((item) => (
           <MapCarouselCard

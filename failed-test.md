@@ -189,7 +189,7 @@ function geolocation(value: unknown) {
 }
 ```
 
-- [ ] mapLocationNoticeRetriesWithoutReloadAndPreventsDuplicateRequests — 위치 오류에서 직접 재시도·중복 요청 잠금·지도 유지·성공 복구
+- [x] mapLocationNoticeRetriesWithoutReloadAndPreventsDuplicateRequests — 위치 오류에서 직접 재시도·중복 요청 잠금·지도 유지·성공 복구
 
 ```ts
 test('mapLocationNoticeRetriesWithoutReloadAndPreventsDuplicateRequests', async () => {

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ErrorBoundary, useErrorBoundary } from '@suspensive/react';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 
+import { Notice } from '@/components/feedback/notice';
 import { LoadingSpinner } from '@/components/feedback/loading-spinner';
 import { categoryLabels } from '@/features/incidents/model/labels';
 
@@ -549,24 +550,27 @@ export default function ReportPage() {
             ref={submissionBoundary}
             onReset={() => setSubmissionError('')}
             fallback={({ error, reset }) => (
-              <div>
-                <p role="alert">{error.message}</p>
-                <button
-                  className="cursor-pointer rounded-[10px] border border-solid border-border bg-surface px-3 py-2 text-muted"
-                  type="button"
-                  onClick={reset}
-                >
-                  오류 닫기
-                </button>
-              </div>
+              <Notice
+                role="alert"
+                title="제보 상태를 다시 확인해 주세요"
+                action={
+                  <button type="button" onClick={reset}>
+                    오류 닫기
+                  </button>
+                }
+              >
+                {error.message}
+              </Notice>
             )}
           >
             <SubmissionError message={submissionError} />
           </ErrorBoundary>
           {confirmedReportId && (
-            <p role="status">
-              제보가 접수됐어요 · 접수번호: {confirmedReportId}
-            </p>
+            <Notice
+              title={`제보가 접수됐어요 · 접수번호: ${confirmedReportId}`}
+            >
+              소식을 전해주셔서 고마워요.
+            </Notice>
           )}
           {confirmedReportId && (
             <button

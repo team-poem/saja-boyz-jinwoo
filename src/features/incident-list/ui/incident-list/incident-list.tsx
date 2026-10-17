@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { Notice } from '@/components/feedback/notice';
 import { ArticleSkeleton } from '@/components/feedback/article-skeleton';
 import {
   categoryLabels,
@@ -48,17 +49,9 @@ export function IncidentList(props: IncidentListProps) {
   if (props.incidents.length === 0) {
     return (
       <div className="flex flex-col gap-3 px-4 py-2">
-        <div
-          className="flex min-h-40 flex-col items-center justify-center gap-2 rounded-card border border-solid border-border bg-surface px-4 py-6 text-center"
-          role="status"
-        >
-          <p className="m-0 text-[14px]/[1.5] font-bold text-text">
-            조건에 맞는 사건이 없어요
-          </p>
-          <p className="m-0 text-[12px]/4 text-muted">
-            검색어나 필터를 바꿔보세요
-          </p>
-        </div>
+        <Notice title="조건에 맞는 사건이 없어요">
+          검색어나 필터를 바꿔보세요
+        </Notice>
       </div>
     );
   }
