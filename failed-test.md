@@ -401,7 +401,7 @@ test('mapRemovedOverviewControlKeepsMultiArticleViewportUntouched', async () => 
 });
 ```
 
-- [ ] mapCoordinateSourceLivesInServiceInfoWithoutMapOverlay — 기존 제거된 지도 컨트롤 계약 교체
+- [x] mapCoordinateSourceLivesInServiceInfoWithoutMapOverlay — 기존 제거된 지도 컨트롤 계약 교체
 
 ```ts
 test('mapCoordinateSourceLivesInServiceInfoWithoutMapOverlay', async () => {
