@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import { ServiceIntro } from '@/components/layout/service-intro';
 import { LoadingSpinner } from '@/components/feedback/loading-spinner';
@@ -156,6 +156,10 @@ export function MapHome({
   const canvas = useRef<HTMLDivElement>(null);
   const controlClearance = useRef<HTMLDivElement>(null);
   const carouselOverlay = useRef<HTMLDivElement>(null);
+  const noticeViewport = useRef<HTMLDivElement>(null);
+  const retryButton = useRef<HTMLButtonElement>(null);
+  const locateButton = useRef<HTMLButtonElement>(null);
+  const restoreLocateFocus = useRef(false);
   const updateControls = useRef<(() => void) | null>(null);
   const clearSelection = useRef<((restoreFocus?: boolean) => void) | null>(
     null,
@@ -170,6 +174,40 @@ export function MapHome({
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
+
+  useLayoutEffect(() => {
+    if (!locating && !locationError && restoreLocateFocus.current) {
+      restoreLocateFocus.current = false;
+      locateButton.current?.focus({ preventScroll: true });
+    }
+  }, [locating, locationError]);
+
+  useLayoutEffect(() => {
+    const positionNotices = () => {
+      if (!noticeViewport.current) return;
+      const bottom = Math.max(
+        (carouselOverlay.current?.getBoundingClientRect().height ?? 0) + 66,
+        (controlClearance.current?.getBoundingClientRect().height ?? 0) + 8,
+      );
+
+      noticeViewport.current.style.bottom = `${bottom}px`;
+    };
+
+    positionNotices();
+    const observer =
+      typeof ResizeObserver === 'undefined'
+        ? undefined
+        : new ResizeObserver(positionNotices);
+
+    if (carouselOverlay.current) observer?.observe(carouselOverlay.current);
+    if (controlClearance.current) observer?.observe(controlClearance.current);
+    window.addEventListener('resize', positionNotices);
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', positionNotices);
+    };
+  }, [ready, articles, filteredArticles, selectedArticles]);
 
   useEffect(() => {
     const viewport = restoreMapViewport(clientId);
@@ -218,7 +256,6 @@ export function MapHome({
     ) => {
       pending = true;
       setLocating(true);
-      setLocationError('');
       void request.then((result) => {
         if (disposed || loadFailed) return;
         pending = false;
@@ -231,6 +268,10 @@ export function MapHome({
         }
 
         if (automatic && automaticCancelled) return;
+        restoreLocateFocus.current =
+          retryButton.current !== null &&
+          document.activeElement === retryButton.current;
+        setLocationError('');
         location = result;
         showLocation(true);
       });
@@ -670,6 +711,7 @@ export function MapHome({
           <div className="pointer-events-auto relative">
             <button
               type="button"
+              ref={locateButton}
               aria-label="내 위치"
               aria-busy={locating}
               disabled={!ready || locating}
@@ -696,95 +738,120 @@ export function MapHome({
           </div>
         </div>
         <div
-          className={`pointer-events-none absolute top-[calc(112px_+_env(safe-area-inset-top))] right-4 left-4 flex flex-col gap-2 [&>div]:pointer-events-auto [&>p]:pointer-events-auto ${locationError ? '[&>*]:bg-white' : '[&>*]:bg-floating'}`}
+          ref={noticeViewport}
+          className="pointer-events-none absolute top-[calc(112px_+_env(safe-area-inset-top))] right-4 bottom-[calc(152px_+_env(safe-area-inset-bottom))] left-4 flex min-h-0 flex-col"
         >
-          {locationError && (
-            <Notice
-              title="위치를 한 번 더 확인할까요?"
-              action={
-                <button
-                  type="button"
-                  aria-label="위치 다시 시도"
-                  disabled={!ready || locating}
-                  onClick={() => locate.current?.()}
-                  className="ui-control min-h-11 rounded-lg border border-brand/30 px-4 py-2 text-sm font-semibold text-brand disabled:opacity-50"
-                >
-                  위치 다시 시도
-                </button>
-              }
-            >
-              {locationError}
-            </Notice>
-          )}
-          {ready && articles !== undefined && !articles?.items.length && (
-            <Notice
-              title={
-                articles === null
-                  ? '주변 소식을 다시 이어볼까요?'
-                  : '다른 동네 소식도 살펴볼까요?'
-              }
-              role="status"
-              action={
-                articles === null ? (
-                  <button
-                    type="button"
-                    onClick={() => window.location.reload()}
-                  >
-                    기사 위치 다시 불러오기
-                  </button>
-                ) : (
-                  <Link href="/incidents">전체 기사 목록 보기</Link>
-                )
-              }
-            >
-              {articles === null ? (
-                <>
-                  <p>
-                    기사 위치를 불러오지 못했습니다. 지도는 계속 사용할 수
-                    있습니다.
-                  </p>
-                  <p>
-                    잠시 후 다시 불러와 주세요. 다시 불러오면 페이지가
-                    새로고침됩니다.
-                  </p>
-                </>
-              ) : (
-                '아직 위치가 확인된 기사가 없습니다.'
-              )}
-            </Notice>
-          )}
-          {failed && (
-            <Notice
-              role="alert"
-              title="지도를 다시 펼쳐볼까요?"
-              action={
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFailed(false);
-                    setReady(false);
-                    setAttempt((value) => value + 1);
-                  }}
-                  className="rounded-lg border border-border px-4 py-2"
-                >
-                  다시 시도
-                </button>
-              }
-            >
-              <p>지도를 불러오지 못했습니다. 다시 시도해 주세요.</p>
-              <p>연결을 확인한 뒤 다시 눌러주세요.</p>
-            </Notice>
-          )}
-          {!ready && !failed && (
+          {(locationError ||
+            failed ||
+            !ready ||
+            (articles !== undefined && !articles?.items.length)) && (
             <div
-              role="status"
-              aria-busy="true"
-              className="rounded-2xl bg-inherit p-4 shadow-floating"
+              role="region"
+              aria-label="지도 안내"
+              tabIndex={0}
+              className={`pointer-events-auto flex min-h-0 flex-col gap-2 overflow-y-auto overscroll-y-contain rounded-2xl focus-visible:outline-2 focus-visible:outline-brand [&>*]:shrink-0 ${locationError ? '[&>*]:bg-white' : '[&>*]:bg-floating'}`}
             >
-              <span className="block size-5 text-muted">
-                <LoadingSpinner />
-              </span>
-              <span className="sr-only">지도를 불러오는 중입니다.</span>
+              {locationError && (
+                <Notice
+                  role="status"
+                  title={
+                    locating
+                      ? '내 위치를 확인하고 있어요'
+                      : '위치를 한 번 더 확인할까요?'
+                  }
+                  action={
+                    <button
+                      type="button"
+                      ref={retryButton}
+                      aria-label="위치 다시 시도"
+                      aria-busy={locating}
+                      aria-disabled={!ready || locating}
+                      onClick={() => locate.current?.()}
+                      className="ui-control flex min-h-11 items-center gap-2 rounded-lg border border-brand/30 px-4 py-2 text-sm font-semibold text-brand aria-disabled:opacity-50"
+                    >
+                      {locating && (
+                        <span aria-hidden="true" className="size-4">
+                          <LoadingSpinner />
+                        </span>
+                      )}
+                      {locating ? '위치 확인 중' : '위치 다시 시도'}
+                    </button>
+                  }
+                >
+                  {locating ? '내 위치를 확인하는 중입니다.' : locationError}
+                </Notice>
+              )}
+              {ready && articles !== undefined && !articles?.items.length && (
+                <Notice
+                  title={
+                    articles === null
+                      ? '주변 소식을 다시 이어볼까요?'
+                      : '다른 동네 소식도 살펴볼까요?'
+                  }
+                  role="status"
+                  action={
+                    articles === null ? (
+                      <button
+                        type="button"
+                        onClick={() => window.location.reload()}
+                      >
+                        기사 위치 다시 불러오기
+                      </button>
+                    ) : (
+                      <Link href="/incidents">전체 기사 목록 보기</Link>
+                    )
+                  }
+                >
+                  {articles === null ? (
+                    <>
+                      <p>
+                        기사 위치를 불러오지 못했습니다. 지도는 계속 사용할 수
+                        있습니다.
+                      </p>
+                      <p>
+                        잠시 후 다시 불러와 주세요. 다시 불러오면 페이지가
+                        새로고침됩니다.
+                      </p>
+                    </>
+                  ) : (
+                    '아직 위치가 확인된 기사가 없습니다.'
+                  )}
+                </Notice>
+              )}
+              {failed && (
+                <Notice
+                  role="alert"
+                  title="지도를 다시 펼쳐볼까요?"
+                  action={
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFailed(false);
+                        setReady(false);
+                        setAttempt((value) => value + 1);
+                      }}
+                      className="rounded-lg border border-border px-4 py-2"
+                    >
+                      다시 시도
+                    </button>
+                  }
+                >
+                  <p>지도를 불러오지 못했습니다. 다시 시도해 주세요.</p>
+                  <p>연결을 확인한 뒤 다시 눌러주세요.</p>
+                </Notice>
+              )}
+              {!ready && !failed && (
+                <div
+                  role="status"
+                  aria-busy="true"
+                  className="rounded-2xl bg-inherit p-4 shadow-floating"
+                >
+                  <span className="block size-5 text-muted">
+                    <LoadingSpinner />
+                  </span>
+                  <span className="sr-only">지도를 불러오는 중입니다.</span>
+                </div>
+              )}
             </div>
           )}
         </div>

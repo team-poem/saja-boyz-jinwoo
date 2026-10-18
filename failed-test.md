@@ -645,7 +645,7 @@ function geolocation(value: unknown) {
 }
 ```
 
-- [ ] mapLocationRetryPreservesFocusAcrossPendingFailureAndSuccess
+- [x] mapLocationRetryPreservesFocusAcrossPendingFailureAndSuccess
 
 ```ts
 test('mapLocationRetryPreservesFocusAcrossPendingFailureAndSuccess', async () => {
