@@ -753,12 +753,8 @@ export function MapHome({
             >
               {locationError && (
                 <Notice
-                  role="status"
-                  title={
-                    locating
-                      ? '내 위치를 확인하고 있어요'
-                      : '위치를 한 번 더 확인할까요?'
-                  }
+                  role={locating ? 'group' : 'status'}
+                  title={locating ? '내 위치' : '위치를 한 번 더 확인할까요?'}
                   action={
                     <button
                       type="button"
@@ -774,11 +770,11 @@ export function MapHome({
                           <LoadingSpinner />
                         </span>
                       )}
-                      {locating ? '위치 확인 중' : '위치 다시 시도'}
+                      위치 다시 시도
                     </button>
                   }
                 >
-                  {locating ? '내 위치를 확인하는 중입니다.' : locationError}
+                  {!locating && locationError}
                 </Notice>
               )}
               {ready && articles !== undefined && !articles?.items.length && (
