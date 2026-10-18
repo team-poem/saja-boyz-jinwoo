@@ -2,6 +2,7 @@
 
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 
+import { Notice } from '@/components/feedback/notice';
 import { ArticleSkeleton } from '@/components/feedback/article-skeleton';
 import { useArticleTail } from '@/features/article-list/ui/article-list/use-article-tail';
 
@@ -93,9 +94,9 @@ export function SearchResults({
         아래로 이동하면 기사를 이어서 불러와요. 중복 기사는 한 번만 표시해요.
       </p>
       {cards.length === 0 ? (
-        <p role="status" className="text-muted leading-[1.7]">
-          검색 결과가 없어요
-        </p>
+        <Notice title="검색 결과가 없어요">
+          다른 키워드로 동네 소식을 찾아보세요.
+        </Notice>
       ) : (
         <div className="flex flex-col gap-3 pb-3">
           {cards.map(({ id, content }) => (
@@ -109,16 +110,26 @@ export function SearchResults({
           variant="search"
         />
       )}
-      {failed && <p role="alert">추가 기사를 불러오지 못했어요</p>}
       {hasMore && (failed || retrying) && (
-        <button
-          type="button"
-          disabled={pending}
-          onClick={() => loadMore(true)}
-          className="ui-control rounded-lg border border-solid border-border bg-surface px-3 py-2 text-brand disabled:opacity-50"
+        <Notice
+          role={failed ? 'alert' : 'group'}
+          title={
+            failed ? '이어지는 검색 결과를 다시 볼까요?' : '이어지는 검색 결과'
+          }
+          action={
+            <button
+              type="button"
+              disabled={pending}
+              onClick={() => loadMore(true)}
+              className="ui-control rounded-lg border border-solid border-border bg-surface px-3 py-2 text-brand disabled:opacity-50"
+            >
+              다시 시도
+            </button>
+          }
         >
-          다시 시도
-        </button>
+          {failed && <p>추가 기사를 불러오지 못했어요</p>}
+          <p>읽던 검색 결과와 검색어는 그대로 있어요.</p>
+        </Notice>
       )}
       {hasMore && <div ref={tail} aria-hidden="true" className="h-px" />}
     </section>

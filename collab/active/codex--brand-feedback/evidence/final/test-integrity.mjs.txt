@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {createRequire} from 'node:module';
+import {createHash} from 'node:crypto';
+const wt=process.env.FEEDBACK_APP;const require=createRequire(path.join(wt,'package.json')),ts=require('typescript');
+const p=path.join(wt,'collab/active/codex--brand-feedback'),hashes=JSON.parse(fs.readFileSync(path.join(p,'baseline-test-hashes.json')));
+const targets=['src/features/map/ui/map-home/map-home.test.ts','src/features/map/ui/map-home/map-articles.test.ts'];
+for(const [f,h] of Object.entries(hashes))if(!targets.includes(f)&&createHash('sha256').update(fs.readFileSync(path.join(wt,f))).digest('hex')!==h)throw Error('Unapproved prior test change '+f);
+const bodies=(file,text)=>{const ast=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true),out={};for(const n of ast.statements)if(ts.isExpressionStatement(n)&&ts.isCallExpression(n.expression)&&n.expression.expression.getText(ast)==='test')out[n.expression.arguments[0].text]=n.getText(ast);return out;};
+let count=0;
+for(const f of targets){const proposed=fs.readFileSync(path.join(p,'proposed-tests',path.basename(f)+'.txt'),'utf8'),actual=fs.readFileSync(path.join(wt,f),'utf8');const a=bodies(f,actual),e=bodies(f,proposed);if(Object.keys(a).length!==Object.keys(e).length)throw Error('Test count mismatch '+f);for(const [name,body] of Object.entries(e)){if(a[name]!==body)throw Error('Exact body changed '+name);count++;}}
+const qa=JSON.parse(fs.readFileSync('/tmp/brand-feedback-browser/report.json'));if(!qa.checks.length||qa.checks.some(x=>!x.passed))throw Error('Browser QA incomplete');for(const [f,h] of Object.entries(qa.sourceFiles))if(createHash('sha256').update(fs.readFileSync(path.join(wt,f))).digest('hex')!==h)throw Error('Source changed after QA '+f);
+console.log(JSON.stringify({untouchedTestFiles:Object.keys(hashes).length-targets.length,exactMapTestBodies:count,browserChecks:qa.checks.length,browserSourceUnchanged:true}));

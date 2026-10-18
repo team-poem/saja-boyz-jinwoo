@@ -1,17 +1,17 @@
 import Link from 'next/link';
 
+import { Notice } from '@/components/feedback/notice';
+
 export default function ArticleDetailNotFound() {
   return (
-    <section className="mt-6 flex flex-col gap-5 rounded-card bg-surface p-6 text-text">
-      <h1 className="m-0 text-[22px]/[30px] font-bold">
-        기사를 찾을 수 없어요
-      </h1>
-      <Link
-        href="/incidents"
-        className="self-start text-sm font-bold text-brand underline underline-offset-4"
+    <div className="mt-6">
+      <Notice
+        titleAs="h1"
+        title="기사를 찾을 수 없어요"
+        action={<Link href="/incidents">목록으로</Link>}
       >
-        목록으로
-      </Link>
-    </section>
+        링크를 확인하거나 목록에서 다른 소식을 살펴보세요.
+      </Notice>
+    </div>
   );
 }
