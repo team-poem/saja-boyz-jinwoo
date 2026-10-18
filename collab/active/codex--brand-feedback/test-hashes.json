@@ -1,0 +1,7 @@
+{
+  "failed-test-proposal.md": "539cc6725b81c82d5ca70f84e12cdc5fa95ebac36777dc7efcd29b7337fa965e",
+  "test-entries.json": "e128a4ffb36e100b1e216f7eef2b3c0fea770b46b6e7640f5fcb010e4b3360a5",
+  "proposed-tests/map-articles.baseline.txt": "0301943f43ccfdab47cb878c1b0981783ec50554f21bb0d3d61d7bce1982e43d",
+  "proposed-tests/map-articles.test.ts.txt": "15d7a0c5ffb1aa85708cb5bbde6ca9d59de4f70c5f269fbdc0d2a8c01a451d5f",
+  "proposed-tests/map-home.test.ts.txt": "d989ea91a59ecfc125120e0907f1c8ac1a4d2f3315c92426420de5e2a89d1d21"
+}

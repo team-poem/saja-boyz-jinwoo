@@ -1,0 +1,11 @@
+{
+  "spec-proposal.md": "e24757c8acac54e93d78640129ce12b0d367f667a857c2e3a7bbc2110292edc6",
+  "copy-audit.md": "caf50360587703892df020b0a00f0fa504bcd58bb2ffc1722675f698e184bd4b",
+  "existing-test-changes-proposal.md": "b33db90d3ec29fed99dff9685dce4d9577a98351ac5181d5bd9aa07ecab7d72f",
+  "existing-test-changes.diff": "1b700f799088681a58dbb2f27f17a4e9ea0ebc9c727d6fdb7f07443788252a85",
+  "failed-test-proposal.md": "539cc6725b81c82d5ca70f84e12cdc5fa95ebac36777dc7efcd29b7337fa965e",
+  "test-entries.json": "e128a4ffb36e100b1e216f7eef2b3c0fea770b46b6e7640f5fcb010e4b3360a5",
+  "proposed-tests/map-articles.baseline.txt": "0301943f43ccfdab47cb878c1b0981783ec50554f21bb0d3d61d7bce1982e43d",
+  "proposed-tests/map-articles.test.ts.txt": "15d7a0c5ffb1aa85708cb5bbde6ca9d59de4f70c5f269fbdc0d2a8c01a451d5f",
+  "proposed-tests/map-home.test.ts.txt": "d989ea91a59ecfc125120e0907f1c8ac1a4d2f3315c92426420de5e2a89d1d21"
+}

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
+import { Notice } from '@/components/feedback/notice';
 import { pageMetadata, siteOrigin } from '@/app/site-metadata';
 import {
   articleText,
@@ -53,15 +54,22 @@ export default async function IncidentDetailPage({
     return (
       <div className="bg-surface px-4 text-text">
         <DetailNavigation />
-        <div role="alert" className="py-4">
+        <Notice
+          role="alert"
+          title="이 소식을 다시 열어볼까요?"
+          action={
+            <Link
+              href={`/incidents/${id}`}
+              className="text-sm font-bold text-brand underline underline-offset-4"
+            >
+              다시 시도
+            </Link>
+          }
+        >
           <p className="mt-0 font-bold">기사를 불러오지 못했어요</p>
-          <Link
-            href={`/incidents/${id}`}
-            className="text-sm font-bold text-brand underline underline-offset-4"
-          >
-            다시 시도
-          </Link>
-        </div>
+
+          <p>연결을 확인한 뒤 다시 눌러주세요.</p>
+        </Notice>
       </div>
     );
   }

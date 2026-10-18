@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
+import { Notice } from '@/components/feedback/notice';
 import { fetchArticleList } from '@/features/article-list/api/fetch-articles';
 import { ArticleList } from '@/features/article-list/ui/article-list/article-list';
 
@@ -78,15 +79,20 @@ export default async function ArchivePage({ searchParams }: ArchiveProps) {
       {result ? (
         <ArticleList items={result.items} apiOrigin={result.apiOrigin} />
       ) : (
-        <div role="alert" className="py-4">
-          기사를 불러오지 못했어요{' '}
-          <Link
-            href={archivePath(page)}
-            className="ui-link text-brand underline"
-          >
-            다시 시도
-          </Link>
-        </div>
+        <Notice
+          role="alert"
+          title="주변 소식을 다시 이어볼까요?"
+          action={
+            <Link
+              href={archivePath(page)}
+              className="ui-link text-brand underline"
+            >
+              다시 시도
+            </Link>
+          }
+        >
+          기사를 불러오지 못했어요 <p>연결을 확인한 뒤 다시 눌러주세요.</p>
+        </Notice>
       )}
       <nav
         aria-label="아카이브 페이지"

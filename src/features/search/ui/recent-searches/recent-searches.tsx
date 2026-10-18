@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+import { Notice } from '@/components/feedback/notice';
 import { KeywordLinkStatus } from '@/app/search/keyword-link-status';
 
 function normalizeKeywords(values: unknown): string[] {
@@ -73,7 +74,9 @@ export function RecentSearches({ executedKeyword = '' }) {
     <section aria-label="최근 검색" className="flex flex-col gap-3">
       <h2 className="m-0 text-xs font-bold text-muted">최근 검색</h2>
       {keywords.length === 0 ? (
-        <p className="m-0 text-sm text-muted">최근 검색어가 없어요</p>
+        <Notice title="최근 검색어가 없어요">
+          첫 검색으로 동네 소식을 찾아보세요.
+        </Notice>
       ) : (
         <ul className="m-0 flex list-none flex-col gap-0 p-0">
           {keywords.map((keyword, index) => (

@@ -51,6 +51,12 @@ export default function AboutPage() {
           <p className="text-sm leading-6 text-muted">{answer}</p>
         </section>
       ))}
+      <a
+        href="https://www.data.go.kr/data/15084084/openapi.do"
+        className="ui-link inline-flex min-h-11 items-center text-brand underline"
+      >
+        기상청 지역 대표 좌표
+      </a>
       <nav aria-label="기사 찾아보기" className="flex flex-wrap gap-4 py-4">
         <Link href="/incidents" className="ui-link text-brand underline">
           기사 목록

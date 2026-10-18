@@ -1,0 +1,98 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {createRequire} from 'node:module';
+import {createServer} from 'node:http';
+import {spawn,execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+const wt=process.env.FEEDBACK_APP;if(!wt)throw Error('FEEDBACK_APP');
+const require=createRequire(path.join(wt,'package.json'));const {chromium}=require('playwright-core');
+const out='/tmp/brand-feedback-browser';await fs.mkdir(out,{recursive:true});
+const report={checks:[],screens:[],pageErrors:[],blockedPosts:[],fixturePosts:[],sourceFiles:{}};
+const check=(ok,name,data)=>{report.checks.push({name,passed:!!ok,data});if(!ok)throw Error(name+': '+JSON.stringify(data));};
+for(const f of execFileSync('git',['ls-files','--cached','--others','--exclude-standard'],{cwd:wt,encoding:'utf8'}).trim().split('\n'))if((f.startsWith('src/')&&!f.includes('.test.')&&!f.startsWith('src/test-support/'))||f.startsWith('public/'))report.sourceFiles[f]=createHash('sha256').update(await fs.readFile(path.join(wt,f))).digest('hex');
+let mode='ok',reportMode='uncertain';const id='a'.repeat(64);
+const item={article_id:id,collection_id:'feedback-qa',image_status:'disabled',image_url:null,article:{title:'부산 검증 소식',description:'부산광역시 검증 안내입니다. 실제 사건 정보가 아닙니다.',originallink:'https://example.invalid/feedback',link:'https://example.invalid/feedback',pubDate:'2026-10-17T09:00:00+09:00'},location_status:'resolved',location_reason:null,location:{latitude:35.1796,longitude:129.0756,label:'부산광역시',precision:'region',evidence:{field:'title',text:'부산'}}};
+const api=createServer((req,res)=>{const u=new URL(req.url,'http://localhost:41039');res.setHeader('content-type','application/json');if(req.method!=='GET'){res.writeHead(405).end('{}');return;}if((mode==='fail-list'&&u.pathname==='/news')||(mode==='fail-map'&&u.pathname==='/map/articles')||(mode==='fail-detail'&&u.pathname.startsWith('/news/'))){res.writeHead(503).end('{}');return;}if(u.pathname==='/news/'+id){res.end(JSON.stringify(item));return;}if(u.pathname.startsWith('/news/')){res.writeHead(404).end('{}');return;}const items=mode==='empty'||Number(u.searchParams.get('offset')??0)>0?[]:[item];res.end(JSON.stringify({total:items.length,items}));});
+await new Promise(r=>api.listen(41039,'127.0.0.1',r));const log=await fs.open(out+'/server.log','w');
+const app=spawn(path.join(wt,'node_modules/.bin/next'),['start','--port','3000'],{cwd:wt,env:{...process.env,NEWS_API_BASE_URL:'http://127.0.0.1:41039'},stdio:['ignore',log.fd,log.fd]});
+let browser;let page;
+const screenshot=async name=>{await page.screenshot({path:out+'/'+name+'.png',fullPage:true});report.screens.push(name+'.png');};
+const noOverflow=async name=>check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),name+' no horizontal overflow');
+const noOverlap=async name=>{const bad=await page.evaluate(()=>{const nodes=[...document.querySelectorAll('main [role="status"],main [role="alert"]')].filter(n=>n.getBoundingClientRect().height>2&&n.getBoundingClientRect().width>2);return nodes.flatMap((a,i)=>nodes.slice(i+1).filter(b=>{const x=a.getBoundingClientRect(),y=b.getBoundingClientRect();return Math.min(x.right,y.right)>Math.max(x.left,y.left)&&Math.min(x.bottom,y.bottom)>Math.max(x.top,y.top);}).map(b=>[a.textContent,b.textContent]));});check(!bad.length,name+' notices do not overlap',bad);};
+try{
+for(let i=0;i<80;i++){try{await fetch('http://localhost:3000');break;}catch{await new Promise(r=>setTimeout(r,250));}}
+browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
+const context=await browser.newContext({viewport:{width:393,height:852},reducedMotion:'reduce'});
+await context.addInitScript(()=>{window.__geo=[];window.__mapCreates=0;Object.defineProperty(navigator,'geolocation',{configurable:true,value:{getCurrentPosition(success,failure,options){window.__geo.push({success,failure,options});}}});});
+page=await context.newPage();page.on('pageerror',e=>report.pageErrors.push(e.message));
+await page.route('**/*',async route=>{const req=route.request(),url=req.url();
+if(url.startsWith('https://reports.example.invalid/')){
+ if(req.method()==='OPTIONS')return route.fulfill({status:204,headers:{'access-control-allow-origin':'*','access-control-allow-methods':'POST,OPTIONS','access-control-allow-headers':'*'}});
+ if(req.method()==='POST'){report.fixturePosts.push({key:req.headers()['idempotency-key'],body:req.postData()});return route.fulfill({status:reportMode==='uncertain'?503:201,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify(reportMode==='uncertain'?{}:{report_id:'a'.repeat(32),status:'pending',received_at:'2026-10-17T12:00:00Z'})});}}
+if(req.method()==='POST'){report.blockedPosts.push(url);return route.abort();}
+if(url.includes('oapi.map.naver.com/openapi/v3/maps.js')){const response=await route.fetch();return route.fulfill({response,body:(await response.text())+'\n;(()=>{const M=naver.maps.Map;naver.maps.Map=new Proxy(M,{construct(T,args){const m=Reflect.construct(T,args,T);window.__map=m;window.__mapCreates++;return m;}});})();'});}return route.continue();});
+const root='http://localhost:3000';
+const mapReady=async()=>{await page.waitForFunction(()=>window.__map&&document.querySelector('button[aria-label="내 위치"]'),null,{timeout:25000});};
+const geoFail=async code=>{await page.evaluate(value=>window.__geo.at(-1).failure({code:value,message:'controlled QA failure'}),code);await page.getByRole('button',{name:'위치 다시 시도',exact:true}).waitFor();};
+const removed=async label=>{check(await page.getByText('기사 위치 보기',{exact:true}).count()===0,label+' overview removed');check(await page.locator('a[href="https://www.data.go.kr/data/15084084/openapi.do"]').count()===0,label+' attribution overlay removed');};
+await page.goto(root);await mapReady();check(await page.evaluate(()=>window.__geo.length===1),'first automatic request once');await geoFail(3);
+check(await page.getByText('위치를 한 번 더 확인할까요?',{exact:true}).isVisible(),'branded location title');await removed('populated');await noOverflow('map393');await noOverlap('map timeout393');
+const size=await page.getByRole('button',{name:'위치 다시 시도',exact:true}).boundingBox();check(size.height>=44,'retry44px target',size);await page.waitForTimeout(1200);await screenshot('map-timeout393');
+await page.evaluate(()=>{window.__originalMap=window.__map;window.__originalScript=document.querySelector('script[src*="oapi.map.naver.com"]');const button=document.querySelector('button[aria-label="위치 다시 시도"]');button.click();button.click();});
+check(await page.evaluate(()=>window.__geo.length===2),'retry duplicate clicks request once');check(await page.getByRole('button',{name:'내 위치',exact:true}).isDisabled(),'pending locks existing location button');
+await page.evaluate(()=>window.__geo[1].success({coords:{latitude:35.1796,longitude:129.0756,accuracy:10}}));await page.waitForFunction(()=>document.querySelector('button[aria-label="내 위치"]')?.disabled===false);
+check(await page.evaluate(()=>window.__map===window.__originalMap&&window.__mapCreates===1&&document.querySelector('script[src*="oapi.map.naver.com"]')===window.__originalScript),'retry preserves map and script');
+check(await page.evaluate(()=>Math.abs(window.__map.getCenter().lat()-35.1796)<0.0001),'retry success recenters');check(await page.getByRole('button',{name:'위치 다시 시도',exact:true}).count()===0,'retry success clears error');
+await page.setViewportSize({width:320,height:740});await page.getByRole('button',{name:'내 위치',exact:true}).click();await geoFail(1);await noOverflow('map320');await noOverlap('map denial320');await screenshot('map-denial320');
+await page.setViewportSize({width:393,height:852});
+for(const value of ['empty','fail-map']){mode=value;await page.goto(root);await mapReady();await geoFail(3);await removed(value);await noOverflow('map '+value);await noOverlap('map '+value);await screenshot('map-'+value);}
+// Review regressions: short screens, keyboard retry lifetime and focus ownership.
+const shortClearance=async label=>{
+ await noOverflow(label);
+ const result=await page.evaluate(()=>{
+  const retry=document.querySelector('button[aria-label="위치 다시 시도"]');
+  const notice=retry?.closest('[role="status"],[role="alert"],[role="group"]');
+  const own=document.querySelector('button[aria-label="내 위치"]');
+  if(!retry||!notice||!own)return {missing:true};
+  const clip=n=>{let r=n.getBoundingClientRect();let x={left:r.left,right:r.right,top:r.top,bottom:r.bottom};for(let p=n.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(/auto|scroll|hidden|clip/.test(s.overflowY)){const y=p.getBoundingClientRect();x.top=Math.max(x.top,y.top);x.bottom=Math.min(x.bottom,y.bottom);}}return x;};
+  const intersects=(a,b)=>Math.min(a.right,b.right)-Math.max(a.left,b.left)>1&&Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>1;
+  const box=clip(notice),loc=own.getBoundingClientRect(),carousel=document.querySelector('[aria-label="지도 기사"]')?.getBoundingClientRect();
+  return {missing:false,notice:box,locate:{top:loc.top,bottom:loc.bottom},overlapsLocate:intersects(box,loc),overlapsCards:carousel?intersects(box,carousel):false};
+ });
+ check(!result.missing&&!result.overlapsLocate&&!result.overlapsCards,label+' visible notice clears map controls and cards',result);
+ const retry=page.getByRole('button',{name:'위치 다시 시도',exact:true});await retry.scrollIntoViewIfNeeded();
+ const reachable=await retry.boundingBox();const control=await page.getByRole('button',{name:'내 위치',exact:true}).boundingBox();
+ check(reachable&&reachable.height>=44&&reachable.y>=0&&reachable.y+reachable.height<=control.y,label+' retry44px reachable above locate',{retry:reachable,control});
+};
+await page.setViewportSize({width:320,height:568});mode='ok';await page.goto(root);await mapReady();await geoFail(1);await screenshot('map-denial-initial320x568');await shortClearance('map short populated');await screenshot('map-denial320x568');
+let keyboardRetry=page.getByRole('button',{name:'위치 다시 시도',exact:true});await keyboardRetry.focus();await page.keyboard.press('Enter');await page.keyboard.press('Enter');
+check(await page.evaluate(()=>window.__geo.length===2),'keyboard pending duplicate requests blocked');
+check(await page.evaluate(()=>!!document.querySelector('button[aria-label="위치 다시 시도"]')&&document.activeElement!==document.body),'keyboard focus retained while retry pending');await screenshot('map-pending320x568');
+check(await page.evaluate(()=>[...document.querySelectorAll('[role="status"]')].filter(node=>node.textContent?.includes('내 위치를 확인하는 중입니다.')).length===1),'pending location has one live loading announcement');
+check(await page.evaluate(()=>!(/내 위치를 확인하고 있어요|내 위치를 확인하는 중입니다\.|위치 확인 중/).test(document.querySelector('button[aria-label="위치 다시 시도"]')?.closest('[role]')?.textContent??'')),'pending retry notice omits repeated loading sentences');
+await page.evaluate(()=>window.__geo.at(-1).failure({code:1,message:'controlled denied'}));
+await page.waitForFunction(()=>document.activeElement?.getAttribute('aria-label')==='위치 다시 시도');check(true,'keyboard focus returns to retry after failure');
+await page.keyboard.press('Enter');await page.evaluate(()=>window.__geo.at(-1).success({coords:{latitude:35.1796,longitude:129.0756,accuracy:10}}));
+await page.waitForFunction(()=>document.activeElement?.getAttribute('aria-label')==='내 위치');check(true,'keyboard successful retry focuses stable locate control');
+check(await page.getByRole('region',{name:'지도 안내',exact:true}).count()===0,'successful location leaves no empty map notice landmark');
+await page.getByRole('button',{name:'내 위치',exact:true}).click();await geoFail(3);keyboardRetry=page.getByRole('button',{name:'위치 다시 시도',exact:true});await keyboardRetry.focus();await page.keyboard.press('Enter');
+await page.locator('[aria-label="기사 필터"] button').first().focus();await page.evaluate(()=>window.__outsideFocus=document.activeElement);await page.evaluate(()=>window.__geo.at(-1).success({coords:{latitude:35.18,longitude:129.08,accuracy:10}}));
+check(await page.evaluate(()=>document.activeElement===window.__outsideFocus),'location success does not steal moved focus');
+for(const value of ['empty','fail-map']){mode=value;await page.goto(root);await mapReady();await geoFail(1);await shortClearance('map short '+value);const action=value==='empty'?page.getByRole('link',{name:'전체 기사 목록 보기',exact:true}):page.getByRole('button',{name:'기사 위치 다시 불러오기',exact:true});await action.scrollIntoViewIfNeeded();check(await action.isVisible(),'short '+value+' second notice action reachable');await screenshot('map-'+value+'320x568');}
+await page.setViewportSize({width:393,height:852});
+
+mode='empty';await page.goto(root+'/incidents');await page.getByText('아직 수집된 기사가 없어요',{exact:true}).waitFor();await noOverflow('list empty');await screenshot('list-empty');
+await page.goto(root+'/search?q=검증없음');await page.getByText('검색 결과가 없어요',{exact:true}).waitFor();await noOverflow('search empty');await screenshot('search-empty');
+await page.evaluate(()=>localStorage.clear());await page.goto(root+'/search');await page.getByText('최근 검색어가 없어요',{exact:true}).waitFor();await screenshot('recent-empty');
+mode='fail-list';for(const url of ['/incidents','/search?q=검증','/archive']){await page.goto(root+url);const alert=page.getByRole('alert').first();await alert.waitFor();await alert.getByRole('link',{name:'다시 시도',exact:true}).waitFor();check(await alert.getByRole('link',{name:'다시 시도',exact:true}).count()===1,url+' retains retry');await noOverflow(url);await screenshot(url.startsWith('/search')?'search-error':url==='/archive'?'archive-error':'list-error');}
+mode='fail-detail';await page.goto(root+'/incidents/'+id);await page.getByRole('alert').first().waitFor();check(await page.locator('a[href="/incidents"]').count()>0,'detail error retains list exit');await noOverflow('detail error');await screenshot('detail-error');
+mode='ok';await page.goto(root+'/incidents/'+'b'.repeat(64));await page.getByRole('heading',{name:'기사를 찾을 수 없어요'}).waitFor();await screenshot('detail-missing');
+await page.goto(root+'/missing-brand-feedback');await page.getByRole('heading',{name:'페이지를 찾을 수 없어요'}).waitFor();const missing=await page.locator('body').innerText();check(!missing.includes('개발 준비 화면')&&!missing.includes('사건 데이터는 아직 연결되지 않았습니다'),'404 no stale development claims');await noOverflow('404');const gap=await page.evaluate(()=>{const n=document.querySelector('h1')?.closest('[role="status"]');const h=document.querySelector('header');return n&&h?n.getBoundingClientRect().top-h.getBoundingClientRect().bottom:null;});check(gap!==null&&gap>=12,'404 separated from shared header',gap);await screenshot('not-found');
+await page.goto(root+'/about');check(await page.locator('a[href="https://www.data.go.kr/data/15084084/openapi.do"]').count()===1,'attribution in about');
+await page.goto(root+'/report');await page.locator('form [name="category"]').selectOption({index:1});await page.locator('form [name="occurredAt"]').fill('2026-10-17T12:00');await page.locator('form [name="title"]').fill('검증용 제보');await page.locator('form [name="location"]').fill('검증용 부산');await page.locator('form [name="description"]').fill('로컬 검증 제보이며 실제 접수하지 않습니다.');
+await page.getByRole('button',{name:'제보 접수',exact:true}).click();await page.getByRole('alert').filter({hasText:'접수 여부를 확인하지 못했어요'}).waitFor();check(await page.locator('form [name="title"]').inputValue()==='검증용 제보','uncertain submission preserves input');check(!(await page.locator('body').innerText()).includes('제보가 접수됐어요'),'uncertain submission not success');await noOverflow('report error');await screenshot('report-error');await page.setViewportSize({width:320,height:740});await noOverflow('report error320');await screenshot('report-error320');await page.setViewportSize({width:393,height:852});
+reportMode='success';await page.getByRole('button',{name:'제보 접수',exact:true}).click();await page.getByRole('status').filter({hasText:'제보가 접수됐어요'}).waitFor();check(report.fixturePosts.length===2&&typeof report.fixturePosts[0].key==='string'&&report.fixturePosts[0].key.length>0&&report.fixturePosts[0].key===report.fixturePosts[1].key,'report retry key preserved');await screenshot('report-success');await page.setViewportSize({width:320,height:740});await noOverflow('report receipt320');check((await page.getByRole('status').filter({hasText:'제보가 접수됐어요'}).innerText()).includes('a'.repeat(32)),'complete receipt ID retained320');await screenshot('report-success320');
+await page.setViewportSize({width:1280,height:900});await page.goto(root+'/search?q=검증없음');await noOverflow('wide search');await screenshot('wide-search');
+check(report.pageErrors.length===0,'no uncaught browser errors',report.pageErrors);
+}catch(error){if(page){await page.screenshot({path:out+'/failure.png',fullPage:true}).catch(()=>{});await fs.writeFile(out+'/failure.html',await page.content()).catch(()=>{});}throw error;}finally{await fs.writeFile(out+'/report.json',JSON.stringify(report,null,2));await browser?.close();app.kill('SIGTERM');await new Promise(r=>api.close(r));await log.close();}
+console.log(JSON.stringify({passed:report.checks.length,screens:report.screens.length,out}));
