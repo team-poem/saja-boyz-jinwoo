@@ -2,9 +2,9 @@
 branch: codex/brand-feedback
 owner: easter721
 started: 2026-10-17
-status: active
+status: done
 goal: feat(ui): 흉흉 안내 문구와 위치 재시도 경험 개선
-next: 지도 오류 재시도·출처/위치 보기 오버레이 제거·화면별 상태 문구
+next: dev PR 리뷰 및 필수 CI 확인 후 사용자가 머지
 base: dev
 ---
 
