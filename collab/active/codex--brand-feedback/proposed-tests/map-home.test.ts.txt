@@ -461,6 +461,14 @@ test('mapLocationRetryPreservesFocusAcrossPendingFailureAndSuccess', async () =>
   expect(request).toHaveBeenCalledTimes(2);
   expect(retry.isConnected).toBe(true);
   expect(container.contains(document.activeElement)).toBe(true);
+  expect(
+    [...container.querySelectorAll('[role="status"]')].filter((node) =>
+      node.textContent?.includes('내 위치를 확인하는 중입니다.'),
+    ),
+  ).toHaveLength(1);
+  expect(retry.closest('[role]')?.textContent).not.toMatch(
+    /내 위치를 확인하고 있어요|내 위치를 확인하는 중입니다\.|위치 확인 중/,
+  );
   await act(async () =>
     failures[1]({ code: 1, message: 'denied' } as GeolocationPositionError),
   );
