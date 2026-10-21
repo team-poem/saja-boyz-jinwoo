@@ -40,7 +40,7 @@ description: 첫 세션 온보딩. 세션 시작 훅이 "setup" 또는 "join" �
 2. `sh harness/init.sh <이름> <핸들>` → 출력 확인. HOTSPOTS 는 `harness/config.sh` 에 직접 쓴다. 테스트 명령은 AGENTS.md `- Test:` 에.
 3. `git add -A && git commit -m "chore: init collaboration harness" && git push` (원격이 없으면 3번 경로의 리포 생성 단계로). 초기화 커밋은 하네스 파일만 바꾸므로 pre-push 가 통과시킨다.
 4. `sh harness/github-policy.sh` — squash 머지만, 브랜치 자동 삭제, main 보호. private + Free 플랜이면 보호는 실패하고 git 훅이 대신한다고 사용자에게 말한다.
-5. sobaya 워크스페이스가 감지됐고 사용자가 원하면 `sh harness/attach-sobaya.sh attach --test "<테스트 명령>"` 후 커밋.
+5. For a new Sobaya connection, follow `harness/sobaya/RULES.md` and preserve existing app inputs and hooks. A clone-local `sobaya.sourceRoot` selects the reviewed source checkout. Do not rerun legacy attach/sync on an existing installation with archived feature plans. Test selection follows Canon TDD without separate test approval.
 6. 검증(아래).
 
 ## 경로 2 — 기존 GitHub 프로젝트에 붙이기

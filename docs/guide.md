@@ -348,7 +348,7 @@ claude        # 또는 codex
 
 ## 개발 하네스 sobaya 와 함께 쓰기
 
-실제 구현은 [team-poem/sobaya](https://github.com/team-poem/sobaya) 가 한다 (사람이 승인한 실패 테스트 → 워커 구현 → 검증 → 커밋). 협업 하네스는 그 바깥에서 "누가 무엇을" 을 관리한다.
+개발 흐름은 [team-poem/sobaya](https://github.com/team-poem/sobaya)를 따른다. 사람이 제품 의도를 정하고, 시나리오 목록에서 테스트 하나를 골라 RED → GREEN → 필요한 리팩터링을 진행한다. 테스트별 승인은 없고 기능 사이에 결과와 배운 점을 돌아본다. 협업 하네스는 그 바깥에서 "누가 무엇을"을 관리한다.
 
 ```
 ~/sobaya/                      ← 각자의 sobaya 워크스페이스 (그냥 clone)
@@ -356,9 +356,9 @@ claude        # 또는 codex
     shop/                      ← 팀 프로젝트 (이 템플릿으로 만든 리포)
 ```
 
-- 붙이기: 앱 안에서 `sh harness/attach-sobaya.sh attach --test "npm test"` 한 번.
-- 소바야가 업데이트되면: 매주 CI 가 이슈로 알리고, 누구 하나 `attach-sobaya.sh update` 로 팀 기준을 올리면, 나머지는 세션 켤 때 "다르다" 는 줄을 보고 `sync`.
-- 자세한 것은 [README.md 의 sobaya 절](../README.md#sobaya) 과 `harness/attach-sobaya.sh` 상단 주석.
+- 연결과 갱신: [연결 규칙](../harness/sobaya/RULES.md)에 따라 팀 pin과 개인 소스 경로·관리 훅을 맞춘다. 바깥 협업 훅, 보관한 기능 문서와 실행 기록을 보존한다.
+- 버전 변경: 후보의 전체 테스트를 확인한 뒤 `harness/sobaya.lock` 갱신 PR을 올린다. 기존 설치에는 legacy `attach/sync/update`를 다시 실행하지 않는다. 주간 CI는 upstream과 pin의 차이를 알린다.
+- 개발 흐름은 [README.md의 Sobaya 절](../README.md#sobaya)을 참고한다.
 
 ## 자주 겪을 것
 
