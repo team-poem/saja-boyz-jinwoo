@@ -137,17 +137,17 @@ start-work ──▶ (작업 · pulse · 커밋마다 wip) ──▶ handoff ─
                   main 을 merge 로 따라잡기         check · push
 ```
 
-- **start-work**: 보호 브랜치면 `git switch -c <type>/<slug> origin/main`. `collab/active/<slug>/claim.md` 작성, 첫 커밋으로 push. sobaya 를 쓰면 `install.sh` 로 이 브랜치의 `spec.md`·`failed-test.md` 생성.
+- **start-work**: 보호 브랜치면 `git switch -c <type>/<slug> origin/dev`. `collab/active/<slug>/claim.md` 작성, 첫 커밋으로 push. Sobaya는 사람이 소유한 제품 의도를 확인하고 기능의 시나리오 목록에서 다음 테스트 하나를 선택한다. 설치 갱신만을 위해 기능 문서를 만들지 않는다.
 - **중간**: 알림에 반응. 허브 파일 차단이면 사용자에게 알린다. 결정은 저널 `rule` 이벤트로.
 - **main 따라잡기 보류 후**: sobaya 작업이 끝나도 미커밋 파일이 남으면 커밋 안내를 새로 보낸다. 커밋 후 다음 pulse 는 main 에 새 push 가 없어도 따라잡기를 재개한다. 충돌 시 원래 작업 상태로 되돌리고 알린다.
-- **handoff**: 저널(이벤트 + 남은 것) → claim status → (sobaya) `gate`·`review` 후 plan 을 `collab/journal/plans/` 로 이동 → `check` → push.
+- **handoff**: 전체 테스트와 필요한 빌드·브라우저 검증 → 기능 결과와 배운 점 회고 → 저널·claim status → 기능 plan을 `collab/journal/plans/`로 보관 → `check` → push. 독립 리뷰는 필요할 때 선택한다.
 - **이어받기**: 남의 브랜치에서 digest 가 "owner 가 @X" 라고 알림 → 최근 저널 `남은 것` 읽고 owner 교체 → 첫 저널에 `reply @X`.
 
 ## 다른 하네스와의 접점
 
 <a id="sobaya"></a>
-- **sobaya (개발 하네스)**: 이 리포는 `<sobaya>/apps/<이름>` 에 산다. `attach-sobaya.sh attach` 가 앱 계약(AGENTS.md `- Test:`), sobaya 의 `install.sh`, 루트 세션용 어댑터, `harness/sobaya.lock` 을 처리한다. 승인 브랜치는 merge 로 따라잡음. sobaya 는 바꾸지 않는다 (amazon 결정, sobaya#4). 맞춤 규칙은 `harness/sobaya/RULES.md`.
-- **sobaya 버전 동기화**: `harness/sobaya.lock` 이 팀 기준. digest 가 클론과 다르면 `sync` 를 권하고, 주간 CI 가 upstream 이 앞서면 이슈. 올릴 때 `update` 후 lock 커밋.
+- **Sobaya (개발 하네스)**: 시나리오 목록 → 테스트 하나의 RED → 전체 스위트 GREEN → 필요한 리팩터링 순서로 진행한다. 테스트별 승인은 없으며 기능 사이에 결과와 배운 점을 돌아본다. 협업 claim·저널·충돌 규칙은 계속 적용한다.
+- **Sobaya 버전 갱신**: `harness/sobaya.lock`이 팀 기준이다. [연결 규칙](harness/sobaya/RULES.md)에 따라 후보 버전을 검증하고 pin PR을 올린다. 각자 소스 경로·버전·관리 훅을 함께 맞추며, 기존 설치에 legacy `attach/sync/update`를 다시 실행하지 않는다. 주간 CI는 upstream과 pin의 차이를 알린다.
 - **아우터 루프 (CI)**: `check` 의 "다른 열린 브랜치와 같은 파일", `digest --json` 의 `overlaps`. 자동 병합 순서는 그때.
 - **다른 도구**: `collab.sh guard <path>` 로 같은 판정, `digest --json` 으로 같은 현황. 파일 위치로 리포 루트를 찾으므로 워크스페이스 루트에서 앱 파일을 건드려도 그 앱의 규칙이 걸린다.
 

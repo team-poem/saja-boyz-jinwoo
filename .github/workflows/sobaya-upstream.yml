@@ -28,7 +28,7 @@ jobs:
             if [ -n "$n" ]; then gh issue close "$n" -c "lock 이 upstream 과 같아졌습니다."; fi
             exit 0
           fi
-          printf '팀 lock: `%s` · upstream: `%s`\n\n```sh\nsh harness/attach-sobaya.sh update   # sobaya 클론 pull + 앱 계약 재설치 + lock 갱신\ngit add harness/sobaya.lock && git commit -m "chore: sobaya %s" && git push\n```\n변경 내용: https://github.com/team-poem/sobaya/compare/%s...%s\n' \
-            "${lock:0:7}" "${up:0:7}" "${up:0:7}" "${lock:0:7}" "${up:0:7}" > body.md
+          printf '팀 lock: `%s` · upstream: `%s`\n\n`harness/sobaya/RULES.md`에 따라 후보 변경을 검토하고, 검증한 소스 경로·pin·관리 훅을 함께 갱신하세요. 기존 설치에는 legacy attach/sync/update를 다시 실행하지 마세요. 보관한 기능 문서와 실행 기록을 보존하고 전체 테스트 결과를 bump PR에 기록하세요.\n\n변경 내용: https://github.com/team-poem/sobaya/compare/%s...%s\n' \
+            "${lock:0:7}" "${up:0:7}" "${lock:0:7}" "${up:0:7}" > body.md
           if [ -n "$n" ]; then gh issue edit "$n" --body-file body.md; else gh issue create --title "$title" --body-file body.md; fi
           echo "이슈 갱신 (${lock:0:7} → ${up:0:7})"

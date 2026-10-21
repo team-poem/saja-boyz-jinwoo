@@ -151,8 +151,8 @@ digest)
     if sr="$(sobaya_root)"; then lk="$(sobaya_lock)"; hd="$(git -C "$sr" rev-parse --short HEAD 2>/dev/null)"
       echo; echo "## 개발 하네스 (sobaya)"
       if [ -z "$lk" ]; then echo "- sobaya 워크스페이스 감지($sr). 아직 붙이지 않음 → sh harness/attach-sobaya.sh attach"
-      elif [ "$(git -C "$sr" rev-parse HEAD 2>/dev/null)" != "$lk" ]; then echo "- 내 sobaya($hd)가 팀이 검증한 버전(${lk%"${lk#???????}"})과 다릅니다 → sh harness/attach-sobaya.sh sync"
-      else echo "- sobaya $hd · 팀 검증 버전과 일치$( sobaya_approved && echo ' · 이 브랜치는 승인 상태 있음(main 따라잡기는 merge)')"; fi
+      elif [ "$(git -C "$sr" rev-parse HEAD 2>/dev/null)" != "$lk" ]; then echo "- 내 sobaya($hd)가 팀이 검증한 버전(${lk%"${lk#???????}"})과 다릅니다 → harness/sobaya/RULES.md 에 따라 소스 경로·pin·훅을 점검하세요"
+      else echo "- sobaya $hd · 팀 검증 버전과 일치$( sobaya_approved && echo ' · 이 브랜치는 실행 기록 있음(main 따라잡기는 merge)')"; fi
     fi
     echo; echo "## 지금 같은 파일을 만지는 중"
     if [ -s "$V" ]; then while IFS="$TAB" read -r fpath o age kind; do case "$kind" in

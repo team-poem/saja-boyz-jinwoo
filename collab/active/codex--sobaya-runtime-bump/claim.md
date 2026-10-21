@@ -2,9 +2,9 @@
 branch: codex/sobaya-runtime-bump
 owner: amazon
 started: 2026-10-21
-status: active
+status: done
 goal: chore(sobaya): 검증된 런타임과 Canon TDD 연결로 갱신
-next: harness/ AGENTS.md .agents/skills/ scripts/collab.sh tests/sobaya.sh
+next: dev 대상 PR 리뷰와 병합 후 구성원별 소스 경로·관리 훅 확인
 base: dev
 ---
 
