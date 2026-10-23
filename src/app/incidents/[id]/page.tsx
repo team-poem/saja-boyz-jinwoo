@@ -106,7 +106,12 @@ export default async function IncidentDetailPage({
       : null;
 
   return (
-    <article className="flex min-h-[calc(100dvh_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))] min-w-0 flex-col gap-4 bg-surface px-4 pb-6 text-text">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`article-detail-title-${id}`}
+      className="fixed bottom-0 left-1/2 z-30 flex h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))] w-full max-w-[640px] min-w-0 -translate-x-1/2 flex-col gap-4 overflow-y-auto overscroll-contain rounded-t-3xl bg-surface px-4 pt-4 pb-[max(24px,env(safe-area-inset-bottom))] text-text shadow-[0_-8px_16px_rgb(0_0_0/10%)]"
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -115,7 +120,10 @@ export default async function IncidentDetailPage({
       />
       <DetailNavigation />
       <div className="flex flex-col gap-2">
-        <h1 className="m-0 text-[22px]/[30px] font-extrabold [overflow-wrap:anywhere]">
+        <h1
+          id={`article-detail-title-${id}`}
+          className="m-0 text-[22px]/[30px] font-extrabold [overflow-wrap:anywhere]"
+        >
           {articleTitle(article.title)}
         </h1>
         <p className="m-0 text-[12px]/4 text-muted">
@@ -135,6 +143,8 @@ export default async function IncidentDetailPage({
       {sourceUrl ? (
         <a
           href={sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className="self-start text-[12px]/4 font-semibold text-muted underline underline-offset-4"
         >
           기사 원문 보기
@@ -149,6 +159,6 @@ export default async function IncidentDetailPage({
         </p>
       </section>
       <DetailShare id={id} title={articleTitle(article.title)} />
-    </article>
+    </div>
   );
 }
