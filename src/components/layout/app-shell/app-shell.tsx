@@ -24,7 +24,7 @@ export function AppShell({
     pathname === '/report' || pathname.startsWith('/incidents/');
   const showHeader = pathname !== '/search' && !isDedicatedScreen;
   const shellClassName = isDedicatedScreen
-    ? 'mx-auto min-h-dvh max-w-[640px] bg-surface pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]'
+    ? `mx-auto min-h-dvh max-w-[640px] ${pathname.startsWith('/incidents/') ? 'bg-background' : 'bg-surface'} pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]`
     : isHome
       ? 'relative mx-auto min-h-dvh max-w-[640px]'
       : `mx-auto min-h-dvh max-w-[640px] px-4 pb-[110px] ${showHeader ? 'pt-[calc(12px_+_env(safe-area-inset-top))]' : 'pt-[calc(20px_+_env(safe-area-inset-top))]'}`;

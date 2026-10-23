@@ -3,7 +3,7 @@
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, assert, beforeEach, expect, test, vi } from 'vitest';
-import IncidentsPage from '@/app/incidents/page';
+import IncidentsPage from '@/app/incidents/(list)/page';
 import type { ArticleCollectionItem } from '@/features/article-list/model/article.types';
 
 const request = vi.fn<typeof fetch>();

@@ -3,7 +3,7 @@ import { afterEach, assert, beforeEach, expect, test, vi } from 'vitest';
 import { createElement, type ComponentType } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-const loadingRoutes = import.meta.glob('./loading.tsx');
+const loadingRoutes = import.meta.glob('./**/loading.tsx');
 const apiOrigin = 'https://news.example.invalid';
 const idA = 'e77553113fe8862b91aec1fd09a25af83e256ac12cb4a8ff7d8d78ea3050c909';
 const idB = '6dd70b87676f579839c940ae6048bc6bf65d2005e1552c515b9a0151500b621a';
@@ -39,7 +39,7 @@ function respond(items: unknown[], total = items.length) {
 
 async function renderPage() {
   vi.resetModules();
-  const { default: IncidentsPage } = await import('./page');
+  const { default: IncidentsPage } = await import('./(list)/page');
   return renderToStaticMarkup(await IncidentsPage());
 }
 
@@ -305,7 +305,7 @@ test('articleRequestTimeout', async () => {
 }, 10000);
 
 test('articleLoading', async () => {
-  const load = loadingRoutes['./loading.tsx'];
+  const load = loadingRoutes['./(list)/loading.tsx'];
   expect(load).toBeTypeOf('function');
   const loadingModule = await load();
   assert(isLoadingModule(loadingModule));

@@ -5,7 +5,7 @@ import { Notice } from '@/components/feedback/notice';
 import { PaginatedArticleList } from '@/features/article-list/ui/article-list/paginated-article-list';
 import { fetchArticleList } from '@/features/article-list/api/fetch-articles';
 
-import { pageMetadata } from '../site-metadata';
+import { pageMetadata } from '../../site-metadata';
 
 export const metadata: Metadata = {
   ...pageMetadata(

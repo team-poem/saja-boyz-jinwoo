@@ -279,7 +279,7 @@ test('articleDetailShareUrl', async () => {
 });
 
 test('articleDetailLinksFromListAndSearch', async () => {
-  const { default: IncidentsPage } = await import('./page');
+  const { default: IncidentsPage } = await import('./(list)/page');
   const { default: SearchPage } = await import('../search/page');
   for (const page of [
     () => IncidentsPage(),
@@ -338,7 +338,6 @@ test('articleDetailLinksFromListAndSearch', async () => {
 
 test('articleDetailRouteBoundaries', async () => {
   const { createElement } = await import('react');
-  const routes = import.meta.glob('./[[]id]/{loading,not-found}.tsx');
   function isRoute(value: unknown): value is { default: () => ReactNode } {
     return (
       value !== null &&
@@ -347,19 +346,15 @@ test('articleDetailRouteBoundaries', async () => {
       typeof value.default === 'function'
     );
   }
-  const loading = routes['./[id]/loading.tsx'];
-  const notFound = routes['./[id]/not-found.tsx'];
-  expect(loading).toBeTypeOf('function');
-  expect(notFound).toBeTypeOf('function');
   const view = document.createElement('div');
-  const loadingModule = await loading();
+  const loadingModule = await import('../@article/(.)incidents/[id]/loading');
   assert(isRoute(loadingModule));
   view.innerHTML = renderToStaticMarkup(createElement(loadingModule.default));
   expect(
     view.querySelector('[role="status"][aria-busy="true"]')?.textContent,
   ).toContain('기사를 불러오는 중');
   expect(view.textContent).not.toContain('기사를 찾을 수 없어요');
-  const notFoundModule = await notFound();
+  const notFoundModule = await import('./[id]/not-found');
   assert(isRoute(notFoundModule));
   view.innerHTML = renderToStaticMarkup(createElement(notFoundModule.default));
   expect(view.textContent).toContain('기사를 찾을 수 없어요');

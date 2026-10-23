@@ -5,8 +5,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, test, vi } from 'vitest';
 
 import SearchLoading from '@/app/search/loading';
-import IncidentsLoading from '@/app/incidents/loading';
-import ArticleDetailLoading from '@/app/incidents/[id]/loading';
+import IncidentsLoading from '@/app/incidents/(list)/loading';
+import ArticleDetailLoading from '@/app/@article/(.)incidents/[id]/loading';
 import { KeywordLinkStatus } from '@/app/search/keyword-link-status';
 import { MapHome } from '@/features/map/ui/map-home/map-home';
 
@@ -28,7 +28,11 @@ test('loadingFeedbackUsesDecorativeSkeletonsAndCompactAccessibleSpinners', () =>
     expect(statuses[0].getAttribute('aria-busy')).toBe('true');
     expect(statuses[0].textContent).toContain(label);
     expect(statuses[0].querySelector('[aria-hidden="true"]')).not.toBeNull();
-    expect(host.querySelector('article, a, button, img')).toBeNull();
+    expect(statuses[0].querySelector('article, a, button, img')).toBeNull();
+    expect(host.querySelector('article, img')).toBeNull();
+    if (Component === ArticleDetailLoading)
+      expect(host.querySelector('a[aria-label="닫기"]')).not.toBeNull();
+    else expect(host.querySelector('a, button')).toBeNull();
     expect(host.textContent).not.toMatch(/없어요|못했어요/);
   }
 

@@ -30,7 +30,11 @@ export async function generateMetadata({
 
   if (result.status === 'error') {
     return {
-      title: '기사를 불러오지 못했어요',
+      ...pageMetadata(
+        '기사를 불러오지 못했어요',
+        '연결을 확인한 뒤 다시 눌러주세요.',
+        '/incidents/' + id,
+      ),
       robots: { index: false, follow: true },
     };
   }
@@ -38,7 +42,10 @@ export async function generateMetadata({
   const title = articleTitle(result.item.article.title);
   const description = articleDescription(result.item.article.description);
 
-  return pageMetadata(title, description, `/incidents/${id}`);
+  return {
+    ...pageMetadata(title, description, `/incidents/${id}`),
+    robots: { index: true, follow: true },
+  };
 }
 
 export default async function IncidentDetailPage({

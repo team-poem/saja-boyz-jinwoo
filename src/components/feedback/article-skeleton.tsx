@@ -20,24 +20,17 @@ export function ArticleSkeleton({
       <span className="sr-only">{label}</span>
       <div aria-hidden="true" className="ui-skeleton-pulse">
         {variant === 'detail' ? (
-          <div className="flex flex-col gap-4 bg-surface px-4 pb-6">
-            <div className="-mx-4 flex min-h-12 items-center justify-between border-0 border-b border-solid border-border px-4">
-              <div className="h-5 w-28 rounded bg-border" />
-              <div className="size-6 rounded bg-border" />
-            </div>
+          <div className="flex flex-col gap-4 bg-surface">
             <div className="flex flex-col gap-2">
-              <div className="h-[30px] w-3/4 rounded bg-border" />
+              <div className="h-6 w-3/4 rounded bg-border" />
               <div className="h-4 w-1/3 rounded bg-border" />
             </div>
-            <div className="h-[190px] rounded-card bg-border" />
+            <div className="h-[140px] rounded-lg bg-border" />
             <div className="h-4 w-24 rounded bg-border" />
             <div className="flex flex-col gap-2">
               <div className="mb-2 h-5 w-20 rounded bg-border" />
               {[0, 1, 2, 3].map((line) => (
-                <div
-                  key={line}
-                  className="h-[22px] rounded bg-border last:w-2/3"
-                />
+                <div key={line} className="h-5 rounded bg-border last:w-2/3" />
               ))}
             </div>
           </div>

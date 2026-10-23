@@ -292,7 +292,7 @@ test('articleSheetRoutesPreserveSource', async () => {
 });
 ```
 - [x] mapArticleSheetPreservesGroupedChoices — 지도 단일/다건·하단 카드와 2/12건·중심·줌·SDK 보존
-- [ ] articleSheetMetadataMatchesDirectUrl — noindex 누수 방지, canonical·OG·공유·JSON-LD와 오류/없는 기사 구분
+- [x] articleSheetMetadataMatchesDirectUrl — noindex 누수 방지, canonical·OG·공유·JSON-LD와 오류/없는 기사 구분
 - [ ] articleSheetVerifiedContext — 실제 위치·출처·관련 기사만 표현하고 대체된 구형 UI 삭제
 
 ## 조작 시트 검증에서 배운 것
@@ -309,3 +309,8 @@ test('articleSheetRoutesPreserveSource', async () => {
 - [x] articleSheetDragKeepsReadingAndShareWithinReach — 핸들 드래그로 접기·펼치기, 긴 본문과 공유 접근, 포커스 순환을 다음 한 테스트로 확인한다.
 
 - 핸들 하향 드래그가 확장 상태를 바꾸지 않는 RED를 확인했다. 공통 시트 프레임과 Figma 치수, 고정 공유 영역·내부 스크롤·포커스 순환으로 수정했고 관련23개 및 전체 gate 통과. 장식 아이콘은 기사 이미지 오류 검증과 섞이지 않게 CSS 배경으로 표시한다.
+
+- SEO RED는 정상 상세의 명시 index/follow 부재였다. 수정 전 실제 없는 URL은 일반/Google/Facebook/Kakao UA 모두200+noindex였고 로딩 경계를 목록 route group으로 이동해 개선한다. 로딩·목록 테스트는 같은 기능 검증을 새 모듈 경로로 이관한다.
+
+- 정상/오류 모두 직접 상세와 가로채기 상세의 canonical·OG·Twitter 일치 및 명시 robots를 검증한 전체 gate 통과. 실404 상태는 최종 프로덕션 빌드에서 재측정한다.
+- 브라우저 중간 검증은 지도2/12·기본/확장·공유·스크롤·뒤/앞에서 성공했고 목록 로딩→본문 교체 후 focus가 BODY로 남는 문제를 발견했다. 다음은 이 한 회귀를 고친다.
