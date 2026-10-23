@@ -450,7 +450,6 @@ test('mapArticleSheetPreservesGroupedChoices', async () => {
     mapArticles: items,
     openArticle,
     close: vi.fn(),
-    replaceArticle: vi.fn(),
     setHeight: vi.fn(),
     registerMapArticles: vi.fn(),
     retry: vi.fn(),

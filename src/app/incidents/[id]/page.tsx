@@ -10,6 +10,10 @@ import {
   publicationText,
   safeSourceUrl,
 } from '@/features/article-list/model/article-presentation';
+import {
+  DetailLocation,
+  RelatedArticles,
+} from '@/features/article-detail/ui/detail-context/detail-context';
 import { DetailRetry } from '@/features/article-detail/ui/detail-retry/detail-retry';
 import { DetailSheet } from '@/features/article-detail/ui/detail-sheet/detail-sheet';
 
@@ -121,33 +125,38 @@ export default async function IncidentDetailPage({
           __html: JSON.stringify(structuredData).replace(/</g, '\\u003c'),
         }}
       />
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         <h1
           id={`article-detail-title-${id}`}
-          className="m-0 text-[18px]/[24px] font-extrabold [overflow-wrap:anywhere]"
+          className="m-0 text-[18px]/[normal] font-extrabold [overflow-wrap:anywhere]"
         >
           {articleTitle(article.title)}
         </h1>
-        <p className="m-0 text-[12px]/4 text-muted">
-          {Number.isNaN(publishedAt.getTime()) ? (
-            '발행 시각 미확인'
-          ) : (
-            <>
-              기사 발행{' '}
-              <time dateTime={publishedAt.toISOString()}>
-                {publicationText(publishedAt)}
-              </time>
-            </>
-          )}
-        </p>
+        <div className="flex flex-col gap-1">
+          <DetailLocation id={id} />
+          <p className="m-0 text-[12px]/4 text-slate-400">
+            {Number.isNaN(publishedAt.getTime()) ? (
+              '발행 시각 미확인'
+            ) : (
+              <>
+                <span className="sr-only">기사 발행 </span>
+                <time dateTime={publishedAt.toISOString()}>
+                  {publicationText(publishedAt)}
+                </time>
+              </>
+            )}
+          </p>
+        </div>
       </div>
-      <DetailImage key={imageUrl} src={imageUrl} />
-      <section aria-label="기사 요약">
-        <h2 className="sr-only">기사 요약</h2>
-        <p className="m-0 text-[13px]/[1.5] whitespace-pre-line text-muted [overflow-wrap:anywhere]">
-          {articleText(article.description)}
-        </p>
-      </section>
+      <div className="flex flex-col gap-3">
+        <DetailImage key={imageUrl} src={imageUrl} />
+        <section aria-label="기사 요약">
+          <h2 className="sr-only">기사 요약</h2>
+          <p className="m-0 text-[13px]/[1.5] whitespace-pre-line text-muted [overflow-wrap:anywhere]">
+            {articleText(article.description)}
+          </p>
+        </section>
+      </div>
       {sourceUrl ? (
         <a
           href={sourceUrl}
@@ -160,6 +169,7 @@ export default async function IncidentDetailPage({
       ) : (
         <p className="m-0 text-sm text-muted">원문 링크 없음</p>
       )}
+      <RelatedArticles id={id} />
     </DetailSheet>
   );
 }

@@ -318,3 +318,5 @@ test('articleSheetRoutesPreserveSource', async () => {
 - [x] articleSheetLoadingPreservesOpenerFocus — 브라우저와 단위 테스트 모두 href 기사 링크에서 로딩→본문→닫기 후 BODY로 남는 RED를 확인했다. 원래 트리거를 라우트 호스트에 보존해 배경 inert 해제 뒤 복원한다.
 
 - 로딩 교체 회귀 테스트와 전체 gate130개 통과. 원래 href 링크를 capture 단계에 기록하고 닫힘 후 host에서 focus를 복구한다. 마커 openArticle 경로도 현재 focus를 보존한다.
+
+- 마지막 문맥 테스트 RED는 검증 위치·동일 지역 관련 기사 표현 부재였다. 서로 다른 지역은 좌표가 같아도 제외하고 중복 ID 제거·직접 유입의 없는 문맥 생성을 막는다. Figma 원본의 4px 핸들+16px 간격에 맞춰 시각 배치를 보정한다.

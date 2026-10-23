@@ -51,10 +51,6 @@ export function ArticleRouteHost({
     },
     [router],
   );
-  const replaceArticle = useCallback(
-    (id: string) => router.replace('/incidents/' + id, { scroll: false }),
-    [router],
-  );
   const close = useCallback(() => router.back(), [router]);
   const retry = useCallback(() => router.refresh(), [router]);
 
@@ -98,22 +94,12 @@ export function ArticleRouteHost({
       height,
       mapArticles,
       openArticle,
-      replaceArticle,
       close,
       setHeight,
       registerMapArticles,
       retry,
     }),
-    [
-      active,
-      sourcePath,
-      height,
-      mapArticles,
-      openArticle,
-      replaceArticle,
-      close,
-      retry,
-    ],
+    [active, sourcePath, height, mapArticles, openArticle, close, retry],
   );
 
   return (

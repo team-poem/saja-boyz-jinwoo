@@ -177,7 +177,7 @@ export function DetailSheet({
           type="button"
           aria-label={expanded ? '기사 시트 접기' : '기사 시트 펼치기'}
           aria-expanded={expanded}
-          className="ui-control flex h-6 w-full touch-none cursor-grab items-start justify-center border-0 bg-transparent p-0 active:cursor-grabbing"
+          className="ui-control relative flex h-5 w-full touch-none after:absolute after:inset-x-0 after:-inset-y-3 after:content-[''] cursor-grab items-start justify-center border-0 bg-transparent p-0 active:cursor-grabbing"
           onClick={(event) => {
             if (event.detail > 0 && drag.current?.moved) {
               drag.current = null;

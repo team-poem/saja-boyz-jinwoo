@@ -11,7 +11,6 @@ export type ArticleSheetRoute = {
   mapArticles: LocatedArticle[];
   openArticle(id: string): void;
   close(): void;
-  replaceArticle(id: string): void;
   setHeight(height: number): void;
   registerMapArticles(items: LocatedArticle[]): void;
   retry(): void;
