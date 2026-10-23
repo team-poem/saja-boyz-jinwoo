@@ -4,7 +4,7 @@ owner: easter721
 started: 2026-10-23
 status: active
 goal: feat(article): 최신 Figma 상세 바텀시트 통합과 기사 검색 유입 개선
-next: 지도·목록·검색 상세 진입, 기사 라우트·메타데이터, 공통 상세 시트
+next: 재검토 범위를 바탕으로 공통 서버 상세·URL 시트부터 Sobaya RED→GREEN 구현
 base: dev
 ---
 
