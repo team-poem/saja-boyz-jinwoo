@@ -124,3 +124,79 @@ test('articleSheetRoutesPreserveSource', async () => {
     vi.unstubAllGlobals();
   }
 });
+
+test('articleSheetLoadingPreservesOpenerFocus', async () => {
+  vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
+  pathname = '/incidents';
+  childSegments = ['incidents', '(list)'];
+  articleSegments = [];
+  const id = 'a'.repeat(64);
+  function Background() {
+    return createElement(
+      'a',
+      {
+        href: '/incidents/' + id,
+        onClick: (event: { preventDefault(): void }) => event.preventDefault(),
+      },
+      '읽던 기사',
+    );
+  }
+  function Modal({ stage }: { stage: string }) {
+    const sheet = useArticleSheetRoute();
+    return createElement(
+      'div',
+      { role: 'dialog', key: stage, tabIndex: -1 },
+      createElement('button', { onClick: () => sheet?.close() }, stage),
+    );
+  }
+  const host = document.createElement('div');
+  document.body.append(host);
+  const root = createRoot(host);
+  const draw = async (stage?: string) => {
+    await act(async () =>
+      root.render(
+        createElement(
+          ArticleRouteHost,
+          {
+            article: stage ? createElement(Modal, { key: stage, stage }) : null,
+          },
+          createElement(Background),
+        ),
+      ),
+    );
+  };
+  try {
+    await draw();
+    const opener = host.querySelector<HTMLAnchorElement>(
+      'main a[href^="/incidents/"]',
+    )!;
+    opener.focus();
+    await act(async () => opener.click());
+    pathname = '/incidents/' + id;
+    articleSegments = ['(.)incidents', id];
+    await draw('로딩 중');
+    host.querySelector<HTMLElement>('[role="dialog"]')!.focus();
+    await draw('기사 본문');
+    const close = host.querySelector<HTMLButtonElement>(
+      '[role="dialog"] button',
+    )!;
+    close.focus();
+    await act(async () => close.click());
+    pathname = '/incidents';
+    articleSegments = ['incidents'];
+    await draw();
+    expect(opener.closest('[inert]')).toBeNull();
+    expect(
+      document.activeElement,
+      '로딩 시트가 본문으로 교체되어도 원래 기사 링크로 복귀',
+    ).toBe(opener);
+  } finally {
+    await act(async () => root.unmount());
+    host.remove();
+    pathname = '/search';
+    childSegments = ['search'];
+    articleSegments = [];
+    vi.clearAllMocks();
+    vi.unstubAllGlobals();
+  }
+});

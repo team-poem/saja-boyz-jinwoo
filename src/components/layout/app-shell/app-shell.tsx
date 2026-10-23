@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import type { ReactNode } from 'react';
+import type { ReactNode, MouseEventHandler } from 'react';
 
 import { FeatureErrorBoundary } from '../../errors/feature-error-boundary/feature-error-boundary';
 import { ArticleFilters } from '../article-filters/article-filters';
@@ -12,10 +12,12 @@ export function AppShell({
   children,
   backgroundPath,
   inert = false,
+  onClickCapture,
 }: {
   children: ReactNode;
   backgroundPath?: string;
   inert?: boolean;
+  onClickCapture?: MouseEventHandler<HTMLDivElement>;
 }) {
   const currentPath = usePathname();
   const pathname = backgroundPath ?? currentPath;
@@ -31,6 +33,7 @@ export function AppShell({
 
   return (
     <div
+      onClickCapture={onClickCapture}
       data-article-background=""
       data-article-overlay={inert || undefined}
       className={shellClassName}

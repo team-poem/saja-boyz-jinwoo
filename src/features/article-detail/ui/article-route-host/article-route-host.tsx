@@ -5,7 +5,15 @@ import {
   useRouter,
   useSelectedLayoutSegments,
 } from 'next/navigation';
-import { useCallback, useMemo, useState, type ReactNode } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+  type MouseEvent,
+} from 'react';
 
 import { AppShell } from '@/components/layout/app-shell/app-shell';
 import type { LocatedArticle } from '@/features/map/model/map-article.types';
@@ -29,10 +37,18 @@ export function ArticleRouteHost({
   const sourcePath =
     '/' +
     backgroundSegments.filter((segment) => !segment.startsWith('(')).join('/');
+  const opener = useRef<HTMLElement | null>(null);
+  const previousActive = useRef(false);
   const [height, setHeight] = useState(0);
   const [mapArticles, registerMapArticles] = useState<LocatedArticle[]>([]);
   const openArticle = useCallback(
-    (id: string) => router.push('/incidents/' + id, { scroll: false }),
+    (id: string) => {
+      opener.current =
+        document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : null;
+      router.push('/incidents/' + id, { scroll: false });
+    },
     [router],
   );
   const replaceArticle = useCallback(
@@ -41,6 +57,40 @@ export function ArticleRouteHost({
   );
   const close = useCallback(() => router.back(), [router]);
   const retry = useCallback(() => router.refresh(), [router]);
+
+  useEffect(() => {
+    if (previousActive.current && !active && opener.current?.isConnected) {
+      opener.current.focus({ preventScroll: true });
+    }
+
+    previousActive.current = active;
+  }, [active]);
+
+  const captureOpener = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      if (
+        active ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      )
+        return;
+      const link =
+        event.target instanceof Element
+          ? event.target.closest<HTMLAnchorElement>('a[href]')
+          : null;
+
+      if (
+        link &&
+        /^\/incidents\/[a-f0-9]{64}$/.test(link.getAttribute('href') ?? '')
+      )
+        opener.current = link;
+    },
+    [active],
+  );
+
   const value = useMemo(
     () => ({
       active,
@@ -68,7 +118,11 @@ export function ArticleRouteHost({
 
   return (
     <ArticleSheetContext value={value}>
-      <AppShell backgroundPath={active ? sourcePath : pathname} inert={active}>
+      <AppShell
+        backgroundPath={active ? sourcePath : pathname}
+        inert={active}
+        onClickCapture={captureOpener}
+      >
         {children}
       </AppShell>
       {article}

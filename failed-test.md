@@ -314,3 +314,7 @@ test('articleSheetRoutesPreserveSource', async () => {
 
 - 정상/오류 모두 직접 상세와 가로채기 상세의 canonical·OG·Twitter 일치 및 명시 robots를 검증한 전체 gate 통과. 실404 상태는 최종 프로덕션 빌드에서 재측정한다.
 - 브라우저 중간 검증은 지도2/12·기본/확장·공유·스크롤·뒤/앞에서 성공했고 목록 로딩→본문 교체 후 focus가 BODY로 남는 문제를 발견했다. 다음은 이 한 회귀를 고친다.
+
+- [x] articleSheetLoadingPreservesOpenerFocus — 브라우저와 단위 테스트 모두 href 기사 링크에서 로딩→본문→닫기 후 BODY로 남는 RED를 확인했다. 원래 트리거를 라우트 호스트에 보존해 배경 inert 해제 뒤 복원한다.
+
+- 로딩 교체 회귀 테스트와 전체 gate130개 통과. 원래 href 링크를 capture 단계에 기록하고 닫힘 후 host에서 focus를 복구한다. 마커 openArticle 경로도 현재 focus를 보존한다.
