@@ -44,11 +44,11 @@ export function DetailShare({ id, title }: { id: string; title: string }) {
   }
 
   return (
-    <div className="mt-auto pt-4">
+    <div className="flex flex-col gap-2">
       <button
         type="button"
         onClick={share}
-        className="ui-control min-h-12 w-full cursor-pointer rounded-card border border-solid border-brand bg-surface px-4 py-3 text-[16px]/5 font-extrabold text-brand"
+        className="ui-control min-h-12 w-full cursor-pointer rounded-xl border-[1.5px] border-solid border-brand bg-surface px-4 py-3 text-[15px]/5 font-extrabold text-brand"
       >
         기사 공유하기
       </button>
@@ -59,7 +59,9 @@ export function DetailShare({ id, title }: { id: string; title: string }) {
       )}
       {manualUrl && (
         <div>
-          <p className="text-sm text-muted">아래 링크를 직접 복사해 주세요.</p>
+          <p role="status" className="m-0 text-sm text-muted">
+            아래 링크를 직접 복사해 주세요.
+          </p>
           <input
             aria-label="공유 링크"
             value={manualUrl}

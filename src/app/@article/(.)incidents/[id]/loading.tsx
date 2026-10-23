@@ -1,4 +1,4 @@
-import { DetailSheet } from '@/app/incidents/[id]/detail-sheet';
+import { DetailSheet } from '@/features/article-detail/ui/detail-sheet/detail-sheet';
 import { ArticleSkeleton } from '@/components/feedback/article-skeleton';
 
 export default function LoadingArticleSheet() {

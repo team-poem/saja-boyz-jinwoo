@@ -1,6 +1,6 @@
 'use client';
 
-import { DetailSheet } from '@/app/incidents/[id]/detail-sheet';
+import { DetailSheet } from '@/features/article-detail/ui/detail-sheet/detail-sheet';
 import { Notice } from '@/components/feedback/notice';
 
 export default function ArticleSheetError({

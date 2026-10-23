@@ -152,3 +152,80 @@ test('articleSheetInteractionPreservesBackground', async () => {
     vi.unstubAllEnvs();
   }
 });
+
+test('articleSheetDragKeepsReadingAndShareWithinReach', async () => {
+  const id = 'd'.repeat(64);
+  vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
+  vi.stubEnv('NEWS_API_BASE_URL', 'https://news.example.invalid');
+  vi.stubGlobal(
+    'fetch',
+    vi.fn().mockResolvedValue(
+      Response.json({
+        article_id: id,
+        article: {
+          title: '드래그 검증 기사',
+          description: '긴 요약 '.repeat(80),
+          pubDate: '2026-10-22T12:20:00Z',
+          originallink: 'https://publisher.example.invalid/report',
+          link: '',
+        },
+        image_status: 'disabled',
+        image_url: null,
+      }),
+    ),
+  );
+  const { act } = await import('react');
+  const { createRoot } = await import('react-dom/client');
+  const host = document.createElement('div');
+  document.body.append(host);
+  const root = createRoot(host);
+  try {
+    await act(async () =>
+      root.render(await DetailPage({ params: Promise.resolve({ id }) })),
+    );
+    const handle = host.querySelector<HTMLButtonElement>(
+      'button[aria-expanded]',
+    )!;
+    const drag = async (start: number, end: number) => {
+      await act(async () => {
+        handle.dispatchEvent(
+          new MouseEvent('pointerdown', { bubbles: true, clientY: start }),
+        );
+        handle.dispatchEvent(
+          new MouseEvent('pointermove', { bubbles: true, clientY: end }),
+        );
+        handle.dispatchEvent(
+          new MouseEvent('pointerup', { bubbles: true, clientY: end }),
+        );
+      });
+    };
+    await drag(100, 220);
+    expect(
+      handle.getAttribute('aria-expanded'),
+      '핸들을 내리면 기본 시트',
+    ).toBe('false');
+    const dialog = host.querySelector('[role="dialog"]')!;
+    expect(dialog.querySelector('h1')?.textContent).toBe('드래그 검증 기사');
+    const share = [...dialog.querySelectorAll('button')].find((button) =>
+      button.textContent?.includes('공유'),
+    )!;
+    expect(share, '긴 기사에서도 공유 버튼이 사라지지 않음').toBeDefined();
+    share.focus();
+    await act(async () =>
+      share.dispatchEvent(
+        new KeyboardEvent('keydown', { bubbles: true, key: 'Tab' }),
+      ),
+    );
+    expect(document.activeElement).toBe(handle);
+    await drag(220, 100);
+    expect(
+      handle.getAttribute('aria-expanded'),
+      '핸들을 올리면 확장 시트',
+    ).toBe('true');
+  } finally {
+    await act(async () => root.unmount());
+    host.remove();
+    vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
+  }
+});

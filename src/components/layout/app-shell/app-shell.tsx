@@ -31,6 +31,8 @@ export function AppShell({
 
   return (
     <div
+      data-article-background=""
+      data-article-overlay={inert || undefined}
       className={shellClassName}
       inert={inert || undefined}
       aria-hidden={inert || undefined}

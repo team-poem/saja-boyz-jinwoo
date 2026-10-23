@@ -289,9 +289,9 @@ test('shows the selected article in the Figma sheet with its real image and publ
   await act(async () => fixture.selected[0]());
   const sheet = document.querySelector('[aria-label="선택한 기사"]');
   const close = sheet?.querySelector('button[aria-label="기사 선택 닫기"]');
-  expect(close?.querySelector('img')?.getAttribute('src')).toBe(
-    '/map/sheet-close.svg',
-  );
+  expect(
+    close?.querySelector<HTMLElement>('span')?.style.backgroundImage,
+  ).toContain('/article-detail/close.svg');
   expect(sheet?.querySelector('h2 a')?.textContent).toBe('장림동 공장 화재');
   expect(sheet?.querySelector('article img')?.getAttribute('src')).toBe(
     `https://news.example.com/images/${'a'.repeat(64)}.jpg`,

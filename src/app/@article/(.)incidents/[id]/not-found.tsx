@@ -1,5 +1,5 @@
 import ArticleDetailNotFound from '@/app/incidents/[id]/not-found';
-import { DetailSheet } from '@/app/incidents/[id]/detail-sheet';
+import { DetailSheet } from '@/features/article-detail/ui/detail-sheet/detail-sheet';
 
 export default function MissingArticleSheet() {
   return (

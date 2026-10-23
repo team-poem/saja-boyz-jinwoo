@@ -8,7 +8,7 @@ export function DetailImage({ src }: { src: string | null }) {
 
   if (!src || failed) {
     return (
-      <p className="m-0 grid h-[190px] w-full place-items-center rounded-[14px] bg-background text-sm text-muted">
+      <p className="m-0 grid h-[140px] w-full place-items-center rounded-lg bg-background text-sm text-muted">
         이미지 없음
       </p>
     );
@@ -20,12 +20,12 @@ export function DetailImage({ src }: { src: string | null }) {
         src={src}
         alt=""
         width={720}
-        height={380}
+        height={280}
         unoptimized
-        className="block h-[190px] w-full rounded-[14px] object-cover"
+        className="block h-[140px] w-full rounded-lg object-cover"
         onError={() => setFailed(true)}
       />
-      <figcaption className="mt-2 text-[11px]/4 text-muted">
+      <figcaption className="mt-1 text-[10px]/[14px] text-muted">
         AI 생성 이미지
       </figcaption>
     </figure>
