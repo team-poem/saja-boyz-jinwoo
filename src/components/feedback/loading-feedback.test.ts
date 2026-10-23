@@ -4,10 +4,10 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, test, vi } from 'vitest';
 
-import SearchLoading from '@/app/search/loading';
-import IncidentsLoading from '@/app/incidents/(list)/loading';
-import ArticleDetailLoading from '@/app/@article/(.)incidents/[id]/loading';
-import { KeywordLinkStatus } from '@/app/search/keyword-link-status';
+import SearchLoading from '@/app/(browse)/@background/search/loading';
+import IncidentsLoading from '@/app/(browse)/@background/incidents/loading';
+import ArticleDetailLoading from '@/app/(browse)/(.)incidents/[id]/loading';
+import { KeywordLinkStatus } from '@/features/search/ui/keyword-link-status/keyword-link-status';
 import { MapHome } from '@/features/map/ui/map-home/map-home';
 
 vi.mock('next/link', async (importOriginal) => ({

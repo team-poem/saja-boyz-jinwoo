@@ -24,14 +24,14 @@ export { useArticleSheetRoute } from '../../model/article-sheet-context';
 
 export function ArticleRouteHost({
   children,
-  article,
+  background,
 }: {
   children?: ReactNode;
-  article?: ReactNode;
+  background?: ReactNode;
 }) {
   const pathname = usePathname();
-  const backgroundSegments = useSelectedLayoutSegments();
-  const articleSegments = useSelectedLayoutSegments('article');
+  const backgroundSegments = useSelectedLayoutSegments('background');
+  const articleSegments = useSelectedLayoutSegments();
   const router = useRouter();
   const active = articleSegments.includes('(.)incidents');
   const sourcePath =
@@ -109,9 +109,9 @@ export function ArticleRouteHost({
         inert={active}
         onClickCapture={captureOpener}
       >
-        {children}
+        {background}
       </AppShell>
-      {article}
+      {children}
     </ArticleSheetContext>
   );
 }

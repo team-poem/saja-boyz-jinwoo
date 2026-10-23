@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { Notice } from '@/components/feedback/notice';
-import { KeywordLinkStatus } from '@/app/search/keyword-link-status';
+import { KeywordLinkStatus } from '@/features/search/ui/keyword-link-status/keyword-link-status';
 
 function normalizeKeywords(values: unknown): string[] {
   if (!Array.isArray(values)) return [];

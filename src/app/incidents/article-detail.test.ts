@@ -279,8 +279,10 @@ test('articleDetailShareUrl', async () => {
 });
 
 test('articleDetailLinksFromListAndSearch', async () => {
-  const { default: IncidentsPage } = await import('./(list)/page');
-  const { default: SearchPage } = await import('../search/page');
+  const { default: IncidentsPage } =
+    await import('../(browse)/@background/incidents/page');
+  const { default: SearchPage } =
+    await import('../(browse)/@background/search/page');
   for (const page of [
     () => IncidentsPage(),
     () => SearchPage({ searchParams: Promise.resolve({ q: '  도로 점검  ' }) }),
@@ -347,7 +349,7 @@ test('articleDetailRouteBoundaries', async () => {
     );
   }
   const view = document.createElement('div');
-  const loadingModule = await import('../@article/(.)incidents/[id]/loading');
+  const loadingModule = await import('../(browse)/(.)incidents/[id]/loading');
   assert(isRoute(loadingModule));
   view.innerHTML = renderToStaticMarkup(createElement(loadingModule.default));
   expect(

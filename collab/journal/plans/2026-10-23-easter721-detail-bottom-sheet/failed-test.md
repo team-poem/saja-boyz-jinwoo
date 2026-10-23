@@ -293,7 +293,7 @@ test('articleSheetRoutesPreserveSource', async () => {
 ```
 - [x] mapArticleSheetPreservesGroupedChoices — 지도 단일/다건·하단 카드와 2/12건·중심·줌·SDK 보존
 - [x] articleSheetMetadataMatchesDirectUrl — noindex 누수 방지, canonical·OG·공유·JSON-LD와 오류/없는 기사 구분
-- [ ] articleSheetVerifiedContext — 실제 위치·출처·관련 기사만 표현하고 대체된 구형 UI 삭제
+- [x] articleSheetVerifiedContext — 실제 위치·출처·관련 기사만 표현하고 대체된 구형 UI 삭제
 
 ## 조작 시트 검증에서 배운 것
 - RED는 배경 스크롤 잠금 부재였다. 125개 전체 테스트는 통과했고 초안 서식만 실패해 실행을 보존·종료한 뒤 Prettier만 적용했다. 동일 기대값의 gate 전체 검증 통과를 확인했으며 새로운 RED로 계산하지 않는다.
@@ -320,3 +320,10 @@ test('articleSheetRoutesPreserveSource', async () => {
 - 로딩 교체 회귀 테스트와 전체 gate130개 통과. 원래 href 링크를 capture 단계에 기록하고 닫힘 후 host에서 focus를 복구한다. 마커 openArticle 경로도 현재 focus를 보존한다.
 
 - 마지막 문맥 테스트 RED는 검증 위치·동일 지역 관련 기사 표현 부재였다. 서로 다른 지역은 좌표가 같아도 제외하고 중복 ID 제거·직접 유입의 없는 문맥 생성을 막는다. Figma 원본의 4px 핸들+16px 간격에 맞춰 시각 배치를 보정한다.
+
+- 최종 브라우저에서 close 상단3px가 handle after에 가려 접힘을 유발하는 RED를 확인했다. nav를 독립된 위쪽 레이어로 올려 닫기를 우선하고 실제 좌표 클릭을 재검증한다.
+
+- JS 없는 404 본문 RED: metadata 단계의 notFound throw 대신 없는 기사 noindex 메타를 반환하고, HTTP404는 page에서만 결정하도록 기존 오류 메타 테스트를 보강한다.
+
+- 실제 브라우저 SEO RED: 검색·목록에서 시트를 연 뒤에도 배경 title/canonical/noindex가 남았다. Next의 children 우선 head 선택에 맞춰 children=상세/메타, @background=실제 화면으로 소유권을 정렬한다. 별도 production fixture는 세 진입·상태 보존·닫기·앞으로가기 모두 통과했으며, 앱 회귀와 실제 메타를 다시 측정한다.
+\n- Next16.3.8의 page notFound는 실제404여도 SSR error recovery가 빈 문서를 반환했다. metadata 분리·명시 layout·ISR60 모두 독립 production fixture에서 실패했고 ISR은 오류 재시도까지 캐시했다. 지원 API인 Proxy rewrite를 직접 문서 요청에만 적용해 실제 upstream404를 기존 root404의 서버 HTML로 보낸다. RSC·503·설정/네트워크 실패는 그대로 통과하며 정상 직접 요청의 존재 확인 GET1회 비용을 명시한다. 다음 단일 회귀는 이 경계의 404·오류 구분이다.\n\n- Proxy 회귀의 실제 RED는 없는 기사 문서가200으로통과하는것이었다. typed skeleton확인후실제404만routing404로rewrite하고RSC/통신오류는통과시키는최소구현을적용한다.\n\n- Proxy 최종브라우저174개기능검증은통과했으나JS활성직접404에서React418을발견했다. rewrite의서버path와브라우저원주소때문에AppShell분기가다른RED를새단일회귀로추가한다. Next hook의404 segment는서버/클라이언트모두_not-found임을독립production에서확인했으며,404 subtree만일관된backgroundPath를사용한다.\n\n- 독립fixture는_not-found였으나 실제Turbopack404Flight는/_not-found였다. 설치Next의getSelectedLayoutSegmentPath가이를그대로반환함을확인했다. 같은회귀에두segment형태를넣어두번째실제RED를관찰했고둘다안정적인404shell로정렬한다.\n\n- [x] articleDocument404KeepsItsAddressAndDoesNotMisclassifyApiErrors — 실제404/invalid만문서rewrite하며RSC·HEAD·POST·503·설정/시간초과를검증했다.\n- [x] notFoundShellMatchesItsRewrittenDocumentDuringHydration — _not-found와/_not-found 모두서버/브라우저동일shell을검증했다.\n- 최종 전체contract_gate133개 통과(실패/스킵0), 타입·포맷·린트(기존경고3)·productionbuild통과. Figma현재원본대조와최종17시나리오178검증/pageerror0을확인했다. 실운영API/SDK와물리기기는이번합성검증대상에포함하지않는다.\n

@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
 import type { ArticleCollectionItem } from '@/features/article-list/model/article.types';
@@ -26,13 +25,9 @@ function isDetailItem(
 }
 
 export const loadDetail = cache(async (id: string) => {
-  if (!/^[a-f0-9]{64}$/.test(id)) notFound();
+  if (!/^[a-f0-9]{64}$/.test(id)) return { status: 'not-found' } as const;
 
-  const result = await fetchDetail(id);
-
-  if (result.status === 'not-found') notFound();
-
-  return result;
+  return fetchDetail(id);
 });
 
 async function fetchDetail(id: string) {

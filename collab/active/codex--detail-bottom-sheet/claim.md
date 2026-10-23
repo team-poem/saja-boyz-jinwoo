@@ -2,9 +2,9 @@
 branch: codex/detail-bottom-sheet
 owner: easter721
 started: 2026-10-23
-status: active
+status: done
 goal: feat(article): 최신 Figma 상세 바텀시트 통합과 기사 검색 유입 개선
-next: 재검토 범위를 바탕으로 공통 서버 상세·URL 시트부터 Sobaya RED→GREEN 구현
+next: dev PR 리뷰와 운영 API·실제 기기 확인
 base: dev
 ---
 

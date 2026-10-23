@@ -105,14 +105,14 @@ test('searchDiscoveryUsesProductionBrandAndRouteMetadata', async () => {
   expect(image.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a');
   expect(image.readUInt32BE(16)).toBe(1200);
   expect(image.readUInt32BE(20)).toBe(630);
-  expect(await metadata('./page.tsx')).toMatchObject({
+  expect(await metadata('./(browse)/page.tsx')).toMatchObject({
     alternates: { canonical: origin + '/' },
   });
-  expect(await metadata('./incidents/(list)/page.tsx')).toMatchObject({
+  expect(await metadata('./(browse)/incidents/page.tsx')).toMatchObject({
     title: '사건 사고 기사 목록',
     alternates: { canonical: origin + '/incidents' },
   });
-  for (const path of ['./search/page.tsx', './report/layout.tsx']) {
+  for (const path of ['./(browse)/search/page.tsx', './report/layout.tsx']) {
     expect(await metadata(path)).toMatchObject({
       robots: { index: false, follow: true },
     });
@@ -185,14 +185,21 @@ test('articleMetadataMatchesSummaryAndEscapesStructuredCitation', async () => {
 
 test('articleMetadataErrorsAreNotIndexableArticles', async () => {
   for (const badId of ['short', 'A'.repeat(64), '../news']) {
-    await expect(
-      metadata('./incidents/[id]/page.tsx', props(undefined, badId)),
-    ).rejects.toThrow('TEST_SEO_NOT_FOUND');
+    const missing = await metadata(
+      './incidents/[id]/page.tsx',
+      props(undefined, badId),
+    );
+    expect(missing.robots).toMatchObject({ index: false, follow: true });
+    expect(JSON.stringify(missing)).not.toMatch(
+      /교통 안내|article:published_time/,
+    );
   }
   expect(request).not.toHaveBeenCalled();
   request.mockResolvedValueOnce(new Response('', { status: 404 }));
-  await expect(metadata('./incidents/[id]/page.tsx')).rejects.toThrow(
-    'TEST_SEO_NOT_FOUND',
+  const missing = await metadata('./incidents/[id]/page.tsx');
+  expect(missing.robots).toMatchObject({ index: false, follow: true });
+  expect(JSON.stringify(missing)).not.toMatch(
+    /교통 안내|article:published_time/,
   );
   for (const response of [
     new Response('PRIVATE_UPSTREAM', { status: 503 }),
@@ -347,12 +354,12 @@ test('serviceAnswersAreVisibleAndReachableWithoutMapJavaScript', async () => {
   expect(await metadata('./about/page.tsx')).toMatchObject({
     alternates: { canonical: origin + '/about' },
   });
-  const list = await load('./incidents/(list)/page.tsx');
+  const list = await load('./(browse)/@background/incidents/page.tsx');
   request.mockResolvedValueOnce(Response.json({ total: 0, items: [] }));
   const listView = view(await (list.default as Route)(props()));
   expect(listView.querySelector('a[href="/archive"]')).not.toBeNull();
   expect(listView.querySelector('a[href="/about"]')).not.toBeNull();
-  const home = await load('./page.tsx');
+  const home = await load('./(browse)/@background/page.tsx');
   vi.stubEnv('NEXT_PUBLIC_NAVER_MAP_CLIENT_ID', '');
   const homeView = view(await (home.default as Route)(props()));
   expect(homeView.querySelector('a[href="/about"]')).not.toBeNull();
@@ -361,7 +368,7 @@ test('serviceAnswersAreVisibleAndReachableWithoutMapJavaScript', async () => {
 
 test('articleSheetMetadataMatchesDirectUrl', async () => {
   const directPath = './incidents/[id]/page.tsx';
-  const sheetPath = './@article/(.)incidents/[id]/page.tsx';
+  const sheetPath = './(browse)/(.)incidents/[id]/page.tsx';
   const canonical = origin + '/incidents/' + id;
   const fixture = item();
   request.mockImplementation(async () => Response.json(fixture));

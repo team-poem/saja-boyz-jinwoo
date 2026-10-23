@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { Notice } from '@/components/feedback/notice';
 import { pageMetadata, siteOrigin } from '@/app/site-metadata';
@@ -32,6 +33,13 @@ export async function generateMetadata({
 
   const result = await loadDetail(id);
 
+  if (result.status === 'not-found') {
+    return {
+      title: '이 기사는 찾을 수 없어요',
+      robots: { index: false, follow: true },
+    };
+  }
+
   if (result.status === 'error') {
     return {
       ...pageMetadata(
@@ -60,6 +68,8 @@ export default async function IncidentDetailPage({
   const { id } = await params;
 
   const result = await loadDetail(id);
+
+  if (result.status === 'not-found') notFound();
 
   if (result.status === 'error') {
     return (

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
-import { ArticleRouteHost } from '@/features/article-detail/ui/article-route-host/article-route-host';
+import { RouteShell } from '@/components/layout/route-shell/route-shell';
 
 import {
   siteDescription,
@@ -36,17 +36,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-  article,
-}: {
-  children: ReactNode;
-  article?: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
       <body>
-        <ArticleRouteHost article={article}>{children}</ArticleRouteHost>
+        <RouteShell>{children}</RouteShell>
       </body>
     </html>
   );

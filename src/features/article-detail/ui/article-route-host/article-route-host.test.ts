@@ -6,15 +6,15 @@ import { expect, test, vi } from 'vitest';
 import { ArticleRouteHost, useArticleSheetRoute } from './article-route-host';
 
 let pathname = '/search';
-let childSegments = ['search'];
-let articleSegments: string[] = [];
+let backgroundSegments = ['search'];
+let childSegments: string[] = [];
 const push = vi.fn();
 const back = vi.fn();
 const replace = vi.fn();
 vi.mock('next/navigation', () => ({
   usePathname: () => pathname,
   useSelectedLayoutSegments: (slot?: string) =>
-    slot === 'article' ? articleSegments : childSegments,
+    slot === 'background' ? backgroundSegments : childSegments,
   useRouter: () => ({ push, back, replace, refresh: vi.fn() }),
 }));
 
@@ -57,9 +57,9 @@ test('articleSheetRoutesPreserveSource', async () => {
         createElement(
           ArticleRouteHost,
           {
-            article: opened ? createElement(Detail) : null,
+            background: createElement(Background),
           },
-          createElement(Background),
+          opened ? createElement(Detail) : null,
         ),
       ),
     );
@@ -78,7 +78,7 @@ test('articleSheetRoutesPreserveSource', async () => {
     );
     expect(push).toHaveBeenCalledWith('/incidents/' + id, { scroll: false });
     pathname = '/incidents/' + id;
-    articleSegments = ['(.)incidents', id];
+    childSegments = ['(.)incidents', id];
     await draw(true);
     expect(container.querySelector('input')).toBe(input);
     expect(input.value).toBe('화재 후속');
@@ -101,16 +101,16 @@ test('articleSheetRoutesPreserveSource', async () => {
     );
     expect(back).toHaveBeenCalledTimes(1);
     pathname = '/search';
-    articleSegments = ['search']; // catch-all 슬롯도 활성 상세로 오인하지 않는다.
+    childSegments = ['search']; // 일반 페이지로 복귀하면 상세 슬롯을 해제한다.
     await draw();
     expect(input.closest('[inert]')).toBeNull();
     expect(input.value).toBe('화재 후속');
     expect(container.querySelector('main')?.textContent).toContain(
       '추가 결과 1',
     );
-    childSegments = ['incidents', '(list)'];
+    backgroundSegments = ['(__SLOT__)', 'incidents'];
     pathname = '/incidents';
-    articleSegments = ['incidents'];
+    childSegments = ['incidents'];
     await draw();
     expect(container.querySelector('header')).not.toBeNull();
     expect(container.querySelector('[aria-label="기사 필터"]')).not.toBeNull();
@@ -118,8 +118,8 @@ test('articleSheetRoutesPreserveSource', async () => {
     await act(async () => root.unmount());
     container.remove();
     pathname = '/search';
-    childSegments = ['search'];
-    articleSegments = [];
+    backgroundSegments = ['search'];
+    childSegments = [];
     vi.clearAllMocks();
     vi.unstubAllGlobals();
   }
@@ -128,8 +128,8 @@ test('articleSheetRoutesPreserveSource', async () => {
 test('articleSheetLoadingPreservesOpenerFocus', async () => {
   vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
   pathname = '/incidents';
-  childSegments = ['incidents', '(list)'];
-  articleSegments = [];
+  backgroundSegments = ['(__SLOT__)', 'incidents'];
+  childSegments = [];
   const id = 'a'.repeat(64);
   function Background() {
     return createElement(
@@ -158,9 +158,9 @@ test('articleSheetLoadingPreservesOpenerFocus', async () => {
         createElement(
           ArticleRouteHost,
           {
-            article: stage ? createElement(Modal, { key: stage, stage }) : null,
+            background: createElement(Background),
           },
-          createElement(Background),
+          stage ? createElement(Modal, { key: stage, stage }) : null,
         ),
       ),
     );
@@ -173,7 +173,7 @@ test('articleSheetLoadingPreservesOpenerFocus', async () => {
     opener.focus();
     await act(async () => opener.click());
     pathname = '/incidents/' + id;
-    articleSegments = ['(.)incidents', id];
+    childSegments = ['(.)incidents', id];
     await draw('로딩 중');
     host.querySelector<HTMLElement>('[role="dialog"]')!.focus();
     await draw('기사 본문');
@@ -183,7 +183,7 @@ test('articleSheetLoadingPreservesOpenerFocus', async () => {
     close.focus();
     await act(async () => close.click());
     pathname = '/incidents';
-    articleSegments = ['incidents'];
+    childSegments = ['incidents'];
     await draw();
     expect(opener.closest('[inert]')).toBeNull();
     expect(
@@ -194,8 +194,8 @@ test('articleSheetLoadingPreservesOpenerFocus', async () => {
     await act(async () => root.unmount());
     host.remove();
     pathname = '/search';
-    childSegments = ['search'];
-    articleSegments = [];
+    backgroundSegments = ['search'];
+    childSegments = [];
     vi.clearAllMocks();
     vi.unstubAllGlobals();
   }

@@ -219,7 +219,7 @@ export function DetailSheet({
         </button>
         <nav
           aria-label="기사 상세 탐색"
-          className="flex h-6 items-center justify-end"
+          className="relative z-10 flex h-6 items-center justify-end"
         >
           {!onClose && (
             <Link
