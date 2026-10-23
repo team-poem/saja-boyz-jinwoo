@@ -5,6 +5,10 @@ import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, expect, test, vi } from 'vitest';
 
 import { MapHome } from './map-home';
+import {
+  ArticleSheetContext,
+  type ArticleSheetRoute,
+} from '@/features/article-detail/model/article-sheet-context';
 import type { MapArticleResult } from '../../model/map-article.types';
 
 let root: Root | undefined;
@@ -38,7 +42,10 @@ const data: MapArticleResult = {
   ],
 };
 
-async function mount(result: MapArticleResult | null = data) {
+async function mount(
+  result: MapArticleResult | null = data,
+  sheetRoute: ArticleSheetRoute | null = null,
+) {
   vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
   const positions: unknown[] = [];
   const removed = vi.fn();
@@ -108,17 +115,33 @@ async function mount(result: MapArticleResult | null = data) {
   container = document.createElement('div');
   document.body.append(container);
   root = createRoot(container);
-  await act(async () =>
-    root!.render(
-      createElement(MapHome, { clientId: 'test', articles: result }),
-    ),
-  );
+  const draw = async (route: ArticleSheetRoute | null = sheetRoute) => {
+    await act(async () =>
+      root!.render(
+        createElement(
+          ArticleSheetContext,
+          { value: route },
+          createElement(MapHome, { clientId: 'test', articles: result }),
+        ),
+      ),
+    );
+  };
+  await draw();
   await act(async () =>
     document
       .querySelector('script[src*="oapi.map.naver.com"]')!
       .dispatchEvent(new Event('load')),
   );
-  return { positions, selected, removed, off, fitBounds, setCenter, setZoom };
+  return {
+    positions,
+    selected,
+    removed,
+    off,
+    fitBounds,
+    setCenter,
+    setZoom,
+    draw,
+  };
 }
 
 afterEach(async () => {
@@ -393,4 +416,83 @@ test('mapRemovedOverviewControlDoesNotRecenterSingleOrDuplicatePositions', async
       .querySelectorAll('script[src*="oapi.map.naver.com"]')
       .forEach((node) => node.remove());
   }
+});
+
+test('mapArticleSheetPreservesGroupedChoices', async () => {
+  const pair = ['b', 'c'].map((letter) => ({
+    ...data.items[0],
+    article_id: letter.repeat(64),
+    article: { ...data.items[0].article, title: letter + ' 두 건 지역 기사' },
+    location: {
+      ...data.items[0].location,
+      latitude: 37.5,
+      longitude: 127.1,
+      label: '두 건 검증 지역',
+    },
+  }));
+  const dozen = Array.from({ length: 12 }, (_, index) => ({
+    ...data.items[0],
+    article_id: (1000 + index).toString(16).padStart(64, '0'),
+    article: { ...data.items[0].article, title: '열두 건 지역 기사 ' + index },
+    location: {
+      ...data.items[0].location,
+      latitude: 37.2,
+      longitude: 129.1,
+      label: '열두 건 검증 지역',
+    },
+  }));
+  const items = [...data.items, ...pair, ...dozen];
+  const openArticle = vi.fn();
+  const route: ArticleSheetRoute = {
+    active: false,
+    sourcePath: '/',
+    height: 456,
+    mapArticles: items,
+    openArticle,
+    close: vi.fn(),
+    replaceArticle: vi.fn(),
+    setHeight: vi.fn(),
+    registerMapArticles: vi.fn(),
+    retry: vi.fn(),
+  };
+  const fixture = await mount({ ...data, total: items.length, items }, route);
+  expect(fixture.positions).toHaveLength(3);
+  await act(async () => fixture.selected[0]());
+  expect(
+    openArticle,
+    '단건 원은 공통 상세 주소로 바로 진입',
+  ).toHaveBeenCalledWith(data.items[0].article_id);
+  await fixture.draw({ ...route, active: true });
+  expect(document.querySelector('[aria-label="선택한 기사"]')).toBeNull();
+  await fixture.draw(route);
+  expect(document.querySelector('[aria-label="선택한 기사"]')).toBeNull();
+  for (const [index, count] of [
+    [1, 2],
+    [2, 12],
+  ]) {
+    await act(async () => fixture.selected[index]());
+    const chooser = document.querySelector('[aria-label="선택한 기사"]');
+    expect(chooser?.querySelectorAll('a[href^="/incidents/"]')).toHaveLength(
+      count,
+    );
+    await fixture.draw({ ...route, active: true });
+    expect(
+      document.querySelector('[aria-label="선택한 기사"]'),
+      '상세와 선택 패널 중복 금지',
+    ).toBeNull();
+    await fixture.draw(route);
+    expect(
+      document
+        .querySelector('[aria-label="선택한 기사"]')
+        ?.querySelectorAll('a[href^="/incidents/"]'),
+    ).toHaveLength(count);
+  }
+  expect(route.registerMapArticles).toHaveBeenCalledWith(items);
+  expect(
+    fixture.positions,
+    '시트 진입으로 SDK나 마커를 재생성하지 않음',
+  ).toHaveLength(3);
+  expect(fixture.setCenter).not.toHaveBeenCalled();
+  expect(fixture.setZoom).not.toHaveBeenCalled();
+  expect(fixture.fitBounds).not.toHaveBeenCalled();
 });

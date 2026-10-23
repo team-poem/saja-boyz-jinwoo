@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import {
@@ -18,19 +18,41 @@ export function MapArticleSheet({
   items,
   apiOrigin,
   onClose,
+  onHeightChange,
 }: {
   items: LocatedArticle[];
   apiOrigin: string;
   onClose(): void;
+  onHeightChange?(height: number): void;
 }) {
+  const panel = useRef<HTMLElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     closeButton.current?.focus({ preventScroll: true });
   }, [items]);
 
+  useLayoutEffect(() => {
+    const update = () =>
+      onHeightChange?.(panel.current?.getBoundingClientRect().height ?? 0);
+
+    update();
+    const observer =
+      typeof ResizeObserver === 'undefined'
+        ? undefined
+        : new ResizeObserver(update);
+
+    if (panel.current) observer?.observe(panel.current);
+
+    return () => {
+      observer?.disconnect();
+      onHeightChange?.(0);
+    };
+  }, [onHeightChange, items]);
+
   return createPortal(
     <section
+      ref={panel}
       aria-label="선택한 기사"
       className="ui-sheet-enter fixed bottom-0 left-1/2 z-30 flex max-h-[65dvh] w-full max-w-[640px] -translate-x-1/2 flex-col gap-4 rounded-t-3xl border-0 border-t border-solid border-[#e3e8f0] bg-surface p-4 pb-[max(16px,env(safe-area-inset-bottom))] shadow-[0_-8px_16px_rgb(0_0_0/10%)]"
       onKeyDown={(event) => {
@@ -77,7 +99,7 @@ export function MapArticleSheet({
               className="flex shrink-0 flex-col gap-4 border-0 border-solid border-border pb-4 not-last:border-b last:pb-0"
             >
               <h2 className="m-0 text-[18px]/[normal] font-extrabold text-text [overflow-wrap:anywhere]">
-                <Link href={`/incidents/${item.article_id}`}>
+                <Link scroll={false} href={`/incidents/${item.article_id}`}>
                   {articleText(item.article.title)}
                 </Link>
               </h2>

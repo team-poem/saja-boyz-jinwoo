@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
+import { useArticleSheetRoute } from '@/features/article-detail/model/article-sheet-context';
 import { ServiceIntro } from '@/components/layout/service-intro';
 import { LoadingSpinner } from '@/components/feedback/loading-spinner';
 import { Notice } from '@/components/feedback/notice';
@@ -135,6 +136,12 @@ export function MapHome({
   clientId: string;
   articles?: MapArticleResult | null;
 }) {
+  const sheetRoute = useArticleSheetRoute();
+  const openArticleRef = useRef(sheetRoute?.openArticle);
+  const registerMapArticles = sheetRoute?.registerMapArticles;
+  const detailOpen = sheetRoute?.active ?? false;
+  const previousDetailOpen = useRef(false);
+  const [selectionHeight, setSelectionHeight] = useState(0);
   const [selectedArticles, setSelectedArticles] = useState<LocatedArticle[]>(
     [],
   );
@@ -174,6 +181,29 @@ export function MapHome({
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
+
+  useEffect(() => {
+    openArticleRef.current = sheetRoute?.openArticle;
+  }, [sheetRoute?.openArticle]);
+
+  useEffect(() => {
+    registerMapArticles?.(filteredArticles?.items ?? []);
+
+    return () => registerMapArticles?.([]);
+  }, [filteredArticles, registerMapArticles]);
+
+  useEffect(() => {
+    if (
+      previousDetailOpen.current &&
+      !detailOpen &&
+      selectedArticles.length === 1
+    ) {
+      clearSelection.current?.(true);
+      setSelectedArticles([]);
+    }
+
+    previousDetailOpen.current = detailOpen;
+  }, [detailOpen, selectedArticles.length]);
 
   useLayoutEffect(() => {
     if (!locating && !locationError && restoreLocateFocus.current) {
@@ -517,6 +547,8 @@ export function MapHome({
             visual.setSelected(true);
             selectedMarker = visual.content;
             setSelectedArticles(group);
+            if (group.length === 1)
+              openArticleRef.current?.(group[0].article_id);
           };
           const listener = maps.Event.addListener(
             articleMarker,
@@ -668,11 +700,16 @@ export function MapHome({
     if (ready) updateArticles.current?.(filteredArticles?.items ?? []);
   }, [filteredArticles, ready]);
 
-  // The sheet is bounded at 65dvh; reserve that area without measuring its DOM
-  // or changing the map viewport when selection changes.
+  // Reserve the visible panel height without changing the map viewport.
   useEffect(() => {
     updateControls.current?.();
-  }, [selectedArticles, ready]);
+  }, [
+    selectedArticles,
+    ready,
+    selectionHeight,
+    sheetRoute?.height,
+    detailOpen,
+  ]);
 
   function applyPeriod(value: MapPeriod) {
     clearSelection.current?.();
@@ -698,11 +735,14 @@ export function MapHome({
         <div
           ref={controlClearance}
           aria-hidden="true"
-          className={`pointer-events-none invisible absolute bottom-0 w-0 ${
-            ready && selectedArticles.length > 0 && articles
-              ? 'h-[max(calc(84px_+_env(safe-area-inset-bottom)),calc(65dvh_+_8px))]'
-              : 'h-[calc(84px_+_env(safe-area-inset-bottom))]'
-          }`}
+          className="pointer-events-none invisible absolute bottom-0 w-0 min-h-[calc(84px_+_env(safe-area-inset-bottom))]"
+          style={{
+            height: detailOpen
+              ? sheetRoute!.height + 8
+              : selectedArticles.length > (sheetRoute ? 1 : 0)
+                ? selectionHeight + 8
+                : undefined,
+          }}
         />
         <div
           ref={carouselOverlay}
@@ -851,16 +891,20 @@ export function MapHome({
             </div>
           )}
         </div>
-        {ready && selectedArticles.length > 0 && articles && (
-          <MapArticleSheet
-            items={selectedArticles}
-            apiOrigin={articles.apiOrigin}
-            onClose={() => {
-              clearSelection.current?.(true);
-              setSelectedArticles([]);
-            }}
-          />
-        )}
+        {ready &&
+          !detailOpen &&
+          selectedArticles.length > (sheetRoute ? 1 : 0) &&
+          articles && (
+            <MapArticleSheet
+              items={selectedArticles}
+              apiOrigin={articles.apiOrigin}
+              onHeightChange={setSelectionHeight}
+              onClose={() => {
+                clearSelection.current?.(true);
+                setSelectedArticles([]);
+              }}
+            />
+          )}
       </section>
       <ServiceIntro />
     </>

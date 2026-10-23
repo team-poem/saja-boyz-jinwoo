@@ -291,7 +291,7 @@ test('articleSheetRoutesPreserveSource', async () => {
   }
 });
 ```
-- [ ] mapArticleSheetPreservesGroupedChoices — 지도 단일/다건·하단 카드와 2/12건·중심·줌·SDK 보존
+- [x] mapArticleSheetPreservesGroupedChoices — 지도 단일/다건·하단 카드와 2/12건·중심·줌·SDK 보존
 - [ ] articleSheetMetadataMatchesDirectUrl — noindex 누수 방지, canonical·OG·공유·JSON-LD와 오류/없는 기사 구분
 - [ ] articleSheetVerifiedContext — 실제 위치·출처·관련 기사만 표현하고 대체된 구형 UI 삭제
 
@@ -300,3 +300,8 @@ test('articleSheetRoutesPreserveSource', async () => {
 - 다음은 가로채기 URL 호스트의 배경 상태 보존이다. 소바야 Canon의 직접 에이전트 RED→GREEN과 gate를 사용해 단일 작성자로 진행한다.
 
 - URL 호스트는 먼저 API 부재를 확인했고, 최소 틀에서 push 호출 0회라는 실제 RED를 재확인했다. 진입/배경 inert/검색 입력·추가 결과 보존 및 복귀, catch-all 해제 검증을 포함한 gate 전체 통과.
+
+## 지도 상세 통합 다음 테스트
+- 단건 원의 직접 상세 진입, 2/12건 선택 보존, 선택/상세 패널 중복 방지, SDK·줌·중심 유지의 회귀를 관찰한다. 미래 메타데이터 시나리오는 아직 문장으로 유지한다.
+
+- 지도 RED는 단건 원이 상세 주소를 열지 않는 것이었다. 2/12건 목록·선택 복구·패널 중복 금지·SDK 및 뷰포트 유지가 포함된 전체 gate 통과.
