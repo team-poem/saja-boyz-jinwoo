@@ -16,6 +16,7 @@ import { loadDetail } from './load-detail';
 import { DetailShare } from './detail-share';
 import { DetailImage } from './detail-image';
 import { DetailNavigation } from './detail-navigation';
+import { DetailSheet } from './detail-sheet';
 
 export const dynamic = 'force-dynamic';
 
@@ -106,12 +107,7 @@ export default async function IncidentDetailPage({
       : null;
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={`article-detail-title-${id}`}
-      className="fixed bottom-0 left-1/2 z-30 flex h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))] w-full max-w-[640px] min-w-0 -translate-x-1/2 flex-col gap-4 overflow-y-auto overscroll-contain rounded-t-3xl bg-surface px-4 pt-4 pb-[max(24px,env(safe-area-inset-bottom))] text-text shadow-[0_-8px_16px_rgb(0_0_0/10%)]"
-    >
+    <DetailSheet titleId={`article-detail-title-${id}`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -159,6 +155,6 @@ export default async function IncidentDetailPage({
         </p>
       </section>
       <DetailShare id={id} title={articleTitle(article.title)} />
-    </div>
+    </DetailSheet>
   );
 }

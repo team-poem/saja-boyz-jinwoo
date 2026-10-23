@@ -64,3 +64,91 @@ test('articleDetailServerSheetPreservesDiscovery', async () => {
     vi.unstubAllEnvs();
   }
 });
+
+test('articleSheetInteractionPreservesBackground', async () => {
+  const id = 'd'.repeat(64);
+  vi.stubEnv('NEWS_API_BASE_URL', 'https://news.example.invalid');
+  vi.stubGlobal(
+    'fetch',
+    vi.fn().mockResolvedValue(
+      Response.json({
+        article_id: id,
+        article: {
+          title: '시트 조작 검증 기사',
+          description: '검증용 요약',
+          pubDate: '2026-10-22T12:20:00Z',
+          originallink: 'https://publisher.example.invalid/report',
+          link: '',
+        },
+        image_status: 'disabled',
+        image_url: null,
+      }),
+    ),
+  );
+  const { act } = await import('react');
+  const { createRoot } = await import('react-dom/client');
+  vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
+  const caller = document.createElement('button');
+  const container = document.createElement('div');
+  document.body.append(caller, container);
+  caller.focus();
+  const previousOverflow = document.body.style.overflow;
+  document.body.style.overflow = 'auto';
+  const root = createRoot(container);
+  let closedTo = '';
+  const captureClose = (event: MouseEvent) => {
+    const link = (event.target as Element).closest('a[aria-label="닫기"]');
+    if (link) {
+      event.preventDefault();
+      closedTo = link.getAttribute('href') ?? '';
+    }
+  };
+  document.addEventListener('click', captureClose);
+  try {
+    const tree = await DetailPage({ params: Promise.resolve({ id }) });
+    await act(async () => {
+      root.render(tree);
+    });
+    const dialog = container.querySelector<HTMLElement>('[role="dialog"]')!;
+    expect(document.body.style.overflow, '시트가 열리면 배경 스크롤 차단').toBe(
+      'hidden',
+    );
+    expect(
+      dialog.contains(document.activeElement),
+      '시트 안으로 포커스 이동',
+    ).toBe(true);
+    const handle = dialog.querySelector<HTMLButtonElement>(
+      'button[aria-expanded]',
+    );
+    expect(handle, '키보드로 접고 펼칠 수 있는 핸들').not.toBeNull();
+    expect(handle?.getAttribute('aria-expanded')).toBe('true');
+    await act(async () => {
+      handle?.click();
+    });
+    expect(handle?.getAttribute('aria-expanded')).toBe('false');
+    await act(async () => {
+      handle?.click();
+    });
+    expect(handle?.getAttribute('aria-expanded')).toBe('true');
+    await act(async () => {
+      dialog.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+      );
+    });
+    expect(closedTo, '직접 유입은 외부 히스토리 대신 지도 주소로 닫기').toBe(
+      '/',
+    );
+  } finally {
+    await act(async () => {
+      root.unmount();
+    });
+    expect(document.body.style.overflow).toBe('auto');
+    expect(document.activeElement, '진입한 요소로 포커스 복구').toBe(caller);
+    document.body.style.overflow = previousOverflow;
+    document.removeEventListener('click', captureClose);
+    caller.remove();
+    container.remove();
+    vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
+  }
+});
