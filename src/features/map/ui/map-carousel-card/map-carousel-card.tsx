@@ -38,6 +38,7 @@ export function MapCarouselCard({
         </p>
         <h3 className="m-0 truncate text-[13px]/4 font-bold text-text">
           <Link
+            scroll={false}
             href={`/incidents/${item.article_id}`}
             className="after:absolute after:inset-0 after:z-10 after:rounded-card after:content-['']"
           >

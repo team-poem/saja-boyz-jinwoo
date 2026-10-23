@@ -31,7 +31,11 @@ export function ArticleCard({
     <article className="ui-card-enter grid min-h-[120px] min-w-0 grid-cols-[80px_minmax(0,1fr)] items-start gap-x-3 gap-y-1 rounded-card border border-solid border-border bg-surface p-3 shadow-[0_4px_8px_rgb(0_0_0/3%)]">
       <ArticleImage key={imageUrl} src={imageUrl} />
       <h2 className="col-start-2 row-start-1 m-0 min-w-0 line-clamp-2 text-[14px]/5 font-extrabold text-text [overflow-wrap:anywhere]">
-        <Link className="ui-link" href={`/incidents/${article_id}`}>
+        <Link
+          scroll={false}
+          className="ui-link"
+          href={`/incidents/${article_id}`}
+        >
           {articleText(article.title)}
         </Link>
       </h2>

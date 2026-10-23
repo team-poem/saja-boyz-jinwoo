@@ -42,7 +42,11 @@ export function SearchResultCard({
   return (
     <article className="ui-card-enter flex min-w-0 flex-col gap-2 rounded-card border border-solid border-border bg-surface p-3 shadow-[0_4px_8px_rgb(0_0_0/5%)]">
       <h2 className="m-0 line-clamp-1 text-[14px]/5 font-bold text-text [overflow-wrap:anywhere]">
-        <Link className="ui-link" href={`/incidents/${article_id}`}>
+        <Link
+          scroll={false}
+          className="ui-link"
+          href={`/incidents/${article_id}`}
+        >
           {highlightedText(articleText(article.title), keyword)}
         </Link>
       </h2>

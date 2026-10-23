@@ -3,8 +3,7 @@
 import { afterEach, assert, beforeEach, expect, test, vi } from 'vitest';
 import { createElement, type ComponentType, type ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import SearchPage from './page';
-const loadingModules = import.meta.glob('./loading.tsx');
+import SearchPage from '../(browse)/@background/search/page';
 const mock = vi.fn<typeof fetch>();
 const item = {
   article_id: 'a'.repeat(64),
@@ -112,7 +111,7 @@ test('searchDistinguishesEmptyFailureAndLoading', async () => {
   );
   expect(url.pathname).toBe('/search');
   expect(url.searchParams.get('q')).toBe('서울 & 화재');
-  const load = loadingModules['./loading.tsx'];
+  const load = () => import('../(browse)/@background/search/loading');
   assert(load);
   const loadingModule = (await load()) as { default: ComponentType };
   const loading = document.createElement('div');

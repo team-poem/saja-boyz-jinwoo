@@ -1,0 +1,850 @@
+{
+  "created": "2026-10-23T10:10:38.817Z",
+  "intermediate": [
+    {
+      "file": "intermediate-map-report.json",
+      "buildId": null,
+      "checks": 43,
+      "failedChecks": [],
+      "scenarios": [
+        {
+          "name": "map-single-region-sheet-expand-and-focus",
+          "passed": true
+        },
+        {
+          "name": "map-region-pair-and-twelve-members-preserved",
+          "passed": true
+        },
+        {
+          "name": "map-carousel-share-copy-and-direct-close",
+          "passed": true
+        },
+        {
+          "name": "responsive-direct-sheet-and-scroll",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        "map-detail-collapsed-393.png",
+        "map-detail-expanded-393.png",
+        "map-2-member-selection-393.png",
+        "map-12-member-selection-393.png",
+        "direct-expanded-320.png",
+        "direct-expanded-393.png",
+        "direct-expanded-768.png",
+        "direct-expanded-1440.png"
+      ]
+    },
+    {
+      "file": "intermediate-list-search-report.json",
+      "buildId": null,
+      "checks": 10,
+      "failedChecks": [
+        {
+          "name": "list opener regains focus",
+          "passed": false
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "list-infinite-pagination-overlay-history-and-scroll",
+          "passed": false,
+          "error": "list opener regains focus {}"
+        },
+        {
+          "name": "search-overlay-indexability-and-return-noindex",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        "list-detail-expanded-393.png",
+        "search-detail-expanded-393.png"
+      ]
+    },
+    {
+      "file": "intermediate-drag-report.json",
+      "buildId": "v744cMIQsSRPuEcB97kue",
+      "checks": 9,
+      "failedChecks": [],
+      "scenarios": [
+        {
+          "name": "map-sheet-pointer-drag-keyboard-and-background-cleanup",
+          "passed": true
+        }
+      ],
+      "screenshots": []
+    },
+    {
+      "file": "intermediate-server-seo-report.json",
+      "buildId": "v744cMIQsSRPuEcB97kue",
+      "checks": 44,
+      "failedChecks": [
+        {
+          "name": "missing article true HTTP404",
+          "passed": false,
+          "id": "missing",
+          "status": 200
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "direct-detail-server-HTML-and-bot-metadata",
+          "passed": true
+        },
+        {
+          "name": "missing-and-error-SEO-distinction-and-escape",
+          "passed": false,
+          "error": "missing article true HTTP404 {\"id\":\"missing\",\"status\":200}"
+        },
+        {
+          "name": "direct-share-with-JavaScript-disabled",
+          "passed": false,
+          "error": "locator.innerText: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n"
+        }
+      ],
+      "screenshots": []
+    }
+  ],
+  "candidateRuns": [
+    {
+      "run": "final-1",
+      "buildId": "EZwBKUmFmGyUKAlzOzvjb",
+      "checks": 125,
+      "scenarios": [
+        {
+          "name": "direct-detail-server-HTML-and-bot-metadata",
+          "passed": true
+        },
+        {
+          "name": "missing-and-error-SEO-distinction-and-escape",
+          "passed": true
+        },
+        {
+          "name": "direct-share-with-JavaScript-disabled",
+          "passed": true
+        },
+        {
+          "name": "list-infinite-pagination-overlay-history-and-scroll",
+          "passed": false,
+          "error": "article canonical/robots settled to expected metadata {\"meta\":{\"title\":\"사건 사고 기사 목록 · 흉흉 · 내 주변의 사건 사고\",\"canonical\":\"https://hyunghyung.vercel.app/incidents\",\"ogUrl\":\"https://hyunghyung.vercel.app/incidents\",\"ogTitle\":\"사건 사고 기사 목록\",\"robots\":[],\"headings\":[\"검증용 기사 · 목록 검색 후속 보도 11\",\"기사 요약\"]}}"
+        },
+        {
+          "name": "search-overlay-indexability-and-return-noindex",
+          "passed": false,
+          "error": "article canonical/robots settled to expected metadata {\"meta\":{\"title\":\"기사 검색 · 흉흉 · 내 주변의 사건 사고\",\"canonical\":\"https://hyunghyung.vercel.app/search\",\"ogUrl\":\"https://hyunghyung.vercel.app/search\",\"ogTitle\":\"기사 검색\",\"robots\":[\"noindex, follow\"],\"headings\":[\"검증용 기사 · 서울 단일 지역 도로 점검\",\"기사 요약\"]}}"
+        },
+        {
+          "name": "map-single-region-sheet-expand-and-focus",
+          "passed": true
+        },
+        {
+          "name": "map-region-pair-and-twelve-members-preserved",
+          "passed": true
+        },
+        {
+          "name": "map-carousel-share-copy-and-direct-close",
+          "passed": true
+        },
+        {
+          "name": "map-sheet-pointer-drag-keyboard-and-background-cleanup",
+          "passed": false,
+          "error": "locator.click: Timeout 7000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog').getByRole('button', { name: '기사 선택 닫기' })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"기사 선택 닫기\" class=\"ui-control grid size-6 place-items-center rounded border-0 bg-transparent p-0\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button type=\"button\" aria-expanded=\"false\" aria-label=\"기사 시트 펼치기\" class=\"ui-control relative flex h-5 w-full touch-none after:absolute after:inset-x-0 after:-inset-y-3 after:content-[''] cursor-grab items-start justify-center border-0 bg-transparent p-0 active:cursor-grabbing\">…</button> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button type=\"button\" aria-expanded=\"false\" aria-label=\"기사 시트 펼치기\" class=\"ui-control relative flex h-5 w-full touch-none after:absolute after:inset-x-0 after:-inset-y-3 after:content-[''] cursor-grab items-start justify-center border-0 bg-transparent p-0 active:cursor-grabbing\">…</button> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    13 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <button type=\"button\" aria-expanded=\"false\" aria-label=\"기사 시트 펼치기\" class=\"ui-control relative flex h-5 w-full touch-none after:absolute after:inset-x-0 after:-inset-y-3 after:content-[''] cursor-grab items-start justify-center border-0 bg-transparent p-0 active:cursor-grabbing\">…</button> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+        },
+        {
+          "name": "map-related-replacement-history-and-location-context",
+          "passed": false,
+          "error": "locator.click: Timeout 7000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog').filter({ has: locator('h1, h2') }).last().getByRole('button', { name: /닫기|닫아/ }).or(getByRole('dialog').filter({ has: locator('h1, h2') }).last().getByRole('link', { name: /닫기|닫아/ })).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/\" aria-label=\"닫기\" class=\"ui-control grid size-6 place-items-center rounded\">…</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button type=\"button\" aria-expanded=\"false\" aria-label=\"기사 시트 펼치기\" class=\"ui-control relative flex h-5 w-full touch-none after:absolute after:inset-x-0 after:-inset-y-3 after:content-[''] cursor-grab items-start justify-center border-0 bg-transparent p-0 active:cursor-grabbing\">…</button> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button type=\"button\" aria-expanded=\"false\" aria-label=\"기사 시트 펼치기\" class=\"ui-control relative flex h-5 w-full touch-none after:absolute after:inset-x-0 after:-inset-y-3 after:content-[''] cursor-grab items-start justify-center border-0 bg-transparent p-0 active:cursor-grabbing\">…</button> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    13 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <button type=\"button\" aria-expanded=\"false\" aria-label=\"기사 시트 펼치기\" class=\"ui-control relative flex h-5 w-full touch-none after:absolute after:inset-x-0 after:-inset-y-3 after:content-[''] cursor-grab items-start justify-center border-0 bg-transparent p-0 active:cursor-grabbing\">…</button> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+        },
+        {
+          "name": "native-share-success-failure-and-manual-copy-fallback",
+          "passed": true
+        },
+        {
+          "name": "error-retry-missing-recovery-image-failure-and-svg-assets",
+          "passed": false,
+          "error": "locator.waitFor: Error: strict mode violation: getByRole('alert') resolved to 2 elements:\n    1) <div role=\"alert\" class=\"rounded-2xl border border-solid border-brand/20 bg-surface p-4 text-text shadow-floating [overflow-wrap:anywhere]\">…</div> aka getByRole('dialog', { name: '기사 상세 오류' }).getByRole('alert')\n    2) <div role=\"alert\" aria-live=\"assertive\" id=\"__next-route-announcer__\"></div> aka locator('[id=\"__next-route-announcer__\"]')\n\nCall log:\n\u001b[2m  - waiting for getByRole('alert') to be visible\u001b[22m\n"
+        },
+        {
+          "name": "reduced-motion-preserves-sheet-controls",
+          "passed": true
+        },
+        {
+          "name": "responsive-direct-sheet-and-scroll",
+          "passed": true
+        }
+      ],
+      "pageErrors": [],
+      "failedChecks": [
+        {
+          "name": "article canonical/robots settled to expected metadata",
+          "passed": false,
+          "meta": {
+            "title": "사건 사고 기사 목록 · 흉흉 · 내 주변의 사건 사고",
+            "canonical": "https://hyunghyung.vercel.app/incidents",
+            "ogUrl": "https://hyunghyung.vercel.app/incidents",
+            "ogTitle": "사건 사고 기사 목록",
+            "robots": [],
+            "headings": [
+              "검증용 기사 · 목록 검색 후속 보도 11",
+              "기사 요약"
+            ]
+          }
+        },
+        {
+          "name": "article canonical/robots settled to expected metadata",
+          "passed": false,
+          "meta": {
+            "title": "기사 검색 · 흉흉 · 내 주변의 사건 사고",
+            "canonical": "https://hyunghyung.vercel.app/search",
+            "ogUrl": "https://hyunghyung.vercel.app/search",
+            "ogTitle": "기사 검색",
+            "robots": [
+              "noindex, follow"
+            ],
+            "headings": [
+              "검증용 기사 · 서울 단일 지역 도로 점검",
+              "기사 요약"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "run": "final-1-early",
+      "buildId": "EZwBKUmFmGyUKAlzOzvjb",
+      "checks": 4,
+      "scenarios": [
+        {
+          "name": "direct-share-with-JavaScript-disabled",
+          "passed": true
+        },
+        {
+          "name": "list-infinite-pagination-overlay-history-and-scroll",
+          "passed": false,
+          "error": "page.waitForFunction: Timeout 10000ms exceeded."
+        }
+      ],
+      "pageErrors": [],
+      "failedChecks": []
+    },
+    {
+      "run": "final-1-early-list",
+      "buildId": "EZwBKUmFmGyUKAlzOzvjb",
+      "checks": 7,
+      "scenarios": [
+        {
+          "name": "list-infinite-pagination-overlay-history-and-scroll",
+          "passed": true
+        }
+      ],
+      "pageErrors": [],
+      "failedChecks": []
+    },
+    {
+      "run": "final-1-early-metadata",
+      "buildId": "EZwBKUmFmGyUKAlzOzvjb",
+      "checks": 3,
+      "scenarios": [
+        {
+          "name": "search-overlay-indexability-and-return-noindex",
+          "passed": false,
+          "error": "article canonical/robots settled to expected metadata {\"meta\":{\"title\":\"기사 검색 · 흉흉 · 내 주변의 사건 사고\",\"canonical\":\"https://hyunghyung.vercel.app/search\",\"ogUrl\":\"https://hyunghyung.vercel.app/search\",\"ogTitle\":\"기사 검색\",\"robots\":[\"noindex, follow\"],\"headings\":[\"검증용 기사 · 서울 단일 지역 도로 점검\",\"기사 요약\"]}}"
+        }
+      ],
+      "pageErrors": [],
+      "failedChecks": [
+        {
+          "name": "article canonical/robots settled to expected metadata",
+          "passed": false,
+          "meta": {
+            "title": "기사 검색 · 흉흉 · 내 주변의 사건 사고",
+            "canonical": "https://hyunghyung.vercel.app/search",
+            "ogUrl": "https://hyunghyung.vercel.app/search",
+            "ogTitle": "기사 검색",
+            "robots": [
+              "noindex, follow"
+            ],
+            "headings": [
+              "검증용 기사 · 서울 단일 지역 도로 점검",
+              "기사 요약"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "run": "final-1-error-complete",
+      "buildId": "EZwBKUmFmGyUKAlzOzvjb",
+      "checks": 7,
+      "scenarios": [
+        {
+          "name": "error-retry-missing-recovery-image-failure-and-svg-assets",
+          "passed": true
+        }
+      ],
+      "pageErrors": [],
+      "failedChecks": []
+    },
+    {
+      "run": "final-2",
+      "buildId": "xsEFs2l1p6ua_LXh6TA3m",
+      "checks": 162,
+      "scenarios": [
+        {
+          "name": "direct-detail-server-HTML-and-bot-metadata",
+          "passed": true
+        },
+        {
+          "name": "missing-and-error-SEO-distinction-and-escape",
+          "passed": true
+        },
+        {
+          "name": "direct-share-with-JavaScript-disabled",
+          "passed": true
+        },
+        {
+          "name": "list-infinite-pagination-overlay-history-and-scroll",
+          "passed": true
+        },
+        {
+          "name": "search-overlay-indexability-and-return-noindex",
+          "passed": true
+        },
+        {
+          "name": "map-single-region-sheet-expand-and-focus",
+          "passed": true
+        },
+        {
+          "name": "map-region-pair-and-twelve-members-preserved",
+          "passed": true
+        },
+        {
+          "name": "map-carousel-share-copy-and-direct-close",
+          "passed": true
+        },
+        {
+          "name": "map-sheet-pointer-drag-keyboard-and-background-cleanup",
+          "passed": true
+        },
+        {
+          "name": "map-related-replacement-history-and-location-context",
+          "passed": false,
+          "error": "locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog').filter({ has: locator('h1, h2') }).last() to be hidden\u001b[22m\n\u001b[2m    24 × locator resolved to visible <div role=\"dialog\" tabindex=\"-1\" aria-modal=\"true\" aria-label=\"선택한 기사\" data-expanded=\"false\" aria-labelledby=\"selected-map-articles\" class=\"ui-sheet-enter fixed bottom-0 left-1/2 z-40 flex max-h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))] w-full max-w-[640px] min-w-0 -translate-x-1/2 flex-col gap-4 overflow-hidden overscroll-contain rounded-t-3xl border-0 border-t border-solid border-border bg-surface p-4 pb-[max(16px,env(safe-area-inset-bottom))] text-text shadow-[0_-8px_16px_rgb(0_0_0/10%…>…</div>\u001b[22m\n"
+        },
+        {
+          "name": "native-share-success-failure-and-manual-copy-fallback",
+          "passed": true
+        },
+        {
+          "name": "error-retry-missing-recovery-image-failure-and-svg-assets",
+          "passed": true
+        },
+        {
+          "name": "reduced-motion-preserves-sheet-controls",
+          "passed": true
+        },
+        {
+          "name": "close-icon-edge-hit-targets",
+          "passed": true
+        },
+        {
+          "name": "responsive-direct-sheet-and-scroll",
+          "passed": true
+        }
+      ],
+      "pageErrors": [],
+      "failedChecks": []
+    },
+    {
+      "run": "final-2-confirmed",
+      "buildId": "xsEFs2l1p6ua_LXh6TA3m",
+      "checks": 165,
+      "scenarios": [
+        {
+          "name": "direct-detail-server-HTML-and-bot-metadata",
+          "passed": true
+        },
+        {
+          "name": "missing-and-error-SEO-distinction-and-escape",
+          "passed": true
+        },
+        {
+          "name": "direct-share-with-JavaScript-disabled",
+          "passed": true
+        },
+        {
+          "name": "list-infinite-pagination-overlay-history-and-scroll",
+          "passed": true
+        },
+        {
+          "name": "search-overlay-indexability-and-return-noindex",
+          "passed": true
+        },
+        {
+          "name": "map-single-region-sheet-expand-and-focus",
+          "passed": true
+        },
+        {
+          "name": "map-region-pair-and-twelve-members-preserved",
+          "passed": true
+        },
+        {
+          "name": "map-carousel-share-copy-and-direct-close",
+          "passed": true
+        },
+        {
+          "name": "map-sheet-pointer-drag-keyboard-and-background-cleanup",
+          "passed": true
+        },
+        {
+          "name": "map-related-replacement-history-and-location-context",
+          "passed": true
+        },
+        {
+          "name": "native-share-success-failure-and-manual-copy-fallback",
+          "passed": true
+        },
+        {
+          "name": "error-retry-missing-recovery-image-failure-and-svg-assets",
+          "passed": true
+        },
+        {
+          "name": "reduced-motion-preserves-sheet-controls",
+          "passed": true
+        },
+        {
+          "name": "close-icon-edge-hit-targets",
+          "passed": true
+        },
+        {
+          "name": "responsive-direct-sheet-and-scroll",
+          "passed": true
+        }
+      ],
+      "pageErrors": [],
+      "failedChecks": []
+    },
+    {
+      "run": "final-3",
+      "buildId": "DdxxVy18o0pqqdPlSdrOm",
+      "checks": 174,
+      "scenarios": [
+        {
+          "name": "direct-detail-server-HTML-and-bot-metadata",
+          "passed": true
+        },
+        {
+          "name": "missing-and-error-SEO-distinction-and-escape",
+          "passed": true
+        },
+        {
+          "name": "direct-share-with-JavaScript-disabled",
+          "passed": true
+        },
+        {
+          "name": "missing-detail-nojs-feedback-and-safe-links",
+          "passed": true
+        },
+        {
+          "name": "direct-document-proxy-request-cost-and-HEAD",
+          "passed": true
+        },
+        {
+          "name": "list-infinite-pagination-overlay-history-and-scroll",
+          "passed": true
+        },
+        {
+          "name": "search-overlay-indexability-and-return-noindex",
+          "passed": true
+        },
+        {
+          "name": "map-single-region-sheet-expand-and-focus",
+          "passed": true
+        },
+        {
+          "name": "map-region-pair-and-twelve-members-preserved",
+          "passed": true
+        },
+        {
+          "name": "map-carousel-share-copy-and-direct-close",
+          "passed": true
+        },
+        {
+          "name": "map-sheet-pointer-drag-keyboard-and-background-cleanup",
+          "passed": true
+        },
+        {
+          "name": "map-related-replacement-history-and-location-context",
+          "passed": true
+        },
+        {
+          "name": "native-share-success-failure-and-manual-copy-fallback",
+          "passed": true
+        },
+        {
+          "name": "error-retry-missing-recovery-image-failure-and-svg-assets",
+          "passed": true
+        },
+        {
+          "name": "reduced-motion-preserves-sheet-controls",
+          "passed": true
+        },
+        {
+          "name": "close-icon-edge-hit-targets",
+          "passed": true
+        },
+        {
+          "name": "responsive-direct-sheet-and-scroll",
+          "passed": true
+        }
+      ],
+      "pageErrors": [
+        "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+      ],
+      "failedChecks": []
+    },
+    {
+      "run": "final-3-hydration-probe",
+      "buildId": "DdxxVy18o0pqqdPlSdrOm",
+      "checks": 7,
+      "scenarios": [
+        {
+          "name": "error-retry-missing-recovery-image-failure-and-svg-assets",
+          "passed": true
+        }
+      ],
+      "pageErrors": [
+        "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+      ],
+      "failedChecks": []
+    },
+    {
+      "run": "final-4",
+      "buildId": "Euqs13b_gy2i-X73E5SjL",
+      "checks": 178,
+      "scenarios": [
+        {
+          "name": "direct-detail-server-HTML-and-bot-metadata",
+          "passed": true
+        },
+        {
+          "name": "missing-and-error-SEO-distinction-and-escape",
+          "passed": true
+        },
+        {
+          "name": "direct-share-with-JavaScript-disabled",
+          "passed": true
+        },
+        {
+          "name": "missing-detail-nojs-feedback-and-safe-links",
+          "passed": true
+        },
+        {
+          "name": "direct-document-proxy-request-cost-and-HEAD",
+          "passed": true
+        },
+        {
+          "name": "list-infinite-pagination-overlay-history-and-scroll",
+          "passed": true
+        },
+        {
+          "name": "search-overlay-indexability-and-return-noindex",
+          "passed": true
+        },
+        {
+          "name": "map-single-region-sheet-expand-and-focus",
+          "passed": true
+        },
+        {
+          "name": "map-region-pair-and-twelve-members-preserved",
+          "passed": true
+        },
+        {
+          "name": "map-carousel-share-copy-and-direct-close",
+          "passed": true
+        },
+        {
+          "name": "map-sheet-pointer-drag-keyboard-and-background-cleanup",
+          "passed": true
+        },
+        {
+          "name": "map-related-replacement-history-and-location-context",
+          "passed": true
+        },
+        {
+          "name": "native-share-success-failure-and-manual-copy-fallback",
+          "passed": true
+        },
+        {
+          "name": "error-retry-missing-recovery-image-failure-and-svg-assets",
+          "passed": true
+        },
+        {
+          "name": "reduced-motion-preserves-sheet-controls",
+          "passed": true
+        },
+        {
+          "name": "close-icon-edge-hit-targets",
+          "passed": true
+        },
+        {
+          "name": "responsive-direct-sheet-and-scroll",
+          "passed": true
+        }
+      ],
+      "pageErrors": [
+        "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+      ],
+      "failedChecks": []
+    },
+    {
+      "run": "final-5",
+      "buildId": "6nDbQNkL0u5Ahh6BxQ5Pf",
+      "checks": 178,
+      "scenarios": [
+        {
+          "name": "direct-detail-server-HTML-and-bot-metadata",
+          "passed": true
+        },
+        {
+          "name": "missing-and-error-SEO-distinction-and-escape",
+          "passed": true
+        },
+        {
+          "name": "direct-share-with-JavaScript-disabled",
+          "passed": true
+        },
+        {
+          "name": "missing-detail-nojs-feedback-and-safe-links",
+          "passed": true
+        },
+        {
+          "name": "direct-document-proxy-request-cost-and-HEAD",
+          "passed": true
+        },
+        {
+          "name": "list-infinite-pagination-overlay-history-and-scroll",
+          "passed": true
+        },
+        {
+          "name": "search-overlay-indexability-and-return-noindex",
+          "passed": true
+        },
+        {
+          "name": "map-single-region-sheet-expand-and-focus",
+          "passed": true
+        },
+        {
+          "name": "map-region-pair-and-twelve-members-preserved",
+          "passed": true
+        },
+        {
+          "name": "map-carousel-share-copy-and-direct-close",
+          "passed": true
+        },
+        {
+          "name": "map-sheet-pointer-drag-keyboard-and-background-cleanup",
+          "passed": true
+        },
+        {
+          "name": "map-related-replacement-history-and-location-context",
+          "passed": true
+        },
+        {
+          "name": "native-share-success-failure-and-manual-copy-fallback",
+          "passed": true
+        },
+        {
+          "name": "error-retry-missing-recovery-image-failure-and-svg-assets",
+          "passed": true
+        },
+        {
+          "name": "reduced-motion-preserves-sheet-controls",
+          "passed": true
+        },
+        {
+          "name": "close-icon-edge-hit-targets",
+          "passed": true
+        },
+        {
+          "name": "responsive-direct-sheet-and-scroll",
+          "passed": true
+        }
+      ],
+      "pageErrors": [],
+      "failedChecks": []
+    }
+  ],
+  "qaHarnessCorrections": [
+    "오류 안내는 Next route announcer와 구분하여 활성 dialog 내부 alert를 조회한다.",
+    "목록 복귀는 URL 변경뿐 아니라 실제 기사 목록 로딩 완료까지 기다린다.",
+    "상세 닫기는 닫기 전 element의 해제를 검사한다. 정상 복귀한 지역 chooser는 남아 있어야 한다."
+  ],
+  "historicalRegressions": [
+    {
+      "name": "목록 로딩 시트 교체 뒤 원래 링크 포커스 상실",
+      "evidence": "focus-probe.json",
+      "finalScenario": "list-infinite-pagination-overlay-history-and-scroll",
+      "resolvedInFinal": true
+    },
+    {
+      "name": "없는 상세 기사 HTTP200",
+      "evidence": "intermediate-server-seo-report.json",
+      "finalScenario": "missing-and-error-SEO-distinction-and-escape",
+      "resolvedInFinal": true
+    },
+    {
+      "name": "JS 비활성에서 본문이 hidden streaming segment에 남음",
+      "evidence": "intermediate-nojs-probe.json",
+      "finalScenario": "direct-share-with-JavaScript-disabled",
+      "resolvedInFinal": true
+    },
+    {
+      "name": "상세 overlay에도 배경 목록·검색 메타데이터가 남음",
+      "evidence": "final-1/report.json",
+      "finalScenario": "search-overlay-indexability-and-return-noindex",
+      "resolvedInFinal": true
+    },
+    {
+      "name": "확장 핸들 hit area가 닫기 아이콘을 가림",
+      "evidence": "final-1/close-edge-probe.json",
+      "finalScenario": "close-icon-edge-hit-targets",
+      "resolvedInFinal": true
+    },
+    {
+      "name": "JS 비활성 없는 기사404 화면·복귀 링크가 비어 있음",
+      "evidence": "final-1/missing-probe.json",
+      "finalScenario": "missing-detail-nojs-feedback-and-safe-links",
+      "resolvedInFinal": true
+    },
+    {
+      "name": "404 rewrite의 서버/client pathname 차이로 React hydration 오류",
+      "evidence": "final-3-hydration-probe/report.json",
+      "finalScenario": "error-retry-missing-recovery-image-failure-and-svg-assets",
+      "requireNoPageErrors": true,
+      "resolvedInFinal": true
+    }
+  ],
+  "finalRun": "final-5",
+  "final": {
+    "buildId": "6nDbQNkL0u5Ahh6BxQ5Pf",
+    "checks": 178,
+    "passedChecks": 178,
+    "failedChecks": [],
+    "scenarios": [
+      {
+        "name": "direct-detail-server-HTML-and-bot-metadata",
+        "passed": true
+      },
+      {
+        "name": "missing-and-error-SEO-distinction-and-escape",
+        "passed": true
+      },
+      {
+        "name": "direct-share-with-JavaScript-disabled",
+        "passed": true
+      },
+      {
+        "name": "missing-detail-nojs-feedback-and-safe-links",
+        "passed": true
+      },
+      {
+        "name": "direct-document-proxy-request-cost-and-HEAD",
+        "passed": true
+      },
+      {
+        "name": "list-infinite-pagination-overlay-history-and-scroll",
+        "passed": true
+      },
+      {
+        "name": "search-overlay-indexability-and-return-noindex",
+        "passed": true
+      },
+      {
+        "name": "map-single-region-sheet-expand-and-focus",
+        "passed": true
+      },
+      {
+        "name": "map-region-pair-and-twelve-members-preserved",
+        "passed": true
+      },
+      {
+        "name": "map-carousel-share-copy-and-direct-close",
+        "passed": true
+      },
+      {
+        "name": "map-sheet-pointer-drag-keyboard-and-background-cleanup",
+        "passed": true
+      },
+      {
+        "name": "map-related-replacement-history-and-location-context",
+        "passed": true
+      },
+      {
+        "name": "native-share-success-failure-and-manual-copy-fallback",
+        "passed": true
+      },
+      {
+        "name": "error-retry-missing-recovery-image-failure-and-svg-assets",
+        "passed": true
+      },
+      {
+        "name": "reduced-motion-preserves-sheet-controls",
+        "passed": true
+      },
+      {
+        "name": "close-icon-edge-hit-targets",
+        "passed": true
+      },
+      {
+        "name": "responsive-direct-sheet-and-scroll",
+        "passed": true
+      }
+    ],
+    "pageErrors": [],
+    "pageErrorEvents": [],
+    "directDocumentApiCost": {
+      "get": 2,
+      "head": 2,
+      "expectedAdditionalProxyGets": 1
+    },
+    "sdkFixtureRequests": 13,
+    "screenshots": [
+      "direct-no-javascript.png",
+      "missing-no-javascript.png",
+      "list-detail-expanded-393.png",
+      "search-detail-expanded-393.png",
+      "map-detail-collapsed-393.png",
+      "map-detail-expanded-393.png",
+      "map-2-member-selection-393.png",
+      "map-12-member-selection-393.png",
+      "map-related-second-article-393.png",
+      "missing-with-javascript.png",
+      "detail-image-failure-393.png",
+      "direct-expanded-320.png",
+      "direct-expanded-393.png",
+      "direct-expanded-768.png",
+      "direct-expanded-1440.png"
+    ],
+    "coverage": {
+      "serverBots": true,
+      "missingAndError": true,
+      "noJavaScript": true,
+      "missingNoJavaScript": true,
+      "proxyCostAndHEAD": true,
+      "listHistoryAndPagination": true,
+      "searchMetadataAndHistory": true,
+      "mapSingleAndFocus": true,
+      "mapMulti": true,
+      "carouselAndShare": true,
+      "pointerDragAndCleanup": true,
+      "relatedReplacement": true,
+      "nativeAndManualShare": true,
+      "retryMissingImageAndAssets": true,
+      "reducedMotion": true,
+      "closeEdgeHitTargets": true,
+      "responsive": true
+    },
+    "exclusions": []
+  }
+}

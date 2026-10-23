@@ -1,22 +1,10 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { Notice } from '@/components/feedback/notice';
-import { pageMetadata } from '@/app/site-metadata';
 import { loadSearchPage } from '@/features/search/api/load-search-page';
 import { SearchResults } from '@/features/search/ui/search-results/search-results';
 import { RecentSearches } from '@/features/search/ui/recent-searches/recent-searches';
-
-import { KeywordLinkStatus } from './keyword-link-status';
-
-export const metadata: Metadata = {
-  ...pageMetadata(
-    '기사 검색',
-    '키워드로 사건 사고 기사를 검색하세요.',
-    '/search',
-  ),
-  robots: { index: false, follow: true },
-};
+import { KeywordLinkStatus } from '@/features/search/ui/keyword-link-status/keyword-link-status';
 
 const suggestedKeywords = [
   { keyword: '대형화재', symbol: '🔥' },

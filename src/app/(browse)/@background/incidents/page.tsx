@@ -1,19 +1,8 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { Notice } from '@/components/feedback/notice';
 import { PaginatedArticleList } from '@/features/article-list/ui/article-list/paginated-article-list';
 import { fetchArticleList } from '@/features/article-list/api/fetch-articles';
-
-import { pageMetadata } from '../site-metadata';
-
-export const metadata: Metadata = {
-  ...pageMetadata(
-    '사건 사고 기사 목록',
-    '수집된 사건 사고 기사의 요약과 원문을 목록에서 확인하세요.',
-    '/incidents',
-  ),
-};
 
 // Read runtime configuration on every request, including configuration errors.
 export const dynamic = 'force-dynamic';
