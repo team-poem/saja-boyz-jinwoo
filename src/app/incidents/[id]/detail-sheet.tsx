@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 
+import { useArticleSheetRoute } from '@/features/article-detail/model/article-sheet-context';
+
 export function DetailSheet({
   titleId,
   children,
@@ -10,7 +12,10 @@ export function DetailSheet({
   children: ReactNode;
 }) {
   const panel = useRef<HTMLDivElement>(null);
-  const [expanded, setExpanded] = useState(true);
+  const route = useArticleSheetRoute();
+  const [expanded, setExpanded] = useState(
+    () => !route?.active || route.sourcePath !== '/',
+  );
 
   useEffect(() => {
     const caller = document.activeElement;
@@ -36,6 +41,23 @@ export function DetailSheet({
       aria-labelledby={titleId}
       tabIndex={-1}
       className={`fixed bottom-0 left-1/2 z-30 flex max-h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))] w-full max-w-[640px] min-w-0 -translate-x-1/2 flex-col gap-4 overflow-y-auto overscroll-contain rounded-t-3xl bg-surface px-4 pt-4 pb-[max(24px,env(safe-area-inset-bottom))] text-text shadow-[0_-8px_16px_rgb(0_0_0/10%)] ${expanded ? 'h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))]' : 'h-[53.52dvh]'}`}
+      onClickCapture={(event) => {
+        if (
+          !route?.active ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        )
+          return;
+        const target = event.target instanceof Element ? event.target : null;
+
+        if (target?.closest('a[aria-label="닫기"]')) {
+          event.preventDefault();
+          route.close();
+        }
+      }}
       onKeyDown={(event) => {
         if (event.key === 'Escape') {
           event.preventDefault();

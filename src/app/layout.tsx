@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
-import { AppShell } from '@/components/layout/app-shell/app-shell';
+import { ArticleRouteHost } from '@/features/article-detail/ui/article-route-host/article-route-host';
 
 import {
   siteDescription,
@@ -36,11 +36,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+  article,
+}: {
+  children: ReactNode;
+  article?: ReactNode;
+}) {
   return (
     <html lang="ko">
       <body>
-        <AppShell>{children}</AppShell>
+        <ArticleRouteHost article={article}>{children}</ArticleRouteHost>
       </body>
     </html>
   );

@@ -8,8 +8,17 @@ import { ArticleFilters } from '../article-filters/article-filters';
 import { BottomNavigation } from '../bottom-navigation/bottom-navigation';
 import { SearchHeader } from '../search-header/search-header';
 
-export function AppShell({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
+export function AppShell({
+  children,
+  backgroundPath,
+  inert = false,
+}: {
+  children: ReactNode;
+  backgroundPath?: string;
+  inert?: boolean;
+}) {
+  const currentPath = usePathname();
+  const pathname = backgroundPath ?? currentPath;
   const isHome = pathname === '/';
   const isDedicatedScreen =
     pathname === '/report' || pathname.startsWith('/incidents/');
@@ -21,7 +30,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       : `mx-auto min-h-dvh max-w-[640px] px-4 pb-[110px] ${showHeader ? 'pt-[calc(12px_+_env(safe-area-inset-top))]' : 'pt-[calc(20px_+_env(safe-area-inset-top))]'}`;
 
   return (
-    <div className={shellClassName}>
+    <div
+      className={shellClassName}
+      inert={inert || undefined}
+      aria-hidden={inert || undefined}
+    >
       {showHeader && <SearchHeader isHome={isHome} />}
       {pathname === '/incidents' && <ArticleFilters isHome={isHome} />}
       <main id="main-content" className={isHome ? 'relative z-0' : undefined}>

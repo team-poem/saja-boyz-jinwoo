@@ -165,7 +165,132 @@ test('articleSheetInteractionPreservesBackground', async () => {
   }
 });
 ```
-- [ ] articleSheetRoutesPreserveSource — 목록/검색의 URL 시트 진입과 q·추가 결과·스크롤 보존
+- [x] articleSheetRoutesPreserveSource — 목록/검색의 URL 시트 진입과 q·추가 결과·스크롤 보존
+```ts
+// file: src/features/article-detail/ui/article-route-host/article-route-host.test.ts
+// @vitest-environment jsdom
+import { act, createElement, useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import { expect, test, vi } from 'vitest';
+import { ArticleRouteHost, useArticleSheetRoute } from './article-route-host';
+
+let pathname = '/search';
+let childSegments = ['search'];
+let articleSegments: string[] = [];
+const push = vi.fn();
+const back = vi.fn();
+const replace = vi.fn();
+vi.mock('next/navigation', () => ({
+  usePathname: () => pathname,
+  useSelectedLayoutSegments: (slot?: string) =>
+    slot === 'article' ? articleSegments : childSegments,
+  useRouter: () => ({ push, back, replace, refresh: vi.fn() }),
+}));
+
+test('articleSheetRoutesPreserveSource', async () => {
+  vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
+  const id = 'a'.repeat(64);
+  function Background() {
+    const [count, setCount] = useState(0);
+    const sheet = useArticleSheetRoute();
+    return createElement(
+      'section',
+      { 'aria-label': '검색 결과' },
+      createElement('input', { defaultValue: '화재', 'aria-label': '검색어' }),
+      createElement(
+        'button',
+        { onClick: () => setCount(count + 1) },
+        '추가 결과 ' + count,
+      ),
+      createElement(
+        'button',
+        { onClick: () => sheet?.openArticle(id) },
+        '상세 열기',
+      ),
+    );
+  }
+  function Detail() {
+    const sheet = useArticleSheetRoute();
+    return createElement(
+      'div',
+      { role: 'dialog' },
+      createElement('button', { onClick: () => sheet?.close() }, '상세 닫기'),
+    );
+  }
+  const container = document.createElement('div');
+  document.body.append(container);
+  const root = createRoot(container);
+  const draw = async (opened = false) => {
+    await act(async () =>
+      root.render(
+        createElement(ArticleRouteHost, {
+          article: opened ? createElement(Detail) : null,
+          children: createElement(Background),
+        }),
+      ),
+    );
+  };
+  try {
+    await draw();
+    const input = container.querySelector('input')!;
+    input.value = '화재 후속';
+    await act(async () =>
+      container.querySelector<HTMLButtonElement>('section button')!.click(),
+    );
+    await act(async () =>
+      [...container.querySelectorAll('button')]
+        .find((b) => b.textContent === '상세 열기')!
+        .click(),
+    );
+    expect(push).toHaveBeenCalledWith('/incidents/' + id, { scroll: false });
+    pathname = '/incidents/' + id;
+    articleSegments = ['(.)incidents', id];
+    await draw(true);
+    expect(container.querySelector('input')).toBe(input);
+    expect(input.value).toBe('화재 후속');
+    expect(container.querySelector('main')?.textContent).toContain(
+      '추가 결과 1',
+    );
+    const background = input.closest('[inert]');
+    expect(
+      background,
+      '배경은 보존하면서 키보드/포인터 접근 차단',
+    ).not.toBeNull();
+    expect(
+      background?.contains(container.querySelector('[role="dialog"]')),
+    ).toBe(false);
+    expect(container.querySelector('nav[aria-label="주 메뉴"]')).not.toBeNull();
+    await act(async () =>
+      container
+        .querySelector<HTMLButtonElement>('[role="dialog"] button')!
+        .click(),
+    );
+    expect(back).toHaveBeenCalledTimes(1);
+    pathname = '/search';
+    articleSegments = ['search']; // catch-all 슬롯도 활성 상세로 오인하지 않는다.
+    await draw();
+    expect(input.closest('[inert]')).toBeNull();
+    expect(input.value).toBe('화재 후속');
+    expect(container.querySelector('main')?.textContent).toContain(
+      '추가 결과 1',
+    );
+    childSegments = ['incidents', '(list)'];
+    pathname = '/incidents';
+    articleSegments = ['incidents'];
+    await draw();
+    expect(container.querySelector('header')).not.toBeNull();
+    expect(container.querySelector('[aria-label="기사 필터"]')).not.toBeNull();
+  } finally {
+    await act(async () => root.unmount());
+    container.remove();
+    pathname = '/search';
+    childSegments = ['search'];
+    articleSegments = [];
+    vi.clearAllMocks();
+    vi.unstubAllGlobals();
+  }
+});
+```
 - [ ] mapArticleSheetPreservesGroupedChoices — 지도 단일/다건·하단 카드와 2/12건·중심·줌·SDK 보존
 - [ ] articleSheetMetadataMatchesDirectUrl — noindex 누수 방지, canonical·OG·공유·JSON-LD와 오류/없는 기사 구분
 - [ ] articleSheetVerifiedContext — 실제 위치·출처·관련 기사만 표현하고 대체된 구형 UI 삭제
@@ -173,3 +298,5 @@ test('articleSheetInteractionPreservesBackground', async () => {
 ## 조작 시트 검증에서 배운 것
 - RED는 배경 스크롤 잠금 부재였다. 125개 전체 테스트는 통과했고 초안 서식만 실패해 실행을 보존·종료한 뒤 Prettier만 적용했다. 동일 기대값의 gate 전체 검증 통과를 확인했으며 새로운 RED로 계산하지 않는다.
 - 다음은 가로채기 URL 호스트의 배경 상태 보존이다. 소바야 Canon의 직접 에이전트 RED→GREEN과 gate를 사용해 단일 작성자로 진행한다.
+
+- URL 호스트는 먼저 API 부재를 확인했고, 최소 틀에서 push 호출 0회라는 실제 RED를 재확인했다. 진입/배경 inert/검색 입력·추가 결과 보존 및 복귀, catch-all 해제 검증을 포함한 gate 전체 통과.
