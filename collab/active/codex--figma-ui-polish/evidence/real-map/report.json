@@ -1,0 +1,315 @@
+{
+  "buildId": "aLz3Fa4JK5XpPPpjv5k2W",
+  "location": "fixed synthetic QA position; no personal position requested",
+  "sdkStubbed": false,
+  "expectationNote": "Same-region counts 1 and 2 use the minimum 38.4px size; 12 uses72px. A different-region overlap under10 would use48px and is not present in this fixture.",
+  "tiles": [
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    },
+    {
+      "host": "nrbe.map.naver.net",
+      "status": 200
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "fixed QA location removes the permission-denied notice"
+    },
+    {
+      "passed": true,
+      "name": "real Naver raster tile loaded successfully"
+    },
+    {
+      "passed": true,
+      "name": "actual SDK DOM contains article-count marker 1"
+    },
+    {
+      "passed": true,
+      "name": "actual marker diameter 1",
+      "side": 38.4,
+      "measured": [
+        "38.3906px",
+        "38.3906px"
+      ]
+    },
+    {
+      "passed": true,
+      "name": "actual marker font 1",
+      "fontSize": "14.4px",
+      "fontWeight": "800"
+    },
+    {
+      "passed": true,
+      "name": "actual marker border 1",
+      "measured": "1px",
+      "expected": 0.8
+    },
+    {
+      "passed": true,
+      "name": "actual marker brand rgba 1",
+      "background": "oklab(0.593308 0.209201 0.098094 / 0.6)",
+      "rgba": [
+        232,
+        25,
+        43,
+        153
+      ]
+    },
+    {
+      "passed": true,
+      "name": "actual SDK DOM contains article-count marker 2"
+    },
+    {
+      "passed": true,
+      "name": "actual marker diameter 2",
+      "side": 38.4,
+      "measured": [
+        "38.3906px",
+        "38.3906px"
+      ]
+    },
+    {
+      "passed": true,
+      "name": "actual marker font 2",
+      "fontSize": "14.4px",
+      "fontWeight": "800"
+    },
+    {
+      "passed": true,
+      "name": "actual marker border 2",
+      "measured": "1px",
+      "expected": 0.8
+    },
+    {
+      "passed": true,
+      "name": "actual marker brand rgba 2",
+      "background": "oklab(0.593308 0.209201 0.098094 / 0.6)",
+      "rgba": [
+        232,
+        25,
+        43,
+        153
+      ]
+    },
+    {
+      "passed": true,
+      "name": "actual SDK DOM contains article-count marker 12"
+    },
+    {
+      "passed": true,
+      "name": "actual marker diameter 12",
+      "side": 72,
+      "measured": [
+        "72px",
+        "72px"
+      ]
+    },
+    {
+      "passed": true,
+      "name": "actual marker font 12",
+      "fontSize": "27px",
+      "fontWeight": "800"
+    },
+    {
+      "passed": true,
+      "name": "actual marker border 12",
+      "measured": "1px",
+      "expected": 1.5
+    },
+    {
+      "passed": true,
+      "name": "actual marker brand rgba 12",
+      "background": "oklab(0.593308 0.209201 0.098094 / 0.6)",
+      "rgba": [
+        232,
+        25,
+        43,
+        153
+      ]
+    }
+  ],
+  "pageErrors": [],
+  "blockedWrites": 1,
+  "markers": [
+    {
+      "count": 1,
+      "box": {
+        "x": 143,
+        "y": 383,
+        "width": 38.390625,
+        "height": 38.390625,
+        "top": 383,
+        "right": 181.390625,
+        "bottom": 421.390625,
+        "left": 143
+      },
+      "width": "38.3906px",
+      "height": "38.3906px",
+      "fontSize": "14.4px",
+      "fontWeight": "800",
+      "fontColor": "rgb(255, 255, 255)",
+      "lineHeight": "14.4px",
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "oklab(0.999994 0.0000455678 0.0000200868 / 0.4)",
+      "borderRGBA": [
+        255,
+        255,
+        255,
+        102
+      ],
+      "backgroundColor": "oklab(0.593308 0.209201 0.098094 / 0.6)",
+      "backgroundRGBA": [
+        232,
+        25,
+        43,
+        153
+      ]
+    },
+    {
+      "count": 2,
+      "box": {
+        "x": 6252,
+        "y": 9019,
+        "width": 38.390625,
+        "height": 38.390625,
+        "top": 9019,
+        "right": 6290.390625,
+        "bottom": 9057.390625,
+        "left": 6252
+      },
+      "width": "38.3906px",
+      "height": "38.3906px",
+      "fontSize": "14.4px",
+      "fontWeight": "800",
+      "fontColor": "rgb(255, 255, 255)",
+      "lineHeight": "14.4px",
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "oklab(0.999994 0.0000455678 0.0000200868 / 0.4)",
+      "borderRGBA": [
+        255,
+        255,
+        255,
+        102
+      ],
+      "backgroundColor": "oklab(0.593308 0.209201 0.098094 / 0.6)",
+      "backgroundRGBA": [
+        232,
+        25,
+        43,
+        153
+      ]
+    },
+    {
+      "count": 12,
+      "box": {
+        "x": 4854,
+        "y": 6526,
+        "width": 72,
+        "height": 72,
+        "top": 6526,
+        "right": 4926,
+        "bottom": 6598,
+        "left": 4854
+      },
+      "width": "72px",
+      "height": "72px",
+      "fontSize": "27px",
+      "fontWeight": "800",
+      "fontColor": "rgb(255, 255, 255)",
+      "lineHeight": "27px",
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "oklab(0.999994 0.0000455678 0.0000200868 / 0.4)",
+      "borderRGBA": [
+        255,
+        255,
+        255,
+        102
+      ],
+      "backgroundColor": "oklab(0.593308 0.209201 0.098094 / 0.6)",
+      "backgroundRGBA": [
+        232,
+        25,
+        43,
+        153
+      ]
+    }
+  ]
+}

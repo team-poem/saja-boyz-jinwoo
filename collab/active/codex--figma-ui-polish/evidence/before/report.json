@@ -1,0 +1,148 @@
+{
+  "buildId": "fVZ6OTn5v2ZanV4BiUJed",
+  "started": "2026-10-24T08:52:39.161Z",
+  "checks": [
+    {
+      "name": "real NextLink RSC navigation uses one article API GET",
+      "passed": false,
+      "actual": 2
+    },
+    {
+      "name": "browser emitted actual Next RSC request and query",
+      "passed": true
+    },
+    {
+      "name": "timed out RSC navigation performs one upstream attempt",
+      "passed": false,
+      "actual": 2
+    },
+    {
+      "name": "one five-second timeout yields retry UI without a second timeout",
+      "passed": false,
+      "elapsedMs": 10420
+    },
+    {
+      "name": "returning from the tenth article preserves chooser expanded state",
+      "passed": false,
+      "before": "true",
+      "after": "false"
+    },
+    {
+      "name": "returning preserves the chooser reading scroll position",
+      "passed": false,
+      "before": 1917,
+      "after": 0
+    },
+    {
+      "name": "returning focuses the tenth article rather than the close button",
+      "passed": false,
+      "expected": "/incidents/00000000000000000000000000000000000000000000000000000000000003f1",
+      "after": {
+        "href": null,
+        "aria": "기사 선택 닫기",
+        "text": ""
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "real-NextLink-RSC-success-load-once",
+      "completed": true
+    },
+    {
+      "name": "real-NextLink-RSC-upstream-timeout-once",
+      "completed": true
+    },
+    {
+      "name": "twelve-member-expanded-chooser-restores-tenth-article-position",
+      "completed": true
+    }
+  ],
+  "navigationRequests": [
+    {
+      "path": "/incidents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "query": "?_rsc=oAKir4HScn-qZxVJ",
+      "rsc": "1",
+      "accept": "*/*",
+      "secFetchDest": null
+    },
+    {
+      "path": "/incidents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "query": "?_rsc=oAKir4HScn-qZxVJ",
+      "rsc": "1",
+      "accept": "*/*",
+      "secFetchDest": null
+    },
+    {
+      "path": "/incidents/00000000000000000000000000000000000000000000000000000000000003f1",
+      "query": "?_rsc=6n_SD_lIKtbIRzGf",
+      "rsc": "1",
+      "accept": "*/*",
+      "secFetchDest": null
+    }
+  ],
+  "pageErrors": [],
+  "successCalls": [
+    {
+      "method": "GET",
+      "path": "/news/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "query": "",
+      "started": 1792831961430,
+      "closedAfterMs": 0,
+      "completed": true
+    },
+    {
+      "method": "GET",
+      "path": "/news/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "query": "",
+      "started": 1792831961441,
+      "closedAfterMs": 1,
+      "completed": true
+    }
+  ],
+  "timeout": {
+    "elapsedMs": 10420,
+    "calls": [
+      {
+        "method": "GET",
+        "path": "/news/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "query": "",
+        "started": 1792831962156,
+        "closedAfterMs": 5006,
+        "completed": false
+      },
+      {
+        "method": "GET",
+        "path": "/news/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "query": "",
+        "started": 1792831967174,
+        "closedAfterMs": 5000,
+        "completed": false
+      }
+    ]
+  },
+  "chooser": {
+    "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003f1",
+    "before": {
+      "expanded": "true",
+      "height": 803,
+      "scrollTop": 1917,
+      "focus": {
+        "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003f1",
+        "aria": null,
+        "text": "검증용 기사 · 대구 같은 지역 10번째 보도"
+      }
+    },
+    "after": {
+      "expanded": "false",
+      "height": 455.984375,
+      "scrollTop": 0,
+      "focus": {
+        "href": null,
+        "aria": "기사 선택 닫기",
+        "text": ""
+      }
+    }
+  },
+  "finished": "2026-10-24T08:52:53.606Z"
+}
