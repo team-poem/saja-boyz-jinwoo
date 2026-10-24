@@ -1,0 +1,58 @@
+import { createRequire } from 'node:module';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+const app = process.env.QA_APP;
+const origin = process.env.QA_ORIGIN || 'http://127.0.0.1:31145';
+const out = path.join('/private/tmp/hyunghyung-polish-qa', process.env.QA_RUN || 'candidate-1-keyboard');
+await mkdir(out, { recursive: true });
+const require = createRequire(path.join(app, 'package.json'));
+const { chromium } = require('playwright-core');
+const report = { buildId: (await readFile(path.join(app, '.next/BUILD_ID'), 'utf8')).trim(), cases: [], pageErrors: [] };
+const browser = await chromium.launch({ channel: 'chrome', headless: true });
+try {
+  for (const viewport of [{ width: 393, height: 852 }, { width: 320, height: 640 }]) {
+    const context = await browser.newContext({ viewport });
+    await context.route('**/*', (route) => route.request().method() !== 'GET' || !['127.0.0.1', 'localhost'].includes(new URL(route.request().url()).hostname) ? route.abort() : route.continue());
+    const page = await context.newPage();
+    page.on('pageerror', (error) => report.pageErrors.push(error.message));
+    await page.goto(origin + '/report');
+    await page.getByRole('heading', { name: '제보하기', exact: true }).waitFor();
+    if (process.env.QA_BUTTON_SCROLL_MARGIN === '1') await page.addStyleTag({ content: 'form button { scroll-margin-block: 80px 112px; }' });
+    await page.locator('input[type="file"]').setInputFiles({ name: '검증용-첨부.png', mimeType: 'image/png', buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg==', 'base64') });
+    await page.getByRole('link', { name: '제보 닫기', exact: true }).focus();
+    const records = [];
+    for (let index = 0; index < 24; index++) {
+      await page.keyboard.press('Tab');
+      const result = await page.evaluate(() => {
+        const active = document.activeElement;
+        if (!(active instanceof HTMLElement) || active === document.body) return null;
+        const rect = active.getBoundingClientRect();
+        const header = document.querySelector('header');
+        const footer = document.querySelector('button[type="submit"]')?.parentElement;
+        const headerRect = header?.getBoundingClientRect();
+        const footerRect = footer?.getBoundingClientRect();
+        const top = header?.contains(active) ? 0 : Math.max(0, headerRect?.bottom ?? 0);
+        const bottom = footer?.contains(active) ? innerHeight : Math.min(innerHeight, footerRect?.top ?? innerHeight);
+        const visibleHeight = Math.max(0, Math.min(rect.bottom, bottom) - Math.max(rect.top, top));
+        const center = { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
+        const hit = document.elementFromPoint(center.x, center.y);
+        return {
+          tag: active.tagName, type: active.getAttribute('type'), id: active.id, label: active.getAttribute('aria-label'),
+          rect: rect.toJSON(), header: headerRect?.toJSON(), footer: footerRect?.toJSON(),
+          visibleHeight, fullyCovered: rect.height > 0 && visibleHeight === 0,
+          centerHitsFooter: Boolean(footer?.contains(hit) && !footer?.contains(active)),
+          scrollY,
+        };
+      });
+      if (result) records.push(result);
+      if (result?.id === 'report-attachments' || result?.label === '검증용-첨부.png 삭제') await page.screenshot({ path: path.join(out, 'visible-' + viewport.width + '-' + viewport.height + '-tab' + index + '.png') });
+      if (result?.fullyCovered || result?.centerHitsFooter) await page.screenshot({ path: path.join(out, 'covered-' + viewport.width + '-' + viewport.height + '-tab' + index + '.png') });
+    }
+    report.cases.push({ viewport, records, covered: records.filter((record) => record.fullyCovered), centeredBehindFooter: records.filter((record) => record.centerHitsFooter) });
+    await context.close();
+  }
+} finally {
+  await browser.close();
+  await writeFile(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
+  console.log(JSON.stringify({ buildId: report.buildId, cases: report.cases.map((test) => ({ viewport: test.viewport, records: test.records.length, covered: test.covered.map((entry) => ({ id: entry.id, label: entry.label, rect: entry.rect })), centeredBehindFooter: test.centeredBehindFooter.map((entry) => ({ id: entry.id, label: entry.label })) })), pageErrors: report.pageErrors }, null, 2));
+}

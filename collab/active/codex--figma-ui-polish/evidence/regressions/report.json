@@ -1,0 +1,132 @@
+{
+  "buildId": "aLz3Fa4JK5XpPPpjv5k2W",
+  "started": "2026-10-24T09:21:09.905Z",
+  "checks": [
+    {
+      "name": "real NextLink RSC navigation uses one article API GET",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "browser emitted actual Next RSC request and query",
+      "passed": true
+    },
+    {
+      "name": "timed out RSC navigation performs one upstream attempt",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "one five-second timeout yields retry UI without a second timeout",
+      "passed": true,
+      "elapsedMs": 5375
+    },
+    {
+      "name": "returning from the tenth article preserves chooser expanded state",
+      "passed": true,
+      "before": "true",
+      "after": "true"
+    },
+    {
+      "name": "returning preserves the chooser reading scroll position",
+      "passed": true,
+      "before": 1917,
+      "after": 1917
+    },
+    {
+      "name": "returning focuses the tenth article rather than the close button",
+      "passed": true,
+      "expected": "/incidents/00000000000000000000000000000000000000000000000000000000000003f1",
+      "after": {
+        "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003f1",
+        "aria": null,
+        "text": "검증용 기사 · 대구 같은 지역 10번째 보도"
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "real-NextLink-RSC-success-load-once",
+      "completed": true
+    },
+    {
+      "name": "real-NextLink-RSC-upstream-timeout-once",
+      "completed": true
+    },
+    {
+      "name": "twelve-member-expanded-chooser-restores-tenth-article-position",
+      "completed": true
+    }
+  ],
+  "navigationRequests": [
+    {
+      "path": "/incidents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "query": "?_rsc=Wn3WRDS6Y3-DRG2n",
+      "rsc": "1",
+      "accept": "*/*",
+      "secFetchDest": null
+    },
+    {
+      "path": "/incidents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "query": "?_rsc=Wn3WRDS6Y3-DRG2n",
+      "rsc": "1",
+      "accept": "*/*",
+      "secFetchDest": null
+    },
+    {
+      "path": "/incidents/00000000000000000000000000000000000000000000000000000000000003f1",
+      "query": "?_rsc=f973GTOiLR-r08i-",
+      "rsc": "1",
+      "accept": "*/*",
+      "secFetchDest": null
+    }
+  ],
+  "pageErrors": [],
+  "successCalls": [
+    {
+      "method": "GET",
+      "path": "/news/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "query": "",
+      "started": 1792833671534,
+      "closedAfterMs": 0,
+      "completed": true
+    }
+  ],
+  "timeout": {
+    "elapsedMs": 5375,
+    "calls": [
+      {
+        "method": "GET",
+        "path": "/news/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "query": "",
+        "started": 1792833672076,
+        "closedAfterMs": 5001,
+        "completed": false
+      }
+    ]
+  },
+  "chooser": {
+    "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003f1",
+    "before": {
+      "expanded": "true",
+      "height": 803,
+      "scrollTop": 1917,
+      "focus": {
+        "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003f1",
+        "aria": null,
+        "text": "검증용 기사 · 대구 같은 지역 10번째 보도"
+      }
+    },
+    "after": {
+      "expanded": "true",
+      "height": 803,
+      "scrollTop": 1917,
+      "focus": {
+        "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003f1",
+        "aria": null,
+        "text": "검증용 기사 · 대구 같은 지역 10번째 보도"
+      }
+    }
+  },
+  "finished": "2026-10-24T09:21:18.710Z"
+}
