@@ -65,7 +65,7 @@ export function RelatedArticles({ id }: { id: string }) {
                 href={'/incidents/' + item.article_id}
                 replace={route?.active}
                 scroll={false}
-                className="ui-link flex flex-col gap-1.5 rounded-lg border border-solid border-border bg-background p-2.5"
+                className="ui-link flex flex-col gap-1.5 rounded-lg border border-solid border-[#e3e8f0] bg-[#f7fafc] p-2.5"
               >
                 <span className="self-end text-[11px]/[14px] text-slate-400">
                   {Number.isNaN(published.getTime()) ? (

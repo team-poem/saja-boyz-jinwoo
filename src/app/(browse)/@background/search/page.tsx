@@ -26,18 +26,18 @@ export default async function SearchPage({
 
   return (
     <div className="flex flex-col gap-5 pb-5 text-sm">
-      <div className="flex items-center gap-3">
+      <div className="flex h-[37px] items-center gap-3">
         <Link
           href="/"
           aria-label="지도로 돌아가기"
-          className="ui-control flex size-11 shrink-0 items-center justify-center rounded-xl border border-solid border-border bg-surface font-bold shadow-[0_4px_8px_rgb(0_0_0/5%)]"
+          className="ui-control relative flex size-9 shrink-0 items-center justify-center rounded-xl border border-solid border-border bg-surface text-[14px]/[17px] font-bold shadow-[0_4px_8px_rgb(0_0_0/5%)] after:absolute after:-inset-1 after:content-['']"
         >
           ←
         </Link>
         <form
           action="/search"
           method="get"
-          className="flex min-h-[47px] min-w-0 flex-1 items-center rounded-card border-[1.5px] border-solid border-brand bg-surface pl-0 pr-0 shadow-[0_4px_8px_rgb(0_0_0/5%)]"
+          className="flex h-[37px] min-w-0 flex-1 items-center rounded-card border-[1.5px] border-solid border-brand bg-surface pl-0 pr-0 shadow-[0_4px_8px_rgb(0_0_0/5%)]"
         >
           <button
             type="submit"
@@ -55,7 +55,7 @@ export default async function SearchPage({
             defaultValue={keyword}
             aria-label="기사 키워드 검색"
             placeholder="기사 키워드 검색"
-            className="min-h-11 min-w-0 flex-1 border-0 bg-transparent p-0 text-[14px]/[17px] font-semibold text-text"
+            className="h-full min-h-0 min-w-0 flex-1 border-0 bg-transparent p-0 text-[14px]/[17px] font-semibold text-text placeholder:font-normal"
           />
           {keyword && (
             <Link
@@ -91,30 +91,32 @@ export default async function SearchPage({
         )
       ) : null}
       <RecentSearches executedKeyword={keyword} />
-      <section
-        aria-labelledby="suggested-keywords"
-        className="flex flex-col gap-3"
-      >
-        <h1
-          id="suggested-keywords"
-          className="m-0 text-xs font-bold text-muted"
+      {!keyword && (
+        <section
+          aria-labelledby="suggested-keywords"
+          className="flex flex-col gap-3"
         >
-          추천 검색어
-        </h1>
-        <div className="flex flex-wrap gap-2">
-          {suggestedKeywords.map(({ keyword, symbol }) => (
-            <Link
-              key={keyword}
-              href={`/search?q=${encodeURIComponent(keyword)}`}
-              className="ui-control inline-flex min-h-9 items-center gap-[6px] rounded-lg border border-solid border-border bg-surface px-3 py-0 text-[12px]/[15px]"
-            >
-              {symbol && <span aria-hidden="true">{symbol}</span>}
-              <span>{keyword}</span>
-              <KeywordLinkStatus />
-            </Link>
-          ))}
-        </div>
-      </section>
+          <h1
+            id="suggested-keywords"
+            className="m-0 text-[12px]/[15px] font-bold text-muted"
+          >
+            추천 검색어
+          </h1>
+          <div className="flex flex-wrap gap-2">
+            {suggestedKeywords.map(({ keyword, symbol }) => (
+              <Link
+                key={keyword}
+                href={`/search?q=${encodeURIComponent(keyword)}`}
+                className="ui-control relative inline-flex min-h-8 items-center gap-[6px] rounded-lg border border-solid border-border bg-surface px-3 py-0 text-[13px]/4"
+              >
+                {symbol && <span aria-hidden="true">{symbol}</span>}
+                <span>{keyword}</span>
+                <KeywordLinkStatus />
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

@@ -50,7 +50,7 @@ export function DetailShare({ id, title }: { id: string; title: string }) {
         onClick={share}
         className="ui-control min-h-12 w-full cursor-pointer rounded-xl border-[1.5px] border-solid border-brand bg-surface px-4 py-3 text-[15px]/5 font-extrabold text-brand"
       >
-        기사 공유하기
+        <span aria-hidden="true">🔗 </span>기사 공유하기
       </button>
       {copied && (
         <p role="status" className="mb-0 text-sm text-muted">

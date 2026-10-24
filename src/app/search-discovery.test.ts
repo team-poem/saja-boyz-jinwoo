@@ -335,7 +335,7 @@ test('serverArchiveLinksOlderRawPagesWithoutReplacingInfiniteScroll', async () =
   expect(failed.querySelector('a[href="/archive?page=2"]')).not.toBeNull();
 });
 
-test('serviceAnswersAreVisibleAndReachableWithoutMapJavaScript', async () => {
+test('serviceAnswersRemainPublicWithoutExtraBrowseLayers', async () => {
   const routeModule = await load('./about/page.tsx');
   const container = view(await (routeModule.default as Route)(props()));
   expect(container.querySelector('h1')?.textContent).toContain('흉흉');
@@ -357,12 +357,20 @@ test('serviceAnswersAreVisibleAndReachableWithoutMapJavaScript', async () => {
   const list = await load('./(browse)/@background/incidents/page.tsx');
   request.mockResolvedValueOnce(Response.json({ total: 0, items: [] }));
   const listView = view(await (list.default as Route)(props()));
-  expect(listView.querySelector('a[href="/archive"]')).not.toBeNull();
-  expect(listView.querySelector('a[href="/about"]')).not.toBeNull();
+  expect(listView.querySelector('a[href="/archive"]')).toBeNull();
+  expect(listView.querySelector('a[href="/about"]')).toBeNull();
   const home = await load('./(browse)/@background/page.tsx');
   vi.stubEnv('NEXT_PUBLIC_NAVER_MAP_CLIENT_ID', '');
   const homeView = view(await (home.default as Route)(props()));
-  expect(homeView.querySelector('a[href="/about"]')).not.toBeNull();
+  expect(
+    homeView.querySelector('section[aria-label="흉흉 서비스 안내"]'),
+  ).toBeNull();
+  expect(graphs(homeView)).toContainEqual({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: '흉흉',
+    url: origin,
+  });
   expect(homeView.querySelector('a[href="/incidents"]')).not.toBeNull();
 });
 

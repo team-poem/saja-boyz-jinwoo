@@ -39,17 +39,19 @@ export function ArticleSkeleton({
             {initial && variant === 'search' && (
               <div className="mb-3 flex flex-col gap-5">
                 <div className="flex items-center gap-3">
-                  <div className="size-11 shrink-0 rounded-xl bg-border" />
-                  <div className="h-[47px] flex-1 rounded-card bg-border" />
+                  <div className="size-9 shrink-0 rounded-xl bg-border" />
+                  <div className="h-[37px] flex-1 rounded-card bg-border" />
                 </div>
                 <div className="h-[18px] w-24 rounded bg-border" />
               </div>
             )}
-            <div className="flex flex-col gap-3">
+            <div
+              className={`flex flex-col ${variant === 'search' ? 'gap-2' : 'gap-3'}`}
+            >
               {[0, 1].map((card) => (
                 <div
                   key={card}
-                  className="flex gap-3 rounded-card border border-solid border-border bg-surface p-3"
+                  className={`flex gap-3 border border-solid border-border bg-surface ${variant === 'search' ? 'rounded-xl p-3.5' : 'min-h-[120px] rounded-card p-3'}`}
                 >
                   {variant === 'list' && (
                     <div className="size-20 shrink-0 rounded-lg bg-border" />
