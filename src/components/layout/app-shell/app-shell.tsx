@@ -12,11 +12,13 @@ export function AppShell({
   children,
   backgroundPath,
   inert = false,
+  hideHeader = false,
   onClickCapture,
 }: {
   children: ReactNode;
   backgroundPath?: string;
   inert?: boolean;
+  hideHeader?: boolean;
   onClickCapture?: MouseEventHandler<HTMLDivElement>;
 }) {
   const currentPath = usePathname();
@@ -25,7 +27,8 @@ export function AppShell({
   const isList = pathname === '/incidents';
   const isDedicatedScreen =
     pathname === '/report' || pathname.startsWith('/incidents/');
-  const showHeader = pathname !== '/search' && !isDedicatedScreen;
+  const showHeader =
+    !hideHeader && pathname !== '/search' && !isDedicatedScreen;
   const shellClassName = isDedicatedScreen
     ? `mx-auto min-h-dvh max-w-[640px] ${pathname.startsWith('/incidents/') ? 'bg-background' : 'bg-surface'} pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]`
     : isHome

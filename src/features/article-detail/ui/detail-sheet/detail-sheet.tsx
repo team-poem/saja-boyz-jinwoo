@@ -60,7 +60,7 @@ export function DetailSheet({
   initialExpanded?: boolean;
   onClose?(): void;
   closeLabel?: string;
-  onHeightChange?(height: number): void;
+  onHeightChange?(height: number, expanded?: boolean): void;
   active?: boolean;
 }) {
   const panel = useRef<HTMLDivElement>(null);
@@ -92,7 +92,8 @@ export function DetailSheet({
     const element = panel.current;
 
     if (!active || !element) return;
-    const update = () => reportHeight?.(element.getBoundingClientRect().height);
+    const update = () =>
+      reportHeight?.(element.getBoundingClientRect().height, expanded);
 
     update();
     const observer =
@@ -108,7 +109,7 @@ export function DetailSheet({
       window.removeEventListener('resize', update);
       reportHeight?.(0);
     };
-  }, [active, reportHeight]);
+  }, [active, reportHeight, expanded]);
 
   useEffect(() => {
     if (!active) return;
