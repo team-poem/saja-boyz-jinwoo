@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
 import { chromium, type Browser, type BrowserContext } from 'playwright-core';
-import { expect, test } from 'vitest';
+import { afterAll, beforeAll, expect, test } from 'vitest';
 
 const execute = promisify(execFile);
 const wait = (ms: number) =>
@@ -47,96 +47,133 @@ async function ready(origin: string, app: ChildProcess, output: () => string) {
   throw new Error('Next server did not start: ' + output());
 }
 
-test('realNextLinkNavigationSkipsDocumentProbeAndTimesOutOnlyOnce', async () => {
-  const id = 'a'.repeat(64);
-  const missingId = 'f'.repeat(64);
-  const article = {
-    article_id: id,
-    image_status: 'disabled',
-    image_url: null,
-    article: {
-      title: '검증용 RSC 이동 기사',
-      description: '실제 사건이 아닌 내부 이동 검증용 기사입니다.',
-      pubDate: '2026-10-24T00:00:00Z',
-      originallink: 'https://publisher.example.invalid/rsc-test',
-      link: '',
-    },
+const id = 'a'.repeat(64);
+const missingId = 'f'.repeat(64);
+const article = {
+  article_id: id,
+  image_status: 'disabled',
+  image_url: null,
+  article: {
+    title: '검증용 RSC 이동 기사',
+    description: '실제 사건이 아닌 내부 이동 검증용 기사입니다.',
+    pubDate: '2026-10-24T00:00:00Z',
+    originallink: 'https://publisher.example.invalid/rsc-test',
+    link: '',
+  },
+};
+let unavailable = false;
+const detailRequests: number[] = [];
+const api = createServer((request, response) => {
+  const url = new URL(request.url ?? '/', 'http://fixture.invalid');
+  response.setHeader('Content-Type', 'application/json; charset=utf-8');
+  if (url.pathname === '/news') {
+    response.end(JSON.stringify({ total: 1, items: [article] }));
+    return;
+  }
+  if (url.pathname === '/news/' + id) {
+    detailRequests.push(Date.now());
+    // Leave this response pending until the app's actual fetch timeout aborts.
+    if (unavailable) return;
+    response.end(JSON.stringify(article));
+    return;
+  }
+  response.writeHead(404).end('{}');
+});
+
+let directory: string | undefined;
+let app: ChildProcess | undefined;
+let browser: Browser | undefined;
+let origin = '';
+const contexts: BrowserContext[] = [];
+
+beforeAll(async () => {
+  directory = await mkdtemp(join(tmpdir(), 'proxy-navigation-test-'));
+  const apiPort = await listen(api);
+  const reservation = createServer();
+  const appPort = await listen(reservation);
+  await new Promise<void>((resolve) => reservation.close(() => resolve()));
+  for (const name of [
+    'src',
+    'public',
+    'package.json',
+    'next.config.ts',
+    'postcss.config.mjs',
+    'tsconfig.json',
+  ]) {
+    await cp(join(process.cwd(), name), join(directory, name), {
+      recursive: true,
+    });
+  }
+  await symlink(
+    join(process.cwd(), 'node_modules'),
+    join(directory, 'node_modules'),
+    'junction',
+  );
+  const env = {
+    ...process.env,
+    NEWS_API_BASE_URL: 'http://127.0.0.1:' + apiPort,
+    NEXT_TELEMETRY_DISABLED: '1',
   };
-  let unavailable = false;
-  const detailRequests: number[] = [];
-  const api = createServer((request, response) => {
-    const url = new URL(request.url ?? '/', 'http://fixture.invalid');
-    response.setHeader('Content-Type', 'application/json; charset=utf-8');
-    if (url.pathname === '/news') {
-      response.end(JSON.stringify({ total: 1, items: [article] }));
-      return;
-    }
-    if (url.pathname === '/news/' + id) {
-      detailRequests.push(Date.now());
-      // Leave this response pending until the app's actual fetch timeout aborts.
-      if (unavailable) return;
-      response.end(JSON.stringify(article));
-      return;
-    }
-    response.writeHead(404).end('{}');
+  const next = join(process.cwd(), 'node_modules/next/dist/bin/next');
+  await execute(process.execPath, [next, 'build', '--webpack'], {
+    cwd: directory,
+    env,
+    timeout: 90000,
+    maxBuffer: 8 * 1024 * 1024,
   });
-  const directory = await mkdtemp(join(tmpdir(), 'proxy-navigation-test-'));
-  let app: ChildProcess | undefined;
-  let browser: Browser | undefined;
-  const contexts: BrowserContext[] = [];
-  try {
-    const apiPort = await listen(api);
-    const reservation = createServer();
-    const appPort = await listen(reservation);
-    await new Promise<void>((resolve) => reservation.close(() => resolve()));
-    for (const name of [
-      'src',
-      'public',
-      'package.json',
-      'next.config.ts',
-      'postcss.config.mjs',
-      'tsconfig.json',
-    ]) {
-      await cp(join(process.cwd(), name), join(directory, name), {
-        recursive: true,
-      });
-    }
-    await symlink(
-      join(process.cwd(), 'node_modules'),
-      join(directory, 'node_modules'),
-      'junction',
-    );
-    const env = {
-      ...process.env,
-      NEWS_API_BASE_URL: 'http://127.0.0.1:' + apiPort,
-      NEXT_TELEMETRY_DISABLED: '1',
-    };
-    const next = join(process.cwd(), 'node_modules/next/dist/bin/next');
-    await execute(process.execPath, [next, 'build', '--webpack'], {
+  app = spawn(
+    process.execPath,
+    [next, 'start', '--hostname', '127.0.0.1', '--port', String(appPort)],
+    {
       cwd: directory,
       env,
-      timeout: 90000,
-      maxBuffer: 8 * 1024 * 1024,
-    });
-    app = spawn(
-      process.execPath,
-      [next, 'start', '--hostname', '127.0.0.1', '--port', String(appPort)],
-      {
-        cwd: directory,
-        env,
-        stdio: ['ignore', 'pipe', 'pipe'],
-      },
-    );
-    let output = '';
-    app.stdout?.on('data', (chunk) => {
-      output += String(chunk);
-    });
-    app.stderr?.on('data', (chunk) => {
-      output += String(chunk);
-    });
-    const origin = 'http://127.0.0.1:' + appPort;
-    await ready(origin, app, () => output);
+      stdio: ['ignore', 'pipe', 'pipe'],
+    },
+  );
+  let output = '';
+  app.stdout?.on('data', (chunk) => {
+    output += String(chunk);
+  });
+  app.stderr?.on('data', (chunk) => {
+    output += String(chunk);
+  });
+  origin = 'http://127.0.0.1:' + appPort;
+  await ready(origin, app, () => output);
+  browser = await chromium.launch({ channel: 'chrome', headless: true });
+}, 120000);
 
+afterAll(async () => {
+  for (const context of contexts) await context.close();
+  await browser?.close();
+  await stop(app);
+  api.closeAllConnections();
+  await new Promise<void>((resolve) => api.close(() => resolve()));
+  if (directory) await rm(directory, { recursive: true, force: true });
+}, 120000);
+
+async function openList() {
+  const context = await browser!.newContext({
+    viewport: { width: 393, height: 852 },
+  });
+  contexts.push(context);
+  await context.route('**/*', async (route) => {
+    const headers = route.request().headers();
+    if (headers['next-router-prefetch'] || headers.purpose === 'prefetch') {
+      await route.abort();
+      return;
+    }
+    await route.continue();
+  });
+  const page = await context.newPage();
+  await page.goto(origin + '/incidents');
+  await page
+    .getByRole('link', { name: article.article.title, exact: true })
+    .waitFor();
+  return page;
+}
+
+test('realNextLinkNavigationSkipsDocumentProbeAndTimesOutOnlyOnce', async () => {
+  try {
     const beforeDocument = detailRequests.length;
     const document = await fetch(origin + '/incidents/' + id);
     await document.text();
@@ -151,28 +188,6 @@ test('realNextLinkNavigationSkipsDocumentProbeAndTimesOutOnlyOnce', async () => 
     const missingHtml = await missing.text();
     expect(missing.status).toBe(404);
     expect(missingHtml).toContain('noindex');
-
-    browser = await chromium.launch({ channel: 'chrome', headless: true });
-    async function openList() {
-      const context = await browser!.newContext({
-        viewport: { width: 393, height: 852 },
-      });
-      contexts.push(context);
-      await context.route('**/*', async (route) => {
-        const headers = route.request().headers();
-        if (headers['next-router-prefetch'] || headers.purpose === 'prefetch') {
-          await route.abort();
-          return;
-        }
-        await route.continue();
-      });
-      const page = await context.newPage();
-      await page.goto(origin + '/incidents');
-      await page
-        .getByRole('link', { name: article.article.title, exact: true })
-        .waitFor();
-      return page;
-    }
 
     const normalPage = await openList();
     const normalRequests: { query: string; rsc?: string }[] = [];
@@ -239,11 +254,6 @@ test('realNextLinkNavigationSkipsDocumentProbeAndTimesOutOnlyOnce', async () => 
         .count(),
     ).toBe(1);
   } finally {
-    for (const context of contexts) await context.close();
-    await browser?.close();
-    await stop(app);
-    api.closeAllConnections();
-    await new Promise<void>((resolve) => api.close(() => resolve()));
-    await rm(directory, { recursive: true, force: true });
+    unavailable = false;
   }
 }, 120000);
