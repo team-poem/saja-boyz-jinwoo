@@ -48,17 +48,23 @@ export function DetailShare({ id, title }: { id: string; title: string }) {
       <button
         type="button"
         onClick={share}
-        className="ui-control min-h-12 w-full cursor-pointer rounded-xl border-[1.5px] border-solid border-brand bg-surface px-4 py-3 text-[15px]/5 font-extrabold text-brand"
+        className="ui-control inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-1 rounded-xl border-[1.5px] border-solid border-brand bg-surface px-4 py-3 text-[15px]/5 font-extrabold text-brand"
       >
-        <span aria-hidden="true">🔗 </span>기사 공유하기
+        <span
+          aria-hidden="true"
+          className="size-[15px] shrink-0 text-[15px]/[15px]"
+        >
+          🔗
+        </span>
+        기사 공유하기
       </button>
       {copied && (
-        <p role="status" className="mb-0 text-sm text-muted">
+        <p role="status" className="m-0 text-sm text-muted">
           링크를 복사했어요
         </p>
       )}
       {manualUrl && (
-        <div>
+        <div className="flex flex-col gap-2">
           <p role="status" className="m-0 text-sm text-muted">
             아래 링크를 직접 복사해 주세요.
           </p>
