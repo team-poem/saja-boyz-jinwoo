@@ -9,7 +9,7 @@ import { KeywordLinkStatus } from '@/features/search/ui/keyword-link-status/keyw
 const suggestedKeywords = [
   { keyword: '대형화재', symbol: '🔥' },
   { keyword: '교통통제', symbol: '🚨' },
-  { keyword: '붕괴위험', symbol: '⚠️' },
+  { keyword: '붕괴위험', symbol: '⚠︎' },
   { keyword: '폭설피해', symbol: '❄️' },
   { keyword: '가스누출', symbol: '💨' },
   { keyword: '테러경보', symbol: '' },
@@ -42,9 +42,12 @@ export default async function SearchPage({
           <button
             type="submit"
             aria-label="검색"
-            className="ui-control grid size-11 shrink-0 cursor-pointer place-items-center border-0 bg-transparent p-0 text-muted"
+            className="-ml-2 flex size-11 shrink-0 cursor-pointer items-center justify-end rounded-xl border-0 bg-transparent p-0 pr-2 text-muted hover:opacity-80 active:opacity-60 motion-safe:transition-opacity"
           >
-            <span aria-hidden="true" className="text-[14px]">
+            <span
+              aria-hidden="true"
+              className="size-3.5 shrink-0 text-[14px]/[14px]"
+            >
               🔍
             </span>
           </button>
@@ -107,9 +110,16 @@ export default async function SearchPage({
               <Link
                 key={keyword}
                 href={`/search?q=${encodeURIComponent(keyword)}`}
-                className="ui-control relative inline-flex min-h-8 items-center gap-[6px] rounded-lg border border-solid border-border bg-surface px-3 py-0 text-[13px]/4"
+                className="ui-control relative inline-flex min-h-8 items-center gap-1 rounded-lg border border-solid border-border bg-surface px-3 py-0 text-[13px]/4"
               >
-                {symbol && <span aria-hidden="true">{symbol}</span>}
+                {symbol && (
+                  <span
+                    aria-hidden="true"
+                    className="w-3.5 shrink-0 text-[14px]/4"
+                  >
+                    {symbol}
+                  </span>
+                )}
                 <span>{keyword}</span>
                 <KeywordLinkStatus />
               </Link>

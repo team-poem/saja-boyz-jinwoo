@@ -310,16 +310,8 @@ export default function ReportPage() {
           aria-label="제보 닫기"
           className="-m-1.5 grid size-11 place-items-center rounded-full text-[14px]/[normal]"
         >
-          <span
-            aria-hidden="true"
-            className="grid size-8 place-items-center rounded-full bg-slate-100"
-          >
-            <Image
-              src="/article-detail/close.svg"
-              alt=""
-              width={24}
-              height={24}
-            />
+          <span aria-hidden="true" className="grid size-8 place-items-center">
+            <Image src="/report/close.svg" alt="" width={24} height={24} />
           </span>
         </Link>
       </header>
@@ -434,7 +426,7 @@ export default function ReportPage() {
               상세내용
             </label>
             <textarea
-              className="box-border h-[120px] w-full min-w-0 resize-y appearance-none rounded-[10px] border border-solid border-border bg-background p-3.5 text-[14px]/[17px] text-text placeholder:text-slate-400"
+              className="box-border h-[120px] w-full min-w-0 resize-none appearance-none rounded-[10px] border border-solid border-border bg-background p-3.5 text-[14px]/[17px] text-text placeholder:text-slate-400"
               id="report-description"
               name="description"
               disabled={formLocked}
