@@ -193,7 +193,7 @@ export default async function IncidentDetailPage({
           </a>
         </div>
       ) : (
-        <p className="m-0 text-sm text-muted">원문 링크 없음</p>
+        <p className="m-0 py-1 text-[12px]/[15px] text-muted">원문 링크 없음</p>
       )}
       <RelatedArticles id={id} />
     </DetailSheet>

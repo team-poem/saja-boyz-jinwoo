@@ -62,7 +62,7 @@ export function ArticleCard({
           기사 원문
         </a>
       ) : (
-        <span className="col-start-2 row-start-4 justify-self-start text-[11px]/[14px] text-muted underline underline-offset-[3px]">
+        <span className="col-start-2 row-start-4 justify-self-start text-[11px]/[14px] text-muted">
           원문 링크 없음
         </span>
       )}

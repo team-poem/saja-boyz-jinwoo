@@ -373,3 +373,77 @@ test('listFocusRemainsVisibleWhileTabbingAndReturningFromDetail', async () => {
     listArticles = [article];
   }
 }, 120000);
+
+test('searchAlignmentPreservesFullTargetsAndWorkingControls', async () => {
+  const page = await openList();
+  await page.evaluate(() =>
+    localStorage.setItem(
+      'hh:recent-searches:v1',
+      JSON.stringify([
+        '서울 소방서',
+        '서교동 화재',
+        '실시간 강남역',
+        '싱크홀 경보',
+      ]),
+    ),
+  );
+  await page.goto(origin + '/search');
+  await page.getByRole('link', { name: '서울 소방서', exact: true }).waitFor();
+  await page.evaluate(() => document.fonts.ready);
+  const sizes = await page.evaluate(() => {
+    const box = (element: Element) => element.getBoundingClientRect().toJSON();
+    const form = document.querySelector('form[action="/search"]')!;
+    const row = document.querySelector('section[aria-label="최근 검색"] li')!;
+    const remove = row.querySelector('button')!;
+    return {
+      form: box(form),
+      submit: box(form.querySelector('button[type="submit"]')!),
+      input: box(form.querySelector('input[name="q"]')!),
+      row: box(row),
+      clock: box(row.querySelector('a > span')!),
+      remove: box(remove),
+      removeGlyph: box(remove.querySelector('span')!),
+      chip: box(document.querySelector('#suggested-keywords + div > a')!),
+    };
+  });
+  expect.soft(sizes.form.height, '시각 검색바37px 유지').toBeCloseTo(37, 0);
+  expect.soft(sizes.submit.width, '검색 실제 클릭 영역44px 유지').toBe(44);
+  expect.soft(sizes.submit.height).toBe(44);
+  expect
+    .soft(
+      Math.abs(sizes.input.x - sizes.form.x - 37.5),
+      'Figma 입력 시작점 · 테두리 반올림 1px 허용',
+    )
+    .toBeLessThanOrEqual(1);
+  expect
+    .soft(sizes.submit.right, '검색 버튼과 입력이 겹치지 않음')
+    .toBeLessThanOrEqual(sizes.input.left + 0.5);
+  expect.soft(sizes.clock.width, '시계glyph가 본문을 밀지 않음').toBe(14);
+  expect.soft(sizes.remove.width, '최근검색 삭제 타깃32px 유지').toBe(32);
+  expect.soft(sizes.remove.height).toBe(32);
+  expect
+    .soft(sizes.removeGlyph.right, '삭제X 시각 위치는 행 오른쪽')
+    .toBeCloseTo(sizes.row.right, 0);
+  expect
+    .soft(sizes.chip.width, '아이콘 추천칩은Figma89px에정렬')
+    .toBeCloseTo(89, 0);
+  await page
+    .getByRole('button', { name: '서울 소방서 삭제', exact: true })
+    .click();
+  expect(
+    await page.getByRole('link', { name: '서울 소방서', exact: true }).count(),
+  ).toBe(0);
+  await page.getByRole('searchbox', { name: '기사 키워드 검색' }).fill('검증');
+  await page.getByRole('button', { name: '검색', exact: true }).click();
+  await page.waitForURL(
+    (url) => url.pathname === '/search' && url.searchParams.get('q') === '검증',
+  );
+  await page.getByRole('link', { name: '검색어 초기화', exact: true }).click();
+  await page.waitForURL((url) => url.pathname === '/search' && !url.search);
+  expect(
+    await page
+      .getByRole('searchbox', { name: '기사 키워드 검색' })
+      .inputValue(),
+  ).toBe('');
+  await page.close();
+}, 120000);

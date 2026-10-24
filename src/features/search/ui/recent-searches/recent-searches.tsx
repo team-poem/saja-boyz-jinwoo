@@ -88,7 +88,10 @@ export function RecentSearches({ executedKeyword = '' }) {
                 href={`/search?q=${encodeURIComponent(keyword)}`}
                 className="ui-control relative flex min-h-8 min-w-0 flex-1 items-center gap-2 font-medium"
               >
-                <span aria-hidden="true" className="shrink-0 text-muted">
+                <span
+                  aria-hidden="true"
+                  className="size-3.5 shrink-0 text-[14px]/[14px] font-normal text-muted"
+                >
                   🕒
                 </span>
                 <span className="min-w-0 truncate">{keyword}</span>
@@ -98,7 +101,7 @@ export function RecentSearches({ executedKeyword = '' }) {
                 type="button"
                 aria-label={`${keyword} 삭제`}
                 onClick={() => removeKeyword(keyword)}
-                className="ui-control grid size-8 shrink-0 cursor-pointer place-items-center border-0 bg-transparent p-0 text-muted"
+                className="ui-control grid size-8 shrink-0 cursor-pointer items-center justify-items-end border-0 bg-transparent p-0 text-muted"
               >
                 <span aria-hidden="true">✕</span>
               </button>
