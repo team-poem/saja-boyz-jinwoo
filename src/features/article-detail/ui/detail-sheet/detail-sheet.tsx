@@ -339,12 +339,8 @@ export function DetailSheet({
         className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain [overflow-wrap:anywhere]"
       >
         {children}
+        {footer && <div className="mt-auto shrink-0">{footer}</div>}
       </div>
-      {footer && (
-        <div className="max-h-[40dvh] shrink-0 overflow-y-auto overscroll-contain">
-          {footer}
-        </div>
-      )}
     </div>
   );
 }
