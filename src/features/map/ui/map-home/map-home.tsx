@@ -892,10 +892,10 @@ export function MapHome({
           )}
         </div>
         {ready &&
-          !detailOpen &&
           selectedArticles.length > (sheetRoute ? 1 : 0) &&
           articles && (
             <MapArticleSheet
+              active={!detailOpen}
               items={selectedArticles}
               apiOrigin={articles.apiOrigin}
               onHeightChange={setSelectionHeight}
