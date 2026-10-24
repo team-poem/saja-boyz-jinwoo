@@ -29,7 +29,7 @@
 - 검색 결과 추가 forward probe는320/393/1440px 각각28개 기록에서 가림0이다. 전체 회귀에는 양방향 키 이동과 상세 복귀도 포함한다.
 - 긴/짧은 본문, 관련 기사3개, 긴 출처·긴 지역명·원문 없음, 복사 성공·실패 수동 URL과 단일 스크롤 흐름을 확인했다.
 - 대표·추가 캡처17장: [목록](capture-manifest.json), [원본 이미지](app/), [Figma 비교](comparison/).
-- 서버와 브라우저는 종료했다. [정리 기록](cleanup.json), [빌드 로그](build.log), [fixture 요청](fixture-requests.json), 재현용 [fixture](fixture.mjs.txt)·[브라우저 스크립트](browser-qa.mjs.txt).
+- 서버와 브라우저는 종료했다. [정리 기록](cleanup.json), [빌드 로그](build-output.txt), [fixture 요청](fixture-requests.json), 재현용 [fixture](fixture.mjs.txt)·[브라우저 스크립트](browser-qa.mjs.txt).
 
 합성 기사61건 중 좌표가 있는15건과 고정 합성 위치를 사용했다. 개인 위치나 실제 사건을 테스트 자료로 사용하지 않았고 실제 제보는 전송하지 않았다. 외부 쓰기 요청은 차단했다.
 
