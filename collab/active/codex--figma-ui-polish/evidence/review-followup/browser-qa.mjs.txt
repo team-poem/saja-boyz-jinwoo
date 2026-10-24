@@ -1,0 +1,97 @@
+import {createRequire} from 'node:module';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import path from 'node:path';
+const app=process.env.QA_APP, origin='http://localhost:31145', root='/private/tmp/pr45-review-followup-qa/final', out=root+'/app';
+await mkdir(out,{recursive:true});
+const require=createRequire(path.join(app,'package.json'));
+const {chromium}=require('playwright-core'), {JSDOM}=require('jsdom');
+const A='a'.repeat(64), B='b'.repeat(64), C='c'.repeat(64), F='f'.repeat(64), D='d'.repeat(64), G=(1000).toString(16).padStart(64,'0'), H=(1001).toString(16).padStart(64,'0');
+const report={commit:process.env.QA_COMMIT,buildId:(await readFile(path.join(app,'.next/BUILD_ID'),'utf8')).trim(),sdkStubbed:false,location:'Fixed synthetic browser position; no personal position.',data:'Local61 synthetic articles;1/2/12 region groups;short/long summaries,long synthetic source/region,no-source variants.',checks:[],scenarios:[],screenshots:[],pageErrors:[],focus:[],blockedWrites:0,tiles200:0};
+const check=(ok,name,data={})=>{report.checks.push({passed:Boolean(ok),name,...data});if(!ok)console.log('QA_FAIL '+name);};
+const browser=await chromium.launch({channel:'chrome',headless:true});
+async function context(options={}) {
+ const ctx=await browser.newContext({viewport:{width:393,height:852},reducedMotion:'reduce',permissions:['geolocation'],geolocation:{latitude:37.56,longitude:126.99,accuracy:1000},...options});
+ await ctx.route('**/*',route=>{const req=route.request();if(!['GET','HEAD'].includes(req.method())){report.blockedWrites++;return route.abort();}if(req.headers()['next-router-prefetch']||req.headers().purpose==='prefetch')return route.abort();return route.continue();});
+ await ctx.addInitScript(()=>{
+  window.__qa={copies:[],clipboardFail:false};
+  Object.defineProperty(navigator,'share',{configurable:true,value:undefined});
+  Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async value=>{if(window.__qa.clipboardFail)throw new Error('QA clipboard denied');window.__qa.copies.push(value);}}});
+ });
+ const page=await ctx.newPage();page.setDefaultTimeout(12000);
+ page.on('pageerror',error=>report.pageErrors.push({name:error.name,path:new URL(page.url()).pathname}));
+ page.on('response',res=>{if(new URL(res.url()).hostname==='nrbe.map.naver.net'&&res.request().resourceType()==='image'&&res.status()===200)report.tiles200++;});
+ return {ctx,page};
+}
+async function scenario(name,run){console.log('QA '+name);try{await run();report.scenarios.push({name,completed:true});}catch(error){report.scenarios.push({name,completed:false,error:String(error.message)});console.log('QA_SCENARIO_FAILED '+name+' '+error.message);}}
+async function capture(page,name,description){
+ await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(img=>img.complete?Promise.resolve():new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});setTimeout(resolve,1500);})))});await page.waitForTimeout(180);
+ await page.screenshot({path:out+'/'+name+'.png'});const geometry=await page.evaluate(()=>({width:innerWidth,height:innerHeight,scrollWidth:document.documentElement.scrollWidth}));
+ report.screenshots.push({file:name+'.png',description,...geometry});check(geometry.scrollWidth<=geometry.width,name+' horizontal overflow absent',geometry);
+}
+async function detail(page,id){await page.waitForURL('**/incidents/'+id);const dialog=page.getByRole('dialog');await dialog.getByRole('heading',{level:1}).waitFor();return dialog;}
+async function reading(dialog){const share=dialog.getByRole('button',{name:'기사 공유하기',exact:true});return share.locator('xpath=ancestor::div').filter({has:share}).evaluateAll(nodes=>nodes.length);}
+async function scrollerOf(locator){return locator.evaluateHandle(node=>{for(let el=node.parentElement;el;el=el.parentElement)if(['auto','scroll'].includes(getComputedStyle(el).overflowY))return el;return null;});}
+async function focusMeasure(page){return page.evaluate(()=>{
+ const a=document.activeElement;if(!(a instanceof HTMLAnchorElement)||!a.closest('article'))return null;
+ let parts=[...a.getClientRects()].map(r=>({left:r.left,right:r.right,top:r.top,bottom:r.bottom}));
+ for(let el=a.parentElement;el&&el!==document.body;el=el.parentElement){const style=getComputedStyle(el),box=el.getBoundingClientRect();const clipX=['hidden','clip','auto','scroll'].includes(style.overflowX),clipY=['hidden','clip','auto','scroll'].includes(style.overflowY);parts=parts.map(r=>({left:clipX?Math.max(r.left,box.left):r.left,right:clipX?Math.min(r.right,box.right):r.right,top:clipY?Math.max(r.top,box.top):r.top,bottom:clipY?Math.min(r.bottom,box.bottom):r.bottom})).filter(r=>r.right>r.left&&r.bottom>r.top);}
+ const header=document.querySelector('[data-article-background] header');let sticky=header;for(let el=header;el;el=el.parentElement)if(getComputedStyle(el).position==='sticky'){sticky=el;break;}
+ const top=sticky?.getBoundingClientRect().bottom??0,nav=document.querySelector('nav[aria-label="주 메뉴"]'),bottom=nav?.getBoundingClientRect().top??innerHeight;
+ const first=parts[0],hit=first?document.elementFromPoint((first.left+first.right)/2,(first.top+first.bottom)/2):null;
+ return {text:a.textContent.trim(),href:new URL(a.href).pathname,unclippedBox:a.getBoundingClientRect().toJSON(),paintedParts:parts,top,bottom,hitSelf:hit===a||a.contains(hit),fullyVisible:parts.length>0&&parts.every(r=>r.top>=top-1&&r.bottom<=bottom+1),scrollY};
+ });}
+async function twoFrames(page){await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));}
+try {
+ await scenario('real-map-and-count-overview',async()=>{
+  const {ctx,page}=await context();await page.goto(origin+'/');await page.getByRole('region',{name:'지도 기사',exact:true}).waitFor();await page.waitForFunction(()=>document.querySelector('button[aria-label^="지역 대표 위치:"]'));
+  for(let i=0;i<40&&!report.tiles200;i++)await page.waitForTimeout(200);
+  check(report.tiles200>0,'actual Naver raster tiles200 without SDK stub',{tiles:report.tiles200});await capture(page,'map','Actual Naver tiles, fixed synthetic location and synthetic articles.');
+  const geometry=()=>page.evaluate(()=>[...document.querySelectorAll('button[aria-label^="지역 대표 위치:"]')].map(el=>({count:Number(el.textContent.trim()),rect:el.getBoundingClientRect().toJSON(),font:getComputedStyle(el).fontSize,bg:getComputedStyle(el).backgroundColor})));
+  let markers=await geometry();for(let i=0;i<12;i++){const three=markers.filter(m=>[1,2,12].includes(m.count));if(three.length!==3)break;const spanX=Math.max(...three.map(m=>m.rect.right))-Math.min(...three.map(m=>m.rect.left)),spanY=Math.max(...three.map(m=>m.rect.bottom))-Math.min(...three.map(m=>m.rect.top));if(spanX<350&&spanY<420)break;await page.mouse.move(190,270);await page.mouse.wheel(0,500);await page.waitForTimeout(350);markers=await geometry();}
+  for(let i=0;i<8;i++){const m=markers.filter(m=>[1,2,12].includes(m.count));if(m.length!==3)break;const dx=196.5-(Math.min(...m.map(v=>v.rect.left))+Math.max(...m.map(v=>v.rect.right)))/2,dy=340-(Math.min(...m.map(v=>v.rect.top))+Math.max(...m.map(v=>v.rect.bottom)))/2;if(Math.abs(dx)<3&&Math.abs(dy)<3)break;await page.mouse.move(196,300);await page.mouse.down();await page.mouse.move(196+Math.max(-110,Math.min(110,dx)),300+Math.max(-130,Math.min(130,dy)),{steps:12});await page.mouse.up();await page.waitForTimeout(350);markers=await geometry();}
+  report.markers=await geometry();check([1,2,12].every(n=>report.markers.some(m=>m.count===n&&m.rect.left>=0&&m.rect.right<=393&&m.rect.top>=105&&m.rect.bottom<590)),'real SDK count1/2/12 visible together', {markers:report.markers});await capture(page,'map-counts','Actual SDK overview via browser wheel and pointer drag only.');
+  await page.getByRole('button',{name:/지역 대표 위치:/}).filter({hasText:/^12$/}).click();
+  const chooser=page.getByRole('dialog');await chooser.locator('a[href="/incidents/'+G+'"]').waitFor();await chooser.locator('a[href="/incidents/'+G+'"]').click();const dlg=await detail(page,G);await dlg.getByRole('button',{name:'기사 시트 펼치기',exact:true}).click();
+  const source=dlg.getByRole('link',{name:/기사 원문 · longnews/});await source.scrollIntoViewIfNeeded();
+  const sourceData=await source.evaluate(el=>{const spans=el.querySelectorAll('span');const host=spans[1],icon=spans[2];return {href:el.getAttribute('href'),target:el.target,rel:el.rel,hostWidth:host.clientWidth,hostScroll:host.scrollWidth,hostUnderline:getComputedStyle(host).textDecorationLine,iconUnderline:getComputedStyle(icon).textDecorationLine,outerUnderline:getComputedStyle(el.previousElementSibling).textDecorationLine,iconSize:getComputedStyle(icon).fontSize};});
+  check(sourceData.target==='_blank'&&/noopener/.test(sourceData.rel)&&/noreferrer/.test(sourceData.rel),'source target rel preserved',sourceData);check(sourceData.hostScroll>sourceData.hostWidth&&sourceData.hostUnderline.includes('underline')&&!sourceData.iconUnderline.includes('underline')&&!sourceData.outerUnderline.includes('underline'),'long hostname truncates and only hostname is underlined',sourceData);
+  check(await dlg.getByRole('region',{name:'같은 지역 보도',exact:true}).locator('li').count()===3,'related reports limited to three');await capture(page,'detail-long-source','Long synthetic hostname underline/ellipsis, long region and three related articles.');
+  const caption=dlg.getByText('AI 생성 이미지',{exact:true});check(await caption.evaluate(el=>getComputedStyle(el).lineHeight)==='15px','image caption15px line-height');
+  await dlg.getByRole('button',{name:'기사 공유하기',exact:true}).scrollIntoViewIfNeeded();await capture(page,'detail-three-related-share','Three related articles and share remain in a single reading scroller.');await ctx.close();
+ });
+ await scenario('detail-short-long-share-and-manual-url',async()=>{
+  const {ctx,page}=await context();await page.goto(origin+'/');const carousel=page.getByRole('region',{name:'지도 기사',exact:true});await carousel.locator('a[href="/incidents/'+B+'"]').click();let dlg=await detail(page,B);
+  check(await dlg.getAttribute('data-expanded')==='false','map short article starts collapsed');await capture(page,'detail','Collapsed short synthetic article from actual map.');
+  await dlg.getByRole('button',{name:'기사 시트 펼치기',exact:true}).click();await capture(page,'detail-expanded','Same short article expanded; share follows reading content and uses remaining space.');
+  check(await page.locator('header:visible').count()===0,'expanded detail hides only home search header');
+  const share=dlg.getByRole('button',{name:'기사 공유하기',exact:true}), reader=await scrollerOf(share);
+  check(await reader.evaluate(el=>Boolean(el&&el.contains([...el.querySelectorAll('button')].find(b=>b.textContent.includes('기사 공유하기'))))),'share is inside the reading scroller');
+  await share.scrollIntoViewIfNeeded();await share.click();check(await page.evaluate(()=>window.__qa.copies.at(-1))===origin+'/incidents/'+B,'copy uses exact clean article URL');
+  await page.evaluate(()=>window.__qa.clipboardFail=true);await share.click();const manual=dlg.getByRole('textbox',{name:'공유 링크',exact:true});await manual.waitFor();await manual.scrollIntoViewIfNeeded();
+  check(await manual.inputValue()===origin+'/incidents/'+B&&await manual.getAttribute('readonly')!==null,'clipboard failure exposes readonly exact URL');
+  check(await reader.evaluate((el)=>Boolean(el.querySelector('input[aria-label="공유 링크"]'))),'manual URL remains in same reading scroller');await capture(page,'detail-manual-url','Clipboard failure: readonly clean URL in the same reading scroller.');
+  await page.keyboard.press('Escape');await page.waitForURL(origin+'/');await carousel.locator('a[href="/incidents/'+A+'"]').click();dlg=await detail(page,A);
+  const longShare=dlg.getByRole('button',{name:'기사 공유하기',exact:true}),longReader=await scrollerOf(longShare),initial=await longShare.boundingBox(),box=await dlg.boundingBox();
+  check(initial.y>box.y+box.height-20,'collapsed long summary share starts after content below fold',{share:initial,dialog:box});await capture(page,'detail-long-collapsed','Long summary before scrolling, with share correctly after content.');
+  await longShare.scrollIntoViewIfNeeded();check(await longReader.evaluate(el=>el.scrollTop)>0,'long summary share reached by internal scrolling');await capture(page,'detail-long-share-scrolled','Long summary share reached by internal reading scroll; no fixed overlay footer.');
+  await page.goto(origin+'/incidents/'+C);dlg=await detail(page,C);await dlg.getByText('원문 링크 없음',{exact:true}).waitFor();check(await dlg.getByRole('link',{name:/기사 원문/}).count()===0,'missing original source has explicit information without fake link');await capture(page,'detail-source-unavailable','Article with no valid source displays explicit no-source information.');await ctx.close();
+ });
+ await scenario('search-layout-results-soft-metadata-and-keyboard-probe',async()=>{
+  const {ctx,page}=await context();await page.goto(origin+'/search');await page.evaluate(()=>localStorage.removeItem('hh:recent-searches:v1'));await page.reload();await page.getByRole('heading',{name:'추천 검색어',exact:true}).waitFor();await capture(page,'search','Initial empty search state.');
+  await page.evaluate(()=>localStorage.setItem('hh:recent-searches:v1',JSON.stringify(['서울소방서','서교동화재','실시간강남역','싱크홀경보'])));await page.reload();await page.getByRole('region',{name:'최근 검색',exact:true}).getByRole('link',{name:'싱크홀경보',exact:true}).waitFor();await capture(page,'search-recent','Four seeded local entries matching Figma labels.');
+  report.searchGeometry=await page.evaluate(()=>({form:document.querySelector('form[action="/search"]')?.getBoundingClientRect().toJSON(),input:document.querySelector('input[type="search"]')?.getBoundingClientRect().toJSON(),images:[...document.querySelectorAll('img')].map(el=>({file:new URL(el.src).pathname,box:el.getBoundingClientRect().toJSON()}))}));
+  await page.getByRole('searchbox',{name:'기사 키워드 검색'}).fill('검증용');await page.getByRole('button',{name:'검색',exact:true}).click();const results=page.getByRole('region',{name:'기사 검색 결과',exact:true});await results.waitFor();check(await results.locator('article').count()>0,'search uses matching keyword and populated results');await capture(page,'search-results','Populated synthetic search results using matching query.');
+  for(const width of [320,393,1440]){await page.setViewportSize({width,height:852});const links=results.locator('article a'),n=Math.min(28,await links.count());await links.nth(0).focus();const failures=[];for(let i=0;i<n;i++){if(i)await page.keyboard.press('Tab');await twoFrames(page);const m=await focusMeasure(page);if(m&&(!m.hitSelf||!m.fullyVisible)){failures.push(m);if(failures.length===1)await capture(page,'search-first-obstruction-'+width,'First observed focused-link obstruction if any.');}}report.focus.push({surface:'search-forward-probe',width,records:n,failures});check(failures.length===0,'search result Tab unobscured '+width,{failures});if(failures.length)await capture(page,'search-tab-obscured-'+width,'Observed search keyboard obstruction; product unchanged.');}
+  await ctx.close();
+ });
+ await scenario('list-and-report-representative-captures',async()=>{
+  const {ctx,page}=await context();await page.goto(origin+'/incidents');await page.locator('article h2 a').first().waitFor();await capture(page,'list-393x852','Article list at393×852.');await page.setViewportSize({width:393,height:918});await capture(page,'list','Article list at393×918 matching latest Figma frame.');await page.setViewportSize({width:393,height:852});await page.goto(origin+'/report');await page.getByRole('heading',{name:'제보하기',exact:true}).waitFor();await capture(page,'report','Report initial state without submission.');await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));await capture(page,'report-bottom','Report bottom; no form input or submission.');
+  const geometry=await page.getByRole('link',{name:'제보 닫기',exact:true}).evaluate(el=>({box:el.getBoundingClientRect().toJSON(),background:getComputedStyle(el).backgroundColor,image:el.querySelector('img').getBoundingClientRect().toJSON(),imagePath:new URL(el.querySelector('img').src).pathname,resize:getComputedStyle(document.querySelector('textarea')).resize}));
+  check(geometry.box.width>=44&&geometry.box.height>=44&&geometry.image.width===24&&geometry.image.height===24&&geometry.imagePath==='/report/close.svg'&&geometry.background==='rgba(0, 0, 0, 0)'&&geometry.resize==='none','report final SVG24/44hit/transparent/resize-none',geometry);await ctx.close();
+ });
+}finally{
+ await browser.close();report.summary={checks:report.checks.length,failed:report.checks.filter(c=>!c.passed),scenarios:report.scenarios.length,scenarioFailures:report.scenarios.filter(s=>!s.completed),pageErrors:report.pageErrors.length};
+ await writeFile(root+'/report.json',JSON.stringify(report,null,2));await writeFile(root+'/manifest.json',JSON.stringify({buildId:report.buildId,commit:report.commit,screenshots:report.screenshots.map(s=>({...s,path:out+'/'+s.file})),conditions:{sdkStubbed:false,syntheticData:true,personalLocation:false,realReportSubmitted:false,temporaryCSSInjected:false}},null,2));
+ await writeFile(root+'/README.md','# PR45 후속 최종 브라우저 QA\n\n- HEAD: '+report.commit+'\n- Build: '+report.buildId+'\n- 실제 Naver SDK/타일, 고정 합성 위치(개인 위치 없음)\n- 로컬 합성 기사61건 및1/2/12 지도 그룹. 긴/짧은 요약·긴host/지역·원문없음은 QA 변형\n- 제품 소스·Git 수정 없음. 임시 CSS 주입 없음. 실제 제보 전송 없음. 브라우저 non-GET/HEAD 요청 차단\n- 공유의 클립보드 성공/실패만 테스트 브라우저에서 모사. 실제 OS 공유창 검증은 아님\n- 웹 캡처이며 iOS 상태바를 복제하지 않음\n\n'+JSON.stringify(report.summary,null,2)+'\n');
+ console.log('QA_COMPLETE '+JSON.stringify({buildId:report.buildId,...report.summary,screenshots:report.screenshots.length,tiles200:report.tiles200}));
+}
