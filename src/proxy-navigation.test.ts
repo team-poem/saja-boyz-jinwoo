@@ -62,12 +62,20 @@ const article = {
   },
 };
 let unavailable = false;
+let listArticles = [article];
 const detailRequests: number[] = [];
 const api = createServer((request, response) => {
   const url = new URL(request.url ?? '/', 'http://fixture.invalid');
   response.setHeader('Content-Type', 'application/json; charset=utf-8');
   if (url.pathname === '/news') {
-    response.end(JSON.stringify({ total: 1, items: [article] }));
+    const offset = Number(url.searchParams.get('offset') ?? 0);
+    const limit = Number(url.searchParams.get('limit') ?? 20);
+    response.end(
+      JSON.stringify({
+        total: listArticles.length,
+        items: listArticles.slice(offset, offset + limit),
+      }),
+    );
     return;
   }
   if (url.pathname === '/news/' + id) {
@@ -75,6 +83,13 @@ const api = createServer((request, response) => {
     // Leave this response pending until the app's actual fetch timeout aborts.
     if (unavailable) return;
     response.end(JSON.stringify(article));
+    return;
+  }
+  const item = listArticles.find(
+    (item) => url.pathname === '/news/' + item.article_id,
+  );
+  if (item) {
+    response.end(JSON.stringify(item));
     return;
   }
   response.writeHead(404).end('{}');
@@ -151,9 +166,9 @@ afterAll(async () => {
   if (directory) await rm(directory, { recursive: true, force: true });
 }, 120000);
 
-async function openList() {
+async function openList(width = 393) {
   const context = await browser!.newContext({
-    viewport: { width: 393, height: 852 },
+    viewport: { width, height: 852 },
   });
   contexts.push(context);
   await context.route('**/*', async (route) => {
@@ -255,5 +270,106 @@ test('realNextLinkNavigationSkipsDocumentProbeAndTimesOutOnlyOnce', async () => 
     ).toBe(1);
   } finally {
     unavailable = false;
+  }
+}, 120000);
+
+test('listFocusRemainsVisibleWhileTabbingAndReturningFromDetail', async () => {
+  listArticles = [
+    article,
+    ...Array.from({ length: 13 }, (_, index) => ({
+      ...article,
+      article_id: (index + 1).toString(16).padStart(64, '0'),
+      article: {
+        ...article.article,
+        title: `포커스 검증 기사 ${index + 1}`,
+        originallink: `https://publisher.example.invalid/focus-${index + 1}`,
+      },
+    })),
+  ];
+  try {
+    for (const width of [320, 393, 1440]) {
+      const page = await openList(width);
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      const links = page.locator('article a');
+      expect(await links.count()).toBe(28);
+      async function visible(index: number, direction: string) {
+        await page.evaluate(
+          () =>
+            new Promise<void>((resolve) =>
+              requestAnimationFrame(() =>
+                requestAnimationFrame(() => resolve()),
+              ),
+            ),
+        );
+        const value = await links.nth(index).evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const shell = element.closest('[data-article-background]')!;
+          let header = shell.querySelector<HTMLElement>('header');
+          while (header && getComputedStyle(header).position !== 'sticky')
+            header = header.parentElement;
+          const nav = shell.querySelector('nav[aria-label="주 메뉴"]')!;
+          const hit = document.elementFromPoint(
+            rect.x + rect.width / 2,
+            rect.y + rect.height / 2,
+          );
+          return {
+            focused: document.activeElement === element,
+            top: rect.top,
+            bottom: rect.bottom,
+            headerBottom: header?.getBoundingClientRect().bottom ?? 0,
+            navTop: nav.getBoundingClientRect().top,
+            hit: hit === element || element.contains(hit),
+          };
+        });
+        const label = `${width}px ${direction} 기사 링크 ${index}`;
+        expect.soft(value.focused, label + ' 실제 키보드 포커스').toBe(true);
+        expect
+          .soft(value.top, label + ' 헤더 아래 포커스 윤곽')
+          .toBeGreaterThanOrEqual(value.headerBottom + 7);
+        expect
+          .soft(value.bottom, label + ' 하단 메뉴 위 포커스 윤곽')
+          .toBeLessThanOrEqual(value.navTop - 7);
+        expect
+          .soft(value.hit, label + ' 링크가 다른 요소에 가리지 않음')
+          .toBe(true);
+      }
+      await links.last().focus();
+      await visible(27, '시작');
+      for (let index = 26; index >= 0; index--) {
+        await page.keyboard.press('Shift+Tab');
+        await visible(index, 'Shift+Tab');
+      }
+      for (let index = 1; index < 28; index++) {
+        await page.keyboard.press('Tab');
+        await visible(index, 'Tab');
+      }
+      for (let index = 0; index < 3; index++)
+        await page.keyboard.press('Shift+Tab');
+      const opener = links.nth(24);
+      expect(
+        await opener.evaluate((element) => element === document.activeElement),
+      ).toBe(true);
+      const before = await page.evaluate(() => scrollY);
+      await page.keyboard.press('Enter');
+      await page
+        .getByRole('dialog')
+        .getByRole('heading', {
+          level: 1,
+          name: listArticles[12].article.title,
+        })
+        .waitFor();
+      await page.keyboard.press('Escape');
+      await page.waitForFunction(
+        () => !document.querySelector('[role="dialog"]'),
+      );
+      expect(new URL(page.url()).pathname).toBe('/incidents');
+      await visible(24, '상세 닫기');
+      expect(
+        Math.abs((await page.evaluate(() => scrollY)) - before),
+      ).toBeLessThanOrEqual(2);
+      await page.close();
+    }
+  } finally {
+    listArticles = [article];
   }
 }, 120000);
