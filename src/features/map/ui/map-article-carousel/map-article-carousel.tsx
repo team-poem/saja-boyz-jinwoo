@@ -14,7 +14,7 @@ export function MapArticleCarousel({
   return (
     <section
       aria-label="지도 기사"
-      className="flex flex-col gap-3 bg-linear-to-b from-transparent to-background/95 pt-8 pb-2 [@media(max-height:550px)]:gap-2 [@media(max-height:550px)]:pt-2"
+      className="flex flex-col gap-3 pt-8 pb-2 [@media(max-height:550px)]:gap-2 [@media(max-height:550px)]:pt-2"
     >
       <div className="flex items-center justify-between px-4">
         <h2 className="m-0 flex items-center gap-1.5 text-[14px]/[17px] font-extrabold text-text">
@@ -36,13 +36,15 @@ export function MapArticleCarousel({
             선택한 기간의 기사가 없습니다. 기간을 변경해 주세요.
           </Notice>
         )}
-        {recentMapArticles(articles.items).map((item) => (
-          <MapCarouselCard
-            key={item.article_id}
-            item={item}
-            apiOrigin={articles.apiOrigin}
-          />
-        ))}
+        {recentMapArticles(articles.items)
+          .slice(0, 4)
+          .map((item) => (
+            <MapCarouselCard
+              key={item.article_id}
+              item={item}
+              apiOrigin={articles.apiOrigin}
+            />
+          ))}
       </div>
     </section>
   );

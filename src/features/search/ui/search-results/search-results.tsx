@@ -98,7 +98,7 @@ export function SearchResults({
           다른 키워드로 동네 소식을 찾아보세요.
         </Notice>
       ) : (
-        <div className="flex flex-col gap-3 pb-3">
+        <div className="flex flex-col gap-2 pb-3">
           {cards.map(({ id, content }) => (
             <Fragment key={id}>{content}</Fragment>
           ))}

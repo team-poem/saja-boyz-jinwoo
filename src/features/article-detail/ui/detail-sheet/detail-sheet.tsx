@@ -195,7 +195,7 @@ export function DetailSheet({
           rememberedFocus.current = event.target;
       }}
       data-expanded={expanded}
-      className={`ui-sheet-enter fixed bottom-0 left-1/2 z-40 flex max-h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))] w-full max-w-[640px] min-w-0 -translate-x-1/2 flex-col gap-4 overflow-hidden overscroll-contain rounded-t-3xl border-0 border-t border-solid border-border bg-surface p-4 pb-[max(16px,env(safe-area-inset-bottom))] text-text shadow-[0_-8px_16px_rgb(0_0_0/10%)] motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-out ${expanded ? 'h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))]' : 'h-[53.52dvh]'}`}
+      className={`ui-sheet-enter fixed bottom-0 left-1/2 z-40 flex max-h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))] w-full max-w-[640px] min-w-0 -translate-x-1/2 flex-col gap-4 overflow-hidden overscroll-contain rounded-t-3xl border-0 border-t border-solid border-[#e3e8f0] bg-surface p-4 pb-[max(16px,env(safe-area-inset-bottom))] text-text shadow-[0_-8px_16px_rgb(0_0_0/10%)] motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-out ${expanded ? 'h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))]' : 'h-[53.52dvh]'}`}
       onKeyDown={(event) => {
         if (!active) return;
 

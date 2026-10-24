@@ -22,6 +22,7 @@ export function AppShell({
   const currentPath = usePathname();
   const pathname = backgroundPath ?? currentPath;
   const isHome = pathname === '/';
+  const isList = pathname === '/incidents';
   const isDedicatedScreen =
     pathname === '/report' || pathname.startsWith('/incidents/');
   const showHeader = pathname !== '/search' && !isDedicatedScreen;
@@ -29,7 +30,7 @@ export function AppShell({
     ? `mx-auto min-h-dvh max-w-[640px] ${pathname.startsWith('/incidents/') ? 'bg-background' : 'bg-surface'} pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]`
     : isHome
       ? 'relative mx-auto min-h-dvh max-w-[640px]'
-      : `mx-auto min-h-dvh max-w-[640px] px-4 pb-[110px] ${showHeader ? 'pt-[calc(12px_+_env(safe-area-inset-top))]' : 'pt-[calc(20px_+_env(safe-area-inset-top))]'}`;
+      : `mx-auto min-h-dvh max-w-[640px] px-4 pb-[110px] ${isList ? '' : showHeader ? 'pt-[calc(12px_+_env(safe-area-inset-top))]' : 'pt-[calc(20px_+_env(safe-area-inset-top))]'}`;
 
   return (
     <div
@@ -40,8 +41,14 @@ export function AppShell({
       inert={inert || undefined}
       aria-hidden={inert || undefined}
     >
-      {showHeader && <SearchHeader isHome={isHome} />}
-      {pathname === '/incidents' && <ArticleFilters isHome={isHome} />}
+      {isList ? (
+        <div className="sticky top-0 z-20 -mx-4 flex flex-col bg-background/95 px-4 pt-[calc(12px_+_env(safe-area-inset-top))] backdrop-blur-[20px]">
+          <SearchHeader isHome={false} />
+          <ArticleFilters isHome={false} />
+        </div>
+      ) : (
+        showHeader && <SearchHeader isHome={isHome} />
+      )}
       <main id="main-content" className={isHome ? 'relative z-0' : undefined}>
         <FeatureErrorBoundary>{children}</FeatureErrorBoundary>
       </main>

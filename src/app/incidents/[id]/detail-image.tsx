@@ -25,7 +25,7 @@ export function DetailImage({ src }: { src: string | null }) {
         className="block h-[140px] w-full rounded-lg object-cover"
         onError={() => setFailed(true)}
       />
-      <figcaption className="mt-1 text-[10px]/[14px] text-muted">
+      <figcaption className="mt-1 text-[10px]/[15px] text-muted">
         AI 생성 이미지
       </figcaption>
     </figure>

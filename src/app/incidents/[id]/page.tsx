@@ -144,11 +144,14 @@ export default async function IncidentDetailPage({
         </h1>
         <div className="flex flex-col gap-1">
           <DetailLocation id={id} />
-          <p className="m-0 text-[12px]/4 text-slate-400">
+          <p className="m-0 flex items-center gap-1 text-[12px]/4 text-slate-400">
             {Number.isNaN(publishedAt.getTime()) ? (
               '발행 시각 미확인'
             ) : (
               <>
+                <span aria-hidden="true" className="text-[14px]">
+                  📅
+                </span>
                 <span className="sr-only">기사 발행 </span>
                 <time dateTime={publishedAt.toISOString()}>
                   {publicationText(publishedAt)}
@@ -172,7 +175,7 @@ export default async function IncidentDetailPage({
           href={sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="self-start text-[12px]/4 font-medium text-muted underline underline-offset-4"
+          className="self-start py-1 text-[12px]/4 font-medium text-muted underline underline-offset-4"
         >
           출처: 기사 원문 · {new URL(sourceUrl).hostname}
         </a>
