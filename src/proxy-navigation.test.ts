@@ -447,3 +447,106 @@ test('searchAlignmentPreservesFullTargetsAndWorkingControls', async () => {
   ).toBe('');
   await page.close();
 }, 120000);
+
+test('searchResultFocusStaysAboveNavigationAndReturnsToItsOpener', async () => {
+  listArticles = [
+    article,
+    ...Array.from({ length: 13 }, (_, index) => ({
+      ...article,
+      article_id: (index + 1).toString(16).padStart(64, '0'),
+      article: {
+        ...article.article,
+        title: `검색 포커스 검증 기사 ${index + 1}`,
+        originallink: `https://publisher.example.invalid/search-focus-${index + 1}`,
+      },
+    })),
+  ];
+  try {
+    for (const width of [320, 393, 1440]) {
+      const page = await openList(width);
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto(origin + '/search?q=' + encodeURIComponent('검증'));
+      const results = page.getByRole('region', {
+        name: '기사 검색 결과',
+        exact: true,
+      });
+      const links = results.locator('article a');
+      await links.last().waitFor();
+      await page.evaluate(() => document.fonts.ready);
+      expect(await links.count()).toBe(28);
+      async function visible(index: number, direction: string) {
+        await page.evaluate(
+          () =>
+            new Promise<void>((resolve) =>
+              requestAnimationFrame(() =>
+                requestAnimationFrame(() => resolve()),
+              ),
+            ),
+        );
+        const value = await links.nth(index).evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const nav = document.querySelector('nav[aria-label="주 메뉴"]')!;
+          const hit = document.elementFromPoint(
+            rect.x + rect.width / 2,
+            rect.y + rect.height / 2,
+          );
+          return {
+            focused: document.activeElement === element,
+            top: rect.top,
+            bottom: rect.bottom,
+            navTop: nav.getBoundingClientRect().top,
+            hit: hit === element || element.contains(hit),
+          };
+        });
+        const label = `${width}px 검색 ${direction} 링크 ${index}`;
+        expect.soft(value.focused, label + ' 실제 키보드 포커스').toBe(true);
+        expect
+          .soft(value.top, label + ' 상단 포커스 윤곽')
+          .toBeGreaterThanOrEqual(7);
+        expect
+          .soft(value.bottom, label + ' 하단 메뉴 위 포커스 윤곽')
+          .toBeLessThanOrEqual(value.navTop - 7);
+        expect
+          .soft(value.hit, label + ' 링크 중앙이 다른 요소에 가리지 않음')
+          .toBe(true);
+      }
+      await links.first().focus();
+      await visible(0, '시작');
+      for (let index = 1; index < 28; index++) {
+        await page.keyboard.press('Tab');
+        await visible(index, 'Tab');
+      }
+      for (let index = 26; index >= 24; index--) {
+        await page.keyboard.press('Shift+Tab');
+        await visible(index, 'Shift+Tab');
+      }
+      const before = await page.evaluate(() => scrollY);
+      await page.keyboard.press('Enter');
+      await page
+        .getByRole('dialog')
+        .getByRole('heading', {
+          level: 1,
+          name: listArticles[12].article.title,
+        })
+        .waitFor();
+      await page.keyboard.press('Escape');
+      await page.waitForFunction(
+        () => !document.querySelector('[role="dialog"]'),
+      );
+      const returned = new URL(page.url());
+      expect(returned.pathname).toBe('/search');
+      expect(returned.searchParams.get('q')).toBe('검증');
+      await visible(24, '상세 닫기');
+      expect(
+        Math.abs((await page.evaluate(() => scrollY)) - before),
+      ).toBeLessThanOrEqual(2);
+      for (let index = 23; index >= 0; index--) {
+        await page.keyboard.press('Shift+Tab');
+        await visible(index, 'Shift+Tab');
+      }
+      await page.close();
+    }
+  } finally {
+    listArticles = [article];
+  }
+}, 120000);

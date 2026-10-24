@@ -25,7 +25,7 @@ export default async function SearchPage({
   const result = keyword ? await loadSearchPage(keyword, 0) : null;
 
   return (
-    <div className="flex flex-col gap-5 pb-5 text-sm">
+    <div className="flex flex-col gap-5 pb-5 text-sm [&_article_a]:scroll-mt-3 [&_article_a]:scroll-mb-[calc(84px_+_env(safe-area-inset-bottom))]">
       <div className="flex h-[37px] items-center gap-3">
         <Link
           href="/"
