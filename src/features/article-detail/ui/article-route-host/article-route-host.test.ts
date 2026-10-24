@@ -200,3 +200,71 @@ test('articleSheetLoadingPreservesOpenerFocus', async () => {
     vi.unstubAllGlobals();
   }
 });
+
+test('expandedMapSheetHidesOnlyTheBackgroundSearchHeader', async () => {
+  const { DetailSheet } = await import('../detail-sheet/detail-sheet');
+  vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
+  pathname = '/incidents/' + 'b'.repeat(64);
+  backgroundSegments = [];
+  childSegments = ['(.)incidents', 'b'.repeat(64)];
+  const host = document.createElement('div');
+  document.body.append(host);
+  const root = createRoot(host);
+  const background = createElement('p', null, '보존할 지도');
+  async function draw(open = true) {
+    await act(async () =>
+      root.render(
+        createElement(
+          ArticleRouteHost,
+          { background },
+          open
+            ? createElement(
+                DetailSheet,
+                { titleId: 'map-detail' },
+                createElement('h1', { id: 'map-detail' }, '지도 상세'),
+              )
+            : null,
+        ),
+      ),
+    );
+  }
+  try {
+    await draw();
+    const shell = host.querySelector('[data-article-background]')!;
+    const map = shell.querySelector('main p');
+    const handle = host.querySelector<HTMLButtonElement>(
+      'button[aria-expanded]',
+    )!;
+    expect(handle.getAttribute('aria-expanded')).toBe('false');
+    expect(
+      shell.querySelector('header'),
+      '기본 시트에서는 지도 검색 헤더 유지',
+    ).not.toBeNull();
+    await act(async () => handle.click());
+    expect(handle.getAttribute('aria-expanded')).toBe('true');
+    expect(
+      shell.querySelector('header'),
+      '확장 시트 위에 검색 헤더가 비치지 않음',
+    ).toBeNull();
+    expect(shell.querySelector('main p'), '지도 DOM과 위치는 보존').toBe(map);
+    await act(async () => handle.click());
+    expect(
+      shell.querySelector('header'),
+      '접으면 원래 검색 헤더 복원',
+    ).not.toBeNull();
+    pathname = '/';
+    childSegments = [];
+    await draw(false);
+    expect(shell.querySelector('main p')).toBe(map);
+    expect(shell.querySelector('header')).not.toBeNull();
+    expect(shell.getAttribute('inert')).toBeNull();
+  } finally {
+    await act(async () => root.unmount());
+    host.remove();
+    pathname = '/search';
+    backgroundSegments = ['search'];
+    childSegments = [];
+    vi.clearAllMocks();
+    vi.unstubAllGlobals();
+  }
+});

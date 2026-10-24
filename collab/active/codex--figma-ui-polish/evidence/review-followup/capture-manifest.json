@@ -1,0 +1,149 @@
+{
+  "buildId": "0yLuwuFKYffar7_ftmQYn",
+  "commit": "36ac745fbef7f5c997df3ebf91eb1080658c3eaf",
+  "screenshots": [
+    {
+      "file": "map.png",
+      "description": "Actual Naver tiles, fixed synthetic location and synthetic articles.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/map.png"
+    },
+    {
+      "file": "map-counts.png",
+      "description": "Actual SDK overview via browser wheel and pointer drag only.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/map-counts.png"
+    },
+    {
+      "file": "detail-long-source.png",
+      "description": "Long synthetic hostname underline/ellipsis, long region and three related articles.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/detail-long-source.png"
+    },
+    {
+      "file": "detail-three-related-share.png",
+      "description": "Three related articles and share remain in a single reading scroller.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/detail-three-related-share.png"
+    },
+    {
+      "file": "detail.png",
+      "description": "Collapsed short synthetic article from actual map.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/detail.png"
+    },
+    {
+      "file": "detail-expanded.png",
+      "description": "Same short article expanded; share follows reading content and uses remaining space.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/detail-expanded.png"
+    },
+    {
+      "file": "detail-manual-url.png",
+      "description": "Clipboard failure: readonly clean URL in the same reading scroller.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/detail-manual-url.png"
+    },
+    {
+      "file": "detail-long-collapsed.png",
+      "description": "Long summary before scrolling, with share correctly after content.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/detail-long-collapsed.png"
+    },
+    {
+      "file": "detail-long-share-scrolled.png",
+      "description": "Long summary share reached by internal reading scroll; no fixed overlay footer.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/detail-long-share-scrolled.png"
+    },
+    {
+      "file": "detail-source-unavailable.png",
+      "description": "Article with no valid source displays explicit no-source information.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/detail-source-unavailable.png"
+    },
+    {
+      "file": "search.png",
+      "description": "Initial empty search state.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/search.png"
+    },
+    {
+      "file": "search-recent.png",
+      "description": "Four seeded local entries matching Figma labels.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/search-recent.png"
+    },
+    {
+      "file": "search-results.png",
+      "description": "Populated synthetic search results using matching query.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/search-results.png"
+    },
+    {
+      "file": "list-393x852.png",
+      "description": "Article list at393×852.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/list-393x852.png"
+    },
+    {
+      "file": "list.png",
+      "description": "Article list at393×918 matching latest Figma frame.",
+      "width": 393,
+      "height": 918,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/list.png"
+    },
+    {
+      "file": "report.png",
+      "description": "Report initial state without submission.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/report.png"
+    },
+    {
+      "file": "report-bottom.png",
+      "description": "Report bottom; no form input or submission.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393,
+      "path": "/private/tmp/pr45-review-followup-qa/final/app/report-bottom.png"
+    }
+  ],
+  "conditions": {
+    "sdkStubbed": false,
+    "syntheticData": true,
+    "personalLocation": false,
+    "realReportSubmitted": false,
+    "temporaryCSSInjected": false
+  }
+}

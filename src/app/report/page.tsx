@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ErrorBoundary, useErrorBoundary } from '@suspensive/react';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 
@@ -300,7 +301,7 @@ export default function ReportPage() {
 
   return (
     <section className="bg-surface text-text">
-      <header className="grid grid-cols-[32px_1fr_32px] items-center border-0 border-b border-solid border-border px-4 py-3">
+      <header className="sticky top-[env(safe-area-inset-top)] z-20 grid grid-cols-[32px_1fr_32px] items-center border-0 border-b border-solid border-border bg-surface px-4 py-3">
         <h1 className="col-start-2 m-0 text-center text-[16px]/[normal] font-extrabold">
           제보하기
         </h1>
@@ -309,16 +310,13 @@ export default function ReportPage() {
           aria-label="제보 닫기"
           className="-m-1.5 grid size-11 place-items-center rounded-full text-[14px]/[normal]"
         >
-          <span
-            aria-hidden="true"
-            className="grid size-8 place-items-center rounded-full bg-slate-100"
-          >
-            ✕
+          <span aria-hidden="true" className="grid size-8 place-items-center">
+            <Image src="/report/close.svg" alt="" width={24} height={24} />
           </span>
         </Link>
       </header>
       <form
-        className="flex min-h-[calc(100dvh-57px)] flex-col"
+        className="flex min-h-[calc(100dvh-57px)] flex-col [&_:is(input,select,textarea,button)]:scroll-mt-[calc(80px_+_env(safe-area-inset-top))] [&_:is(input,select,textarea,button)]:scroll-mb-[calc(112px_+_env(safe-area-inset-bottom))]"
         noValidate
         onSubmit={checkInput}
       >
@@ -332,7 +330,7 @@ export default function ReportPage() {
             </label>
             <div className="relative">
               <select
-                className="box-border h-[43px] w-full min-w-0 appearance-none rounded-[10px] border border-solid border-border bg-background py-3 pr-11 pl-3.5 text-[14px]/[17px] text-text invalid:text-slate-400"
+                className="box-border h-[41px] w-full min-w-0 appearance-none rounded-[10px] border border-solid border-border bg-background py-[11px] pr-11 pl-3.5 text-[14px]/[17px] text-text invalid:text-slate-400"
                 id="report-category"
                 name="category"
                 disabled={formLocked}
@@ -366,7 +364,7 @@ export default function ReportPage() {
               발생 날짜 및 시간 (한국시간)
             </label>
             <input
-              className="box-border h-[43px] w-full min-w-0 rounded-[10px] border border-solid border-border bg-background px-3.5 py-3 text-[14px]/[17px] text-muted"
+              className="box-border h-[41px] w-full min-w-0 rounded-[10px] border border-solid border-border bg-background px-3.5 py-[11px] text-[14px]/[17px] text-muted"
               id="report-occurred-at"
               name="occurredAt"
               disabled={formLocked}
@@ -384,7 +382,7 @@ export default function ReportPage() {
               제보 제목
             </label>
             <input
-              className="box-border h-[43px] w-full min-w-0 appearance-none rounded-[10px] border border-solid border-border bg-background px-3.5 py-3 text-[14px]/[17px] text-text placeholder:text-slate-400"
+              className="box-border h-[41px] w-full min-w-0 appearance-none rounded-[10px] border border-solid border-border bg-background px-3.5 py-[11px] text-[14px]/[17px] text-text placeholder:text-slate-400"
               id="report-title"
               name="title"
               disabled={formLocked}
@@ -409,7 +407,7 @@ export default function ReportPage() {
                 📍
               </span>
               <input
-                className="box-border h-[43px] w-full min-w-0 appearance-none rounded-[10px] border border-solid border-border bg-background py-3 pr-3.5 pl-10 text-[14px]/[17px] text-text placeholder:text-slate-400"
+                className="box-border h-[41px] w-full min-w-0 appearance-none rounded-[10px] border border-solid border-border bg-background py-[11px] pr-3.5 pl-10 text-[14px]/[17px] text-text placeholder:text-slate-400"
                 id="report-location"
                 name="location"
                 disabled={formLocked}
@@ -428,7 +426,7 @@ export default function ReportPage() {
               상세내용
             </label>
             <textarea
-              className="box-border h-[120px] w-full min-w-0 resize-y appearance-none rounded-[10px] border border-solid border-border bg-background p-3.5 text-[14px]/[17px] text-text placeholder:text-slate-400"
+              className="box-border h-[120px] w-full min-w-0 resize-none appearance-none rounded-[10px] border border-solid border-border bg-background p-3.5 text-[14px]/[17px] text-text placeholder:text-slate-400"
               id="report-description"
               name="description"
               disabled={formLocked}
@@ -590,7 +588,7 @@ export default function ReportPage() {
             </button>
           )}
         </div>
-        <div className="mt-auto px-4 pt-4 pb-[max(24px,env(safe-area-inset-bottom))]">
+        <div className="sticky bottom-0 z-20 mt-auto bg-surface px-4 pt-4 pb-[max(24px,env(safe-area-inset-bottom))]">
           <button
             className="ui-control ui-primary flex min-h-[52px] w-full items-center justify-center cursor-pointer rounded-card border-0 bg-brand text-[16px]/[normal] font-extrabold text-surface disabled:cursor-default disabled:opacity-60"
             aria-busy={isSubmitting}

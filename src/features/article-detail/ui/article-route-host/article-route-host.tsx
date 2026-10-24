@@ -39,7 +39,12 @@ export function ArticleRouteHost({
     backgroundSegments.filter((segment) => !segment.startsWith('(')).join('/');
   const opener = useRef<HTMLElement | null>(null);
   const previousActive = useRef(false);
-  const [height, setHeight] = useState(0);
+  const [height, setMeasuredHeight] = useState(0);
+  const [expanded, setExpanded] = useState(false);
+  const setHeight = useCallback((height: number, expanded = false) => {
+    setMeasuredHeight(height);
+    setExpanded(expanded);
+  }, []);
   const [mapArticles, registerMapArticles] = useState<LocatedArticle[]>([]);
   const openArticle = useCallback(
     (id: string) => {
@@ -99,7 +104,16 @@ export function ArticleRouteHost({
       registerMapArticles,
       retry,
     }),
-    [active, sourcePath, height, mapArticles, openArticle, close, retry],
+    [
+      active,
+      sourcePath,
+      height,
+      mapArticles,
+      openArticle,
+      close,
+      retry,
+      setHeight,
+    ],
   );
 
   return (
@@ -107,6 +121,7 @@ export function ArticleRouteHost({
       <AppShell
         backgroundPath={active ? sourcePath : pathname}
         inert={active}
+        hideHeader={active && sourcePath === '/' && expanded}
         onClickCapture={captureOpener}
       >
         {background}

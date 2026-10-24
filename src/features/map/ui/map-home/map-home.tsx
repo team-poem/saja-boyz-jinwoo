@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
+import { SiteStructuredData } from '@/components/layout/site-structured-data/site-structured-data';
 import { useArticleSheetRoute } from '@/features/article-detail/model/article-sheet-context';
-import { ServiceIntro } from '@/components/layout/service-intro';
 import { LoadingSpinner } from '@/components/feedback/loading-spinner';
 import { Notice } from '@/components/feedback/notice';
 import { articleText } from '@/features/article-list/model/article-presentation';
@@ -16,6 +16,12 @@ import { MapPeriodFilter } from '../map-period-filter/map-period-filter';
 import { MapUnavailableFilter } from '../map-unavailable-filter/map-unavailable-filter';
 import { createArticleMarker } from './map-article-marker';
 import { MapArticleSheet } from './map-article-sheet';
+import {
+  naverMapScriptUrl,
+  type MapInstance,
+  type MarkerInstance,
+  type NaverMaps,
+} from './naver-map-sdk';
 import { MapArticleCarousel } from '../map-article-carousel/map-article-carousel';
 import type {
   LocatedArticle,
@@ -31,50 +37,6 @@ import {
   hasMapViewport,
   restoreMapViewport,
 } from '../../model/map-viewport';
-
-type ControlCollection = { getArray(): HTMLElement[] };
-type MapInstance = {
-  controls?: Partial<Record<string | number, ControlCollection>>;
-  destroy(): void;
-  getCenter?(): { lat(): number; lng(): number };
-  getZoom?(): number;
-  getProjection?(): {
-    fromCoordToOffset(point: unknown): { x: number; y: number };
-  };
-  setCenter(point: unknown): void;
-  setSize(size: unknown): void;
-};
-type MarkerInstance = { setMap(map: MapInstance | null): void };
-type NaverMaps = {
-  Position?: {
-    BOTTOM_LEFT: string | number;
-    BOTTOM_CENTER?: string | number;
-    BOTTOM_RIGHT: string | number;
-  };
-  Size: new (width: number, height: number) => unknown;
-  Point: new (x: number, y: number) => unknown;
-  Marker: new (options: {
-    map: MapInstance;
-    position: unknown;
-    icon?:
-      | { url: string; size: unknown; anchor: unknown }
-      | { content: HTMLElement; anchor: unknown };
-    title?: string;
-  }) => MarkerInstance;
-  Event: {
-    addListener(
-      target: MapInstance | MarkerInstance | ControlCollection,
-      event: string,
-      callback: () => void,
-    ): unknown;
-    removeListener(listener: unknown): void;
-  };
-  LatLng: new (latitude: number, longitude: number) => unknown;
-  Map: new (
-    element: HTMLElement,
-    options: { center: unknown; zoom: number },
-  ) => MapInstance;
-};
 
 type LocationResult =
   { latitude: number; longitude: number } | { error: string };
@@ -599,9 +561,7 @@ export function MapHome({
       setReady(true);
     };
 
-    const url = new URL('https://oapi.map.naver.com/openapi/v3/maps.js');
-
-    url.searchParams.set('ncpKeyId', clientId);
+    const url = naverMapScriptUrl(clientId);
 
     for (const element of document.querySelectorAll('script[src]')) {
       const scriptUrl = new URL((element as HTMLScriptElement).src);
@@ -720,6 +680,7 @@ export function MapHome({
 
   return (
     <>
+      <SiteStructuredData />
       <section aria-label="주변 지도" className="relative">
         <div
           role="group"
@@ -892,10 +853,10 @@ export function MapHome({
           )}
         </div>
         {ready &&
-          !detailOpen &&
           selectedArticles.length > (sheetRoute ? 1 : 0) &&
           articles && (
             <MapArticleSheet
+              active={!detailOpen}
               items={selectedArticles}
               apiOrigin={articles.apiOrigin}
               onHeightChange={setSelectionHeight}
@@ -906,7 +867,6 @@ export function MapHome({
             />
           )}
       </section>
-      <ServiceIntro />
     </>
   );
 }

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import {
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type ReactNode,
@@ -10,6 +11,36 @@ import {
 } from 'react';
 
 import { useArticleSheetRoute } from '../../model/article-sheet-context';
+
+const scrollLocks = new Set<symbol>();
+let unlockedBody: { overflow: string; paddingRight: string } | undefined;
+
+function lockBodyScroll() {
+  const token = Symbol();
+
+  if (scrollLocks.size === 0) {
+    unlockedBody = {
+      overflow: document.body.style.overflow,
+      paddingRight: document.body.style.paddingRight,
+    };
+    const width = document.documentElement.clientWidth;
+    const gutter = width > 0 ? window.innerWidth - width : 0;
+
+    document.body.style.overflow = 'hidden';
+    if (gutter > 0) document.body.style.paddingRight = gutter + 'px';
+  }
+
+  scrollLocks.add(token);
+
+  return () => {
+    if (!scrollLocks.delete(token) || scrollLocks.size > 0 || !unlockedBody)
+      return;
+
+    document.body.style.overflow = unlockedBody.overflow;
+    document.body.style.paddingRight = unlockedBody.paddingRight;
+    unlockedBody = undefined;
+  };
+}
 
 export function DetailSheet({
   titleId,
@@ -20,6 +51,7 @@ export function DetailSheet({
   onClose,
   closeLabel = '닫기',
   onHeightChange,
+  active = true,
 }: {
   titleId: string;
   children?: ReactNode;
@@ -28,9 +60,14 @@ export function DetailSheet({
   initialExpanded?: boolean;
   onClose?(): void;
   closeLabel?: string;
-  onHeightChange?(height: number): void;
+  onHeightChange?(height: number, expanded?: boolean): void;
+  active?: boolean;
 }) {
   const panel = useRef<HTMLDivElement>(null);
+  const scroller = useRef<HTMLDivElement>(null);
+  const scrollPosition = useRef(0);
+  const caller = useRef<HTMLElement | null>(null);
+  const rememberedFocus = useRef<HTMLElement | null>(null);
   const closeControl = useRef<HTMLAnchorElement | HTMLButtonElement | null>(
     null,
   );
@@ -40,13 +77,23 @@ export function DetailSheet({
   );
   const localClose = Boolean(onClose);
   const drag = useRef<{ start: number; moved: boolean } | null>(null);
-  const reportHeight = route?.active ? route.setHeight : onHeightChange;
+  const reportHeight = localClose
+    ? onHeightChange
+    : route?.active
+      ? route.setHeight
+      : onHeightChange;
+
+  useLayoutEffect(() => {
+    if (active && scroller.current)
+      scroller.current.scrollTop = scrollPosition.current;
+  }, [active]);
 
   useEffect(() => {
     const element = panel.current;
 
-    if (!element) return;
-    const update = () => reportHeight?.(element.getBoundingClientRect().height);
+    if (!active || !element) return;
+    const update = () =>
+      reportHeight?.(element.getBoundingClientRect().height, expanded);
 
     update();
     const observer =
@@ -62,15 +109,16 @@ export function DetailSheet({
       window.removeEventListener('resize', update);
       reportHeight?.(0);
     };
-  }, [reportHeight]);
+  }, [active, reportHeight, expanded]);
 
   useEffect(() => {
+    if (!active) return;
     const element = panel.current;
-    const caller = document.activeElement;
-    const overflow = document.body.style.overflow;
-    const padding = document.body.style.paddingRight;
-    const width = document.documentElement.clientWidth;
-    const gutter = width > 0 ? window.innerWidth - width : 0;
+
+    if (!caller.current && document.activeElement instanceof HTMLElement)
+      caller.current = document.activeElement;
+
+    const unlockBodyScroll = lockBodyScroll();
     const background = localClose
       ? document.querySelector<HTMLElement>('[data-article-background]')
       : null;
@@ -82,9 +130,9 @@ export function DetailSheet({
       background.setAttribute('aria-hidden', 'true');
     }
 
-    document.body.style.overflow = 'hidden';
-    if (gutter > 0) document.body.style.paddingRight = gutter + 'px';
-    if (localClose) closeControl.current?.focus({ preventScroll: true });
+    if (rememberedFocus.current?.isConnected)
+      rememberedFocus.current.focus({ preventScroll: true });
+    else if (localClose) closeControl.current?.focus({ preventScroll: true });
     else element?.focus({ preventScroll: true });
 
     const containFocus = (event: FocusEvent) => {
@@ -96,8 +144,7 @@ export function DetailSheet({
 
     return () => {
       document.removeEventListener('focusin', containFocus);
-      document.body.style.overflow = overflow;
-      document.body.style.paddingRight = padding;
+      unlockBodyScroll();
 
       // A group chooser can be replaced by a routed detail in the same commit.
       if (background && background.dataset.articleOverlay !== 'true') {
@@ -107,10 +154,11 @@ export function DetailSheet({
         else background.setAttribute('aria-hidden', previousHidden);
       }
 
-      if (caller instanceof HTMLElement && caller.isConnected)
-        caller.focus({ preventScroll: true });
+      // Suspending a group chooser must not take focus from the routed detail.
+      if (!element?.hidden && caller.current?.isConnected)
+        caller.current.focus({ preventScroll: true });
     };
-  }, [localClose]);
+  }, [active, localClose]);
 
   function close(event: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) {
     if (
@@ -134,14 +182,24 @@ export function DetailSheet({
   return (
     <div
       ref={panel}
-      role="dialog"
-      aria-modal="true"
-      aria-label={label}
-      aria-labelledby={titleId}
-      tabIndex={-1}
+      role={active ? 'dialog' : undefined}
+      aria-modal={active ? true : undefined}
+      aria-label={active ? label : undefined}
+      aria-labelledby={active ? titleId : undefined}
+      aria-hidden={!active || undefined}
+      hidden={!active}
+      inert={!active || undefined}
+      style={active ? undefined : { display: 'none' }}
+      tabIndex={active ? -1 : undefined}
+      onFocusCapture={(event) => {
+        if (active && event.target instanceof HTMLElement)
+          rememberedFocus.current = event.target;
+      }}
       data-expanded={expanded}
-      className={`ui-sheet-enter fixed bottom-0 left-1/2 z-40 flex max-h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))] w-full max-w-[640px] min-w-0 -translate-x-1/2 flex-col gap-4 overflow-hidden overscroll-contain rounded-t-3xl border-0 border-t border-solid border-border bg-surface p-4 pb-[max(16px,env(safe-area-inset-bottom))] text-text shadow-[0_-8px_16px_rgb(0_0_0/10%)] motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-out ${expanded ? 'h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))]' : 'h-[53.52dvh]'}`}
+      className={`ui-sheet-enter fixed bottom-0 left-1/2 z-40 flex max-h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))] w-full max-w-[640px] min-w-0 -translate-x-1/2 flex-col gap-4 overflow-hidden overscroll-contain rounded-t-3xl border-0 border-t border-solid border-[#e3e8f0] bg-surface p-4 pb-[max(16px,env(safe-area-inset-bottom))] text-text shadow-[0_-8px_16px_rgb(0_0_0/10%)] motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-out ${expanded ? 'h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))]' : 'h-[53.52dvh]'}`}
       onKeyDown={(event) => {
+        if (!active) return;
+
         if (event.key === 'Escape') {
           event.preventDefault();
           event.stopPropagation();
@@ -175,7 +233,13 @@ export function DetailSheet({
       <div className="shrink-0">
         <button
           type="button"
-          aria-label={expanded ? '기사 시트 접기' : '기사 시트 펼치기'}
+          aria-label={
+            active
+              ? expanded
+                ? '기사 시트 접기'
+                : '기사 시트 펼치기'
+              : undefined
+          }
           aria-expanded={expanded}
           className="ui-control relative flex h-5 w-full touch-none after:absolute after:inset-x-0 after:-inset-y-3 after:content-[''] cursor-grab items-start justify-center border-0 bg-transparent p-0 active:cursor-grabbing"
           onClick={(event) => {
@@ -218,7 +282,7 @@ export function DetailSheet({
           />
         </button>
         <nav
-          aria-label="기사 상세 탐색"
+          aria-label={active ? '기사 상세 탐색' : undefined}
           className="relative z-10 flex h-6 items-center justify-end"
         >
           {!onClose && (
@@ -237,7 +301,7 @@ export function DetailSheet({
               ref={(element) => {
                 closeControl.current = element;
               }}
-              aria-label={closeLabel}
+              aria-label={active ? closeLabel : undefined}
               onClick={close}
               className="ui-control grid size-6 place-items-center rounded border-0 bg-transparent p-0"
             >
@@ -254,7 +318,7 @@ export function DetailSheet({
               }}
               href={route?.active ? route.sourcePath : '/'}
               scroll={false}
-              aria-label={closeLabel}
+              aria-label={active ? closeLabel : undefined}
               onClick={close}
               className="ui-control grid size-6 place-items-center rounded"
             >
@@ -268,16 +332,16 @@ export function DetailSheet({
         </nav>
       </div>
       <div
-        tabIndex={0}
+        ref={scroller}
+        tabIndex={active ? 0 : undefined}
+        onScroll={(event) => {
+          if (active) scrollPosition.current = event.currentTarget.scrollTop;
+        }}
         className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain [overflow-wrap:anywhere]"
       >
         {children}
+        {footer && <div className="mt-auto shrink-0">{footer}</div>}
       </div>
-      {footer && (
-        <div className="max-h-[40dvh] shrink-0 overflow-y-auto overscroll-contain">
-          {footer}
-        </div>
-      )}
     </div>
   );
 }

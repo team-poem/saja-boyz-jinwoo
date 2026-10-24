@@ -1,0 +1,83 @@
+{
+  "build": "0yLuwuFKYffar7_ftmQYn",
+  "commit": "36ac745fbef7f5c997df3ebf91eb1080658c3eaf",
+  "panels": 7,
+  "extras": 7,
+  "brokenImages": 0,
+  "renderedImageCount": 21,
+  "nativePairWidths": [
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    },
+    {
+      "natural": 393,
+      "display": 393
+    }
+  ],
+  "pageErrors": [],
+  "files": [
+    "compare-map.png",
+    "compare-search.png",
+    "compare-search-results.png",
+    "compare-list.png",
+    "compare-detail.png",
+    "compare-detail-expanded.png",
+    "compare-report.png",
+    "compare-extra-empty-search.png",
+    "compare-extra-long-source.png",
+    "compare-extra-manual-url.png",
+    "compare-extra-map-counts.png",
+    "compare-extra-no-source.png",
+    "compare-extra-long-before-scroll.png",
+    "compare-extra-long-after-scroll.png"
+  ]
+}

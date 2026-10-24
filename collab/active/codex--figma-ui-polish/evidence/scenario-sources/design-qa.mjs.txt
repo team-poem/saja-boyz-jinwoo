@@ -1,0 +1,258 @@
+import { createRequire } from 'node:module';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+
+const app = process.env.POLISH_APP ?? '/Users/jeong-gyuhwan/규환/projects/saja-boyz-jinwoo-codex--figma-ui-polish';
+const require = createRequire(app + '/package.json');
+const { chromium } = require('playwright-core');
+const origin = process.env.POLISH_ORIGIN ?? 'http://127.0.0.1:31145';
+const output = process.env.POLISH_OUT ?? '/private/tmp/figma-polish-design-qa';
+const viewports = [
+  { width: 393, height: 852 },
+  { width: 320, height: 568 },
+  { width: 768, height: 900 },
+  { width: 1440, height: 900 },
+];
+const report = {
+  origin,
+  startedAt: new Date().toISOString(),
+  scope: '실제 프로덕션 앱에서 검색·목록·제보의 CSS 치수와 스크롤·포커스 가림 검사',
+  limitations: ['합성 로컬 기사 fixture 사용', '모바일 OS 키보드는 검증하지 않음', '제보 POST는 보내지 않고 브라우저에서도 차단'],
+  checks: [],
+  measurements: [],
+  screenshots: [],
+  pageErrors: [],
+  blockedPosts: [],
+  sourceHashes: {},
+};
+const sourcePaths = [
+  'src/app/(browse)/@background/search/page.tsx',
+  'src/app/(browse)/@background/incidents/page.tsx',
+  'src/features/search/ui/recent-searches/recent-searches.tsx',
+  'src/features/search/ui/keyword-link-status/keyword-link-status.tsx',
+  'src/features/search/ui/search-result-card/search-result-card.tsx',
+  'src/features/search/ui/search-results/search-results.tsx',
+  'src/features/article-list/ui/article-card/article-card.tsx',
+  'src/components/layout/app-shell/app-shell.tsx',
+  'src/app/report/page.tsx',
+];
+for (const path of sourcePaths) {
+  report.sourceHashes[path] = createHash('sha256').update(await readFile(app + '/' + path)).digest('hex');
+}
+
+await mkdir(output, { recursive: true });
+let currentPage;
+let currentStep;
+let browser;
+function check(viewport, name, passed, details) {
+  report.checks.push({ viewport, name, passed: Boolean(passed), details });
+}
+function near(actual, expected, tolerance = 0.6) {
+  return Math.abs(actual - expected) <= tolerance;
+}
+async function settle(page) {
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(220);
+}
+async function screenshot(page, viewport, name) {
+  const filename = `${viewport.width}x${viewport.height}-${name}.png`;
+  await page.screenshot({ path: output + '/' + filename, fullPage: false });
+  report.screenshots.push({ viewport, name, path: output + '/' + filename });
+}
+async function overflow(page, viewport, name) {
+  const geometry = await page.evaluate(() => ({ viewport: innerWidth, html: document.documentElement.scrollWidth, body: document.body.scrollWidth }));
+  check(viewport, name + ' 가로 overflow 없음', geometry.html <= geometry.viewport && geometry.body <= geometry.viewport, geometry);
+}
+async function searchGeometry(page) {
+  return page.evaluate(() => {
+    const box = (element) => {
+      const rect = element.getBoundingClientRect();
+      return { x: rect.x, y: rect.y, width: rect.width, height: rect.height, top: rect.top, bottom: rect.bottom };
+    };
+    const form = document.querySelector('form[action="/search"]');
+    const back = document.querySelector('a[aria-label="지도로 돌아가기"]');
+    const rows = [...document.querySelectorAll('section[aria-label="최근 검색"] li')];
+    const chips = [...document.querySelectorAll('#suggested-keywords + div > a')];
+    const recent = document.querySelector('section[aria-label="최근 검색"] ul');
+    const styles = (element) => element ? ({ fontSize: getComputedStyle(element).fontSize, lineHeight: getComputedStyle(element).lineHeight, gap: getComputedStyle(element).gap }) : null;
+    return {
+      form: box(form), back: box(back),
+      backHit: { pseudoInset: getComputedStyle(back, '::after').inset },
+      submit: box(form.querySelector('button[type="submit"]')),
+      rows: rows.map(box), recentStyles: styles(recent),
+      chips: chips.map((element) => ({ ...box(element), ...styles(element) })),
+      suggestedCount: document.querySelectorAll('#suggested-keywords').length,
+      idleStatusCount: [...document.querySelectorAll('[role="status"]')].filter((node) => node.textContent.includes('검색 결과를 불러오는 중')).length,
+    };
+  });
+}
+async function listGeometry(page) {
+  return page.evaluate(() => {
+    const box = (element) => {
+      const rect = element.getBoundingClientRect();
+      return { x: rect.x, y: rect.y, width: rect.width, height: rect.height, top: rect.top, bottom: rect.bottom };
+    };
+    const section = document.querySelector('section[aria-label="사건 목록"]');
+    const header = document.querySelector('[data-article-background] > div.sticky');
+    const filters = document.querySelector('[aria-label="기사 필터"]');
+    const cards = [...section.querySelectorAll('article')];
+    return {
+      scrollY, scrollHeight: document.documentElement.scrollHeight,
+      sticky: header ? { ...box(header), position: getComputedStyle(header).position } : null,
+      filter: filters ? box(filters) : null,
+      extraLinks: section.querySelectorAll('a[href="/about"],a[href="/archive"]').length,
+      cards: cards.slice(0, 6).map((card) => {
+        const summary = card.querySelector('p.row-start-3');
+        const title = card.querySelector('h2');
+        return { ...box(card), rowGap: getComputedStyle(card).rowGap, padding: getComputedStyle(card).padding, titleLineHeight: getComputedStyle(title).lineHeight, summaryLineHeight: summary ? getComputedStyle(summary).lineHeight : null, title: title.textContent };
+      }),
+      cardGaps: cards.slice(1, 6).map((card, index) => box(card).top - box(cards[index]).bottom),
+    };
+  });
+}
+async function reportGeometry(page) {
+  return page.evaluate(() => {
+    const box = (element) => {
+      const rect = element.getBoundingClientRect();
+      return { x: rect.x, y: rect.y, width: rect.width, height: rect.height, top: rect.top, bottom: rect.bottom };
+    };
+    const form = document.querySelector('form');
+    const header = document.querySelector('section > header');
+    const submit = form.querySelector('button[type="submit"]');
+    const footer = submit.parentElement;
+    const fields = ['category', 'occurredAt', 'title', 'location', 'description', 'attachments'].map((name) => {
+      const element = form.querySelector(`[name="${name}"]`);
+      return { name, ...box(element), lineHeight: getComputedStyle(element).lineHeight };
+    });
+    const active = document.activeElement;
+    const activeField = fields.find((field) => active?.getAttribute('name') === field.name);
+    const head = box(header), foot = box(footer);
+    return {
+      scrollY, header: { ...head, position: getComputedStyle(header).position },
+      footer: { ...foot, position: getComputedStyle(footer).position },
+      submit: box(submit), fields,
+      activeName: active?.getAttribute('name') ?? null,
+      focusUncovered: activeField ? activeField.top >= head.bottom - 1 && activeField.bottom <= foot.top + 1 : null,
+    };
+  });
+}
+
+try {
+  browser = await chromium.launch({ channel: 'chrome', headless: true });
+  for (const viewport of viewports) {
+    const context = await browser.newContext({ viewport });
+    await context.route('**/*', async (route) => {
+      if (route.request().method() === 'POST') {
+        report.blockedPosts.push({ url: route.request().url(), viewport });
+        await route.abort();
+      } else {
+        await route.continue();
+      }
+    });
+    const page = await context.newPage();
+    currentPage = page;
+    page.on('pageerror', (error) => report.pageErrors.push({ viewport, error: String(error) }));
+
+    currentStep = 'search-empty';
+    await page.goto(origin + '/search');
+    await page.getByRole('searchbox', { name: '기사 키워드 검색' }).waitFor();
+    await settle(page);
+    let data = await searchGeometry(page);
+    report.measurements.push({ viewport, step: currentStep, ...data });
+    check(viewport, '검색바 37px', near(data.form.height, 37), data.form);
+    check(viewport, '뒤로 시각 36px', near(data.back.height, 36) && near(data.back.width, 36), data.back);
+    check(viewport, '추천 칩 32px/13px', data.chips.length === 6 && data.chips.every((chip) => near(chip.height, 32) && chip.fontSize === '13px'), data.chips);
+    check(viewport, 'idle 검색 spinner 공간 없음', data.idleStatusCount === 0, data.idleStatusCount);
+    await overflow(page, viewport, currentStep);
+    await screenshot(page, viewport, currentStep);
+
+    currentStep = 'search-recent';
+    await page.evaluate(() => localStorage.setItem('hh:recent-searches:v1', JSON.stringify(['서울 소방서', '서교동 화재', '실시간 강남역', '싱크홀 경보'])));
+    await page.reload();
+    await page.locator('section[aria-label="최근 검색"] li').nth(3).waitFor();
+    await settle(page);
+    data = await searchGeometry(page);
+    report.measurements.push({ viewport, step: currentStep, ...data });
+    check(viewport, '최근 검색 4행 높이33px', data.rows.length === 4 && data.rows.every((row) => near(row.height, 33)), data.rows);
+    check(viewport, '최근 검색 gap8', data.recentStyles.gap === '8px', data.recentStyles);
+    await overflow(page, viewport, currentStep);
+    await screenshot(page, viewport, currentStep);
+
+    currentStep = 'search-results';
+    await page.goto(origin + '/search?q=' + encodeURIComponent('화재'));
+    await page.getByRole('heading', { name: '기사 검색 결과', exact: true }).waitFor();
+    await settle(page);
+    data = await searchGeometry(page);
+    report.measurements.push({ viewport, step: currentStep, ...data });
+    check(viewport, '검색 결과에 추천 레이어 없음', data.suggestedCount === 0, data.suggestedCount);
+    await overflow(page, viewport, currentStep);
+    await screenshot(page, viewport, currentStep);
+
+    currentStep = 'list-top';
+    await page.goto(origin + '/incidents');
+    await page.locator('section[aria-label="사건 목록"]').waitFor();
+    await settle(page);
+    let list = await listGeometry(page);
+    report.measurements.push({ viewport, step: currentStep, ...list });
+    check(viewport, '목록 부가 안내행 없음', list.extraLinks === 0, list.extraLinks);
+    check(viewport, '목록 header/filter sticky', list.sticky?.position === 'sticky', list.sticky);
+    check(viewport, '목록 카드120~121px', list.cards.length > 0 && list.cards.every((card) => card.height >= 119.5 && card.height <= 121.6), list.cards);
+    check(viewport, '목록 카드 row gap6 / summary16', list.cards.length > 0 && list.cards.every((card) => card.rowGap === '6px' && card.summaryLineHeight === '16px'), list.cards);
+    check(viewport, '목록 카드간 gap12', list.cardGaps.length > 0 && list.cardGaps.every((gap) => near(gap, 12)), list.cardGaps);
+    await overflow(page, viewport, currentStep);
+    await screenshot(page, viewport, currentStep);
+    const originalSticky = list.sticky;
+    currentStep = 'list-scrolled';
+    await page.evaluate(() => scrollTo(0, 600));
+    await settle(page);
+    list = await listGeometry(page);
+    report.measurements.push({ viewport, step: currentStep, ...list });
+    check(viewport, '스크롤해도 목록 header 위치 유지', list.scrollY > 30 && near(list.sticky?.top ?? -999, originalSticky?.top ?? 999, 1), { scrollY: list.scrollY, before: originalSticky, after: list.sticky });
+    await screenshot(page, viewport, currentStep);
+
+    currentStep = 'report-top';
+    await page.goto(origin + '/report');
+    await page.locator('form [name="title"]').waitFor();
+    await settle(page);
+    let form = await reportGeometry(page);
+    report.measurements.push({ viewport, step: currentStep, ...form });
+    check(viewport, '제보 입력41px', form.fields.filter((field) => ['category', 'occurredAt', 'title', 'location'].includes(field.name)).every((field) => near(field.height, 41)), form.fields);
+    check(viewport, '제보 textarea120px', near(form.fields.find((field) => field.name === 'description').height, 120), form.fields);
+    check(viewport, '제보 CTA52px', near(form.submit.height, 52), form.submit);
+    check(viewport, '제보 header/footer sticky', form.header.position === 'sticky' && form.footer.position === 'sticky', { header: form.header, footer: form.footer });
+    await overflow(page, viewport, currentStep);
+    await screenshot(page, viewport, currentStep);
+
+    currentStep = 'report-bottom';
+    await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+    await settle(page);
+    form = await reportGeometry(page);
+    report.measurements.push({ viewport, step: currentStep, ...form });
+    check(viewport, '제보 스크롤 후 header/CTA가 viewport 안', form.header.top >= -1 && form.submit.bottom <= viewport.height + 1, { header: form.header, submit: form.submit });
+    await screenshot(page, viewport, currentStep);
+    for (const name of ['title', 'location', 'description', 'category', 'occurredAt', 'attachments']) {
+      currentStep = 'report-focus-' + name;
+      await page.locator(`form [name="${name}"]`).focus();
+      await settle(page);
+      form = await reportGeometry(page);
+      report.measurements.push({ viewport, step: currentStep, ...form });
+      check(viewport, '제보 focus ' + name + '가 sticky에 가려지지 않음', form.activeName === name && form.focusUncovered, { activeName: form.activeName, fields: form.fields, header: form.header, footer: form.footer });
+      if (name === 'title' || name === 'description') await screenshot(page, viewport, currentStep);
+    }
+    await context.close();
+  }
+} catch (error) {
+  report.failure = { step: currentStep, message: String(error), stack: error.stack };
+  if (currentPage) await currentPage.screenshot({ path: output + '/failure.png' }).catch(() => {});
+  process.exitCode = 1;
+} finally {
+  await browser?.close();
+  report.finishedAt = new Date().toISOString();
+  report.sourceChanged = [];
+  for (const path of sourcePaths) {
+    if (createHash('sha256').update(await readFile(app + '/' + path)).digest('hex') !== report.sourceHashes[path]) report.sourceChanged.push(path);
+  }
+  report.summary = { passed: report.checks.filter((check) => check.passed).length, failed: report.checks.filter((check) => !check.passed).length, screenshots: report.screenshots.length, pageErrors: report.pageErrors.length, sourceChanged: report.sourceChanged };
+  await writeFile(output + '/report.json', JSON.stringify(report, null, 2));
+  process.stdout.write(JSON.stringify({ output, summary: report.summary, failure: report.failure, failedChecks: report.checks.filter((check) => !check.passed).map(({ viewport, name, details }) => ({ viewport, name, details })) }, null, 2));
+}

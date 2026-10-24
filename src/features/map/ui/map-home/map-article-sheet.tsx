@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { createPortal } from 'react-dom';
 
 import { DetailSheet } from '@/features/article-detail/ui/detail-sheet/detail-sheet';
+import { useArticleSheetRoute } from '@/features/article-detail/model/article-sheet-context';
 import {
   articleText,
   publicationDate,
@@ -18,12 +19,16 @@ export function MapArticleSheet({
   apiOrigin,
   onClose,
   onHeightChange,
+  active = true,
 }: {
   items: LocatedArticle[];
   apiOrigin: string;
   onClose(): void;
   onHeightChange?(height: number): void;
+  active?: boolean;
 }) {
+  const route = useArticleSheetRoute();
+
   return createPortal(
     <DetailSheet
       titleId="selected-map-articles"
@@ -32,6 +37,7 @@ export function MapArticleSheet({
       onClose={onClose}
       closeLabel="기사 선택 닫기"
       onHeightChange={onHeightChange}
+      active={active}
     >
       <h1
         id="selected-map-articles"
@@ -54,7 +60,27 @@ export function MapArticleSheet({
             className="flex shrink-0 flex-col gap-3 rounded-lg border border-solid border-border bg-background p-2.5"
           >
             <h2 className="m-0 text-[15px]/[21px] font-extrabold text-text [overflow-wrap:anywhere]">
-              <Link scroll={false} href={'/incidents/' + item.article_id}>
+              <Link
+                scroll={false}
+                href={'/incidents/' + item.article_id}
+                onClick={(event) => {
+                  if (
+                    !route ||
+                    event.defaultPrevented ||
+                    event.button !== 0 ||
+                    event.metaKey ||
+                    event.ctrlKey ||
+                    event.shiftKey ||
+                    event.altKey ||
+                    event.currentTarget.target === '_blank'
+                  )
+                    return;
+
+                  event.preventDefault();
+                  event.currentTarget.focus({ preventScroll: true });
+                  route.openArticle(item.article_id);
+                }}
+              >
                 {articleText(item.article.title)}
               </Link>
             </h2>

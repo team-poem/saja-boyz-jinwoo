@@ -333,7 +333,13 @@ test('mapPeriodFiltersSynchronizeMarkersAndCardsWithoutResettingMap', async () =
   expect(carousel().querySelectorAll('a[href^="/incidents/"]')).toHaveLength(2);
   await click('기간: 최근 7일');
   await click('전체 기간');
-  expect(carousel().querySelectorAll('a[href^="/incidents/"]')).toHaveLength(5);
+  expect(carousel().querySelectorAll('a[href^="/incidents/"]')).toHaveLength(4);
+  expect(
+    carousel().querySelector('a[href="/incidents/' + unknown.article_id + '"]'),
+  ).toBeNull();
+  expect(
+    [...fixture.active].map((marker) => marker.content.textContent),
+  ).toEqual(['5']);
   expect(fixture.created).toHaveBeenCalledTimes(1);
   expect(fixture.destroy).not.toHaveBeenCalled();
   expect(fixture.setCenter).not.toHaveBeenCalled();
