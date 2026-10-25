@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { IconText } from '@/components/ui/icon-text/icon-text';
 import { Notice } from '@/components/feedback/notice';
 import { pageMetadata, siteOrigin } from '@/app/site-metadata';
 import {
@@ -148,18 +149,12 @@ export default async function IncidentDetailPage({
             {Number.isNaN(publishedAt.getTime()) ? (
               '발행 시각 미확인'
             ) : (
-              <>
-                <span
-                  aria-hidden="true"
-                  className="w-3.5 shrink-0 text-[14px]/4"
-                >
-                  📅
-                </span>
+              <IconText icon="calendar" size="compact">
                 <span className="sr-only">기사 발행 </span>
                 <time dateTime={publishedAt.toISOString()}>
                   {publicationText(publishedAt)}
                 </time>
-              </>
+              </IconText>
             )}
           </p>
         </div>
@@ -174,7 +169,7 @@ export default async function IncidentDetailPage({
         </section>
       </div>
       {sourceUrl ? (
-        <div className="flex min-w-0 items-baseline gap-1.5 py-1 text-[12px]/[15px] text-muted">
+        <div className="flex min-w-0 items-center gap-1.5 py-1 text-[12px]/[15px] text-muted">
           <span className="shrink-0">출처:</span>
           <a
             href={sourceUrl}
@@ -183,13 +178,15 @@ export default async function IncidentDetailPage({
             title={`기사 원문 · ${new URL(sourceUrl).hostname}`}
             className="ui-link inline-flex min-w-0 items-center gap-1.5"
           >
-            <span className="sr-only">기사 원문 · </span>
-            <span className="min-w-0 truncate underline decoration-slate-300 underline-offset-2">
+            <IconText
+              icon="link"
+              size="compact"
+              position="end"
+              textClassName="truncate underline decoration-slate-300 underline-offset-2"
+            >
+              <span className="sr-only">기사 원문 · </span>
               {new URL(sourceUrl).hostname}
-            </span>
-            <span aria-hidden="true" className="shrink-0 text-[11px]/[15px]">
-              🔗
-            </span>
+            </IconText>
           </a>
         </div>
       ) : (

@@ -1,5 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { IconText } from '@/components/ui/icon-text/icon-text';
+
 const filters = {
   category: {
     label: '카테고리',
@@ -62,12 +64,17 @@ export function MapUnavailableFilter({ kind }: { kind: keyof typeof filters }) {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen(!open)}
-        className={`ui-control flex h-[27px] items-center justify-center gap-1 rounded-[20px] border border-solid border-[rgba(200,210,220,0.6)] bg-floating px-[11px] py-[5px] text-[12px]/[15px] font-semibold whitespace-nowrap text-text backdrop-blur-[8px] ${kind === 'category' ? 'w-[82px]' : 'w-[60px]'}`}
+        className={`ui-control flex h-[27px] items-center justify-center gap-1 rounded-[20px] border border-solid border-[rgba(200,210,220,0.6)] bg-floating px-2.5 py-[5px] text-[12px]/[15px] font-semibold whitespace-nowrap text-text backdrop-blur-[8px] ${kind === 'category' ? 'w-[82px]' : 'w-[60px]'}`}
       >
-        {label}
-        <span aria-hidden="true" className="text-[8px]/[10px] text-muted">
-          ▼
-        </span>
+        <IconText
+          icon="chevron-down"
+          size="indicator"
+          spacing="compact"
+          position="end"
+          iconClassName="text-muted"
+        >
+          {label}
+        </IconText>
       </button>
       {open && (
         <div

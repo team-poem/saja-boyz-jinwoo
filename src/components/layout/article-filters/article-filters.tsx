@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { IconText } from '@/components/ui/icon-text/icon-text';
+
 export function ArticleFilters({ isHome }: { isHome: boolean }) {
   const chipClassName = `flex shrink-0 items-center gap-1 rounded-[20px] border border-solid border-[rgba(200,210,220,0.6)] bg-floating px-3 py-0 text-[13px]/[normal] font-semibold text-text opacity-100 backdrop-blur-[8px] ${isHome ? 'h-8' : 'h-7'}`;
 
@@ -28,13 +30,15 @@ export function ArticleFilters({ isHome }: { isHome: boolean }) {
           title={`${label} 필터 준비 중`}
           className={chipClassName}
         >
-          {label}
-          <span
-            aria-hidden="true"
-            className="text-[8px] font-normal text-muted"
+          <IconText
+            icon="chevron-down"
+            size="indicator"
+            spacing="compact"
+            position="end"
+            iconClassName="text-muted"
           >
-            ▼
-          </span>
+            {label}
+          </IconText>
         </button>
       ))}
     </div>

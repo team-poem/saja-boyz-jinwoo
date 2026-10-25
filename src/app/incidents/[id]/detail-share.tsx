@@ -2,6 +2,8 @@
 
 import { useRef, useState } from 'react';
 
+import { IconText } from '@/components/ui/icon-text/icon-text';
+
 export function DetailShare({ id, title }: { id: string; title: string }) {
   const [copied, setCopied] = useState(false);
   const [manualUrl, setManualUrl] = useState('');
@@ -50,13 +52,9 @@ export function DetailShare({ id, title }: { id: string; title: string }) {
         onClick={share}
         className="ui-control inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-1 rounded-xl border-[1.5px] border-solid border-brand bg-surface px-4 py-3 text-[15px]/5 font-extrabold text-brand"
       >
-        <span
-          aria-hidden="true"
-          className="size-[15px] shrink-0 text-[15px]/[15px]"
-        >
-          🔗
-        </span>
-        기사 공유하기
+        <IconText icon="link" size="action" spacing="comfortable">
+          기사 공유하기
+        </IconText>
       </button>
       {copied && (
         <p role="status" className="m-0 text-sm text-muted">

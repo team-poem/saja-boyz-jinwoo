@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 
+import { IconText } from '@/components/ui/icon-text/icon-text';
 import { groupMapArticles } from '@/features/map/model/map-region-groups';
 import {
   articleTitle,
@@ -38,15 +39,16 @@ export function DetailLocation({ id }: { id: string }) {
 
   return (
     <p className="m-0 flex items-start gap-1 text-[13px]/[18px] font-medium text-muted">
-      <span aria-hidden="true" className="w-3.5 shrink-0 text-[14px]/[18px]">
-        📍
-      </span>
-      <span className="min-w-0 [overflow-wrap:anywhere]">
+      <IconText
+        icon="pin"
+        iconClassName="text-brand"
+        textClassName="[overflow-wrap:anywhere]"
+      >
         {item.location.label} · {precision}
         {item.location.precision !== 'address' && (
           <span className="sr-only"> · 실제 발생 지점과 다를 수 있습니다</span>
         )}
-      </span>
+      </IconText>
     </p>
   );
 }
