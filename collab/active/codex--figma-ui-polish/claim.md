@@ -2,9 +2,9 @@
 branch: codex/figma-ui-polish
 owner: easter721
 started: 2026-10-24
-status: active
+status: done
 goal: fix(ui): 상세 복귀 회귀와 최신 Figma 화면 세부 스타일 정렬
-next: 현재 지도 그룹의 기사 수 분포에 따른 상대 숫자 원 크기와 클러스터 검증
+next: PR45 리뷰 후 dev 반영 및 배포 확인
 base: dev
 ---
 
@@ -27,3 +27,5 @@ base: dev
 - 2026-10-25 최종 검증: 전체143개 실패·생략0, 실제지도 production 빌드·타입, 새51개 실패0·pageErrors0·캡처19장. 제품e39f064/BuildXRLrbvZf66XLorkUFX5Fp. 정상ICO보존·PNG96추가·Apple잘림수정.
 
 - 2026-10-25 사용자 승인: 특정 건수의 고정 크기 구간을 없애고 현재 지도에 표시되는 그룹들의 상대 건수로 원 크기를 연속 계산한다. 서로 다른 건수의 시각적 차이를 확보하고 기존 PR45에 검증·커밋·푸시한다.
+
+- 상대 숫자 원 최종: 소스5202747/BuildOlCnnH7LrNmRV-5J37cIH, 전체146개·production빌드·타입·실제Naver71개 실패0·캡처7장. 이동pane원점 정규화, 화면밖제외, 선택시트/포커스/읽던위치 보존 확인. 외부댓글/리뷰요청/머지/Draft전환 없음.

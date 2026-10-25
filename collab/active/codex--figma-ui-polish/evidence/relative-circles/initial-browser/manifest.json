@@ -1,0 +1,55 @@
+{
+  "sourceHead": "b8c9ddb08bc3e6a1ff3f7361cbcf7c33e1977455",
+  "buildId": "EOy55uv3v2rCdB4mj5gVQ",
+  "conditions": {
+    "actualSDK": true,
+    "SDKModified": false,
+    "syntheticAPI": true,
+    "fixedSyntheticPosition": true,
+    "personalLocation": false,
+    "noFixedCountBuckets": true
+  },
+  "screenshots": [
+    {
+      "file": "relative-baseline.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-baseline.png",
+      "description": "Actual Naver map with synthetic3/4/8/4; remote19 exists in API only."
+    },
+    {
+      "file": "relative-max8-outside.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-max8-outside.png",
+      "description": "Native pointer drag removes8 and rescales remaining4."
+    },
+    {
+      "file": "relative-selection-resize.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-selection-resize.png",
+      "description": "Selected group membership unchanged while radius changes; sheet/link/scroll must persist."
+    },
+    {
+      "file": "relative-close-latest-marker.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-close-latest-marker.png",
+      "description": "After selection close, focus belongs to the current marker and background is interactive."
+    },
+    {
+      "file": "relative-period24h.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-period24h.png",
+      "description": "Recent dates remove6 of8;4 becomes visible maximum."
+    },
+    {
+      "file": "relative-zoom-merged.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-zoom-merged.png",
+      "description": "Real wheel zoom and SDK projection; no SDK object edits."
+    },
+    {
+      "file": "relative-comparison-1-2-12.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-comparison-1-2-12.png",
+      "description": "Current relative1/2/12 near fixed synthetic position; geography differs from historical reference."
+    }
+  ],
+  "historicalReference": {
+    "path": "/private/tmp/pr45-relative-circles-qa/run/app/reference-before-relative-1-2-12.png",
+    "buildId": "XRLrbvZf66XLorkUFX5Fp",
+    "sourceHead": "e39f064d49c4aa10daed38c221c95389620b1156",
+    "note": "Historical whole-country map. Different camera/geography; visual size reference only."
+  }
+}

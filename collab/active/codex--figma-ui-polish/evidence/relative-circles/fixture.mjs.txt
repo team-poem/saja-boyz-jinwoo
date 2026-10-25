@@ -1,0 +1,41 @@
+import {createServer} from 'node:http';
+import {mkdir,writeFile} from 'node:fs/promises';
+const output=process.env.QA_OUTPUT||'/private/tmp/pr45-relative-circles-qa/run',port=Number(process.env.QA_API_PORT||41146),now=Date.now(),hour=3600000;
+await mkdir(output,{recursive:true});
+const specifications=[
+ ['A','QA-A 종로 검증 지역',3,37.56,126.99,3],
+ ['B','QA-B 서북 검증 지역',4,37.584,126.963,4],
+ ['C','QA-C 동북 검증 지역',8,37.586,127.017,2],
+ ['D','QA-D 남쪽 검증 지역',4,37.534,126.982,4],
+ ['OUT','QA-OUT 화면 밖 검증 지역',19,35.1796,129.0756,19],
+];
+function makeDataset(specs,seed){
+ const items=[],mapItems=[];
+ for(const [key,label,count,latitude,longitude,recent] of specs)for(let i=0;i<count;i++){
+  const id=(seed++).toString(16).padStart(64,'0'),age=i<recent?(i+1)*hour:(50+i)*hour;
+  const item={collection_id:'relative-circles-qa',article_id:id,image_status:'ready',image_url:'/images/'+id+'.jpg',article:{title:'검증용 기사 · '+label+' · '+(i+1)+'번째 보도',description:'지역 숫자 원과 선택시트 상태 확인을 위한 합성 기사입니다. 실제 사건 보도가 아닙니다. 안전 안내를 정리하는 검증용 문장입니다.',pubDate:new Date(now-age).toISOString(),originallink:'https://publisher.example.invalid/relative/'+id,link:''}};
+  items.push(item);mapItems.push({...item,location_status:'resolved',location_reason:null,location:{latitude,longitude,label,precision:'region',evidence:{field:'title',text:label}}});
+ }
+ items.sort((a,b)=>Date.parse(b.article.pubDate)-Date.parse(a.article.pubDate));
+ return {items,mapItems,groups:specs.map(([key,label,count,,,recent])=>({key,label,count,recent}))};
+}
+const data={relative:makeDataset(specifications,10000),comparison:makeDataset([['A',specifications[0][1],1,37.56,126.99,1],['B',specifications[1][1],2,37.584,126.963,2],['C',specifications[2][1],12,37.586,127.017,12]],20000)};
+const details=new Map(Object.values(data).flatMap(d=>d.items).map(i=>[i.article_id,i]));
+let selected='relative';const requests=[];
+const image='<svg xmlns="http://www.w3.org/2000/svg" width="720" height="400"><rect width="720" height="400" fill="#dae6ee"/><path d="M50 310 230 120 380 250 540 90 670 310" stroke="#9aafbf" stroke-width="24" fill="none"/><rect x="160" y="160" width="400" height="80" rx="12" fill="white"/><text x="360" y="210" text-anchor="middle" font-family="sans-serif" font-size="32">SYNTHETIC QA</text></svg>';
+function reply(res,status,body){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','Access-Control-Allow-Origin':'*'});res.end(JSON.stringify(body));}
+const server=createServer((req,res)=>{
+ const u=new URL(req.url||'/','http://fixture.invalid'),p=u.pathname;
+ if(req.method!=='GET'&&req.method!=='HEAD')return reply(res,405,{error:'QA_READ_ONLY'});
+ if(p==='/__qa/health')return reply(res,200,{ok:true,synthetic:true,selected,total:data[selected].items.length,groups:data[selected].groups});
+ if(p==='/__qa/dataset'){const name=u.searchParams.get('name');if(!Object.hasOwn(data,name))return reply(res,400,{error:'UNKNOWN_DATASET'});selected=name;return reply(res,200,{selected});}
+ requests.push({method:req.method,path:p,query:u.search});
+ if(p==='/news'){const q=(u.searchParams.get('keyword')||'').toLowerCase(),all=data[selected].items.filter(i=>!q||i.article.title.toLowerCase().includes(q)),offset=Number(u.searchParams.get('offset')||0),limit=Number(u.searchParams.get('limit')||20);return reply(res,200,{total:all.length,items:all.slice(offset,offset+limit)});}
+ if(p==='/map/articles'){const all=data[selected].mapItems,offset=Number(u.searchParams.get('offset')||0),limit=Number(u.searchParams.get('limit')||100);return reply(res,200,{total:all.length,items:all.slice(offset,offset+limit)});}
+ if(p.startsWith('/news/')){const item=details.get(p.slice(6));return reply(res,item?200:404,item||{error:'QA_NOT_FOUND'});}
+ if(/^\/images\/[a-f0-9]{64}\.jpg$/.test(p)){res.writeHead(200,{'Content-Type':'image/svg+xml','Cache-Control':'no-store','Access-Control-Allow-Origin':'*'});return res.end(image);}
+ return reply(res,404,{error:'QA_NOT_FOUND'});
+});
+server.listen(port,'127.0.0.1',()=>console.log(JSON.stringify({fixture:'http://127.0.0.1:'+port,synthetic:true,counts:[3,4,8,4,19]})));
+async function stop(){await writeFile(output+'/fixture-requests.json',JSON.stringify(requests,null,2));server.closeAllConnections();server.close(()=>process.exit(0));}
+process.on('SIGTERM',stop);process.on('SIGINT',stop);
