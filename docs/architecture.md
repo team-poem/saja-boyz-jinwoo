@@ -23,7 +23,7 @@ pnpm run dev
 - `src/components/errors/feature-error-boundary/`: Suspensive 경계와 경계 통합 테스트. 기존 테스트 계약을 위해 FeatureError를 재수출한다. 새 호출부는 model에서 직접 가져온다.
 - `src/features/article-list/api/`: 서버 페이지의 뉴스 조회와 응답 검증. 환경변수는 요청마다 읽으며 클라이언트에서 이 모듈을 가져오지 않는다.
 - `src/features/article-list/model/`: 기사 응답 타입과 발행 시각·본문·원문 링크 표시 규칙.
-- `src/features/article-list/ui/<컴포넌트>/`: 목록, 카드, 이미지. 이미지의 실패 상태만 클라이언트 컴포넌트가 소유한다.
+- `src/features/article-list/ui/<컴포넌트>/`: 목록, 카드, 이미지. 이미지의 다운로드·실패 상태만 클라이언트 컴포넌트가 소유한다.
 - `src/features/incident-list/ui/incident-list/`: 기존 사건 목록과 테스트. 현재 라우트의 로딩 표시에 사용하며 ready 화면은 기사 API와 통합하지 않았다.
 - `src/features/map/model/`: 지도 기사 타입, 고정 대표점별 집계, 발행일 기간·카드 정렬, 뷰포트 보존.
 - `src/features/map/ui/<컴포넌트>/`: 지도 홈, 숫자 원 선택 시트, carousel·카드·이미지, 기간·미제공·전체 필터. SDK 수명주기는 MapHome이 소유하고 필터는 마커 데이터만 갱신한다.
@@ -95,3 +95,13 @@ Figma 이미지와 SVG는 실제 화면 구현 시 해당 노드에서 받아 �
 Next.js의 React lint 플러그인이 ESLint 10에서 실패하므로 현재 호환되는 ESLint 9.39.5를 사용한다. 플러그인 호환성이 확보되면 함께 갱신한다.
 
 검색 결과는features/search/ui/search-result-card의텍스트카드가소유하며, 목록의ArticleCard와표시구성을분리한다. 공통CSS의ui-모션클래스는요청된컨트롤/드롭다운/시트/검색결과에서만명시적으로사용하고,SDK/데이터수명주기와분리한다.
+
+## 요청 대기와 서버 본문
+
+홈의 서버 기사 조회는 `app/(browse)/@background/(map)/loading.tsx`에서 `MapHomeLoading`을 렌더링한다. 데이터가 준비되기 전 MapHome을 미리 마운트하지 않으며 실제 SDK와 위치 요청은 MapHome이 한 번 소유한다. 홈 전용 route group은 URL을 바꾸지 않고 검색의 상위 loading 경계가 되는 것을 막는다.
+
+수동 검색은 서버 GET form을 유지한 `SearchForm`이 transition·중복 제출 방지·SearchLoading을 소유한다. 결과를 기다리는 동안 기존 내용은 hidden/inert로 유지한다. 명시적 제출 때만 revision key를 바꾸어 같은 검색어도 카드·offset·hasMore를 새로 시작한다. 상세 열기/닫기나 일반 refresh는 revision을 바꾸지 않는다. 검색 route의 자동 loading 경계를 두지 않아 JS 없는 GET 결과가 숨겨진 Suspense 세그먼트에만 남지 않게 한다.
+
+`components/feedback/image-loading.tsx`는 URL별 이미지 다운로드 상태와 캐시 완료를 처리한다. 예약한 영역의 장식 스켈레톤을 이미지 뒤에 두어 JS 없는 이미지와 기존 AI 캡션도 보이게 한다. 목록80px·지도 카드80px·상세140px 치수는 유지한다.
+
+상세 재시도는 기존 링크 주소·오류 안내를 유지하고 transition 동안 스피너·busy·중복 방지를 제공한다. 직접 공유 주소에는 loading 파일이나 전역 metadata 대기 정책을 추가하지 않는다. Proxy의 존재 확인과 metadata는 첫 HTML 이전에 대기할 수 있으므로 앱 로더로 이 구간을 가릴 수 없다. 느린 응답의 실제 서버 본문·NoJS·canonical/OG/JSON-LD·GET/HEAD404를 함께 검증한다.

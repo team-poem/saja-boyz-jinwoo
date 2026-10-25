@@ -80,3 +80,5 @@
 
 - 액션 로딩 단계: 실제검색Button/Enter가전체문서GET으로바뀌며대기표시없음,NoJS검색본문숨김,내부/직접retrybusy/spinner없음을RED로확인했다. GETform+clienttransition/스켈레톤·상세refresh대기와중복차단을구현했다. 홈loading은(map)으로한정하고검색loading은기능컴포넌트로옮겨NoJS본문을보존한다. 기존테스트는뷰이동import/routerfixture만조정하고기대값은유지,전체149개·포맷·린트·소스/Git불변GREEN.
 28. 같은검색어재제출도새첫페이지를표시하고기존pagination을초기화한다. 이전추가페이지응답이늦게도착해도새결과에추가하지않으며,상세진입/복귀나일반refresh만으로검색pagination을초기화하지않는다.
+
+- 재검색 단계: 같은query에기존40개카드와oldpagination이남는RED를확인했다. 명시적form제출transition에서만revision key를갱신해A40→B20→offset20→B23→C3→빈결과를GREEN으로검증했다. 첫전체실행1개실패뒤동일브라우저파일9개가GREEN이며,요청기록은해당검색어로한정하고실제새결과렌더를기다린뒤전체150개·포맷·린트·소스/Git불변GREEN을확인했다. 기대값을줄이거나필터/SEO/404정책을바꾸지않았다.

@@ -33,6 +33,17 @@
       "failed": 0,
       "skipped": 0,
       "support": "기존기대값은유지하고이동한뷰의import경로와새router의SSRfixture만갱신. 홈loading을(map)routegroup으로한정하고검색Skeleton을clientpending뷰로이동해NoJSGET검색복구."
+    },
+    {
+      "test": "repeatingTheSameSearchReplacesCardsAndResetsPagination",
+      "red": "repeat-search-red.json",
+      "observed": "같은검색어재제출뒤기존40개카드와이전pagination유지",
+      "green": "repeat-search-focused-green.json",
+      "full": "gate150.json",
+      "passed": 150,
+      "failed": 0,
+      "skipped": 0,
+      "support": "명시submit revision으로만결과remount. A40→B20→offset20→B23→C3→empty검증. 첫전체실행1개실패뒤동일파일9개GREEN,관측을해당keyword요청·렌더완료로한정해전체재검증."
     }
   ]
 }
