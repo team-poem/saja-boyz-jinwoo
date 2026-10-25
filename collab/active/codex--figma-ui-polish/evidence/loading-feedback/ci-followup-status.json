@@ -1,0 +1,15 @@
+{
+  "baselineUiSource": "56d4c1c",
+  "productFilesChanged": [],
+  "testFileChanged": [
+    "src/proxy-navigation.test.ts"
+  ],
+  "testBlob": "ca6bbbef30f614decf6d1e8f4cf2d7d488097605",
+  "fullGateExitCode": 0,
+  "tests": 150,
+  "failed": 0,
+  "skipped": 0,
+  "navigationFileTests": 9,
+  "wholeTestLimitMs": 60000,
+  "change": "테스트별 context 종료·RSC200과 실제 결과/페이지 상태 확인·phase 진단"
+}

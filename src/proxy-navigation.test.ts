@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
 import { chromium, type Browser, type BrowserContext } from 'playwright-core';
-import { afterAll, beforeAll, expect, test } from 'vitest';
+import { afterAll, afterEach, beforeAll, expect, test } from 'vitest';
 
 const execute = promisify(execFile);
 const wait = (ms: number) =>
@@ -180,6 +180,10 @@ beforeAll(async () => {
   await ready(origin, app, () => output);
   browser = await chromium.launch({ channel: 'chrome', headless: true });
 }, 120000);
+
+afterEach(async () => {
+  for (const context of contexts.splice(0)) await context.close();
+});
 
 afterAll(async () => {
   for (const context of contexts) await context.close();
@@ -1106,6 +1110,8 @@ test('searchSubmissionsAndDetailRetriesExposePendingWithoutLosingGetOrRecovery',
 }, 90000);
 
 test('repeatingTheSameSearchReplacesCardsAndResetsPagination', async () => {
+  let phase = '목록 진입';
+  const inFlight = new Map<object, string>();
   const saved = listArticles;
   const batch = (prefix: string, size: number, base: number) =>
     Array.from({ length: size }, (_, index) => ({
@@ -1115,11 +1121,20 @@ test('repeatingTheSameSearchReplacesCardsAndResetsPagination', async () => {
     }));
   try {
     const page = await openList();
+    page.setDefaultTimeout(8000);
+    page.setDefaultNavigationTimeout(8000);
+    page.on('request', (request) =>
+      inFlight.set(request, request.method() + ' ' + request.url()),
+    );
+    page.on('requestfinished', (request) => inFlight.delete(request));
+    page.on('requestfailed', (request) => inFlight.delete(request));
+    phase = '최초 검색';
     listArticles = batch('이전 검색 기사 ', 41, 50000);
     await page.goto(origin + '/search?q=' + encodeURIComponent('재검색'));
     await expect
       .poll(() => page.locator('main article').count(), { timeout: 5000 })
       .toBe(20);
+    phase = '기존 추가 페이지';
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await expect
       .poll(() => page.locator('main article').count(), { timeout: 5000 })
@@ -1130,6 +1145,7 @@ test('repeatingTheSameSearchReplacesCardsAndResetsPagination', async () => {
       batch('마지막 검색 기사 ', 3, 70000),
       [],
     ].entries()) {
+      phase = '재검색 ' + index + ' 입력 접근';
       listArticles = replacement;
       await page
         .getByRole('searchbox', { name: '기사 키워드 검색' })
@@ -1139,14 +1155,18 @@ test('repeatingTheSameSearchReplacesCardsAndResetsPagination', async () => {
           new URL(response.url()).pathname === '/search' &&
           response.request().headers().rsc === '1' &&
           !response.request().headers()['next-router-prefetch'],
+        { timeout: 8000 },
       );
+      phase = '재검색 ' + index + ' 제출';
       if (index)
         await page
           .getByRole('searchbox', { name: '기사 키워드 검색' })
           .press('Enter');
       else
         await page.getByRole('button', { name: '검색', exact: true }).click();
-      await (await response).finished();
+      phase = '재검색 ' + index + ' 응답 헤더';
+      expect((await response).status()).toBe(200);
+      phase = '재검색 ' + index + ' 결과 교체';
       await expect
         .poll(() =>
           page
@@ -1170,6 +1190,7 @@ test('repeatingTheSameSearchReplacesCardsAndResetsPagination', async () => {
         JSON.stringify(
           replacement.slice(0, 20).map((item) => item.article.title),
         );
+      phase = '재검색 ' + index + ' 추가 페이지/종료';
       const requests = newsOffsets.length;
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
       if (replaced && replacement.length > 20) {
@@ -1204,6 +1225,14 @@ test('repeatingTheSameSearchReplacesCardsAndResetsPagination', async () => {
           )
           .toBe(true);
     }
+  } catch (error) {
+    throw new Error(
+      '재검색 검증 단계: ' +
+        phase +
+        '\n진행 중 요청: ' +
+        JSON.stringify([...inFlight.values()]),
+      { cause: error },
+    );
   } finally {
     listArticles = saved;
   }
