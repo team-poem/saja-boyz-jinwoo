@@ -1,0 +1,16 @@
+{
+  "runtime": "sobaya 0d051213",
+  "baseline": 146,
+  "cycles": [
+    {
+      "test": "articleImagesShowSkeletonUntilLoadAndRecoverAcrossUrlsAndCachedImages",
+      "red": "image-red.json",
+      "observed": "세 이미지의 pending 스켈레톤 없음·실패가 다음 URL에 남음",
+      "green": "image-focused-green.json",
+      "full": "gate147.json",
+      "passed": 147,
+      "failed": 0,
+      "skipped": 0
+    }
+  ]
+}
