@@ -195,7 +195,7 @@ test('articleImageStates', async () => {
   respond([{ ...item, image_status: 'ready', image_url: imagePath }]);
   const ready = singleCard(await renderPage());
   expect(ready).toContain(`src="${apiOrigin}${imagePath}"`);
-  expect(ready).toContain('AI 생성 이미지');
+  expect(ready).not.toContain('<figcaption');
   expect(ready).toMatch(/width="80"/);
   expect(ready).toMatch(/height="80"/);
   for (const imageStatus of ['disabled', 'pending', 'generating', 'failed']) {
@@ -203,7 +203,7 @@ test('articleImageStates', async () => {
     const row = singleCard(await renderPage());
     expect(row).toContain('이미지 없음');
     expect(row).not.toMatch(/<img\b/);
-    expect(row).not.toContain('AI 생성 이미지');
+    expect(row).not.toContain('<figcaption');
   }
   for (const imageUrl of [
     null,
@@ -216,7 +216,7 @@ test('articleImageStates', async () => {
     const row = singleCard(await renderPage());
     expect(row).toContain('이미지 없음');
     expect(row).not.toMatch(/<img\b/);
-    expect(row).not.toContain('AI 생성 이미지');
+    expect(row).not.toContain('<figcaption');
   }
 });
 

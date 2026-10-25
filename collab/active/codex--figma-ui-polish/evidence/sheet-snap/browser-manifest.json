@@ -1,0 +1,132 @@
+{
+  "sourceHead": "6c6c23b523079626d863c65446d2a8290df66737",
+  "buildId": "XqX4ZJdwETDiiPENL9Q0h",
+  "synthetic": true,
+  "personalLocation": false,
+  "SDKStubbed": false,
+  "summary": {
+    "checks": 224,
+    "failed": 0,
+    "scenarios": 4,
+    "incomplete": 0,
+    "screenshots": 14,
+    "pageErrors": 0,
+    "tiles200": 23
+  },
+  "screenshots": [
+    {
+      "file": "app/normal-short.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic short article; initial collapsed content fit with a half-height ceiling."
+    },
+    {
+      "file": "app/normal-medium.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic medium article; initial collapsed content fit with a half-height ceiling."
+    },
+    {
+      "file": "app/normal-long.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic long article; initial collapsed content fit with a half-height ceiling."
+    },
+    {
+      "file": "app/normal-long-expanded.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Same long article after an actual native handle up drag; near-full ceiling, with the reserved top area."
+    },
+    {
+      "file": "app/manual-url.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Only native share/clipboard capabilities fail synthetically; manual URL joins the same reading flow."
+    },
+    {
+      "file": "app/manual-url-low-height.png",
+      "viewport": {
+        "width": 1440,
+        "height": 320
+      },
+      "condition": "Wide desktop viewport with only320px height; sheet remains capped and the manual URL is reachable."
+    },
+    {
+      "file": "app/map-normal-short.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual Naver SDK and synthetic single-group marker open a normal article directly."
+    },
+    {
+      "file": "app/map-long-default.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual Naver background; same very long normal article in its initial content-fit half snap, readingTop0."
+    },
+    {
+      "file": "app/map-long-expanded.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Same actual Naver background and long article after an actual native up drag; explicit near-full height, readingTop0."
+    },
+    {
+      "file": "app/group12-reading-position.png",
+      "viewport": {
+        "width": 1440,
+        "height": 500
+      },
+      "condition": "Real Naver group12 chooser, expanded, reading a later article after viewport resize."
+    },
+    {
+      "file": "app/group12-returned.png",
+      "viewport": {
+        "width": 1440,
+        "height": 500
+      },
+      "condition": "Detail close returned to the same chooser, reading position and focused link."
+    },
+    {
+      "file": "app/filter-low-height.png",
+      "viewport": {
+        "width": 393,
+        "height": 320
+      },
+      "condition": "Existing auto-size whole-filter sheet; period/category/status design is unchanged."
+    },
+    {
+      "file": "app/nojs-long-normal.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "JavaScript disabled; CSS natural height/scroll retains the real summary and original source."
+    },
+    {
+      "file": "app/nojs404.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual404 without JavaScript; original address and safe escape remain available."
+    }
+  ],
+  "report": "report.json",
+  "execution": "Prepared only until parent QA_READY; no product source/server/build mutations."
+}

@@ -1,0 +1,78 @@
+import { createServer } from 'node:http';
+import { mkdir, writeFile } from 'node:fs/promises';
+
+const port = Number(process.env.QA_API_PORT || 41151);
+const output = process.env.QA_OUTPUT || '/private/tmp/pr45-sheet-snap-qa/final';
+const now = Date.now();
+const hour = 3600000;
+const ids = { short: 'a'.repeat(64), medium: 'b'.repeat(64), pairSecond: 'c'.repeat(64), long: (70000).toString(16).padStart(64, '0'), missing: 'f'.repeat(64) };
+const group12Ids = Array.from({ length: 12 }, (_, index) => (70000 + index).toString(16).padStart(64, '0'));
+const texts = {
+  short: '짧은 높이를 확인하는 합성 기사입니다.',
+  medium: '보행 안전을 위한 임시 점검이 진행됐습니다. 현장에서는 안내에 따라 통행하고, 점검 구간을 지나갈 때 주변 상황을 확인해 주세요. 우회 경로와 통제 안내를 정리하는 화면 검증용 합성 기사입니다.',
+  long: ('아주 긴 본문에서 시트 내부 스크롤과 출처, 공유 버튼까지 안전하게 도달하는지 확인하는 합성 문장입니다. 실제 사건 보도가 아니며 개인 위치를 사용하지 않습니다. ').repeat(50),
+};
+function make(id, title, description, index) {
+  return { collection_id: 'adaptive-sheet-qa', article_id: id, image_status: 'ready', image_url: '/images/' + id + '.jpg', article: {
+    title, description, pubDate: new Date(now - index * hour).toISOString(),
+    originallink: 'https://publisher.example.invalid/adaptive/' + id, link: '',
+  } };
+}
+const short = make(ids.short, '검증용 기사 · 높이검증 짧음', texts.short, 0);
+const medium = make(ids.medium, '검증용 기사 · 높이검증 중간', texts.medium, 1);
+const pairSecond = make(ids.pairSecond, '검증용 기사 · 높이검증 두 번째 보도', texts.short, 2);
+const group12 = group12Ids.map((id, index) => make(id, index === 0 ? '검증용 기사 · 높이검증 아주 긴 본문' : '검증용 기사 · 높이검증 그룹12 보도 ' + (index + 1), index === 0 ? texts.long : texts.medium, index + 3));
+const items = [short, medium, pairSecond, ...group12];
+const details = new Map(items.map(item => [item.article_id, item]));
+function locate(item, label, latitude, longitude) {
+  return { ...item, location_status: 'resolved', location_reason: null, location: { latitude, longitude, label, precision: 'region', evidence: { field: 'title', text: item.article.title } } };
+}
+const mapItems = [
+  locate(short, 'QA-A 단일 검증 지역', 37.56, 126.99),
+  locate(medium, 'QA-B 두 건 검증 지역', 37.584, 126.963),
+  locate(pairSecond, 'QA-B 두 건 검증 지역', 37.584, 126.963),
+  ...group12.map(item => locate(item, 'QA-C 열두 건 검증 지역', 37.586, 127.017)),
+];
+const image = '<svg xmlns="http://www.w3.org/2000/svg" width="720" height="400"><rect width="720" height="400" fill="#dae6ee"/><path d="M50 310 230 120 380 250 540 90 670 310" stroke="#9aafbf" stroke-width="24" fill="none"/><rect x="140" y="160" width="440" height="80" rx="12" fill="white"/><text x="360" y="210" text-anchor="middle" font-family="sans-serif" font-size="30">SYNTHETIC ADAPTIVE QA</text></svg>';
+const requests = [];
+function send(res, status, body) {
+  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'Access-Control-Allow-Origin': '*' });
+  res.end(JSON.stringify(body));
+}
+const server = createServer((req, res) => {
+  const url = new URL(req.url || '/', 'http://fixture.invalid'), path = url.pathname;
+  if (!['GET', 'HEAD'].includes(req.method)) return send(res, 405, { error: 'QA_READ_ONLY' });
+  if (path === '/__qa/health') return send(res, 200, { ok: true, synthetic: true, personalLocation: false, ids, group12Ids, total: items.length, groups: [1, 2, 12], variants: { short, medium, long: group12[0] } });
+  if (path === '/__qa/requests') return send(res, 200, { requests });
+  const entry = { method: req.method, path, query: url.search, started: Date.now() };
+  requests.push(entry);
+  res.once('close', () => { entry.completed = res.writableEnded; entry.elapsedMs = Date.now() - entry.started; });
+  if (path === '/news') {
+    const keyword = (url.searchParams.get('keyword') || '').toLowerCase();
+    const all = items.filter(item => !keyword || item.article.title.toLowerCase().includes(keyword));
+    const offset = Number(url.searchParams.get('offset') || 0), limit = Number(url.searchParams.get('limit') || 20);
+    return send(res, 200, { total: all.length, items: all.slice(offset, offset + limit) });
+  }
+  if (path === '/map/articles') {
+    const offset = Number(url.searchParams.get('offset') || 0), limit = Number(url.searchParams.get('limit') || 100);
+    return send(res, 200, { total: mapItems.length, items: mapItems.slice(offset, offset + limit) });
+  }
+  if (path.startsWith('/news/')) {
+    const item = details.get(path.slice(6));
+    return send(res, item ? 200 : 404, item || { error: 'QA_NOT_FOUND' });
+  }
+  if (/^\/images\/[a-f0-9]{64}\.jpg$/.test(path) && details.has(path.slice(8, -4))) {
+    res.writeHead(200, { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=3600', 'Access-Control-Allow-Origin': '*' });
+    return res.end(image);
+  }
+  return send(res, 404, { error: 'QA_NOT_FOUND' });
+});
+server.listen(port, '127.0.0.1', () => console.log(JSON.stringify({ fixture: 'http://127.0.0.1:' + port, synthetic: true, articles: items.length, groups: [1, 2, 12] })));
+async function stop() {
+  await mkdir(output, { recursive: true });
+  await writeFile(output + '/fixture-requests.json', JSON.stringify(requests, null, 2));
+  server.closeAllConnections();
+  server.close(() => process.exit(0));
+}
+process.on('SIGTERM', stop);
+process.on('SIGINT', stop);

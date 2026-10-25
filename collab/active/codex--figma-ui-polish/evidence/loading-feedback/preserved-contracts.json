@@ -1,0 +1,66 @@
+{
+  "baseline": "4c6210f",
+  "candidate": "56d4c1c60d5558d08e5495d1a31b21903b83f213",
+  "files": [
+    {
+      "path": "next.config.ts",
+      "baselineBlob": "8406eae65974bc12b4c39a4211e943ae19130133",
+      "candidateBlob": "8406eae65974bc12b4c39a4211e943ae19130133",
+      "unchanged": true
+    },
+    {
+      "path": "src/proxy.ts",
+      "baselineBlob": "e701ee57712c7b82e60b8b4a94a9606c92eef7a8",
+      "candidateBlob": "e701ee57712c7b82e60b8b4a94a9606c92eef7a8",
+      "unchanged": true
+    },
+    {
+      "path": "src/components/layout/article-filters/article-filters.tsx",
+      "baselineBlob": "16e1272c000eec46ecef3cca19917f7e652e02b0",
+      "candidateBlob": "16e1272c000eec46ecef3cca19917f7e652e02b0",
+      "unchanged": true
+    },
+    {
+      "path": "src/features/map/ui/map-unavailable-filter/map-unavailable-filter.tsx",
+      "baselineBlob": "157ce6243cf52988342b9c96ad1f568b9edb9308",
+      "candidateBlob": "157ce6243cf52988342b9c96ad1f568b9edb9308",
+      "unchanged": true
+    },
+    {
+      "path": "src/features/map/ui/map-all-filters/map-all-filters.tsx",
+      "baselineBlob": "fbaa0a47138318cf6b99ff47e97a1955aa49089b",
+      "candidateBlob": "fbaa0a47138318cf6b99ff47e97a1955aa49089b",
+      "unchanged": true
+    },
+    {
+      "path": "src/app/incidents/[id]/page.tsx",
+      "baselineBlob": "72b9dd2898a3fe65296570991643256167a3ffb6",
+      "candidateBlob": "72b9dd2898a3fe65296570991643256167a3ffb6",
+      "unchanged": true
+    },
+    {
+      "path": "src/app/site-metadata.ts",
+      "baselineBlob": "175bc14a54c81e1bc16bfa0133c67a1d92fa5493",
+      "candidateBlob": "175bc14a54c81e1bc16bfa0133c67a1d92fa5493",
+      "unchanged": true
+    },
+    {
+      "path": "src/app/robots.ts",
+      "baselineBlob": "2b8dd3dad56e92c1b6c66dd13afc45fbef6672b7",
+      "candidateBlob": "2b8dd3dad56e92c1b6c66dd13afc45fbef6672b7",
+      "unchanged": true
+    },
+    {
+      "path": "src/app/sitemap.ts",
+      "baselineBlob": "b3f277431a13b111e20af426cdaac694fe358902",
+      "candidateBlob": "b3f277431a13b111e20af426cdaac694fe358902",
+      "unchanged": true
+    },
+    {
+      "path": "src/components/layout/site-structured-data/site-structured-data.tsx",
+      "baselineBlob": "ba75476b1d50e97353c5c174d2cbf92165ead8d4",
+      "candidateBlob": "ba75476b1d50e97353c5c174d2cbf92165ead8d4",
+      "unchanged": true
+    }
+  ]
+}

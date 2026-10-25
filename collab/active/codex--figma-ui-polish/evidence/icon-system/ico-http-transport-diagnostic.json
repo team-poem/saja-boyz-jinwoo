@@ -1,0 +1,613 @@
+{
+  "scope": "Temporary ordinary HTTP server only; no Next/app server/build/source edits.",
+  "nativeFetch": [
+    {
+      "name": "original-x-plain",
+      "status": 200,
+      "length": 2685,
+      "sha256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+      "expectedSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+      "contentType": "image/x-icon",
+      "encoding": null
+    },
+    {
+      "name": "original-x-gzip",
+      "status": 200,
+      "length": 2685,
+      "sha256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+      "expectedSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+      "contentType": "image/x-icon",
+      "encoding": "gzip"
+    },
+    {
+      "name": "original-vnd-plain",
+      "status": 200,
+      "length": 2685,
+      "sha256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+      "expectedSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+      "contentType": "image/vnd.microsoft.icon",
+      "encoding": null
+    },
+    {
+      "name": "original-vnd-gzip",
+      "status": 200,
+      "length": 2685,
+      "sha256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+      "expectedSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+      "contentType": "image/vnd.microsoft.icon",
+      "encoding": "gzip"
+    },
+    {
+      "name": "candidate-x-plain",
+      "status": 200,
+      "length": 3709,
+      "sha256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+      "expectedSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+      "contentType": "image/x-icon",
+      "encoding": null
+    },
+    {
+      "name": "candidate-x-gzip",
+      "status": 200,
+      "length": 3709,
+      "sha256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+      "expectedSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+      "contentType": "image/x-icon",
+      "encoding": "gzip"
+    },
+    {
+      "name": "candidate-vnd-plain",
+      "status": 200,
+      "length": 3709,
+      "sha256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+      "expectedSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+      "contentType": "image/vnd.microsoft.icon",
+      "encoding": null
+    },
+    {
+      "name": "candidate-vnd-gzip",
+      "status": 200,
+      "length": 3709,
+      "sha256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+      "expectedSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+      "contentType": "image/vnd.microsoft.icon",
+      "encoding": "gzip"
+    },
+    {
+      "name": "original-embedded48-PNG-control",
+      "status": 200,
+      "length": 1290,
+      "sha256": "496f343a3503fb68b0086de8fc9ff6513f301374e10511bc7c42bc83ca92431e",
+      "expectedSHA256": "496f343a3503fb68b0086de8fc9ff6513f301374e10511bc7c42bc83ca92431e",
+      "contentType": "image/png",
+      "encoding": null
+    }
+  ],
+  "browser": [
+    {
+      "mode": "no-route",
+      "results": [
+        {
+          "name": "original-x-plain",
+          "mime": "image/x-icon",
+          "gzip": false,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 2685,
+          "browserFetchSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "original-x-gzip",
+          "mime": "image/x-icon",
+          "gzip": true,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 2685,
+          "browserFetchSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "original-vnd-plain",
+          "mime": "image/vnd.microsoft.icon",
+          "gzip": false,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 2685,
+          "browserFetchSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "original-vnd-gzip",
+          "mime": "image/vnd.microsoft.icon",
+          "gzip": true,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 2685,
+          "browserFetchSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "candidate-x-plain",
+          "mime": "image/x-icon",
+          "gzip": false,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 3709,
+          "browserFetchSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "candidate-x-gzip",
+          "mime": "image/x-icon",
+          "gzip": true,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 3709,
+          "browserFetchSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "candidate-vnd-plain",
+          "mime": "image/vnd.microsoft.icon",
+          "gzip": false,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 3709,
+          "browserFetchSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "candidate-vnd-gzip",
+          "mime": "image/vnd.microsoft.icon",
+          "gzip": true,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 3709,
+          "browserFetchSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "original-embedded48-PNG-control",
+          "mime": "image/png",
+          "gzip": false,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 1290,
+          "browserFetchSHA256": "496f343a3503fb68b0086de8fc9ff6513f301374e10511bc7c42bc83ca92431e",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        }
+      ]
+    },
+    {
+      "mode": "pass-through-route",
+      "results": [
+        {
+          "name": "original-x-plain",
+          "mime": "image/x-icon",
+          "gzip": false,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 2685,
+          "browserFetchSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "original-x-gzip",
+          "mime": "image/x-icon",
+          "gzip": true,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 2685,
+          "browserFetchSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "original-vnd-plain",
+          "mime": "image/vnd.microsoft.icon",
+          "gzip": false,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 2685,
+          "browserFetchSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "original-vnd-gzip",
+          "mime": "image/vnd.microsoft.icon",
+          "gzip": true,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 2685,
+          "browserFetchSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "candidate-x-plain",
+          "mime": "image/x-icon",
+          "gzip": false,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 3709,
+          "browserFetchSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "candidate-x-gzip",
+          "mime": "image/x-icon",
+          "gzip": true,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 3709,
+          "browserFetchSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "candidate-vnd-plain",
+          "mime": "image/vnd.microsoft.icon",
+          "gzip": false,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 3709,
+          "browserFetchSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "candidate-vnd-gzip",
+          "mime": "image/vnd.microsoft.icon",
+          "gzip": true,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 3709,
+          "browserFetchSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        },
+        {
+          "name": "original-embedded48-PNG-control",
+          "mime": "image/png",
+          "gzip": false,
+          "httpDecoded": true,
+          "httpError": null,
+          "httpWidth": 48,
+          "httpHeight": 48,
+          "browserFetchLength": 1290,
+          "browserFetchSHA256": "496f343a3503fb68b0086de8fc9ff6513f301374e10511bc7c42bc83ca92431e",
+          "dataDecoded": true,
+          "dataError": null,
+          "dataWidth": 48
+        }
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "variant": "original-x-plain",
+      "accept": "*/*",
+      "purpose": null
+    },
+    {
+      "variant": "original-x-gzip",
+      "accept": "*/*",
+      "purpose": null
+    },
+    {
+      "variant": "original-vnd-plain",
+      "accept": "*/*",
+      "purpose": null
+    },
+    {
+      "variant": "original-vnd-gzip",
+      "accept": "*/*",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-x-plain",
+      "accept": "*/*",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-x-gzip",
+      "accept": "*/*",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-vnd-plain",
+      "accept": "*/*",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-vnd-gzip",
+      "accept": "*/*",
+      "purpose": null
+    },
+    {
+      "variant": "original-embedded48-PNG-control",
+      "accept": "*/*",
+      "purpose": null
+    },
+    {
+      "variant": "original-x-plain",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "original-x-plain",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "original-x-gzip",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "original-x-gzip",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "original-vnd-plain",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "original-vnd-plain",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "original-vnd-gzip",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "original-vnd-gzip",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-x-plain",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-x-plain",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-x-gzip",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-x-gzip",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-vnd-plain",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-vnd-plain",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-vnd-gzip",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-vnd-gzip",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "original-embedded48-PNG-control",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "original-embedded48-PNG-control",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "original-x-plain",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "original-x-plain",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "original-x-gzip",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "original-x-gzip",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "original-vnd-plain",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "original-vnd-plain",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "original-vnd-gzip",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "original-vnd-gzip",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-x-plain",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-x-plain",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-x-gzip",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-x-gzip",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-vnd-plain",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-vnd-plain",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-vnd-gzip",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "candidate-vnd-gzip",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    },
+    {
+      "variant": "original-embedded48-PNG-control",
+      "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "destination": "image",
+      "purpose": null
+    },
+    {
+      "variant": "original-embedded48-PNG-control",
+      "accept": "*/*",
+      "destination": "empty",
+      "purpose": null
+    }
+  ]
+}

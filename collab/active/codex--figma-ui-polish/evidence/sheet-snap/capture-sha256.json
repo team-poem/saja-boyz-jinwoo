@@ -1,0 +1,20 @@
+{
+  "sourceHead": "6c6c23b523079626d863c65446d2a8290df66737",
+  "buildId": "XqX4ZJdwETDiiPENL9Q0h",
+  "png": {
+    "filter-low-height.png": "3f53a53d742c92ad92551250182d422456f4b9f48f6e73b1a14741cb9f9f6dc5",
+    "group12-reading-position.png": "424c8f0e6269ad78a0e9d087409e937e4fb5f9cb957baf68e49c95088a46c538",
+    "group12-returned.png": "7b370f9ed5d9baf0d712961a9cfa410f242dd171fa33b3fcebad5c502865765a",
+    "manual-url-low-height.png": "10d0b67cd64587d3a8c40e22093d2cf848805f481ecdc0560994fac0103c93ed",
+    "manual-url.png": "9338af611ad8de2a505ba16b5849e4a70e7d0c9691157ca6a2e4b4306afab89d",
+    "map-long-default.png": "b48802aca55c7fa7efff0f1f2f7ed33f9dc2f78c7b3875ecec7688d14818a165",
+    "map-long-expanded.png": "c53c250fd9e99fbe421c92cb2b1ca3d70d03ec6413106bad938f8acc5ef1bba6",
+    "map-normal-short.png": "fc3d2932365ad3c16dc36bc9240a190e4f7294e0ebb642b0d780c8711367e944",
+    "nojs-long-normal.png": "056a53925dac8c4a65c8b95cf508ce7d9072f8fb9755ad368978b400bb648f2b",
+    "nojs404.png": "4105bcd9f29489c7e8b90871d645061f75a2cfa4d16c2fc36e10696657e5b46e",
+    "normal-long-expanded.png": "0e61c0089bcc75ff050d0ed819fe4315c3efc3ae61d3ab3497ade0fe0401f566",
+    "normal-long.png": "c437da08fbf315facc438db0ce6985cbfd4de3d9d1ded1fc08f909a3d85e1ab6",
+    "normal-medium.png": "3cf2b9cf98f7965133be96ba6154ec34ea51a9377c2b79cec0718ab420d3b6db",
+    "normal-short.png": "b14c3136af35c177ce4e2f3d73e394149136f6e3d28cb658a27fefb72de42b52"
+  }
+}

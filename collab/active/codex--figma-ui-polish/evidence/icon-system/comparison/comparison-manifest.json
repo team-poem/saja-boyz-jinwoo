@@ -1,0 +1,288 @@
+{
+  "date": "2026-10-25",
+  "commit": "e39f064d49c4aa10daed38c221c95389620b1156",
+  "build": "XRLrbvZf66XLorkUFX5Fp",
+  "capture_report": "../qa-report.json",
+  "capture_manifest": "../capture-manifest.json",
+  "browser_summary": {
+    "checks": 51,
+    "failed": [],
+    "scenarios": 5,
+    "scenarioFailures": [],
+    "pageErrors": 0
+  },
+  "tiles_200": 133,
+  "panels": [
+    {
+      "id": "map",
+      "number": "01",
+      "title": "지도 홈",
+      "node": "18:2348",
+      "figma": "map.png",
+      "app": "map.png",
+      "note": "실제 Naver SDK·타일 위에 합성 기사와 고정 테스트 좌표를 표시했다. 시안의 상태 메뉴는 열려 있고 실제 캡처는 기본 닫힘 상태다. 시안의 지도 배경과 기사 이미지·문구는 다르다. 승인된 SVG 브랜드는 유지하며, API에 없는 분류·상태 배지는 만들지 않는다. Chrome safe-area는0이며 Figma의 iOS 하단 여백과 구분한다.",
+      "figma_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "app_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "size": "393×852",
+      "figma_sha256": "c44deb374955da4e0cc8877640455842d7d84b4b10d3a5805d75188d6067f88a",
+      "app_sha256": "17a3f207c0ccdfc4a7219c9e397d78ba86ba9c176f7e8c8e03c990d537b3474e"
+    },
+    {
+      "id": "search",
+      "number": "02",
+      "title": "검색 시작 · 최근 검색",
+      "node": "11:1797",
+      "figma": "search.png",
+      "app": "search-recent.png",
+      "note": "최근 검색4개로 행간을 대조했다. 예시 검색어의 띄어쓰기와 한국어 섹션명은 시안과 다르다. 입력 시작점·14px 시계·오른쪽 삭제 X·추천 칩 간격을 보완했다. 검색44px·삭제32px 클릭 영역은 유지한다. 돋보기·시계·추천 아이콘은 OS 이모지 대신 공통 SVG로 바꿨다. Figma 상단37px는 iOS 상태바이며 웹에 복제하지 않았다. Figma의 컬러 이모지와는 사용자 추가 요청에 따라 의도적으로 다른 모양이다.",
+      "figma_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "app_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "size": "393×852",
+      "figma_sha256": "21465c550a10768a876205b6e57c85a570226d42a2771df6057b9d739e8ebbaa",
+      "app_sha256": "a5f0165c6fcd2d94202f3e24d011af1cb1cf32cd0d35758b042d9928fd02a441"
+    },
+    {
+      "id": "search-results",
+      "number": "03",
+      "title": "검색 결과",
+      "node": "11:1864",
+      "figma": "search-results.png",
+      "app": "search-results.png",
+      "note": "합성 기사에 실제 매칭되는 검색 결과다. 입력 정렬과 검색·초기화 조작을 유지하고 검색 결과 링크에도 하단 메뉴를 피하는 스크롤 여백을 적용했다. API가 제공하지 않는 주소 검색 결과·분류·상태 대신 실제 기사 제목·요약·발행일·원문을 보여주므로 내용 구성은 시안과 다르다.",
+      "figma_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "app_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "size": "393×852",
+      "figma_sha256": "85fc00e2bbec8ae0a6a2742156471497fe4599f3f514d33c5259aba8e137f930",
+      "app_sha256": "805dd6f1357f3ab2de1962ad5d3d62ec534277ba4c3890fd445d31f7729c82d3"
+    },
+    {
+      "id": "list",
+      "number": "04",
+      "title": "목록",
+      "node": "11:2123",
+      "figma": "list.png",
+      "app": "list.png",
+      "note": "393×918 화면으로 대조했다. 제목·원문 링크에 고정 헤더와 하단 메뉴를 피하는 스크롤 여백을 적용했고 320/393/1440px의 실제 양방향 Tab·상세 복귀 회귀를 추가했다. 카드 내부는 API가 제공하는 제목·발행일·요약·원문을 유지한다. 시안의 분류·위치 정보를 임의로 채우지 않는다.",
+      "figma_dimensions": {
+        "width": 393,
+        "height": 918
+      },
+      "app_dimensions": {
+        "width": 393,
+        "height": 918
+      },
+      "size": "393×918",
+      "figma_sha256": "6004badf6450c51c9f8ed0305eeb874dc361149fa76c58d30f1a989fa5f0459b",
+      "app_sha256": "de909b45be3ed48b0bbe7288ce2f3050a81262bd61324523993117e1cd1aaa7c"
+    },
+    {
+      "id": "detail",
+      "number": "05",
+      "title": "상세 바텀시트 · 기본",
+      "node": "19:2865",
+      "figma": "detail.png",
+      "app": "detail.png",
+      "note": "공유와 복사 실패 시 수동 URL을 관련 보도 뒤의 동일 본문 스크롤로 옮겼다. 접힌 화면과 긴 기사에서는 본문 흐름에 따라 읽을 수 있다. 위치14px·날짜/출처12px·공유16px SVG와 역할별4/6/8px 간격을 적용했다. 출처 밑줄은 도메인 텍스트에만 남긴다. 합성 이미지·본문 길이와 API 미제공 배지는 CSS 차이와 구분한다.",
+      "figma_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "app_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "size": "393×852",
+      "figma_sha256": "f70ed26e2542e7f07b36b5888085abc4352057e81ae3536ea6930ee2ed43c5a5",
+      "app_sha256": "f4db340ae9d58eac4043bf3fac082d91c92d0891a7a3260185084b1724267af2"
+    },
+    {
+      "id": "detail-expanded",
+      "number": "06",
+      "title": "상세 바텀시트 · 확장",
+      "node": "504:269",
+      "figma": "detail-expanded.png",
+      "app": "detail-expanded.png",
+      "note": "확장 시 지도 DOM을 보존하면서 배경 검색 헤더만 숨긴다. 공유는 본문과 같은 스크롤에 있고 짧은 확장 본문에서는 남는 공간 아래로 배치된다. 관련 보도는 실제 같은 지역의 다른 기사 수만큼 표시하며 시안의3개를 복제하지 않는다. 출처는 언론사 로고 대신 검증된 실제 원문 도메인이다.",
+      "figma_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "app_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "size": "393×852",
+      "figma_sha256": "9eedf3d9ac654b05a9a93898e17c081c40314b94aaffdedc1f0a9fa031a2eda3",
+      "app_sha256": "1dc480402ba2120ea8cff92cca9fc0a3fc64a37423953908da788a42a9ad179e"
+    },
+    {
+      "id": "report",
+      "number": "07",
+      "title": "제보",
+      "node": "11:2221 · 닫기508:695",
+      "figma": "report.png",
+      "app": "report.png",
+      "note": "닫기는 최신 Figma의24px SVG로 교체하고 회색 원 배경을 제거했다. 실제 클릭 영역44px는 유지하며 textarea 크기조절 표시도 제거했다. 위치 SVG14px와 입력 시작점의 간격도 맞췄다. 입력·첨부·한국시간·제출·재시도 계약은 유지한다. native 날짜 컨트롤과 제품 안내 문구는 시안과 다를 수 있으며 실제 제보는 전송하지 않았다.",
+      "figma_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "app_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "size": "393×852",
+      "figma_sha256": "8a5b192bda92b68850c6f573ebe9e52758bc2bc3f2a339aa01c21876c9af0375",
+      "app_sha256": "880464cf318fc44191d272772785caf025664df22a59fd722f556d7d8c7377f2"
+    }
+  ],
+  "extras": [
+    {
+      "id": "two-line-icons",
+      "title": "두 줄 위치 · 공통 아이콘",
+      "app": "detail-two-line.png",
+      "note": "위치14px·날짜12px SVG와6px 기본 간격을 실제 긴 지역 표기에서 확인한다. 텍스트가 여러 줄이어도 아이콘은 축소되지 않으며 현재 공통 중앙 정렬 규칙을 따른다. 지역 대표 위치와 실제 발생 지점의 차이는 안내에 남긴다.",
+      "app_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "app_sha256": "5fc3ddba2448d9c103447bcce7071a13b2021f788c947df74f0b543e4ce5f9e8"
+    },
+    {
+      "id": "long-source",
+      "title": "긴 원문 도메인 · 출처 아이콘",
+      "app": "detail-long-source.png",
+      "note": "출처 링크 SVG는12px·간격6px다. 밑줄은 도메인 텍스트에만 적용하고 긴 도메인의 말줄임, 실제 안전한 href와 접근 가능한 전체 이름은 유지한다.",
+      "app_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "app_sha256": "5fc3ddba2448d9c103447bcce7071a13b2021f788c947df74f0b543e4ce5f9e8"
+    },
+    {
+      "id": "no-source",
+      "title": "유효한 원문 링크 없음",
+      "app": "detail-source-unavailable.png",
+      "note": "유효한 원문 URL이 없으면 안내만 표시하며 링크 아이콘이나 가짜 밑줄을 만들지 않는다.",
+      "app_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "app_sha256": "b942c49a56b74c4d9d57adc107f3416f3663319b3d936b20a842c377d93539b6"
+    },
+    {
+      "id": "manual-url",
+      "title": "공유 복사 실패 · 수동 URL",
+      "app": "detail-manual-url.png",
+      "note": "공유 SVG16px·간격8px를 적용했다. 복사 실패 시 수동 URL도 같은 본문 스크롤 안에 있으며 공유·복사·키보드 접근 동작을 유지한다.",
+      "app_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "app_sha256": "eb0562b9d0b9891dd29964932deb8ed9cbfc8f34181dab412bb4ca04c4f09324"
+    },
+    {
+      "id": "map-counts",
+      "title": "숫자 원1·2·12 · 실제 지도",
+      "app": "map-counts.png",
+      "note": "실제 Naver 지도 위의 합성 기사 집계다. 지도 마커·숫자 원은 텍스트 옆 일반 UI 아이콘과 크기 역할이 달라 이번8/12/14/16px 규칙에 편입하지 않았다.",
+      "app_dimensions": {
+        "width": 393,
+        "height": 852
+      },
+      "app_sha256": "13bdfda1b1a4d56b6c70234ed5e4d7562ecbaa5dcf2d06a892604083224687bc"
+    }
+  ],
+  "apple": [
+    {
+      "id": "before",
+      "title": "수정 전 Apple 원본",
+      "source": "/private/tmp/pr45-icon-system-qa/raster-final/apple-before.png",
+      "file": "apple-before.png",
+      "source_commit": "11e17e6",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "sha256": "e238db3c29542df675692436177521c9b2d9320b730e89215ae6919bc2e0a349"
+    },
+    {
+      "id": "after",
+      "title": "수정 후 HTTP 원본",
+      "source": "/private/tmp/pr45-icon-system-qa/raster-final/apple-original.png",
+      "file": "apple-after.png",
+      "source_commit": "e39f064d49c4aa10daed38c221c95389620b1156",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "sha256": "e600f1f8ce6222b09308b82c1ceea77260e73d90f66ff41f0fae75dc324f48c8"
+    }
+  ],
+  "raster96": {
+    "source": "/private/tmp/pr45-icon-system-qa/raster-final/raster96-original.png",
+    "file": "raster96-original.png",
+    "source_commit": "e39f064d49c4aa10daed38c221c95389620b1156",
+    "dimensions": {
+      "width": 96,
+      "height": 96
+    },
+    "sha256": "63a8c6f80732c66d80b4b915581e1bd1892a8690469ba9633fea9d54a821c165"
+  },
+  "favicon_asset_overview": {
+    "source": "/private/tmp/pr45-icon-system-qa/raster-final/app/favicon-assets.png",
+    "dimensions": {
+      "width": 900,
+      "height": 440
+    },
+    "sha256": "4d6abc2c9e6c8f68ff9a1b3d0dc593a41876306aad278d6ec23463349d3940bb"
+  },
+  "icon_sizes": {
+    "indicator": 8,
+    "compact": 12,
+    "default": 14,
+    "action": 16
+  },
+  "icon_gaps": [
+    4,
+    6,
+    8
+  ],
+  "source_images_unmodified": true,
+  "qa_scope": {
+    "current": "Refreshed18 UI captures and no-route normal-context favicon4-format HTTP/head/decode. No repeat of116 geometry checks.",
+    "previousUIIconGeometry": "/private/tmp/pr45-icon-system-qa/final/initial-full-run/report.json",
+    "previousHTTPSetupDiagnosis": "/private/tmp/pr45-icon-system-qa/final/ico-next-http-diagnostic.json",
+    "parentGate": "143 tests reported by parent; separate from current visual checks."
+  },
+  "ui_measurement_commit": "8393d30bd3d2261aad960486da3fb7786341177f",
+  "ui_source_unchanged_since_measurement": true,
+  "conditions": [
+    "실제 Naver SDK·타일",
+    "합성 기사·고정 테스트 좌표",
+    "실제 제보 POST 없음",
+    "Chrome safe-area0",
+    "iOS 상태바·홈 인디케이터 미복제",
+    "일반UI SVG는 사용자 추가 요청에 따른 의도적 변경·native/브랜드/지도 표시는 별도 역할"
+  ],
+  "test_scope": "이전140개와 구분한 공통 아이콘·브랜드 자산 회귀3개 추가·전체143개 통과. 최종 브라우저 수치는 app/capture-report.json을 따른다.",
+  "final_github_ci": "별도 확인"
+}

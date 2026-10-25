@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
+import { SiteStructuredData } from '@/components/layout/site-structured-data/site-structured-data';
 import { useArticleSheetRoute } from '@/features/article-detail/model/article-sheet-context';
-import { ServiceIntro } from '@/components/layout/service-intro';
 import { LoadingSpinner } from '@/components/feedback/loading-spinner';
 import { Notice } from '@/components/feedback/notice';
 import { articleText } from '@/features/article-list/model/article-presentation';
@@ -16,6 +16,12 @@ import { MapPeriodFilter } from '../map-period-filter/map-period-filter';
 import { MapUnavailableFilter } from '../map-unavailable-filter/map-unavailable-filter';
 import { createArticleMarker } from './map-article-marker';
 import { MapArticleSheet } from './map-article-sheet';
+import {
+  naverMapScriptUrl,
+  type MapInstance,
+  type MarkerInstance,
+  type NaverMaps,
+} from './naver-map-sdk';
 import { MapArticleCarousel } from '../map-article-carousel/map-article-carousel';
 import type {
   LocatedArticle,
@@ -31,50 +37,6 @@ import {
   hasMapViewport,
   restoreMapViewport,
 } from '../../model/map-viewport';
-
-type ControlCollection = { getArray(): HTMLElement[] };
-type MapInstance = {
-  controls?: Partial<Record<string | number, ControlCollection>>;
-  destroy(): void;
-  getCenter?(): { lat(): number; lng(): number };
-  getZoom?(): number;
-  getProjection?(): {
-    fromCoordToOffset(point: unknown): { x: number; y: number };
-  };
-  setCenter(point: unknown): void;
-  setSize(size: unknown): void;
-};
-type MarkerInstance = { setMap(map: MapInstance | null): void };
-type NaverMaps = {
-  Position?: {
-    BOTTOM_LEFT: string | number;
-    BOTTOM_CENTER?: string | number;
-    BOTTOM_RIGHT: string | number;
-  };
-  Size: new (width: number, height: number) => unknown;
-  Point: new (x: number, y: number) => unknown;
-  Marker: new (options: {
-    map: MapInstance;
-    position: unknown;
-    icon?:
-      | { url: string; size: unknown; anchor: unknown }
-      | { content: HTMLElement; anchor: unknown };
-    title?: string;
-  }) => MarkerInstance;
-  Event: {
-    addListener(
-      target: MapInstance | MarkerInstance | ControlCollection,
-      event: string,
-      callback: () => void,
-    ): unknown;
-    removeListener(listener: unknown): void;
-  };
-  LatLng: new (latitude: number, longitude: number) => unknown;
-  Map: new (
-    element: HTMLElement,
-    options: { center: unknown; zoom: number },
-  ) => MapInstance;
-};
 
 type LocationResult =
   { latitude: number; longitude: number } | { error: string };
@@ -171,6 +133,7 @@ export function MapHome({
   const clearSelection = useRef<((restoreFocus?: boolean) => void) | null>(
     null,
   );
+  const restoreSelectionFocus = useRef<HTMLButtonElement | null>(null);
   const automaticLocation = useRef<{
     started: boolean;
     request?: Promise<LocationResult>;
@@ -204,6 +167,15 @@ export function MapHome({
 
     previousDetailOpen.current = detailOpen;
   }, [detailOpen, selectedArticles.length]);
+
+  useEffect(() => {
+    if (selectedArticles.length || !restoreSelectionFocus.current) return;
+    const target = restoreSelectionFocus.current;
+
+    restoreSelectionFocus.current = null;
+    // 시트의 포커스 가드와 배경 inert가 해제된 commit 뒤에 복귀한다.
+    if (target.isConnected) target.focus({ preventScroll: true });
+  }, [selectedArticles]);
 
   useLayoutEffect(() => {
     if (!locating && !locationError && restoreLocateFocus.current) {
@@ -246,6 +218,7 @@ export function MapHome({
     let map: MapInstance | undefined;
     let marker: MarkerInstance | undefined;
     let selectedMarker: HTMLButtonElement | undefined;
+    let selectedPoint: string | undefined;
     const articleMarkers: {
       marker: MarkerInstance;
       listener: unknown;
@@ -481,8 +454,11 @@ export function MapHome({
 
       clearSelection.current = (restoreFocus = false) => {
         for (const entry of articleMarkers) entry.setSelected(false);
-        if (restoreFocus) selectedMarker?.focus({ preventScroll: true });
+        restoreSelectionFocus.current = restoreFocus
+          ? (selectedMarker ?? null)
+          : null;
         selectedMarker = undefined;
+        selectedPoint = undefined;
       };
 
       let currentItems: LocatedArticle[] = [];
@@ -494,24 +470,79 @@ export function MapHome({
         const groups = groupMapArticles(items);
 
         const projection = map.getProjection?.();
+        const viewSize =
+          canvas.current &&
+          canvas.current.clientWidth > 0 &&
+          canvas.current.clientHeight > 0
+            ? {
+                width: canvas.current.clientWidth,
+                height: canvas.current.clientHeight,
+              }
+            : undefined;
+        const center = map.getCenter?.();
+        const centerOffset =
+          projection && viewSize && center
+            ? projection.fromCoordToOffset(center)
+            : undefined;
+        const camera =
+          centerOffset &&
+          Number.isFinite(centerOffset.x) &&
+          Number.isFinite(centerOffset.y)
+            ? viewSize
+            : undefined;
 
         const nextGroups = groupMapDisplayPoints(
           groups,
           projection
-            ? ({ latitude, longitude }) =>
-                projection.fromCoordToOffset(
+            ? ({ latitude, longitude }) => {
+                const point = projection.fromCoordToOffset(
                   new maps.LatLng(latitude, longitude),
-                )
+                );
+
+                // SDK pane의 이동 원점을 바깥 canvas의 화면 좌표로 정규화한다.
+                return camera && centerOffset
+                  ? {
+                      x: point.x - centerOffset.x + camera.width / 2,
+                      y: point.y - centerOffset.y + camera.height / 2,
+                    }
+                  : point;
+              }
             : undefined,
+          camera,
         );
 
         if (sameMapDisplayGroups(displayGroups, nextGroups)) return;
+        const previousSelection = selectedPoint
+          ? displayGroups.get(selectedPoint)
+          : undefined;
+        const nextSelection = selectedPoint
+          ? nextGroups.get(selectedPoint)
+          : undefined;
+        const selectedIds = new Set(
+          previousSelection?.items.map((item) => item.article_id),
+        );
+        const retainedSelection =
+          nextSelection &&
+          nextSelection.items.length === selectedIds.size &&
+          nextSelection.items.every((item) => selectedIds.has(item.article_id))
+            ? nextSelection
+            : undefined;
+        const restoreMarkerFocus = document.activeElement === selectedMarker;
+
+        if (retainedSelection) {
+          setSelectedArticles(retainedSelection.items);
+        } else {
+          clearSelection.current?.();
+          setSelectedArticles([]);
+        }
+
         displayGroups = nextGroups;
-        clearSelection.current?.();
-        setSelectedArticles([]);
         clearArticles();
 
-        for (const { items: group, regionCount } of displayGroups.values()) {
+        for (const [
+          point,
+          { items: group, regionCount, diameter },
+        ] of displayGroups) {
           const item = group[0];
           const title =
             group.length === 1
@@ -526,7 +557,7 @@ export function MapHome({
           const visual = createArticleMarker(
             group.length,
             `${positionLabel}: ${item.location.label} · ${title}${regionCount > 1 ? ' · 지역 묶음' : ''}`,
-            regionCount > 1,
+            diameter,
           );
 
           const articleMarker = new maps.Marker({
@@ -546,6 +577,7 @@ export function MapHome({
             clearSelection.current?.();
             visual.setSelected(true);
             selectedMarker = visual.content;
+            selectedPoint = point;
             setSelectedArticles(group);
             if (group.length === 1)
               openArticleRef.current?.(group[0].article_id);
@@ -568,6 +600,13 @@ export function MapHome({
             listener,
             setSelected: visual.setSelected,
           });
+
+          if (retainedSelection && point === selectedPoint) {
+            visual.setSelected(true);
+            selectedMarker = visual.content;
+            if (restoreMarkerFocus)
+              visual.content.focus({ preventScroll: true });
+          }
         }
       };
 
@@ -599,9 +638,7 @@ export function MapHome({
       setReady(true);
     };
 
-    const url = new URL('https://oapi.map.naver.com/openapi/v3/maps.js');
-
-    url.searchParams.set('ncpKeyId', clientId);
+    const url = naverMapScriptUrl(clientId);
 
     for (const element of document.querySelectorAll('script[src]')) {
       const scriptUrl = new URL((element as HTMLScriptElement).src);
@@ -720,6 +757,7 @@ export function MapHome({
 
   return (
     <>
+      <SiteStructuredData />
       <section aria-label="주변 지도" className="relative">
         <div
           role="group"
@@ -892,10 +930,10 @@ export function MapHome({
           )}
         </div>
         {ready &&
-          !detailOpen &&
           selectedArticles.length > (sheetRoute ? 1 : 0) &&
           articles && (
             <MapArticleSheet
+              active={!detailOpen}
               items={selectedArticles}
               apiOrigin={articles.apiOrigin}
               onHeightChange={setSelectionHeight}
@@ -906,7 +944,6 @@ export function MapHome({
             />
           )}
       </section>
-      <ServiceIntro />
     </>
   );
 }

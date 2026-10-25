@@ -1,0 +1,115 @@
+{
+  "sourceHead": "9f33c546c1ef5894d3351e7bf0496f1b8278dfc1",
+  "buildId": "3az_4QQ5E5r7rXctQkgo6",
+  "synthetic": true,
+  "personalLocation": false,
+  "SDKStubbed": false,
+  "summary": {
+    "checks": 120,
+    "failed": 0,
+    "scenarios": 4,
+    "incomplete": 0,
+    "screenshots": 11,
+    "pageErrors": 0,
+    "tiles200": 23
+  },
+  "screenshots": [
+    {
+      "file": "app/normal-short.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic short article; direct entry, natural height with an expanded70dvh ceiling."
+    },
+    {
+      "file": "app/normal-medium.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic medium article; direct entry, natural height with an expanded70dvh ceiling."
+    },
+    {
+      "file": "app/normal-long.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic long article; direct entry, natural height with an expanded70dvh ceiling."
+    },
+    {
+      "file": "app/manual-url.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Only native share/clipboard capabilities fail synthetically; manual URL joins the same reading flow."
+    },
+    {
+      "file": "app/manual-url-low-height.png",
+      "viewport": {
+        "width": 1440,
+        "height": 320
+      },
+      "condition": "Wide desktop viewport with only320px height; sheet remains capped and the manual URL is reachable."
+    },
+    {
+      "file": "app/map-normal-short.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual Naver SDK and synthetic single-group marker open a normal article directly."
+    },
+    {
+      "file": "app/group12-reading-position.png",
+      "viewport": {
+        "width": 1440,
+        "height": 500
+      },
+      "condition": "Real Naver group12 chooser, expanded, reading a later article after viewport resize."
+    },
+    {
+      "file": "app/group12-returned.png",
+      "viewport": {
+        "width": 1440,
+        "height": 500
+      },
+      "condition": "Detail close returned to the same chooser, reading position and focused link."
+    },
+    {
+      "file": "app/filter-low-height.png",
+      "viewport": {
+        "width": 393,
+        "height": 320
+      },
+      "condition": "Existing auto-size whole-filter sheet; period/category/status design is unchanged."
+    },
+    {
+      "file": "app/nojs-long-normal.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "JavaScript disabled; CSS natural height/scroll retains the real summary and original source."
+    },
+    {
+      "file": "app/nojs404.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual404 without JavaScript; original address and safe escape remain available."
+    }
+  ],
+  "report": "report.json",
+  "execution": "Prepared only until parent QA_READY; no product source/server/build mutations.",
+  "initialRun": "../first-run/report.json",
+  "diagnostics": [
+    "../running-fixture-diagnostic.json",
+    "../restarted-fixture-diagnostic.json",
+    "../nojs-diagnostic/report.json"
+  ],
+  "resultNotes": "../RESULTS.md"
+}

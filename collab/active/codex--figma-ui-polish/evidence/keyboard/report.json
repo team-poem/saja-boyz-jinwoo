@@ -1,0 +1,1866 @@
+{
+  "buildId": "9Ou5Qm-kpoM0Vi-Klf4QG",
+  "cases": [
+    {
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "records": [
+        {
+          "tag": "SELECT",
+          "type": null,
+          "id": "report-category",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 97,
+            "width": 361,
+            "height": 41,
+            "top": 97,
+            "right": 377,
+            "bottom": 138,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 361,
+            "height": 41,
+            "top": 182,
+            "right": 377,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 361,
+            "height": 41,
+            "top": 182,
+            "right": 377,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 361,
+            "height": 41,
+            "top": 182,
+            "right": 377,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 361,
+            "height": 41,
+            "top": 182,
+            "right": 377,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 361,
+            "height": 41,
+            "top": 182,
+            "right": 377,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 361,
+            "height": 41,
+            "top": 182,
+            "right": 377,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 361,
+            "height": 41,
+            "top": 182,
+            "right": 377,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "id": "report-title",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 267,
+            "width": 361,
+            "height": 41,
+            "top": 267,
+            "right": 377,
+            "bottom": 308,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "id": "report-location",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 352,
+            "width": 361,
+            "height": 41,
+            "top": 352,
+            "right": 377,
+            "bottom": 393,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": null,
+          "id": "report-description",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 437,
+            "width": 361,
+            "height": 120,
+            "top": 437,
+            "right": 377,
+            "bottom": 557,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 120,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "file",
+          "id": "report-attachments",
+          "label": null,
+          "rect": {
+            "x": 17,
+            "y": 602,
+            "width": 359,
+            "height": 98,
+            "top": 602,
+            "right": 376,
+            "bottom": 700,
+            "left": 17
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 98,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "id": "",
+          "label": "검증용-첨부.png 삭제",
+          "rect": {
+            "x": 328.515625,
+            "y": 706,
+            "width": 48.484375,
+            "height": 34,
+            "top": 706,
+            "right": 377,
+            "bottom": 740,
+            "left": 328.515625
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 34,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 3
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "id": "",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 776,
+            "width": 361,
+            "height": 52,
+            "top": 776,
+            "right": 377,
+            "bottom": 828,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 52,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 35
+        },
+        {
+          "tag": "A",
+          "type": null,
+          "id": "",
+          "label": "제보 닫기",
+          "rect": {
+            "x": 339,
+            "y": 6,
+            "width": 44,
+            "height": 44,
+            "top": 6,
+            "right": 383,
+            "bottom": 50,
+            "left": 339
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 44,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 35
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "id": "report-category",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 80,
+            "width": 361,
+            "height": 41,
+            "top": 80,
+            "right": 377,
+            "bottom": 121,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 17
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 165,
+            "width": 361,
+            "height": 41,
+            "top": 165,
+            "right": 377,
+            "bottom": 206,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 17
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 165,
+            "width": 361,
+            "height": 41,
+            "top": 165,
+            "right": 377,
+            "bottom": 206,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 17
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 165,
+            "width": 361,
+            "height": 41,
+            "top": 165,
+            "right": 377,
+            "bottom": 206,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 17
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 165,
+            "width": 361,
+            "height": 41,
+            "top": 165,
+            "right": 377,
+            "bottom": 206,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 17
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 165,
+            "width": 361,
+            "height": 41,
+            "top": 165,
+            "right": 377,
+            "bottom": 206,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 17
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 165,
+            "width": 361,
+            "height": 41,
+            "top": 165,
+            "right": 377,
+            "bottom": 206,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 17
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 165,
+            "width": 361,
+            "height": 41,
+            "top": 165,
+            "right": 377,
+            "bottom": 206,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 393,
+            "height": 57,
+            "top": 0,
+            "right": 393,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 760,
+            "width": 393,
+            "height": 92,
+            "top": 760,
+            "right": 393,
+            "bottom": 852,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 17
+        }
+      ],
+      "covered": [],
+      "centeredBehindFooter": []
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "records": [
+        {
+          "tag": "SELECT",
+          "type": null,
+          "id": "report-category",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 97,
+            "width": 288,
+            "height": 41,
+            "top": 97,
+            "right": 304,
+            "bottom": 138,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "id": "report-title",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 267,
+            "width": 288,
+            "height": 41,
+            "top": 267,
+            "right": 304,
+            "bottom": 308,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": null,
+          "id": "report-location",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 352,
+            "width": 288,
+            "height": 41,
+            "top": 352,
+            "right": 304,
+            "bottom": 393,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": null,
+          "id": "report-description",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 437,
+            "width": 288,
+            "height": 120,
+            "top": 437,
+            "right": 304,
+            "bottom": 557,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 111,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "file",
+          "id": "report-attachments",
+          "label": null,
+          "rect": {
+            "x": 17,
+            "y": 430,
+            "width": 286,
+            "height": 98,
+            "top": 430,
+            "right": 303,
+            "bottom": 528,
+            "left": 17
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 98,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 172
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "id": "",
+          "label": "검증용-첨부.png 삭제",
+          "rect": {
+            "x": 255.515625,
+            "y": 494,
+            "width": 48.484375,
+            "height": 34,
+            "top": 494,
+            "right": 304,
+            "bottom": 528,
+            "left": 255.515625
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 34,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 215
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "id": "",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 564,
+            "width": 288,
+            "height": 52,
+            "top": 564,
+            "right": 304,
+            "bottom": 616,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 52,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 247
+        },
+        {
+          "tag": "A",
+          "type": null,
+          "id": "",
+          "label": "제보 닫기",
+          "rect": {
+            "x": 266,
+            "y": 6,
+            "width": 44,
+            "height": 44,
+            "top": 6,
+            "right": 310,
+            "bottom": 50,
+            "left": 266
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 44,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 247
+        },
+        {
+          "tag": "SELECT",
+          "type": null,
+          "id": "report-category",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 97,
+            "width": 288,
+            "height": 41,
+            "top": 97,
+            "right": 304,
+            "bottom": 138,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        },
+        {
+          "tag": "INPUT",
+          "type": "datetime-local",
+          "id": "report-occurred-at",
+          "label": null,
+          "rect": {
+            "x": 16,
+            "y": 182,
+            "width": 288,
+            "height": 41,
+            "top": 182,
+            "right": 304,
+            "bottom": 223,
+            "left": 16
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 57,
+            "top": 0,
+            "right": 320,
+            "bottom": 57,
+            "left": 0
+          },
+          "footer": {
+            "x": 0,
+            "y": 548,
+            "width": 320,
+            "height": 92,
+            "top": 548,
+            "right": 320,
+            "bottom": 640,
+            "left": 0
+          },
+          "visibleHeight": 41,
+          "fullyCovered": false,
+          "centerHitsFooter": false,
+          "scrollY": 0
+        }
+      ],
+      "covered": [],
+      "centeredBehindFooter": []
+    }
+  ],
+  "pageErrors": []
+}

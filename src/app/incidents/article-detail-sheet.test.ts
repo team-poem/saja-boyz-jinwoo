@@ -6,6 +6,7 @@ import DetailPage from './[id]/page';
 
 vi.mock('next/navigation', () => ({
   usePathname: () => null,
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
   notFound: () => {
     throw new Error('TEST_ARTICLE_NOT_FOUND');
   },
@@ -122,15 +123,15 @@ test('articleSheetInteractionPreservesBackground', async () => {
       'button[aria-expanded]',
     );
     expect(handle, '키보드로 접고 펼칠 수 있는 핸들').not.toBeNull();
-    expect(handle?.getAttribute('aria-expanded')).toBe('true');
-    await act(async () => {
-      handle?.click();
-    });
     expect(handle?.getAttribute('aria-expanded')).toBe('false');
     await act(async () => {
       handle?.click();
     });
     expect(handle?.getAttribute('aria-expanded')).toBe('true');
+    await act(async () => {
+      handle?.click();
+    });
+    expect(handle?.getAttribute('aria-expanded')).toBe('false');
     await act(async () => {
       dialog.dispatchEvent(
         new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
@@ -228,5 +229,82 @@ test('articleSheetDragKeepsReadingAndShareWithinReach', async () => {
     host.remove();
     vi.unstubAllGlobals();
     vi.unstubAllEnvs();
+  }
+});
+
+test('articleShareAndFallbackStayInTheReadingScrollFlow', async () => {
+  const { act, createElement } = await import('react');
+  const { createRoot } = await import('react-dom/client');
+  const { DetailSheet } =
+    await import('@/features/article-detail/ui/detail-sheet/detail-sheet');
+  const { DetailShare } = await import('./[id]/detail-share');
+  vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
+  vi.stubGlobal('navigator', {
+    clipboard: {
+      writeText: vi.fn().mockRejectedValue(new Error('clipboard unavailable')),
+    },
+  });
+  const host = document.createElement('div');
+  document.body.append(host);
+  const root = createRoot(host);
+  try {
+    await act(async () =>
+      root.render(
+        createElement(
+          DetailSheet,
+          {
+            titleId: 'reading-title',
+            footer: createElement(DetailShare, {
+              id: 'd'.repeat(64),
+              title: '읽기 흐름 기사',
+            }),
+          },
+          createElement('h1', { id: 'reading-title' }, '읽기 흐름 기사'),
+          createElement(
+            'section',
+            { 'aria-label': '기사 요약' },
+            '긴 본문 '.repeat(100),
+          ),
+        ),
+      ),
+    );
+    const summary = host.querySelector('section[aria-label="기사 요약"]')!;
+    const reading = summary.closest('[tabindex="0"]')!;
+    const share = [...host.querySelectorAll('button')].find((button) =>
+      button.textContent?.includes('공유'),
+    )!;
+    expect(
+      reading.contains(share),
+      '공유도 본문과 같은 스크롤 영역에 있어야 함',
+    ).toBe(true);
+    expect(
+      share.compareDocumentPosition(summary) & Node.DOCUMENT_POSITION_PRECEDING,
+      '공유는 본문 뒤에 위치',
+    ).toBeTruthy();
+    await act(async () => share.click());
+    const manual = host.querySelector<HTMLInputElement>(
+      'input[aria-label="공유 링크"]',
+    )!;
+    expect(manual.value).toBe(
+      window.location.origin + '/incidents/' + 'd'.repeat(64),
+    );
+    expect(
+      reading.contains(manual),
+      '복사 실패 복구도 같은 읽기 영역에서 접근',
+    ).toBe(true);
+    manual.focus();
+    await act(async () =>
+      manual.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }),
+      ),
+    );
+    expect(
+      document.activeElement,
+      '마지막 공유 컨트롤 뒤에는 시트 핸들로 포커스 순환',
+    ).toBe(host.querySelector('button[aria-expanded]'));
+  } finally {
+    await act(async () => root.unmount());
+    host.remove();
+    vi.unstubAllGlobals();
   }
 });

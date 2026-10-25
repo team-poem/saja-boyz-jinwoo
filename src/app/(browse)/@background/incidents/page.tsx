@@ -13,15 +13,7 @@ export default async function IncidentsPage() {
   return (
     <section aria-label="사건 목록">
       <h1 className="sr-only">사건 목록</h1>
-      <p className="text-sm text-muted">최근 30일 인기순</p>
-      <div className="flex flex-wrap gap-4 py-4 text-sm">
-        <Link href="/archive" className="ui-link text-brand underline">
-          기사 아카이브
-        </Link>
-        <Link href="/about" className="ui-link text-brand underline">
-          서비스 안내
-        </Link>
-      </div>
+      <p className="sr-only">최근 30일 인기순</p>
       {result ? (
         <PaginatedArticleList initialPage={result} />
       ) : (

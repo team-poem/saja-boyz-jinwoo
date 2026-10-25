@@ -1,0 +1,70 @@
+{
+  "browser": "Actual local Chrome, data URLs; no app server/build or source edits",
+  "originalSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+  "candidateSHA256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+  "results": [
+    {
+      "name": "original-ICO",
+      "success": true,
+      "error": null,
+      "naturalWidth": 48,
+      "naturalHeight": 48
+    },
+    {
+      "name": "candidate-ICO",
+      "success": true,
+      "error": null,
+      "naturalWidth": 48,
+      "naturalHeight": 48
+    },
+    {
+      "name": "original-embedded-PNG-16",
+      "success": true,
+      "error": null,
+      "naturalWidth": 16,
+      "naturalHeight": 16
+    },
+    {
+      "name": "original-embedded-PNG-32",
+      "success": true,
+      "error": null,
+      "naturalWidth": 32,
+      "naturalHeight": 32
+    },
+    {
+      "name": "original-embedded-PNG-48",
+      "success": true,
+      "error": null,
+      "naturalWidth": 48,
+      "naturalHeight": 48
+    },
+    {
+      "name": "candidate-embedded-PNG-16",
+      "success": true,
+      "error": null,
+      "naturalWidth": 16,
+      "naturalHeight": 16
+    },
+    {
+      "name": "candidate-embedded-PNG-32",
+      "success": true,
+      "error": null,
+      "naturalWidth": 32,
+      "naturalHeight": 32
+    },
+    {
+      "name": "candidate-embedded-PNG-48",
+      "success": true,
+      "error": null,
+      "naturalWidth": 48,
+      "naturalHeight": 48
+    },
+    {
+      "name": "served-Apple-PNG-control",
+      "success": true,
+      "error": null,
+      "naturalWidth": 180,
+      "naturalHeight": 180
+    }
+  ]
+}

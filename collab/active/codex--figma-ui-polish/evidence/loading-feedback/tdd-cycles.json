@@ -1,0 +1,59 @@
+{
+  "runtime": "sobaya 0d051213",
+  "baseline": 146,
+  "cycles": [
+    {
+      "test": "articleImagesShowSkeletonUntilLoadAndRecoverAcrossUrlsAndCachedImages",
+      "red": "image-red.json",
+      "observed": "세 이미지의 pending 스켈레톤 없음·실패가 다음 URL에 남음",
+      "green": "image-focused-green.json",
+      "full": "gate147.json",
+      "passed": 147,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "test": "serverLoadingBoundariesKeepMapFrameAndStandaloneArticleSeoAccessible",
+      "red": "server-red.json",
+      "observed": "홈 기사 API 보류 중 지도 로딩 표면이 없음",
+      "green": "server-focused-green.json",
+      "full": "gate148.json",
+      "passed": 148,
+      "failed": 0,
+      "skipped": 0,
+      "learning": "직접 loading 파일만 추가하면 NoJS본문이 숨고 모든UA메타대기는첫로더없이전역정책만변경함. 직접SSR/proxy/메타데이터를유지하고느린직접본문·SEO·404회귀를추가."
+    },
+    {
+      "test": "searchSubmissionsAndDetailRetriesExposePendingWithoutLosingGetOrRecovery",
+      "red": "actions-red.json",
+      "observed": "수동검색이전체문서GET으로제출되고NoJS결과가숨음,내부/직접상세재시도의busy/spinner없음",
+      "green": "actions-focused-green.json",
+      "full": "gate149.json",
+      "passed": 149,
+      "failed": 0,
+      "skipped": 0,
+      "support": "기존기대값은유지하고이동한뷰의import경로와새router의SSRfixture만갱신. 홈loading을(map)routegroup으로한정하고검색Skeleton을clientpending뷰로이동해NoJSGET검색복구."
+    },
+    {
+      "test": "repeatingTheSameSearchReplacesCardsAndResetsPagination",
+      "red": "repeat-search-red.json",
+      "observed": "같은검색어재제출뒤기존40개카드와이전pagination유지",
+      "green": "repeat-search-focused-green.json",
+      "full": "gate150.json",
+      "passed": 150,
+      "failed": 0,
+      "skipped": 0,
+      "support": "명시submit revision으로만결과remount. A40→B20→offset20→B23→C3→empty검증. 첫전체실행1개실패뒤동일파일9개GREEN,관측을해당keyword요청·렌더완료로한정해전체재검증.",
+      "ci_followup": {
+        "red": "ci-ab52ab4-timeout.txt",
+        "observed": "원격149개통과/같은검색어회귀1개60초timeout",
+        "green": "ci-navigation-nine-green.json",
+        "full": "ci-gate150.json",
+        "passed": 150,
+        "failed": 0,
+        "skipped": 0,
+        "changes": "제품UI불변. 테스트마다context종료,무제한RSC스트림EOF대기대신실제200응답+새결과/offset/busy종료를검증하고단계진단추가. 전체60초상한과기대값유지."
+      }
+    }
+  ]
+}

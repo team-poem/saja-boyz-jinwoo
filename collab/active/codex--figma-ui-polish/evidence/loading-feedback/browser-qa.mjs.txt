@@ -1,0 +1,450 @@
+import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import { execFileSync } from 'node:child_process';
+
+const app = process.env.QA_APP || '/Users/jeong-gyuhwan/규환/projects/saja-boyz-jinwoo-codex--figma-ui-polish';
+const origin = process.env.QA_ORIGIN || 'http://localhost:31147';
+const api = process.env.QA_API || 'http://127.0.0.1:41147';
+const output = process.env.QA_OUTPUT || '/private/tmp/pr45-loading-qa/final';
+const siteOrigin = process.env.QA_SITE_ORIGIN || 'https://hyunghyung.vercel.app';
+const require = createRequire(app + '/package.json');
+const { chromium } = require('playwright-core');
+const { JSDOM } = require('jsdom');
+const buildId = (await readFile(app + '/.next/BUILD_ID', 'utf8')).trim();
+if (process.env.QA_EXPECT_BUILD_ID && process.env.QA_EXPECT_BUILD_ID !== buildId) throw new Error('Build ID mismatch');
+await mkdir(output + '/app', { recursive: true });
+const report = {
+  sourceHead: process.env.QA_COMMIT || execFileSync('git', ['rev-parse', 'HEAD'], { cwd: app, encoding: 'utf8' }).trim(),
+  buildId, started: new Date().toISOString(),
+  synthetic: true, personalLocation: false, SDKStubbed: false, SDKModified: false,
+  checks: [], scenarios: [], screenshots: [], pageErrors: [], fixtureStates: [],
+  tiles200: 0, observedWrites: [], notes: [
+    'All articles, illustrations and the browser location are synthetic.',
+    'Home API hold expects an h-dvh skeleton; real SDK is expected only after release.',
+    'Direct document probe/metadata waits before HTML are timing evidence, not missing-loader failures.',
+    'AI captions retain their existing SSR presence while an image is pending.',
+    'A separate no-routing context is used for image cache verification.',
+    'Browser steps never submit reports or invoke application write APIs.',
+  ],
+};
+function check(ok, name, evidence) {
+  report.checks.push({ name, passed: Boolean(ok), ...(evidence === undefined ? {} : { evidence }) });
+  return Boolean(ok);
+}
+function requireCheck(ok, name, evidence) {
+  if (!check(ok, name, evidence)) throw new Error(name);
+}
+async function control(path, values = {}) {
+  const url = new URL('/__qa/' + path, api);
+  for (const [key, value] of Object.entries(values)) if (value !== undefined) url.searchParams.set(key, String(value));
+  const response = await fetch(url);
+  if (!response.ok) throw new Error('Fixture control failed: ' + response.status);
+  return response.json();
+}
+async function state(label) {
+  const value = await control('state');
+  if (label) report.fixtureStates.push({ label, value });
+  return value;
+}
+async function waitPending(scope, key, after = 0, timeout = 4000) {
+  const started = Date.now();
+  while (Date.now() - started < timeout) {
+    const value = await state();
+    const match = value.pending.find(item => item.scope === scope && (!key || item.key === key) && item.token > after);
+    if (match) return match;
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
+  throw new Error('Expected gated request did not arrive: ' + scope);
+}
+async function snapshot(page, name, condition) {
+  const file = 'app/' + name + '.png';
+  await page.screenshot({ path: output + '/' + file, animations: 'disabled', timeout: 10000 });
+  report.screenshots.push({ file, viewport: page.viewportSize(), condition });
+}
+const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const contexts = new Set();
+async function pageFor(options = {}) {
+  const { blockPrefetch = false, ...contextOptions } = options;
+  const context = await browser.newContext({
+    viewport: { width: 393, height: 852 },
+    reducedMotion: 'reduce',
+    permissions: ['geolocation'],
+    geolocation: { latitude: 37.56, longitude: 126.99, accuracy: 1000 },
+    ...contextOptions,
+  });
+  contexts.add(context);
+  // Only RSC loader/retry contexts intercept prefetch. Cache/NoJS/SDK-image
+  // verification contexts have no routing interception at all.
+  if (blockPrefetch) await context.route('**/*', async route => {
+    const headers = route.request().headers();
+    if (headers['next-router-prefetch'] || headers.purpose === 'prefetch') return route.abort();
+    return route.continue();
+  });
+  const page = await context.newPage();
+  page.on('pageerror', error => report.pageErrors.push({ message: error.message }));
+  page.on('request', request => {
+    if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method())) {
+      // Observational guard only: no steps in this runner target a write action.
+      report.observedWrites.push({ method: request.method(), origin: new URL(request.url()).origin, path: new URL(request.url()).pathname });
+    }
+  });
+  page.on('response', response => {
+    const url = new URL(response.url());
+    if (url.hostname === 'nrbe.map.naver.net' && response.status() === 200) report.tiles200++;
+  });
+  return page;
+}
+async function closePage(page) {
+  const context = page.context();
+  contexts.delete(context);
+  await context.close();
+}
+async function scenario(name, run) {
+  const before = report.checks.length;
+  const entry = { name, started: Date.now(), completed: false };
+  report.scenarios.push(entry);
+  try { await control('reset'); await run(); entry.completed = true; }
+  catch (error) { entry.error = String(error?.stack || error); check(false, name + ' completed', entry.error); }
+  finally {
+    await state(name + ':end').catch(() => {});
+    await control('reset').catch(() => {});
+    for (const context of [...contexts]) { contexts.delete(context); await context.close().catch(() => {}); }
+    entry.elapsedMs = Date.now() - entry.started;
+    entry.checks = report.checks.length - before;
+  }
+}
+const health = await control('health');
+const id = health.ids.single, missing = health.ids.missing, title = health.title, summary = health.summary;
+const detailPath = '/incidents/' + id;
+const skeletonSelector = '[data-image-loading]';
+const imageSelector = 'img[src="' + api + '/images/' + id + '.jpg"]';
+const busy = page => page.locator('[role="status"][aria-busy="true"]').filter({ visible: true }).first();
+async function imageScope(page, surface) {
+  if (surface === 'detail') return page.getByRole('dialog').locator('figure').filter({ has: page.locator(imageSelector) }).first();
+  return page.locator('article').filter({ has: page.locator('a[href="' + detailPath + '"]') }).locator('figure').first();
+}
+async function openSurface(page, surface) {
+  await page.goto(origin + (surface === 'map' ? '/' : surface === 'detail' ? detailPath : '/incidents'), { waitUntil: 'domcontentloaded' });
+  if (surface === 'map') await page.locator('button[aria-label^="지역 대표 위치:"]').first().waitFor({ timeout: 15000 });
+  else if (surface === 'detail') await page.getByRole('heading', { name: title, exact: true }).waitFor();
+}
+async function loadedImage(figure) {
+  await figure.locator('img').waitFor();
+  await figure.locator('img').evaluate(image => image.decode());
+  await figure.locator(skeletonSelector).waitFor({ state: 'detached' });
+}
+async function imageGeometry(figure) {
+  return figure.evaluate(element => {
+    const image = element.querySelector('img'), loading = element.querySelector('[data-image-loading]');
+    return {
+      figure: element.getBoundingClientRect().toJSON(),
+      image: image?.getBoundingClientRect().toJSON(),
+      skeleton: loading?.getBoundingClientRect().toJSON(),
+      skeletonHidden: loading?.getAttribute('aria-hidden'),
+      complete: image?.complete, naturalWidth: image?.naturalWidth,
+      caption: element.querySelector('figcaption')?.textContent,
+    };
+  });
+}
+try {
+  for (const surface of ['list', 'map', 'detail']) {
+    await scenario('image-' + surface + '-pending-success-cache', async () => {
+      await control('config', { scope: 'image', key: id, hold: 1, status: 200 });
+      const page = await pageFor();
+      await openSurface(page, surface);
+      await waitPending('image', id);
+      const figure = await imageScope(page, surface);
+      await figure.locator(skeletonSelector).waitFor({ state: 'visible' });
+      const before = await imageGeometry(figure);
+      check(before.skeletonHidden === 'true', surface + ' image skeleton is decorative', before);
+      check(before.caption?.includes('AI 생성 이미지'), surface + ' pending image retains SSR caption');
+      check(before.image?.height > 0 && Math.abs(before.skeleton.height - before.image.height) < 1, surface + ' skeleton reserves the image area', before);
+      await snapshot(page, 'image-' + surface + '-pending', 'Held synthetic image; caption intentionally retains its SSR presence.');
+      await control('config', { scope: 'image', key: id, hold: 0, status: 200 });
+      await control('release', { scope: 'image', key: id, status: 200 });
+      await loadedImage(figure);
+      const after = await imageGeometry(figure);
+      check(after.complete && after.naturalWidth > 0, surface + ' real image decodes after release');
+      check(Math.abs(before.figure.height - after.figure.height) < 1 && Math.abs(before.figure.width - after.figure.width) < 1, surface + ' pending/success image geometry is stable', { before, after });
+      await snapshot(page, 'image-' + surface + '-success', 'Released and decoded synthetic image.');
+      // No browser route interception exists in this context, so HTTP cache
+      // behavior is observed rather than disabled by Playwright routing.
+      const beforeCache = (await state()).requests.filter(item => item.scope === 'image' && item.key === id).length;
+      await control('config', { scope: 'image', key: id, hold: 1, status: 200 });
+      const cachedPage = await page.context().newPage();
+      cachedPage.on('pageerror', error => report.pageErrors.push({ message: error.message }));
+      cachedPage.on('request', request => {
+        if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method())) {
+          report.observedWrites.push({ method: request.method(), origin: new URL(request.url()).origin, path: new URL(request.url()).pathname });
+        }
+      });
+      cachedPage.on('response', response => {
+        const url = new URL(response.url());
+        if (url.hostname === 'nrbe.map.naver.net' && response.status() === 200) report.tiles200++;
+      });
+      // General navigation in a new page shares the same context HTTP cache;
+      // reload's mandatory revalidation is not treated as a product cache bug.
+      await openSurface(cachedPage, surface);
+      const cachedFigure = await imageScope(cachedPage, surface);
+      await loadedImage(cachedFigure);
+      const cacheState = await state();
+      check(cacheState.requests.filter(item => item.scope === 'image' && item.key === id).length === beforeCache, surface + ' cache reuses the image without another fixture GET');
+      check(!cacheState.pending.some(item => item.scope === 'image' && item.key === id), surface + ' cache does not leave a skeleton or held image request');
+      await snapshot(cachedPage, 'image-' + surface + '-cache', 'New page, same normal browser context; general navigation shares HTTP max-age cache without route interception or forced reload validation.');
+      await cachedPage.close();
+      await closePage(page);
+    });
+    await scenario('image-' + surface + '-pending-failure', async () => {
+      await control('config', { scope: 'image', key: id, hold: 1, status: 503 });
+      const page = await pageFor();
+      await openSurface(page, surface);
+      await waitPending('image', id);
+      const figure = await imageScope(page, surface);
+      await figure.locator(skeletonSelector).waitFor({ state: 'visible' });
+      await control('config', { scope: 'image', key: id, hold: 0, status: 503 });
+      await control('release', { scope: 'image', key: id, status: 503 });
+      const owner = surface === 'detail' ? page.getByRole('dialog') : page.locator('article').filter({ has: page.locator('a[href="' + detailPath + '"]') });
+      await owner.getByText('이미지 없음', { exact: true }).waitFor();
+      check(await owner.locator(skeletonSelector).count() === 0, surface + ' failed image terminates skeleton');
+      await snapshot(page, 'image-' + surface + '-failure', 'Synthetic image HTTP503; product fallback visible.');
+    });
+  }
+  await scenario('home-api-hold-skeleton-then-single-real-sdk', async () => {
+    await control('config', { scope: 'map', hold: 1, status: 200 });
+    const page = await pageFor();
+    const navigation = page.goto(origin + '/', { waitUntil: 'commit' });
+    await waitPending('map');
+    await navigation;
+    const loading = page.locator(process.env.QA_HOME_LOADING_SELECTOR || '[data-map-loading]').first();
+    await loading.waitFor({ state: 'visible', timeout: 2500 });
+    const originalLoading = await loading.elementHandle();
+    const geometry = await loading.evaluate(element => {
+      const container = element.closest('.h-dvh') || element;
+      return { height: container.getBoundingClientRect().height, viewport: innerHeight };
+    });
+    check(geometry.height >= geometry.viewport - 1, 'home held API shows a full-height skeleton', geometry);
+    check(await page.locator('script[src*="maps.js"]').count() === 0, 'home does not initialize real SDK before held map data resolves');
+    await snapshot(page, 'home-api-pending', 'Server map API held; full-height fallback, SDK intentionally not yet mounted.');
+    await control('config', { scope: 'map', hold: 0, status: 200 });
+    await control('release', { scope: 'map', status: 200 });
+    await page.locator('button[aria-label^="지역 대표 위치:"]').first().waitFor({ timeout: 15000 });
+    check(await page.locator('script[src*="maps.js"]').count() === 1, 'home starts real SDK exactly once after API release');
+    await page.waitForFunction(element => !element.isConnected, originalLoading);
+    check(await loading.count() === 0, 'home fallback leaves after the real map mounts');
+    await snapshot(page, 'home-api-ready', 'Actual Naver SDK/tiles with fixed synthetic browser location and synthetic article groups.');
+  });
+  for (const submit of ['enter', 'button']) await scenario('manual-search-' + submit + '-pending', async () => {
+    const page = await pageFor();
+    await page.goto(origin + '/search', { waitUntil: 'domcontentloaded' });
+    await control('config', { scope: 'list', key: '느린검색', hold: 1, status: 200 });
+    const input = page.getByRole('searchbox', { name: '기사 키워드 검색' });
+    await input.fill('느린검색');
+    const form = page.locator('form[action="/search"]');
+    requireCheck(((await form.getAttribute('method')) || 'get').toLowerCase() === 'get', 'search fixture step only submits GET');
+    const submitButton = form.getByRole('button', { name: '검색', exact: true });
+    const trigger = submit === 'enter' ? input.press('Enter') : submitButton.click();
+    await waitPending('list', '느린검색');
+    const pending = busy(page);
+    await pending.waitFor({ state: 'visible', timeout: 2000 });
+    check(await submitButton.locator('svg[aria-hidden="true"]').count() === 1, submit + ' submit button has one decorative pending spinner');
+    check(await form.getAttribute('aria-busy') === 'true' && await submitButton.getAttribute('aria-busy') === 'true', submit + ' form and button expose busy state');
+    check(await submitButton.isDisabled() && await input.evaluate(element => element.readOnly), submit + ' pending prevents duplicate submit and query edits');
+    check(await page.locator('[role="status"][aria-busy="true"]').filter({ visible: true }).count() === 1, submit + ' pending has one visible search skeleton status');
+    check(await input.inputValue() === '느린검색', submit + ' pending retains the typed query');
+    await snapshot(page, 'search-' + submit + '-pending', 'Manual GET submission is held in the local article API.');
+    await control('config', { scope: 'list', key: '느린검색', hold: 0, status: 200 });
+    await control('release', { scope: 'list', key: '느린검색', status: 200 });
+    await trigger;
+    await page.waitForURL(url => url.pathname === '/search' && url.searchParams.get('q') === '느린검색');
+    await page.locator('article').filter({ hasText: title }).waitFor();
+    check(await pending.count() === 0, submit + ' search skeleton clears when actual results arrive');
+    check(await form.getAttribute('aria-busy') === 'false' && await submitButton.getAttribute('aria-busy') === 'false' && !await submitButton.isDisabled() && !await input.evaluate(element => element.readOnly), submit + ' completed search restores the form controls');
+    await snapshot(page, 'search-' + submit + '-success', 'The matching synthetic result set has replaced the pending state.');
+  });
+  await scenario('server-search-error-link-retry-failure-then-recovery', async () => {
+    const keyword = '느린검색';
+    const spacedQuery = ' 느린검색 ';
+    const retryHref = '/search?q=' + encodeURIComponent(keyword);
+    await control('config', { scope: 'list', key: keyword, hold: 0, status: 503 });
+    const page = await pageFor({ blockPrefetch: true });
+    await page.goto(origin + '/search?q=' + encodeURIComponent(spacedQuery), { waitUntil: 'domcontentloaded' });
+    const notice = page.getByRole('alert').filter({ hasText: '검색을 다시 이어볼까요?' });
+    await notice.waitFor({ state: 'visible' });
+    check(new URL(page.url()).searchParams.get('q') === spacedQuery, 'search error starts from an actual URL containing whitespace');
+    check(await page.getByRole('searchbox', { name: '기사 키워드 검색' }).inputValue() === keyword, 'server search trims the keyword while retaining the meaningful query');
+    check((await state()).requests.some(item => item.scope === 'list' && item.key === keyword && item.status === 503), 'whitespace query reaches the matching trimmed fixture keyword and503');
+    for (const status of [503, 200]) {
+      // Keep href/text selectors stable while the pending span extends the
+      // accessible link name. This is the actual server error Link, not form submit.
+      const retry = notice.locator('a[href="' + retryHref + '"]').filter({ hasText: '다시 시도' });
+      await retry.waitFor({ state: 'visible' });
+      await control('config', { scope: 'list', key: keyword, hold: 1, status });
+      const before = (await state()).requests.filter(item => item.scope === 'list' && item.key === keyword).length;
+      const retrying = retry.click();
+      await waitPending('list', keyword);
+      const pending = retry.locator('span[role="status"][aria-busy="true"]');
+      await pending.waitFor({ state: 'visible', timeout: 2000 });
+      check(await pending.locator('svg[aria-hidden="true"]').count() === 1, 'server search error Link exposes one KeywordLinkStatus spinner before' + status);
+      check((await state()).requests.filter(item => item.scope === 'list' && item.key === keyword).length - before === 1, 'server search retry performs one held keyword request before' + status);
+      await snapshot(page, 'search-error-retry-' + status + '-pending', 'Server search error Link pending; original query included whitespace and this retry normalizes its URL.');
+      await control('config', { scope: 'list', key: keyword, hold: 0, status });
+      await control('release', { scope: 'list', key: keyword, status });
+      await retrying;
+      await pending.waitFor({ state: 'detached', timeout: 5000 });
+      if (status === 503) {
+        await notice.waitFor({ state: 'visible' });
+        check(await retry.count() === 1 && await retry.isVisible(), 'failed server search retry ends pending and retains an available retry Link');
+        check(new URL(page.url()).searchParams.get('q') === keyword, 'failed Link retry keeps the normalized keyword URL for the same-href retry');
+        await snapshot(page, 'search-error-retry-503-result', 'The first retry failed again; its spinner ended and the same-href retry remains available.');
+      } else {
+        await page.getByRole('heading', { name: '기사 검색 결과', exact: true }).waitFor();
+        await page.locator('article').filter({ hasText: title }).waitFor();
+        check(await notice.count() === 0, 'successful server search retry replaces the error notice with actual matching articles');
+        check(new URL(page.url()).searchParams.get('q') === keyword, 'successful same-href search retry keeps the normalized shared query URL');
+        await snapshot(page, 'search-error-retry-200-result', 'Second retry used the same normalized href and recovered the real synthetic search results.');
+      }
+    }
+  });
+  for (const mode of ['overlay', 'archive']) await scenario('detail-rsc-' + mode + '-loader', async () => {
+    const page = await pageFor({ blockPrefetch: true });
+    await page.goto(origin + (mode === 'overlay' ? '/incidents' : '/archive'), { waitUntil: 'domcontentloaded' });
+    const link = page.locator('article a[href="' + detailPath + '"]').first();
+    await link.waitFor();
+    await control('config', { scope: 'detail', key: id, hold: 1, status: 200 });
+    const before = (await state()).requests.filter(item => item.scope === 'detail' && item.key === id).length;
+    const rscRequests = [];
+    page.on('request', request => {
+      const url = new URL(request.url());
+      if (url.pathname === detailPath && !request.headers()['next-router-prefetch']) rscRequests.push({ rsc: request.headers().rsc, queryHasRsc: url.searchParams.has('_rsc') });
+    });
+    const navigation = link.click();
+    await waitPending('detail', id);
+    const loading = page.getByRole('dialog').locator('[role="status"][aria-busy="true"]');
+    await loading.waitFor({ state: 'visible', timeout: 2000 });
+    const upstreamRequests = (await state()).requests.filter(item => item.scope === 'detail' && item.key === id).length - before;
+    check(upstreamRequests === 1, mode + ' real RSC entry uses one upstream detail GET');
+    report.rscEntries ??= [];
+    report.rscEntries.push({ from: mode === 'overlay' ? '/incidents' : '/archive', requests: rscRequests, upstreamRequests, dialogPresent: await page.getByRole('dialog').count(), sourceArchiveHeadingVisible: await page.getByRole('heading', { name: '기사 아카이브', exact: true }).isVisible().catch(() => false), classification: 'Observed route/UI only; archive entry is not assumed standalone.' });
+    check(rscRequests.some(request => request.rsc === '1' && request.queryHasRsc), mode + ' uses an actual NextLink RSC request');
+    await snapshot(page, 'detail-' + mode + '-pending', 'Actual NextLink RSC entry; upstream detail held, prefetch blocked only in this context.');
+    await control('config', { scope: 'detail', key: id, hold: 0, status: 200 });
+    await control('release', { scope: 'detail', key: id, status: 200 });
+    await navigation;
+    await page.getByRole('heading', { name: title, exact: true }).waitFor();
+    check(await page.getByRole('dialog').locator('[role="status"][aria-busy="true"]').count() === 0, mode + ' detail loader clears after response');
+  });
+  for (const resultStatus of [200, 503]) await scenario('detail-refresh-pending-' + resultStatus, async () => {
+    await control('config', { scope: 'detail', key: id, hold: 0, status: 503 });
+    const page = await pageFor({ blockPrefetch: true });
+    await page.goto(origin + '/incidents', { waitUntil: 'domcontentloaded' });
+    await page.locator('article a[href="' + detailPath + '"]').first().click();
+    const dialog = page.getByRole('dialog');
+    await dialog.getByRole('alert').waitFor();
+    const retry = dialog.getByRole('link', { name: '다시 시도', exact: true });
+    await retry.waitFor();
+    await control('config', { scope: 'detail', key: id, hold: 1, status: resultStatus });
+    const before = (await state()).requests.filter(item => item.scope === 'detail' && item.key === id).length;
+    await retry.focus();
+    const retrying = retry.click();
+    await waitPending('detail', id);
+    const pending = retry.locator('span[role="status"][aria-busy="true"]');
+    await pending.waitFor({ state: 'visible', timeout: 2000 });
+    check(await retry.getAttribute('aria-busy') === 'true' && await retry.getAttribute('aria-disabled') === 'true', 'refresh exposes busy and disabled state on its fixed-label link');
+    check(await pending.locator('svg[aria-hidden="true"]').count() === 1, 'refresh exposes one pending spinner');
+    // Real keyboard input during pending, without force-clicking a disabled link.
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(150);
+    check((await state()).requests.filter(item => item.scope === 'detail' && item.key === id).length - before === 1, 'pending refresh blocks duplicate keyboard submissions');
+    check(new URL(page.url()).pathname === detailPath, 'refresh pending preserves the shared article URL');
+    await snapshot(page, 'detail-refresh-' + resultStatus + '-pending', 'An error sheet retries with router.refresh; repeated Enter must not add upstream requests.');
+    await control('config', { scope: 'detail', key: id, hold: 0, status: resultStatus });
+    await control('release', { scope: 'detail', key: id, status: resultStatus });
+    await retrying;
+    if (resultStatus === 200) await dialog.getByRole('heading', { name: title, exact: true }).waitFor();
+    else {
+      await pending.waitFor({ state: 'detached' });
+      await dialog.getByRole('alert').waitFor();
+      const retryAgain = dialog.getByRole('link', { name: '다시 시도', exact: true });
+      check(await retryAgain.getAttribute('aria-disabled') !== 'true' && await retryAgain.getAttribute('aria-busy') === 'false', 'failed refresh restores an enabled non-busy retry path');
+    }
+    check(await dialog.locator('[role="status"][aria-busy="true"]').count() === 0, 'refresh spinner terminates after ' + resultStatus);
+    await snapshot(page, 'detail-refresh-' + resultStatus + '-result', resultStatus === 200 ? 'Retry recovered the article.' : 'Retry failed again; the pending state ended and retry is available.');
+  });
+  await scenario('direct-document-probe-and-metadata-delay', async () => {
+    await control('config', { scope: 'detail', key: id, hold: 1, status: 200 });
+    const page = await pageFor();
+    const started = Date.now();
+    const navigation = page.goto(origin + detailPath, { waitUntil: 'domcontentloaded' });
+    const probe = await waitPending('detail', id);
+    await page.waitForTimeout(250);
+    const first = await state('direct:probe-held');
+    check(first.pending.filter(item => item.scope === 'detail').length === 1, 'direct document initially waits on the existence probe');
+    await control('release', { scope: 'detail', key: id, count: 1, status: 200 });
+    const detail = await waitPending('detail', id, probe.token);
+    await page.waitForTimeout(250);
+    await state('direct:metadata-held');
+    // No loader assertion here: preserve existing direct-document SSR/Proxy and
+    // metadata behavior; pre-HTML waiting is measured separately from UI loading.
+    await control('config', { scope: 'detail', key: id, hold: 0, status: 200 });
+    await control('release', { scope: 'detail', key: id, count: 1, status: 200 });
+    const response = await navigation;
+    check(response.status() === 200, 'delayed direct document returns200');
+    await page.getByRole('heading', { name: title, exact: true }).waitFor();
+    check((await state()).requests.filter(item => item.scope === 'detail' && item.key === id).length === 2, 'direct probe and cached page/metadata load remain two upstream GETs');
+    report.directTiming = { elapsedMs: Date.now() - started, probeToken: probe.token, detailToken: detail.token, preHtmlDelayIsExpected: true };
+    await snapshot(page, 'direct-delayed-success', 'Both direct-request stages were gated and explicitly released; initial pre-HTML delay is expected.');
+  });
+  await scenario('nojs-visible-body-bot-metadata-and-real404', async () => {
+    const page = await pageFor({ javaScriptEnabled: false });
+    const response = await page.goto(origin + detailPath, { waitUntil: 'load' });
+    check(response.status() === 200, 'NoJS valid article document status200');
+    await page.getByRole('heading', { name: title, exact: true }).waitFor({ state: 'visible' });
+    check(await page.getByRole('region', { name: '기사 요약' }).getByText(summary, { exact: true }).isVisible(), 'NoJS actual article summary is visible');
+    check(await page.getByRole('link', { name: /기사 원문/ }).isVisible(), 'NoJS actual source link is visible');
+    const image = page.locator(imageSelector);
+    const imageState = await image.evaluate(image => ({ complete: image.complete, naturalWidth: image.naturalWidth, width: image.getBoundingClientRect().width, height: image.getBoundingClientRect().height }));
+    check(imageState.complete && imageState.naturalWidth > 0 && imageState.width > 0 && imageState.height > 0, 'NoJS image loads visibly without a client onLoad callback', imageState);
+    await snapshot(page, 'direct-nojs-valid', 'JavaScript disabled; final article title, summary, source and image must remain visible.');
+    const bot = await fetch(origin + detailPath, { headers: { 'user-agent': 'Googlebot' } });
+    const html = await bot.text(), doc = new JSDOM(html).window.document;
+    check(bot.status === 200, 'native fetch bot response status is numeric200');
+    check(doc.querySelector('title')?.textContent.includes(title), 'bot receives the actual article title');
+    check(doc.querySelector('link[rel="canonical"]')?.getAttribute('href') === siteOrigin + detailPath, 'bot canonical is the stable public article URL');
+    check(!/noindex/.test(doc.querySelector('meta[name="robots"]')?.getAttribute('content') || ''), 'successful bot article is indexable');
+    const missingResponse = await page.goto(origin + '/incidents/' + missing + '?qa=loading', { waitUntil: 'load' });
+    check(missingResponse.status() === 404, 'NoJS missing article keeps a real404');
+    check(/noindex/.test(await page.locator('meta[name="robots"]').getAttribute('content')), 'NoJS missing article is noindex');
+    check(await page.getByRole('heading', { level: 1 }).isVisible(), 'NoJS missing article has a visible explanation');
+    check(await page.getByRole('link', { name: /목록/ }).first().isVisible() && await page.getByRole('link', { name: /지도/ }).first().isVisible(), 'NoJS404 retains visible list/map escape paths');
+    check(new URL(page.url()).pathname === '/incidents/' + missing && new URL(page.url()).searchParams.get('qa') === 'loading', 'NoJS404 preserves the original URL and query');
+    await snapshot(page, 'direct-nojs404', 'Actual upstream404, no JavaScript, unchanged original address and visible escape paths.');
+  });
+} finally {
+  await state('final').catch(() => {});
+  await control('reset').catch(() => {});
+  for (const context of contexts) await context.close().catch(() => {});
+  await browser.close();
+  check(report.observedWrites.filter(request => request.origin === origin).length === 0, 'runner initiated no application write requests', report.observedWrites);
+  report.providerPosts = report.observedWrites.filter(request => request.origin !== origin);
+  check(report.pageErrors.length === 0, 'no uncaught browser page errors', report.pageErrors);
+  check(report.tiles200 > 0, 'actual Naver raster tiles loaded without SDK stub', { tiles200: report.tiles200 });
+  report.finished = new Date().toISOString();
+  report.summary = {
+    checks: report.checks.length,
+    failed: report.checks.filter(item => !item.passed).length,
+    scenarios: report.scenarios.length,
+    incompleteScenarios: report.scenarios.filter(item => !item.completed).length,
+    screenshots: report.screenshots.length,
+    pageErrors: report.pageErrors.length,
+  };
+  await writeFile(output + '/report.json', JSON.stringify(report, null, 2));
+  await writeFile(output + '/manifest.json', JSON.stringify({
+    sourceHead: report.sourceHead, buildId, synthetic: true, personalLocation: false,
+    SDKStubbed: false, SDKModified: false, summary: report.summary,
+    screenshots: report.screenshots, report: 'report.json',
+    execution: 'Run only after parent QA-ready; this script does not build or start any server.',
+  }, null, 2));
+}
+console.log(JSON.stringify({ buildId, output, ...report.summary }));
+if (report.summary.failed || report.summary.incompleteScenarios) process.exitCode = 1;

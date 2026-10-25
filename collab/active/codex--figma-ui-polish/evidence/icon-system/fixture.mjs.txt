@@ -1,0 +1,141 @@
+import { createServer } from 'node:http';
+import { writeFile, mkdir } from 'node:fs/promises';
+
+export const ids = {
+  single: 'a'.repeat(64),
+  pairFirst: 'b'.repeat(64),
+  pairSecond: 'c'.repeat(64),
+  unavailable: 'd'.repeat(64),
+  unsafe: 'e'.repeat(64),
+  missing: 'f'.repeat(64),
+};
+export const port = Number(process.env.QA_API_PORT || 41144);
+const dataDirectory = '/private/tmp/pr45-icon-system-qa/raster-final';
+const created = '2026-10-23T09:00:00+09:00';
+const make = (articleId, title, index = 0) => ({
+  collection_id: 'local-detail-qa',
+  article_id: articleId,
+  image_status: 'ready',
+  image_url: `/images/${articleId}.jpg`,
+  article: {
+    title,
+    description: `${title}의 바텀시트·검색·공유 검증용 요약입니다. 실제 사건 정보가 아닙니다. ${'읽기 영역과 스크롤을 확인하는 검증 문장입니다. '.repeat(index === 0 ? 28 : 3)}`,
+    pubDate: new Date(new Date(created).getTime() - index * 60000).toISOString(),
+    originallink: `https://publisher.example.invalid/news/${articleId}`,
+    link: `https://portal.example.invalid/news/${articleId}`,
+  },
+});
+const single = make(ids.single, '검증용 기사 · 서울 단일 지역 도로 점검');
+const pair = [
+  make(ids.pairFirst, '검증용 기사 · 부산 같은 지역 첫 번째 보도', 1),
+  make(ids.pairSecond, '검증용 기사 · 부산 같은 지역 두 번째 보도', 2),
+];
+pair[0].article.description = '부산의 한 도로에서 점검 작업이 진행돼 일부 차로의 통행이 제한됐습니다. 현장 관계자가 안전 시설을 확인하고 있으며, 인근 운전자는 안내에 따라 우회해 주세요. 이 내용은 화면 비교를 위한 합성 기사이며 실제 사건 보도가 아닙니다.';
+pair[1].article.description = '부산 도로 점검 구간의 교통 안내를 추가로 정리했습니다. 화면 비교용 합성 데이터이며 실제 사건 보도가 아닙니다.';
+const group12 = Array.from({ length: 12 }, (_, i) =>
+  make((1000 + i).toString(16).padStart(64, '0'), `검증용 기사 · 대구 같은 지역 ${i + 1}번째 보도`, i + 3),
+);
+const others = Array.from({ length: 46 }, (_, i) =>
+  make((2000 + i).toString(16).padStart(64, '0'), `검증용 기사 · 목록 검색 후속 보도 ${i + 1}`, i + 15),
+);
+const unsafe = make(ids.unsafe, '검증용 &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;', 0);
+unsafe.article.description = '검증용 &lt;/script&gt;&lt;script&gt;alert(1)&lt;/script&gt;';
+unsafe.article.pubDate = '2026-02-31T00:00:00Z';
+unsafe.article.originallink = 'javascript:alert(1)';
+unsafe.article.link = 'data:text/html,unsafe';
+unsafe.image_status = 'disabled';
+unsafe.image_url = null;
+const items = [single, ...pair, ...group12, ...others];
+const details = new Map([...items, unsafe].map((item) => [item.article_id, item]));
+function located(item, label, latitude, longitude) {
+  return {
+    ...item,
+    location_status: 'resolved',
+    location_reason: null,
+    location: {
+      latitude,
+      longitude,
+      label,
+      precision: 'region',
+      evidence: { field: 'title', text: label },
+    },
+  };
+}
+const longRegion = '대구광역시 중구 동성로 일대 도로 점검 및 보행 안전 확인을 위한 긴 지역 이름';
+const longHost = 'longnews'.repeat(7) + '.' + 'regional'.repeat(7) + '.example.invalid';
+group12[0].article.originallink = 'https://' + longHost + '/reports/' + group12[0].article_id;
+group12[0].article.description = '긴 출처와 여러 관련 보도, 공유 영역의 스크롤을 확인하는 합성 기사입니다. ' + '현장 안내에 따라 통행해 주세요. '.repeat(18) + longRegion;
+group12[1].article.description = '짧은 요약에서도 관련 보도와 공유가 자연스럽게 이어지는지 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. ' + longRegion;
+pair[1].article.originallink = '';
+pair[1].article.link = '';
+const mapItems = [
+  located(single, '서울', 37.5665, 126.978),
+  ...pair.map((item) => located(item, '부산', 35.1796, 129.0756)),
+  ...group12.map((item) => { if (!item.article.description.includes(longRegion)) item.article.description += ' ' + longRegion; const row = located(item, longRegion, 35.8714, 128.6014); row.location.evidence.field = 'description'; return row; }),
+];
+const requests = [];
+let mode = 'ok';
+// A local synthetic illustration, explicitly marked as QA; no remote image calls.
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="400"><rect width="720" height="400" fill="#e6edf3"/><rect x="40" y="45" width="640" height="310" rx="24" fill="#d9e3ec"/><path d="M70 300 L240 120 L350 250 L510 90 L650 300" stroke="#9caebf" stroke-width="25" fill="none"/><rect x="215" y="166" width="290" height="68" rx="16" fill="#ffffff"/><text x="360" y="209" font-family="sans-serif" font-size="34" text-anchor="middle" fill="#25354a">QA FIXTURE</text></svg>`;
+const respond = (res, status, data) => {
+  res.writeHead(status, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Access-Control-Allow-Origin': '*',
+    'Cache-Control': 'no-store',
+  });
+  res.end(JSON.stringify(data));
+};
+await mkdir(dataDirectory, { recursive: true });
+export const server = createServer((req, res) => {
+  const url = new URL(req.url || '/', 'http://fixture.invalid');
+  const { pathname, searchParams } = url;
+  // Only local fixture path/query are recorded. No headers, tokens, or real positions.
+  if (!pathname.startsWith('/__qa')) {
+    const entry = { method: req.method, path: pathname, query: url.search, started: Date.now() };
+    requests.push(entry);
+    res.once('close', () => { entry.closedAfterMs = Date.now() - entry.started; entry.completed = res.writableEnded; });
+  }
+  if (req.method !== 'GET') return respond(res, 405, { error: 'QA_GET_ONLY' });
+  if (pathname === '/__qa/health') return respond(res, 200, { ok: true, total: items.length, mapGroups: [1, 2, 12], ids, mode });
+  if (pathname === '/__qa/requests') return respond(res, 200, { requests });
+  if (pathname === '/__qa/reset') { requests.length = 0; mode = searchParams.get('mode') || 'ok'; return respond(res, 200, { ok: true, mode }); }
+  if (/^\/images\/[a-f0-9]{64}\.jpg$/.test(pathname)) {
+    res.writeHead(200, { 'Content-Type': 'image/svg+xml', 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-store' });
+    return res.end(svg);
+  }
+  if (pathname === '/news') {
+    if (mode === 'list-error' || searchParams.get('keyword') === '검증503') return respond(res, 503, { error: 'QA_PRIVATE_DIAGNOSTIC' });
+    const keyword = (searchParams.get('keyword') || '').toLowerCase();
+    const filtered = items.filter((item) => !keyword || item.article.title.toLowerCase().includes(keyword));
+    const offset = Number(searchParams.get('offset') || 0);
+    const limit = Number(searchParams.get('limit') || 20);
+    return respond(res, 200, { total: filtered.length, items: filtered.slice(offset, offset + limit) });
+  }
+  if (pathname === '/map/articles') {
+    const offset = Number(searchParams.get('offset') || 0);
+    const limit = Number(searchParams.get('limit') || 100);
+    return respond(res, 200, { total: mapItems.length, items: mapItems.slice(offset, offset + limit) });
+  }
+  if (pathname.startsWith('/news/')) {
+    const id = pathname.slice('/news/'.length);
+    if (id === ids.single && mode === 'detail-timeout') {
+      setTimeout(() => { if (!res.destroyed) respond(res, 200, details.get(id)); }, 6500);
+      return;
+    }
+    if (id === ids.unavailable) return respond(res, 503, { error: 'QA_PRIVATE_DIAGNOSTIC' });
+    if (id === ids.single && mode === 'detail-error') return respond(res, 503, { error: 'QA_PRIVATE_DIAGNOSTIC' });
+    const item = details.get(id);
+    return respond(res, item ? 200 : 404, item || { error: 'QA_NOT_FOUND' });
+  }
+  return respond(res, 404, { error: 'QA_NOT_FOUND' });
+});
+server.listen(port, '127.0.0.1', () => {
+  console.log(JSON.stringify({ fixture: `http://127.0.0.1:${port}`, total: items.length, mapGroups: [1, 2, 12] }));
+});
+async function stop() {
+  await writeFile(`${dataDirectory}/fixture-requests.json`, JSON.stringify(requests, null, 2));
+  server.closeAllConnections();
+  server.close(() => process.exit(0));
+}
+process.on('SIGTERM', stop);
+process.on('SIGINT', stop);

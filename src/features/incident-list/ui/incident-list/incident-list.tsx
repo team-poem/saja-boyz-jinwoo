@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { IconText } from '@/components/ui/icon-text/icon-text';
 import { Notice } from '@/components/feedback/notice';
 import { ArticleSkeleton } from '@/components/feedback/article-skeleton';
 import {
@@ -91,11 +92,10 @@ export function IncidentList(props: IncidentListProps) {
               <h2 className="m-0 truncate text-[14px]/[normal] font-extrabold text-text">
                 {incident.title}
               </h2>
-              <p className="m-0 flex min-w-0 items-baseline gap-1 text-[11px]/[normal] text-muted">
-                <span aria-hidden="true">📍</span>
-                <span className="min-w-0 truncate">
+              <p className="m-0 flex min-w-0 items-center gap-1.5 text-[11px]/[normal] text-muted">
+                <IconText icon="pin" size="compact" textClassName="truncate">
                   {incident.location.address}
-                </span>
+                </IconText>
                 <span aria-hidden="true">·</span>
                 <time
                   className="shrink-0 whitespace-nowrap"

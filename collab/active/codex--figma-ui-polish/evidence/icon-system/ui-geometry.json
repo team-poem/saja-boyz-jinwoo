@@ -1,0 +1,1539 @@
+{
+  "source": "8393d30bd3d2261aad960486da3fb7786341177f",
+  "buildId": "fwzXRin30pZvx7lF2HIuC",
+  "checks": [
+    {
+      "passed": true,
+      "name": "actual Naver raster tiles200 without SDK stub",
+      "tiles": 20
+    },
+    {
+      "passed": true,
+      "name": "map semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "filter 카테고리 text/arrow geometry 320",
+      "label": "카테고리",
+      "button": {
+        "x": 130,
+        "y": 68,
+        "width": 82,
+        "height": 27,
+        "top": 68,
+        "right": 212,
+        "bottom": 95,
+        "left": 130
+      },
+      "text": {
+        "x": 144.25,
+        "y": 74,
+        "width": 41.484375,
+        "height": 15,
+        "top": 74,
+        "right": 185.734375,
+        "bottom": 89,
+        "left": 144.25
+      },
+      "svg": {
+        "x": 189.734375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 197.734375,
+        "bottom": 85.5,
+        "left": 189.734375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter 상태 text/arrow geometry 320",
+      "label": "상태",
+      "button": {
+        "x": 218,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 278,
+        "bottom": 95,
+        "left": 218
+      },
+      "text": {
+        "x": 231.625,
+        "y": 74,
+        "width": 20.75,
+        "height": 15,
+        "top": 74,
+        "right": 252.375,
+        "bottom": 89,
+        "left": 231.625
+      },
+      "svg": {
+        "x": 256.375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 264.375,
+        "bottom": 85.5,
+        "left": 256.375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter24시간 text/arrow no overlap 320",
+      "label": "기간: 최근 24시간",
+      "button": {
+        "x": 64,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 124,
+        "bottom": 95,
+        "left": 64
+      },
+      "text": {
+        "x": 69.984375,
+        "y": 74,
+        "width": 36.03125,
+        "height": 15,
+        "top": 74,
+        "right": 106.015625,
+        "bottom": 89,
+        "left": 69.984375
+      },
+      "svg": {
+        "x": 110.015625,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 118.015625,
+        "bottom": 85.5,
+        "left": 110.015625
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 4,
+      "paddingRight": 4,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "map-320 semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map-320 actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "filter 카테고리 text/arrow geometry 393",
+      "label": "카테고리",
+      "button": {
+        "x": 130,
+        "y": 68,
+        "width": 82,
+        "height": 27,
+        "top": 68,
+        "right": 212,
+        "bottom": 95,
+        "left": 130
+      },
+      "text": {
+        "x": 144.25,
+        "y": 74,
+        "width": 41.484375,
+        "height": 15,
+        "top": 74,
+        "right": 185.734375,
+        "bottom": 89,
+        "left": 144.25
+      },
+      "svg": {
+        "x": 189.734375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 197.734375,
+        "bottom": 85.5,
+        "left": 189.734375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter 상태 text/arrow geometry 393",
+      "label": "상태",
+      "button": {
+        "x": 218,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 278,
+        "bottom": 95,
+        "left": 218
+      },
+      "text": {
+        "x": 231.625,
+        "y": 74,
+        "width": 20.75,
+        "height": 15,
+        "top": 74,
+        "right": 252.375,
+        "bottom": 89,
+        "left": 231.625
+      },
+      "svg": {
+        "x": 256.375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 264.375,
+        "bottom": 85.5,
+        "left": 256.375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter24시간 text/arrow no overlap 393",
+      "label": "기간: 최근 24시간",
+      "button": {
+        "x": 64,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 124,
+        "bottom": 95,
+        "left": 64
+      },
+      "text": {
+        "x": 69.984375,
+        "y": 74,
+        "width": 36.03125,
+        "height": 15,
+        "top": 74,
+        "right": 106.015625,
+        "bottom": 89,
+        "left": 69.984375
+      },
+      "svg": {
+        "x": 110.015625,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 118.015625,
+        "bottom": 85.5,
+        "left": 110.015625
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 4,
+      "paddingRight": 4,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "map-393 semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map-393 actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "filter 카테고리 text/arrow geometry 1440",
+      "label": "카테고리",
+      "button": {
+        "x": 530,
+        "y": 68,
+        "width": 82,
+        "height": 27,
+        "top": 68,
+        "right": 612,
+        "bottom": 95,
+        "left": 530
+      },
+      "text": {
+        "x": 544.25,
+        "y": 74,
+        "width": 41.484375,
+        "height": 15,
+        "top": 74,
+        "right": 585.734375,
+        "bottom": 89,
+        "left": 544.25
+      },
+      "svg": {
+        "x": 589.734375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 597.734375,
+        "bottom": 85.5,
+        "left": 589.734375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter 상태 text/arrow geometry 1440",
+      "label": "상태",
+      "button": {
+        "x": 618,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 678,
+        "bottom": 95,
+        "left": 618
+      },
+      "text": {
+        "x": 631.625,
+        "y": 74,
+        "width": 20.75,
+        "height": 15,
+        "top": 74,
+        "right": 652.375,
+        "bottom": 89,
+        "left": 631.625
+      },
+      "svg": {
+        "x": 656.375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 664.375,
+        "bottom": 85.5,
+        "left": 656.375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter24시간 text/arrow no overlap 1440",
+      "label": "기간: 최근 24시간",
+      "button": {
+        "x": 464,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 524,
+        "bottom": 95,
+        "left": 464
+      },
+      "text": {
+        "x": 469.984375,
+        "y": 74,
+        "width": 36.03125,
+        "height": 15,
+        "top": 74,
+        "right": 506.015625,
+        "bottom": 89,
+        "left": 469.984375
+      },
+      "svg": {
+        "x": 510.015625,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 518.015625,
+        "bottom": 85.5,
+        "left": 510.015625
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 4,
+      "paddingRight": 4,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "map-1440 semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map-1440 actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "real SDK count1/2/12 visible together",
+      "markers": [
+        {
+          "count": 1,
+          "rect": {
+            "x": 81,
+            "y": 185,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 185,
+            "right": 119.390625,
+            "bottom": 223.390625,
+            "left": 81
+          },
+          "font": "14.4px",
+          "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+        },
+        {
+          "count": 2,
+          "rect": {
+            "x": 272,
+            "y": 455,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 455,
+            "right": 310.390625,
+            "bottom": 493.390625,
+            "left": 272
+          },
+          "font": "14.4px",
+          "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+        },
+        {
+          "count": 12,
+          "rect": {
+            "x": 212,
+            "y": 361,
+            "width": 72,
+            "height": 72,
+            "top": 361,
+            "right": 284,
+            "bottom": 433,
+            "left": 212
+          },
+          "font": "27px",
+          "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+        }
+      ]
+    },
+    {
+      "passed": true,
+      "name": "map-counts semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map-counts actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map-counts horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "source target rel preserved",
+      "href": "https://longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.invalid/reports/00000000000000000000000000000000000000000000000000000000000003e8",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "hostWidth": 313,
+      "hostScroll": 795,
+      "hostUnderline": "underline",
+      "iconUnderline": "none",
+      "outerUnderline": "none",
+      "iconSize": 12
+    },
+    {
+      "passed": true,
+      "name": "long hostname truncates and only hostname is underlined",
+      "href": "https://longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.invalid/reports/00000000000000000000000000000000000000000000000000000000000003e8",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "hostWidth": 313,
+      "hostScroll": 795,
+      "hostUnderline": "underline",
+      "iconUnderline": "none",
+      "outerUnderline": "none",
+      "iconSize": 12
+    },
+    {
+      "passed": true,
+      "name": "related reports limited to three"
+    },
+    {
+      "passed": true,
+      "name": "detail-long-source semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-source actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-source horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "image caption15px line-height"
+    },
+    {
+      "passed": true,
+      "name": "detail-three-related-share semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-three-related-share actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-three-related-share horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "map short article starts collapsed"
+    },
+    {
+      "passed": true,
+      "name": "detail semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "detail-expanded semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-expanded actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-expanded horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "expanded detail hides only home search header"
+    },
+    {
+      "passed": true,
+      "name": "share is inside the reading scroller"
+    },
+    {
+      "passed": true,
+      "name": "copy uses exact clean article URL"
+    },
+    {
+      "passed": true,
+      "name": "clipboard failure exposes readonly exact URL"
+    },
+    {
+      "passed": true,
+      "name": "manual URL remains in same reading scroller"
+    },
+    {
+      "passed": true,
+      "name": "detail-manual-url semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-manual-url actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-manual-url horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "collapsed long summary share starts after content below fold",
+      "share": {
+        "x": 16,
+        "y": 1215.015625,
+        "width": 361,
+        "height": 48
+      },
+      "dialog": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375
+      }
+    },
+    {
+      "passed": true,
+      "name": "detail-long-collapsed semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-collapsed actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-collapsed horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "long summary share reached by internal scrolling"
+    },
+    {
+      "passed": true,
+      "name": "detail-long-share-scrolled semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-share-scrolled actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-share-scrolled horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "missing original source has explicit information without fake link"
+    },
+    {
+      "passed": true,
+      "name": "detail-source-unavailable semantic SVG size and hidden decoration",
+      "count": 2,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-source-unavailable actual textRange gap and vertical center",
+      "count": 2,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-source-unavailable horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search-recent semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-recent actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-recent horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search uses matching keyword and populated results"
+    },
+    {
+      "passed": true,
+      "name": "search-results semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-results actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-results horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search result Tab unobscured 320",
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search result Tab unobscured 393",
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search result Tab unobscured 1440",
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "list-393x852 semantic SVG size and hidden decoration",
+      "count": 4,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "list-393x852 actual textRange gap and vertical center",
+      "count": 3,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "list-393x852 horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "list semantic SVG size and hidden decoration",
+      "count": 4,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "list actual textRange gap and vertical center",
+      "count": 3,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "list horizontal overflow absent",
+      "width": 393,
+      "height": 918,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "report semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "report-bottom semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report-bottom actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report-bottom horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "report final SVG24/44hit/transparent/resize-none",
+      "box": {
+        "x": 339,
+        "y": 6,
+        "width": 44,
+        "height": 44,
+        "top": 6,
+        "right": 383,
+        "bottom": 50,
+        "left": 339
+      },
+      "background": "rgba(0, 0, 0, 0)",
+      "image": {
+        "x": 349,
+        "y": 16,
+        "width": 24,
+        "height": 24,
+        "top": 16,
+        "right": 373,
+        "bottom": 40,
+        "left": 349
+      },
+      "imagePath": "/report/close.svg",
+      "resize": "none"
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-320 semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-320 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "long region/detail no overflow 320",
+      "horizontal": true,
+      "svg": {
+        "x": 16,
+        "y": 170,
+        "width": 14,
+        "height": 14,
+        "top": 170,
+        "right": 30,
+        "bottom": 184,
+        "left": 16
+      }
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-393 semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-393 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "long region/detail no overflow 393",
+      "horizontal": true,
+      "svg": {
+        "x": 16,
+        "y": 170,
+        "width": 14,
+        "height": 14,
+        "top": 170,
+        "right": 30,
+        "bottom": 184,
+        "left": 16
+      }
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-1440 semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-1440 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "long region/detail no overflow 1440",
+      "horizontal": true,
+      "svg": {
+        "x": 416,
+        "y": 161,
+        "width": 14,
+        "height": 14,
+        "top": 161,
+        "right": 430,
+        "bottom": 175,
+        "left": 416
+      }
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search-recent-320 semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-recent-320 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search independent44/32 targets 320",
+      "submit": {
+        "x": 57,
+        "y": 16.5,
+        "width": 44,
+        "height": 44,
+        "top": 16.5,
+        "right": 101,
+        "bottom": 60.5,
+        "left": 57
+      },
+      "recent": [
+        {
+          "link": {
+            "x": 16,
+            "y": 104,
+            "width": 248,
+            "height": 32,
+            "top": 104,
+            "right": 264,
+            "bottom": 136,
+            "left": 16
+          },
+          "remove": {
+            "x": 272,
+            "y": 104,
+            "width": 32,
+            "height": 32,
+            "top": 104,
+            "right": 304,
+            "bottom": 136,
+            "left": 272
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 145,
+            "width": 248,
+            "height": 32,
+            "top": 145,
+            "right": 264,
+            "bottom": 177,
+            "left": 16
+          },
+          "remove": {
+            "x": 272,
+            "y": 145,
+            "width": 32,
+            "height": 32,
+            "top": 145,
+            "right": 304,
+            "bottom": 177,
+            "left": 272
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 186,
+            "width": 248,
+            "height": 32,
+            "top": 186,
+            "right": 264,
+            "bottom": 218,
+            "left": 16
+          },
+          "remove": {
+            "x": 272,
+            "y": 186,
+            "width": 32,
+            "height": 32,
+            "top": 186,
+            "right": 304,
+            "bottom": 218,
+            "left": 272
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 227,
+            "width": 248,
+            "height": 32,
+            "top": 227,
+            "right": 264,
+            "bottom": 259,
+            "left": 16
+          },
+          "remove": {
+            "x": 272,
+            "y": 227,
+            "width": 32,
+            "height": 32,
+            "top": 227,
+            "right": 304,
+            "bottom": 259,
+            "left": 272
+          }
+        }
+      ],
+      "searchSVG": {
+        "x": 79,
+        "y": 31.5,
+        "width": 14,
+        "height": 14,
+        "top": 31.5,
+        "right": 93,
+        "bottom": 45.5,
+        "left": 79
+      },
+      "input": {
+        "x": 101,
+        "y": 21,
+        "width": 202,
+        "height": 35,
+        "top": 21,
+        "right": 303,
+        "bottom": 56,
+        "left": 101
+      }
+    },
+    {
+      "passed": true,
+      "name": "search-recent-393 semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-recent-393 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search independent44/32 targets 393",
+      "submit": {
+        "x": 57,
+        "y": 16.5,
+        "width": 44,
+        "height": 44,
+        "top": 16.5,
+        "right": 101,
+        "bottom": 60.5,
+        "left": 57
+      },
+      "recent": [
+        {
+          "link": {
+            "x": 16,
+            "y": 104,
+            "width": 321,
+            "height": 32,
+            "top": 104,
+            "right": 337,
+            "bottom": 136,
+            "left": 16
+          },
+          "remove": {
+            "x": 345,
+            "y": 104,
+            "width": 32,
+            "height": 32,
+            "top": 104,
+            "right": 377,
+            "bottom": 136,
+            "left": 345
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 145,
+            "width": 321,
+            "height": 32,
+            "top": 145,
+            "right": 337,
+            "bottom": 177,
+            "left": 16
+          },
+          "remove": {
+            "x": 345,
+            "y": 145,
+            "width": 32,
+            "height": 32,
+            "top": 145,
+            "right": 377,
+            "bottom": 177,
+            "left": 345
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 186,
+            "width": 321,
+            "height": 32,
+            "top": 186,
+            "right": 337,
+            "bottom": 218,
+            "left": 16
+          },
+          "remove": {
+            "x": 345,
+            "y": 186,
+            "width": 32,
+            "height": 32,
+            "top": 186,
+            "right": 377,
+            "bottom": 218,
+            "left": 345
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 227,
+            "width": 321,
+            "height": 32,
+            "top": 227,
+            "right": 337,
+            "bottom": 259,
+            "left": 16
+          },
+          "remove": {
+            "x": 345,
+            "y": 227,
+            "width": 32,
+            "height": 32,
+            "top": 227,
+            "right": 377,
+            "bottom": 259,
+            "left": 345
+          }
+        }
+      ],
+      "searchSVG": {
+        "x": 79,
+        "y": 31.5,
+        "width": 14,
+        "height": 14,
+        "top": 31.5,
+        "right": 93,
+        "bottom": 45.5,
+        "left": 79
+      },
+      "input": {
+        "x": 101,
+        "y": 21,
+        "width": 275,
+        "height": 35,
+        "top": 21,
+        "right": 376,
+        "bottom": 56,
+        "left": 101
+      }
+    },
+    {
+      "passed": true,
+      "name": "search-recent-1440 semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-recent-1440 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search independent44/32 targets 1440",
+      "submit": {
+        "x": 457,
+        "y": 16.5,
+        "width": 44,
+        "height": 44,
+        "top": 16.5,
+        "right": 501,
+        "bottom": 60.5,
+        "left": 457
+      },
+      "recent": [
+        {
+          "link": {
+            "x": 416,
+            "y": 104,
+            "width": 568,
+            "height": 32,
+            "top": 104,
+            "right": 984,
+            "bottom": 136,
+            "left": 416
+          },
+          "remove": {
+            "x": 992,
+            "y": 104,
+            "width": 32,
+            "height": 32,
+            "top": 104,
+            "right": 1024,
+            "bottom": 136,
+            "left": 992
+          }
+        },
+        {
+          "link": {
+            "x": 416,
+            "y": 145,
+            "width": 568,
+            "height": 32,
+            "top": 145,
+            "right": 984,
+            "bottom": 177,
+            "left": 416
+          },
+          "remove": {
+            "x": 992,
+            "y": 145,
+            "width": 32,
+            "height": 32,
+            "top": 145,
+            "right": 1024,
+            "bottom": 177,
+            "left": 992
+          }
+        },
+        {
+          "link": {
+            "x": 416,
+            "y": 186,
+            "width": 568,
+            "height": 32,
+            "top": 186,
+            "right": 984,
+            "bottom": 218,
+            "left": 416
+          },
+          "remove": {
+            "x": 992,
+            "y": 186,
+            "width": 32,
+            "height": 32,
+            "top": 186,
+            "right": 1024,
+            "bottom": 218,
+            "left": 992
+          }
+        },
+        {
+          "link": {
+            "x": 416,
+            "y": 227,
+            "width": 568,
+            "height": 32,
+            "top": 227,
+            "right": 984,
+            "bottom": 259,
+            "left": 416
+          },
+          "remove": {
+            "x": 992,
+            "y": 227,
+            "width": 32,
+            "height": 32,
+            "top": 227,
+            "right": 1024,
+            "bottom": 259,
+            "left": 992
+          }
+        }
+      ],
+      "searchSVG": {
+        "x": 479,
+        "y": 31.5,
+        "width": 14,
+        "height": 14,
+        "top": 31.5,
+        "right": 493,
+        "bottom": 45.5,
+        "left": 479
+      },
+      "input": {
+        "x": 501,
+        "y": 21,
+        "width": 522,
+        "height": 35,
+        "top": 21,
+        "right": 1023,
+        "bottom": 56,
+        "left": 501
+      }
+    },
+    {
+      "passed": true,
+      "name": "report-320 semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report-320 actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report prefix14 padding34 and no text overlap 320",
+      "svg": {
+        "x": 30,
+        "y": 369.5,
+        "width": 14,
+        "height": 14,
+        "top": 369.5,
+        "right": 44,
+        "bottom": 383.5,
+        "left": 30
+      },
+      "input": {
+        "x": 16,
+        "y": 356,
+        "width": 288,
+        "height": 41,
+        "top": 356,
+        "right": 304,
+        "bottom": 397,
+        "left": 16
+      },
+      "paddingLeft": 34,
+      "centerDelta": 0,
+      "textStart": 51
+    },
+    {
+      "passed": true,
+      "name": "report-393 semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report-393 actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report prefix14 padding34 and no text overlap 393",
+      "svg": {
+        "x": 30,
+        "y": 369.5,
+        "width": 14,
+        "height": 14,
+        "top": 369.5,
+        "right": 44,
+        "bottom": 383.5,
+        "left": 30
+      },
+      "input": {
+        "x": 16,
+        "y": 356,
+        "width": 361,
+        "height": 41,
+        "top": 356,
+        "right": 377,
+        "bottom": 397,
+        "left": 16
+      },
+      "paddingLeft": 34,
+      "centerDelta": 0,
+      "textStart": 51
+    },
+    {
+      "passed": true,
+      "name": "report-1440 semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report-1440 actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report prefix14 padding34 and no text overlap 1440",
+      "svg": {
+        "x": 430,
+        "y": 365.5,
+        "width": 14,
+        "height": 14,
+        "top": 365.5,
+        "right": 444,
+        "bottom": 379.5,
+        "left": 430
+      },
+      "input": {
+        "x": 416,
+        "y": 352,
+        "width": 608,
+        "height": 41,
+        "top": 352,
+        "right": 1024,
+        "bottom": 393,
+        "left": 416
+      },
+      "paddingLeft": 34,
+      "centerDelta": 0,
+      "textStart": 451
+    }
+  ],
+  "scope": "UI TypeScript/TSX/CSS의 Git blob 일치는 ui-source-equivalence.json에서 별도로 검증한다.",
+  "summary": {
+    "checks": 116,
+    "failed": []
+  }
+}

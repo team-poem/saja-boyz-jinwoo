@@ -249,12 +249,15 @@ test('mapRegionCirclesGrowWithCountAndKeepSelection', async () => {
     '7',
     '12',
   ]);
-  expect(markers.map((marker) => marker.anchor)).toEqual([
-    { x: 19.2, y: 19.2 },
-    { x: 19.2, y: 19.2 },
-    { x: 24, y: 24 },
-    { x: 36, y: 36 },
-  ]);
+  const sides = markers.map((marker) => parseFloat(marker.content.style.width));
+  for (const [index, marker] of markers.entries()) {
+    expect(marker.anchor).toMatchObject({
+      x: sides[index] / 2,
+      y: sides[index] / 2,
+    });
+    if (index > 0)
+      expect(sides[index] - sides[index - 1]).toBeGreaterThanOrEqual(4);
+  }
   markers[3].content.focus();
   await act(async () =>
     markers[3].content.dispatchEvent(
@@ -300,7 +303,7 @@ test('mapCarouselUsesRealArticlesAndSafeImages', async () => {
     `img[src="https://news.example.com/images/${recent.article_id}.jpg"]`,
   );
   assert(image);
-  expect(cards.textContent).toContain('AI 생성 이미지');
+  expect(cards.querySelector('figcaption')).toBeNull();
   await act(async () => image.dispatchEvent(new Event('error')));
   expect(cards.textContent).toContain('이미지 없음');
   expect(cards.querySelectorAll('a[href^="/incidents/"]')).toHaveLength(3);
@@ -333,7 +336,13 @@ test('mapPeriodFiltersSynchronizeMarkersAndCardsWithoutResettingMap', async () =
   expect(carousel().querySelectorAll('a[href^="/incidents/"]')).toHaveLength(2);
   await click('기간: 최근 7일');
   await click('전체 기간');
-  expect(carousel().querySelectorAll('a[href^="/incidents/"]')).toHaveLength(5);
+  expect(carousel().querySelectorAll('a[href^="/incidents/"]')).toHaveLength(4);
+  expect(
+    carousel().querySelector('a[href="/incidents/' + unknown.article_id + '"]'),
+  ).toBeNull();
+  expect(
+    [...fixture.active].map((marker) => marker.content.textContent),
+  ).toEqual(['5']);
   expect(fixture.created).toHaveBeenCalledTimes(1);
   expect(fixture.destroy).not.toHaveBeenCalled();
   expect(fixture.setCenter).not.toHaveBeenCalled();

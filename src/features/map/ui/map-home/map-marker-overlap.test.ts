@@ -43,7 +43,12 @@ function item(
   };
 }
 
-async function mount(items: LocatedArticle[], failure = false) {
+async function mount(
+  items: LocatedArticle[],
+  failure = false,
+  viewport?: { width: number; height: number },
+  paneProjection = false,
+) {
   vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
   vi.useFakeTimers({ toFake: ['Date'] });
   vi.setSystemTime(now);
@@ -60,6 +65,8 @@ async function mount(items: LocatedArticle[], failure = false) {
   const setCenter = vi.fn();
   const setZoom = vi.fn();
   let zoom = 10;
+  let panX = 0;
+  let panY = 0;
   class LatLng {
     constructor(
       public latitude: number,
@@ -86,13 +93,23 @@ async function mount(items: LocatedArticle[], failure = false) {
         fromCoordToOffset(point: LatLng) {
           const scale = zoom >= 15 ? 100000 : 1000;
           return {
-            x: (point.lng() - 129) * scale,
-            y: (point.lat() - 35) * scale,
+            x: (point.lng() - 129) * scale + (paneProjection ? 1000 : panX),
+            y: (point.lat() - 35) * scale + (paneProjection ? -500 : panY),
           };
         },
       };
     }
     getCenter() {
+      if (viewport) {
+        const canvas = host.querySelector<HTMLElement>(
+          '[aria-label="주변 지도"] > .h-dvh',
+        )!;
+        const scale = zoom >= 15 ? 100000 : 1000;
+        return new LatLng(
+          35 + (canvas.clientHeight / 2 - panY) / scale,
+          129 + (canvas.clientWidth / 2 - panX) / scale,
+        );
+      }
       return new LatLng(37.56, 126.99);
     }
     getZoom() {
@@ -112,7 +129,7 @@ async function mount(items: LocatedArticle[], failure = false) {
       };
       active.add(this.entry);
       host
-        .querySelector('[aria-label="주변 지도"] > div')
+        .querySelector('[aria-label="주변 지도"] > .h-dvh')
         ?.append(this.entry.content);
     }
     setMap(map: unknown) {
@@ -161,6 +178,17 @@ async function mount(items: LocatedArticle[], failure = false) {
   await act(async () =>
     root!.render(createElement(MapHome, { clientId: 'design-test', articles })),
   );
+  if (viewport) {
+    const canvas = host.querySelector('[aria-label="주변 지도"] > .h-dvh')!;
+    Object.defineProperty(canvas, 'clientWidth', {
+      configurable: true,
+      value: viewport.width,
+    });
+    Object.defineProperty(canvas, 'clientHeight', {
+      configurable: true,
+      value: viewport.height,
+    });
+  }
   await act(async () =>
     document
       .querySelector('script[src*="oapi.map.naver.com"]')!
@@ -173,6 +201,26 @@ async function mount(items: LocatedArticle[], failure = false) {
     destroy,
     setCenter,
     setZoom,
+    async pan(x: number, y: number) {
+      panX = x;
+      panY = y;
+      await act(async () => {
+        for (const [target, events] of callbacks)
+          if (target instanceof MapFixture) events.get('idle')?.();
+      });
+    },
+    async resize(width: number, height: number) {
+      const canvas = host.querySelector('[aria-label="주변 지도"] > .h-dvh')!;
+      Object.defineProperty(canvas, 'clientWidth', {
+        configurable: true,
+        value: width,
+      });
+      Object.defineProperty(canvas, 'clientHeight', {
+        configurable: true,
+        value: height,
+      });
+      await act(async () => window.dispatchEvent(new Event('resize')));
+    },
     async changeZoom(value: number) {
       zoom = value;
       await act(async () => {
@@ -265,8 +313,14 @@ test('mapOverlappingRegionMarkersCombineUniqueArticles', async () => {
     (entry) => entry.content.textContent === '1',
   );
   assert(cluster && single);
-  expect(cluster.anchor).toMatchObject({ x: 24, y: 24 });
-  expect(single.anchor).toMatchObject({ x: 19.2, y: 19.2 });
+  const clusterSide = parseFloat(cluster.content.style.width);
+  const singleSide = parseFloat(single.content.style.width);
+  expect(clusterSide - singleSide).toBeGreaterThanOrEqual(4);
+  expect(cluster.anchor).toMatchObject({
+    x: clusterSide / 2,
+    y: clusterSide / 2,
+  });
+  expect(single.anchor).toMatchObject({ x: singleSide / 2, y: singleSide / 2 });
   expect(cluster.content.getAttribute('aria-label')).toContain('묶음');
   expect(
     [first.location, nearby(2).location].some((point) => {
@@ -345,4 +399,205 @@ test('mapDisplayClustersFollowPeriodAndDisposeListeners', async () => {
   await act(async () => stale.forEach((callback) => callback()));
   expect(fixture.active.size).toBe(0);
   expect(fixture.created).toHaveBeenCalledTimes(1);
+});
+
+test('mapCircleSizesCompareOnlyCurrentViewportAndKeepDistinctCountsVisible', async () => {
+  let id = 100;
+  const groups = [
+    { count: 3, x: 60, y: 120, age: 0 },
+    { count: 4, x: 210, y: 120, age: 0 },
+    { count: 8, x: 360, y: 120, age: 0 },
+    { count: 4, x: 210, y: 260, age: 0 },
+    { count: 19, x: 980, y: 120, age: 2 },
+    { count: 3, x: 800, y: 120, age: 0 },
+  ];
+  const items = groups.flatMap((group, index) =>
+    Array.from({ length: group.count }, () => {
+      const entry = item(++id, group.age, `비율 검증 지역 ${index}`);
+      return {
+        ...entry,
+        location: {
+          ...entry.location,
+          latitude: 35 + group.y / 1000,
+          longitude: 129 + group.x / 1000,
+        },
+      };
+    }),
+  );
+  const fixture = await mount(items, false, { width: 480, height: 300 });
+  const size = (count: number) => {
+    const entries = [...fixture.active].filter(
+      (entry) => Number(entry.content.textContent) === count,
+    );
+    assert(entries.length);
+    const widths = entries.map(
+      (entry) => (entry.anchor as { x: number }).x * 2,
+    );
+    for (const [index, entry] of entries.entries()) {
+      expect
+        .soft(
+          parseFloat(entry.content.style.width),
+          '실제 원과 SDK anchor 너비 일치',
+        )
+        .toBeCloseTo(widths[index], 8);
+      expect
+        .soft(parseFloat(entry.content.style.height), '실제 원 높이 일치')
+        .toBeCloseTo(widths[index], 8);
+    }
+    expect.soft(new Set(widths).size, '같은 건수는 같은 크기').toBe(1);
+    return widths[0];
+  };
+  expect
+    .soft(counts(fixture), '화면 밖 대규모 그룹은 표시·비율에서 제외')
+    .toEqual(['3', '4', '4', '8']);
+  const before = [size(3), size(4), size(8)];
+  expect
+    .soft(before[1] - before[0], '인접 건수도 시각적 차이')
+    .toBeGreaterThanOrEqual(4);
+  expect.soft(before[2] - before[1]).toBeGreaterThanOrEqual(4);
+  expect.soft(before[0]).toBeGreaterThanOrEqual(38.4);
+  expect.soft(before[2]).toBeLessThanOrEqual(88);
+
+  await fixture.pan(-700, 0);
+  expect.soft(counts(fixture)).toEqual(['19', '3']);
+  expect.soft(size(19) - size(3)).toBeGreaterThanOrEqual(4);
+  await click('기간');
+  await click('최근 24시간');
+  expect.soft(counts(fixture)).toEqual(['3']);
+  expect.soft(Number.isFinite(size(3))).toBe(true);
+  const same = [...fixture.active][0].content;
+  await fixture.idle();
+  expect
+    .soft([...fixture.active][0].content, '같은 화면 idle에서 마커 수명 유지')
+    .toBe(same);
+
+  await fixture.pan(0, 0);
+  expect.soft(counts(fixture)).toEqual(['3', '4', '4', '8']);
+  expect.soft([size(3), size(4), size(8)]).toEqual(before);
+  const largest = [...fixture.active].find(
+    (entry) => entry.content.textContent === '8',
+  )!;
+  largest.content.focus();
+  await act(async () =>
+    largest.content.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+    ),
+  );
+  const sheet = document.querySelector('[aria-label="선택한 기사"]');
+  assert(sheet);
+  expect(sheet.querySelectorAll('a[href^="/incidents/"]')).toHaveLength(8);
+  await click('기사 선택 닫기', sheet);
+  expect(document.activeElement).toBe(largest.content);
+  expect(fixture.created).toHaveBeenCalledTimes(1);
+  expect(fixture.setCenter).not.toHaveBeenCalled();
+  expect(fixture.setZoom).not.toHaveBeenCalled();
+});
+
+test('mapRelativeResizingKeepsUnchangedSelectionAndReturnsToCurrentMarker', async () => {
+  let id = 300;
+  const items = [
+    { count: 3, x: 60 },
+    { count: 4, x: 260 },
+    { count: 12, x: 650 },
+  ].flatMap((group, region) =>
+    Array.from({ length: group.count }, () => {
+      const entry = item(++id, 0, `크기 변경 지역 ${region}`);
+      return {
+        ...entry,
+        location: {
+          ...entry.location,
+          latitude: 35.12,
+          longitude: 129 + group.x / 1000,
+        },
+      };
+    }),
+  );
+  const fixture = await mount(items, false, { width: 480, height: 300 });
+  expect(counts(fixture)).toEqual(['3', '4']);
+  const original = [...fixture.active].find(
+    (entry) => entry.content.textContent === '4',
+  )!;
+  const before = parseFloat(original.content.style.width);
+  await act(async () =>
+    original.content.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+    ),
+  );
+  const sheet = document.querySelector('[aria-label="선택한 기사"]')!;
+  const link = sheet.querySelector<HTMLAnchorElement>(
+    'a[href^="/incidents/"]',
+  )!;
+  link.focus();
+
+  await fixture.resize(800, 300);
+  expect.soft(counts(fixture)).toEqual(['12', '3', '4']);
+  expect
+    .soft(
+      document.querySelector('[aria-label="선택한 기사"]'),
+      '크기 변화만 있으면 같은 선택 시트 유지',
+    )
+    .toBe(sheet);
+  expect.soft(document.activeElement, '읽던 링크 포커스 유지').toBe(link);
+  const current = [...fixture.active].find(
+    (entry) => entry.content.textContent === '4',
+  )!;
+  expect
+    .soft(parseFloat(current.content.style.width), '새 최대값에 따른 재계산')
+    .toBeLessThan(before);
+  expect.soft(current.content.getAttribute('aria-pressed')).toBe('true');
+  if (sheet.isConnected) {
+    await click('기사 선택 닫기', sheet);
+    expect
+      .soft(document.activeElement, '닫으면 현재 크기의 마커로 복귀')
+      .toBe(current.content);
+    expect.soft(current.content.getAttribute('aria-pressed')).toBe('false');
+  }
+  expect(fixture.created).toHaveBeenCalledTimes(1);
+  expect(fixture.setCenter).not.toHaveBeenCalled();
+  expect(fixture.setZoom).not.toHaveBeenCalled();
+});
+
+test('mapPaneProjectionNormalizesCameraCenterBeforeViewportSizing', async () => {
+  let id = 500;
+  const items = [
+    { count: 3, x: 80 },
+    { count: 4, x: 230 },
+    { count: 8, x: 400 },
+  ].flatMap((group, region) =>
+    Array.from({ length: group.count }, () => {
+      const entry = item(++id, 0, `이동 레이어 지역 ${region}`);
+      return {
+        ...entry,
+        location: {
+          ...entry.location,
+          latitude: 35.12,
+          longitude: 129 + group.x / 1000,
+        },
+      };
+    }),
+  );
+  const fixture = await mount(items, false, { width: 480, height: 300 }, true);
+  const width = (count: number) =>
+    parseFloat(
+      [...fixture.active].find(
+        (entry) => Number(entry.content.textContent) === count,
+      )?.content.style.width ?? 'NaN',
+    );
+  expect
+    .soft(counts(fixture), '레이어 원점이 화면 원점과 달라도 화면 안 그룹 표시')
+    .toEqual(['3', '4', '8']);
+  const middle = width(4);
+  await fixture.pan(-180, 0);
+  expect
+    .soft(counts(fixture), '지도 이동 시 중심 기준으로 화면 밖3 제외')
+    .toEqual(['4', '8']);
+  expect
+    .soft(width(4), '새 화면 안 최소 건수에 따라 재계산')
+    .toBeLessThan(middle);
+  await fixture.resize(200, 300);
+  expect.soft(counts(fixture), '화면 축소 시 밖으로 나간8 제외').toEqual(['4']);
+  expect.soft(Number.isFinite(width(4))).toBe(true);
+  expect(fixture.created).toHaveBeenCalledTimes(1);
+  expect(fixture.setCenter).not.toHaveBeenCalled();
+  expect(fixture.setZoom).not.toHaveBeenCalled();
 });

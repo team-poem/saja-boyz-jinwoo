@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { ArticleViewTracker } from '@/features/article-views/article-view-tracker';
+import { IconText } from '@/components/ui/icon-text/icon-text';
 import { Notice } from '@/components/feedback/notice';
 import { pageMetadata, siteOrigin } from '@/app/site-metadata';
 import {
@@ -146,16 +147,16 @@ export default async function IncidentDetailPage({
         </h1>
         <div className="flex flex-col gap-1">
           <DetailLocation id={id} />
-          <p className="m-0 text-[12px]/4 text-slate-400">
+          <p className="m-0 flex items-center gap-1 text-[12px]/4 text-muted">
             {Number.isNaN(publishedAt.getTime()) ? (
               '발행 시각 미확인'
             ) : (
-              <>
+              <IconText icon="calendar" size="compact">
                 <span className="sr-only">기사 발행 </span>
                 <time dateTime={publishedAt.toISOString()}>
                   {publicationText(publishedAt)}
                 </time>
-              </>
+              </IconText>
             )}
           </p>
         </div>
@@ -170,16 +171,28 @@ export default async function IncidentDetailPage({
         </section>
       </div>
       {sourceUrl ? (
-        <a
-          href={sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="self-start text-[12px]/4 font-medium text-muted underline underline-offset-4"
-        >
-          출처: 기사 원문 · {new URL(sourceUrl).hostname}
-        </a>
+        <div className="flex min-w-0 items-center gap-1.5 py-1 text-[12px]/[15px] text-muted">
+          <span className="shrink-0">출처:</span>
+          <a
+            href={sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`기사 원문 · ${new URL(sourceUrl).hostname}`}
+            className="ui-link inline-flex min-w-0 items-center gap-1.5"
+          >
+            <IconText
+              icon="link"
+              size="compact"
+              position="end"
+              textClassName="truncate underline decoration-slate-300 underline-offset-2"
+            >
+              <span className="sr-only">기사 원문 · </span>
+              {new URL(sourceUrl).hostname}
+            </IconText>
+          </a>
+        </div>
       ) : (
-        <p className="m-0 text-sm text-muted">원문 링크 없음</p>
+        <p className="m-0 py-1 text-[12px]/[15px] text-muted">원문 링크 없음</p>
       )}
       <RelatedArticles id={id} />
     </DetailSheet>

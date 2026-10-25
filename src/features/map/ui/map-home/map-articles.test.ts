@@ -1,10 +1,11 @@
 // file: src/features/map/ui/map-home/map-articles.test.ts
 // @vitest-environment jsdom
-import { act, createElement } from 'react';
+import { act, createElement, type ReactNode } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, expect, test, vi } from 'vitest';
 
 import { MapHome } from './map-home';
+import { DetailSheet } from '@/features/article-detail/ui/detail-sheet/detail-sheet';
 import {
   ArticleSheetContext,
   type ArticleSheetRoute,
@@ -115,13 +116,17 @@ async function mount(
   container = document.createElement('div');
   document.body.append(container);
   root = createRoot(container);
-  const draw = async (route: ArticleSheetRoute | null = sheetRoute) => {
+  const draw = async (
+    route: ArticleSheetRoute | null = sheetRoute,
+    overlay?: ReactNode,
+  ) => {
     await act(async () =>
       root!.render(
         createElement(
           ArticleSheetContext,
           { value: route },
           createElement(MapHome, { clientId: 'test', articles: result }),
+          overlay,
         ),
       ),
     );
@@ -296,7 +301,7 @@ test('shows the selected article in the Figma sheet with its real image and publ
   expect(sheet?.querySelector('article img')?.getAttribute('src')).toBe(
     `https://news.example.com/images/${'a'.repeat(64)}.jpg`,
   );
-  expect(sheet?.textContent).toContain('AI 생성 이미지');
+  expect(sheet?.textContent).toContain('AI로 생성된 이미지입니다.');
   expect(sheet?.textContent).toContain('기사 발행');
   expect(sheet?.querySelector('time')?.getAttribute('dateTime')).toBe(
     '2026-10-13T23:00:00.000Z',
@@ -494,4 +499,152 @@ test('mapArticleSheetPreservesGroupedChoices', async () => {
   expect(fixture.setCenter).not.toHaveBeenCalled();
   expect(fixture.setZoom).not.toHaveBeenCalled();
   expect(fixture.fitBounds).not.toHaveBeenCalled();
+});
+
+test('mapGroupedSheetRestoresExpandedReadingPositionAndArticleFocus', async () => {
+  const items = Array.from({ length: 12 }, (_, index) => ({
+    ...data.items[0],
+    article_id: (2000 + index).toString(16).padStart(64, '0'),
+    article: {
+      ...data.items[0].article,
+      title: '그룹 복귀 검증 기사 ' + index,
+    },
+  }));
+  const openArticle = vi.fn();
+  const route: ArticleSheetRoute = {
+    active: false,
+    sourcePath: '/',
+    height: 456,
+    mapArticles: items,
+    openArticle,
+    close: vi.fn(),
+    setHeight: vi.fn(),
+    registerMapArticles: vi.fn(),
+    retry: vi.fn(),
+  };
+  const overflow = document.body.style.overflow;
+  const padding = document.body.style.paddingRight;
+  document.body.style.overflow = 'auto';
+  document.body.style.paddingRight = '8px';
+
+  try {
+    const fixture = await mount({ ...data, total: items.length, items }, route);
+    container.dataset.articleBackground = '';
+    const marker = (fixture.positions[0] as { icon: { content: HTMLElement } })
+      .icon.content;
+    marker.focus();
+    await act(async () => fixture.selected[0]());
+    const chooser = document.querySelector<HTMLElement>(
+      '[aria-label="선택한 기사"]',
+    )!;
+    const scroller = chooser.querySelector<HTMLElement>('[tabindex="0"]')!;
+    const article = chooser.querySelectorAll<HTMLAnchorElement>(
+      'a[href^="/incidents/"]',
+    )[9];
+    const handle = chooser.querySelector<HTMLButtonElement>(
+      'button[aria-expanded]',
+    )!;
+    await act(async () => handle.click());
+    scroller.scrollTop = 640;
+    await act(async () => scroller.dispatchEvent(new Event('scroll')));
+    article.focus();
+
+    const preventNavigation = (event: MouseEvent) => event.preventDefault();
+    document.addEventListener('click', preventNavigation);
+    try {
+      await act(async () =>
+        article.dispatchEvent(
+          new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            ctrlKey: true,
+          }),
+        ),
+      );
+      expect(
+        openArticle,
+        '수정키 클릭은 기존 링크 동작 유지',
+      ).not.toHaveBeenCalled();
+      await act(async () => article.click());
+    } finally {
+      document.removeEventListener('click', preventNavigation);
+    }
+    expect(
+      openArticle,
+      '포털 링크도 공통 상세 진입으로 opener 보존',
+    ).toHaveBeenCalledWith(items[9].article_id);
+
+    container.dataset.articleOverlay = 'true';
+    container.inert = true;
+    container.setAttribute('aria-hidden', 'true');
+    await fixture.draw(
+      { ...route, active: true },
+      createElement(
+        DetailSheet,
+        { titleId: 'group-routed-detail-heading' },
+        createElement(
+          'h1',
+          { id: 'group-routed-detail-heading' },
+          items[9].article.title,
+        ),
+      ),
+    );
+    const detail = document.querySelector<HTMLElement>('[role="dialog"]')!;
+    expect(chooser.isConnected, '그룹 시트를 버리지 않고 읽기 상태 보존').toBe(
+      true,
+    );
+    expect(chooser.hidden).toBe(true);
+    expect(chooser.hasAttribute('inert')).toBe(true);
+    expect(chooser.getAttribute('role')).toBeNull();
+    expect(document.querySelector('[aria-label="선택한 기사"]')).toBeNull();
+    expect(document.querySelectorAll('[role="dialog"]')).toHaveLength(1);
+    expect(
+      detail.contains(document.activeElement),
+      '새 상세가 포커스를 소유',
+    ).toBe(true);
+    expect(document.body.style.overflow).toBe('hidden');
+    marker.focus();
+    expect(
+      detail.contains(document.activeElement),
+      '숨은 그룹이 포커스를 가로채지 않음',
+    ).toBe(true);
+
+    delete container.dataset.articleOverlay;
+    container.inert = false;
+    container.removeAttribute('aria-hidden');
+    await fixture.draw(route);
+    expect(document.querySelector('[aria-label="선택한 기사"]')).toBe(chooser);
+    expect(chooser.hidden).toBe(false);
+    expect(chooser.hasAttribute('inert')).toBe(false);
+    expect(chooser.dataset.expanded, '펼쳐 읽던 높이 유지').toBe('true');
+    expect(chooser.querySelector('[tabindex="0"]')).toBe(scroller);
+    expect(scroller.scrollTop, '열 번째 기사까지 읽던 스크롤 유지').toBe(640);
+    expect(document.activeElement, '원래 열었던 열 번째 기사로 복귀').toBe(
+      article,
+    );
+    expect(document.body.style.overflow).toBe('hidden');
+    expect(container.inert).toBe(true);
+    await act(async () =>
+      chooser
+        .querySelector<HTMLButtonElement>(
+          'button[aria-label="기사 선택 닫기"]',
+        )!
+        .click(),
+    );
+    expect(document.activeElement, '그룹도 닫으면 원래 숫자 원으로 복귀').toBe(
+      marker,
+    );
+    expect(document.body.style.overflow).toBe('auto');
+    expect(document.body.style.paddingRight).toBe('8px');
+    expect(container.inert).toBe(false);
+    expect(document.querySelectorAll('[role="dialog"]')).toHaveLength(0);
+    expect(fixture.positions).toHaveLength(1);
+    expect(fixture.setCenter).not.toHaveBeenCalled();
+    expect(fixture.setZoom).not.toHaveBeenCalled();
+  } finally {
+    if (root) await act(async () => root!.unmount());
+    root = undefined;
+    document.body.style.overflow = overflow;
+    document.body.style.paddingRight = padding;
+  }
 });

@@ -191,7 +191,7 @@ test('articleListMoreAppendsWithRawOffsetsAndFirstSeenIdentity', async () => {
   expect(added.querySelector('img')?.getAttribute('src')).toBe(
     apiOrigin + next.image_url,
   );
-  expect(added.textContent).toContain('AI 생성 이미지');
+  expect(added.querySelector('figcaption')).toBeNull();
   expect(
     added.querySelector('a[href="https://publisher.example.invalid/19"]'),
   ).not.toBeNull();

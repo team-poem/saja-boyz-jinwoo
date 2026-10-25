@@ -1,0 +1,126 @@
+import { createRequire } from 'node:module';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { installNaverFixture } from '/private/tmp/hyunghyung-detail-qa/naver-stub.mjs';
+const app = process.env.QA_APP || '/private/tmp/hyunghyung-polish-qa/baseline-app';
+const origin = process.env.QA_ORIGIN || 'http://127.0.0.1:31144';
+const api = process.env.QA_API || 'http://127.0.0.1:41144';
+const out = path.join('/private/tmp/hyunghyung-polish-qa', process.env.QA_RUN || 'baseline-red');
+await mkdir(out, { recursive: true });
+const require = createRequire(path.join(app, 'package.json'));
+const { chromium } = require('playwright-core');
+const report = {
+  buildId: (await readFile(path.join(app, '.next/BUILD_ID'), 'utf8')).trim(),
+  started: new Date().toISOString(),
+  checks: [], scenarios: [], navigationRequests: [], pageErrors: [],
+};
+const check = (condition, name, details = {}) => report.checks.push({ name, passed: Boolean(condition), ...details });
+const reset = (mode = 'ok') => fetch(api + '/__qa/reset?mode=' + mode).then((response) => response.json());
+const requests = () => fetch(api + '/__qa/requests').then((response) => response.json()).then((value) => value.requests);
+const id = 'a'.repeat(64);
+const browser = await chromium.launch({ channel: 'chrome', headless: true });
+async function fresh() {
+  const context = await browser.newContext({ viewport: { width: 393, height: 852 }, reducedMotion: 'reduce' });
+  await context.addInitScript(installNaverFixture);
+  await context.route('**/*', async (route) => {
+    const request = route.request();
+    const url = new URL(request.url());
+    if (url.hostname === 'oapi.map.naver.com') return route.fulfill({ status: 200, contentType: 'text/javascript', body: '/* isolated SDK fixture */' });
+    if (!['127.0.0.1', 'localhost'].includes(url.hostname)) return route.abort();
+    const headers = request.headers();
+    if (headers['next-router-prefetch'] || headers.purpose === 'prefetch') return route.abort();
+    if (url.pathname.startsWith('/incidents/')) report.navigationRequests.push({ path: url.pathname, query: url.search, rsc: headers.rsc || null, accept: headers.accept || null, secFetchDest: headers['sec-fetch-dest'] || null });
+    return route.continue();
+  });
+  const page = await context.newPage();
+  page.setDefaultTimeout(12000);
+  page.on('pageerror', (error) => report.pageErrors.push({ url: page.url(), message: error.message }));
+  return { context, page };
+}
+async function scenario(name, run) {
+  console.log('QA scenario ' + name);
+  try { await run(); report.scenarios.push({ name, completed: true }); }
+  catch (error) { report.scenarios.push({ name, completed: false, error: error.message }); }
+}
+try {
+  await scenario('real-NextLink-RSC-success-load-once', async () => {
+    await reset();
+    const { context, page } = await fresh();
+    try {
+      await page.goto(origin + '/incidents');
+      const link = page.locator('a[href="/incidents/' + id + '"]').first();
+      await link.waitFor();
+      await link.click();
+      await page.getByRole('dialog').getByRole('heading', { level: 1 }).waitFor();
+      const calls = (await requests()).filter((entry) => entry.path === '/news/' + id);
+      report.successCalls = calls;
+      check(calls.length === 1, 'real NextLink RSC navigation uses one article API GET', { actual: calls.length });
+      check(report.navigationRequests.some((entry) => entry.path.endsWith(id) && entry.rsc === '1' && /_rsc=/.test(entry.query)), 'browser emitted actual Next RSC request and query');
+      await page.screenshot({ path: path.join(out, 'rsc-success.png') });
+    } finally { await context.close(); }
+  });
+
+  await scenario('real-NextLink-RSC-upstream-timeout-once', async () => {
+    await reset('detail-timeout');
+    const { context, page } = await fresh();
+    try {
+      await page.goto(origin + '/incidents');
+      const link = page.locator('a[href="/incidents/' + id + '"]').first();
+      await link.waitFor();
+      const started = Date.now();
+      await link.click();
+      await page.getByRole('dialog').getByRole('alert').waitFor({ timeout: 18000 });
+      const elapsedMs = Date.now() - started;
+      const calls = (await requests()).filter((entry) => entry.path === '/news/' + id);
+      report.timeout = { elapsedMs, calls };
+      check(calls.length === 1, 'timed out RSC navigation performs one upstream attempt', { actual: calls.length });
+      check(elapsedMs >= 4500 && elapsedMs < 8500, 'one five-second timeout yields retry UI without a second timeout', { elapsedMs });
+      await page.screenshot({ path: path.join(out, 'rsc-timeout.png') });
+    } finally { await context.close(); await reset(); }
+  });
+
+  await scenario('twelve-member-expanded-chooser-restores-tenth-article-position', async () => {
+    await reset();
+    const { context, page } = await fresh();
+    const snapshot = () => page.getByRole('dialog').evaluate((element) => {
+      const scroller = [...element.querySelectorAll('*')].find((node) => node.scrollHeight > node.clientHeight && ['auto', 'scroll'].includes(getComputedStyle(node).overflowY));
+      return {
+        expanded: element.getAttribute('data-expanded'),
+        height: element.getBoundingClientRect().height,
+        scrollTop: scroller?.scrollTop || 0,
+        focus: { href: document.activeElement?.getAttribute('href'), aria: document.activeElement?.getAttribute('aria-label'), text: document.activeElement?.textContent.slice(0, 60) },
+      };
+    });
+    try {
+      await page.goto(origin + '/');
+      await page.getByRole('button', { name: /지역 대표 위치: 대구.*기사 12건/ }).click();
+      await page.getByRole('dialog').getByRole('button', { name: /시트.*펼치기/ }).click();
+      const tenth = page.getByRole('dialog').locator('a[href^="/incidents/"]').nth(9);
+      const href = await tenth.getAttribute('href');
+      await tenth.scrollIntoViewIfNeeded();
+      await tenth.focus();
+      const before = await snapshot();
+      await page.screenshot({ path: path.join(out, 'chooser-before-tenth.png') });
+      await tenth.click();
+      await page.waitForURL((url) => url.pathname === href);
+      await page.getByRole('dialog').getByRole('heading', { level: 1 }).waitFor();
+      await page.getByRole('dialog').getByRole('link', { name: '닫기', exact: true }).click();
+      await page.waitForURL((url) => url.pathname === '/');
+      await page.getByRole('dialog').getByRole('heading', { name: /12건/ }).waitFor();
+      await page.waitForTimeout(150);
+      const after = await snapshot();
+      report.chooser = { href, before, after };
+      check(after.expanded === before.expanded && after.height > 700, 'returning from the tenth article preserves chooser expanded state', { before: before.expanded, after: after.expanded });
+      check(before.scrollTop > 100 && Math.abs(after.scrollTop - before.scrollTop) < 3, 'returning preserves the chooser reading scroll position', { before: before.scrollTop, after: after.scrollTop });
+      check(after.focus.href === href, 'returning focuses the tenth article rather than the close button', { expected: href, after: after.focus });
+      await page.screenshot({ path: path.join(out, 'chooser-after-tenth.png') });
+    } finally { await context.close(); }
+  });
+} finally {
+  await browser.close();
+  await reset();
+  report.finished = new Date().toISOString();
+  await writeFile(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
+  console.log(JSON.stringify({ buildId: report.buildId, checks: report.checks, scenarios: report.scenarios, successCalls: report.successCalls?.length, timeoutMs: report.timeout?.elapsedMs, chooser: report.chooser, pageErrors: report.pageErrors }, null, 2));
+  if (report.checks.some((entry) => !entry.passed) || report.scenarios.some((entry) => !entry.completed) || report.pageErrors.length) process.exitCode = 1;
+}
