@@ -303,7 +303,7 @@ test('mapCarouselUsesRealArticlesAndSafeImages', async () => {
     `img[src="https://news.example.com/images/${recent.article_id}.jpg"]`,
   );
   assert(image);
-  expect(cards.textContent).toContain('AI 생성 이미지');
+  expect(cards.querySelector('figcaption')).toBeNull();
   await act(async () => image.dispatchEvent(new Event('error')));
   expect(cards.textContent).toContain('이미지 없음');
   expect(cards.querySelectorAll('a[href^="/incidents/"]')).toHaveLength(3);

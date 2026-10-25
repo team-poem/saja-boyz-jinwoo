@@ -27,9 +27,6 @@ export function MapCarouselImage({ src }: { src: string | null }) {
             onError={onError}
             className="relative block h-20 w-full object-cover"
           />
-          <figcaption className="absolute right-1 bottom-1 rounded bg-[#292929]/80 px-1.5 py-0.5 text-[8px]/[10px] text-[#dedede]">
-            AI 생성 이미지
-          </figcaption>
         </>
       ) : (
         <span className="grid h-full place-items-center text-[12px]/[normal] text-muted">

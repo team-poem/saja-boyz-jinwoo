@@ -95,3 +95,5 @@
 
 32. 시나리오30·31의70/80상한은사용자최종Figma두단계지시로대체한다. 모든지도/목록/검색/직접/NoJS상세는내용auto+53.52dvh상한의기본접힘으로시작하고nativehandleupdrag로viewport-49px/safe-top까지확장,down으로기본복귀한다. 공유앞여백을만들지않으며body-scroll/닫기/포커스/선택복귀·NoJS/SEO404는유지한다.
 33. AI표시는상세·지도선택시트의실제이미지아래“AI로 생성된 이미지입니다.”만작게표시한다. 일반목록/지도하단carousel은이미지와로딩/실패복구를유지하면서AIcaption/badge를보이지않는다. 이미지없음/실패에는시트도caption없음,로더는caption영역을덮지않는다.
+
+- 최종snap/AI: 초기모드true·기본half초과·drag가70상한에머묾·list/carousel배지/상세문구불일치RED를확인했다. defaultfalse+기본내용auto/max53.52,수동h/maxviewport49safe,시트전용아래caption으로focused3개/전체151개gateexit0·포맷린트소스Git불변GREEN. dummySDK carousel은기존unit+실제SDK QA로중복검증범위를유지하고교체DOM0측정은연결된현재DOM관측으로보완했다. 70/80시안은폐기한완료기준이다.

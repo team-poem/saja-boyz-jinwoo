@@ -301,7 +301,7 @@ test('shows the selected article in the Figma sheet with its real image and publ
   expect(sheet?.querySelector('article img')?.getAttribute('src')).toBe(
     `https://news.example.com/images/${'a'.repeat(64)}.jpg`,
   );
-  expect(sheet?.textContent).toContain('AI 생성 이미지');
+  expect(sheet?.textContent).toContain('AI로 생성된 이미지입니다.');
   expect(sheet?.textContent).toContain('기사 발행');
   expect(sheet?.querySelector('time')?.getAttribute('dateTime')).toBe(
     '2026-10-13T23:00:00.000Z',

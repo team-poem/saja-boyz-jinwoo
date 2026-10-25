@@ -122,15 +122,15 @@ test('articleSheetInteractionPreservesBackground', async () => {
       'button[aria-expanded]',
     );
     expect(handle, '키보드로 접고 펼칠 수 있는 핸들').not.toBeNull();
-    expect(handle?.getAttribute('aria-expanded')).toBe('true');
-    await act(async () => {
-      handle?.click();
-    });
     expect(handle?.getAttribute('aria-expanded')).toBe('false');
     await act(async () => {
       handle?.click();
     });
     expect(handle?.getAttribute('aria-expanded')).toBe('true');
+    await act(async () => {
+      handle?.click();
+    });
+    expect(handle?.getAttribute('aria-expanded')).toBe('false');
     await act(async () => {
       dialog.dispatchEvent(
         new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),

@@ -97,7 +97,7 @@ test('articleDetailRequestAndContent', async () => {
   expect(
     view.querySelector(`img[src="${apiOrigin}/images/${id}.jpg"]`),
   ).not.toBeNull();
-  expect(view.textContent).toContain('AI 생성 이미지');
+  expect(view.textContent).toContain('AI로 생성된 이미지입니다.');
   expect(view.textContent).not.toMatch(/사건 위치|발생 시각|타임라인/);
   expect(view.querySelector('a[href="/incidents"]')).not.toBeNull();
   expect(view.querySelector('a[href="/"]')).not.toBeNull();
@@ -201,7 +201,7 @@ test('articleDetailImageFailure', async () => {
   await act(async () => image.dispatchEvent(new Event('error')));
   expect(container.querySelector('img')).toBeNull();
   expect(container.textContent).toContain('이미지 없음');
-  expect(container.textContent).not.toContain('AI 생성 이미지');
+  expect(container.textContent).not.toContain('AI로 생성된 이미지입니다.');
   expect(container.querySelector('h1')?.textContent).toBe('교통 안내 & 점검');
   expect(container.textContent).toContain(item.article.description);
   expect(
@@ -380,7 +380,7 @@ test('articleDetailSafePresentation', async () => {
     const view = await detailMarkup();
     expect(view.querySelector('img')).toBeNull();
     expect(view.textContent).toContain('이미지 없음');
-    expect(view.textContent).not.toContain('AI 생성 이미지');
+    expect(view.textContent).not.toContain('AI로 생성된 이미지입니다.');
   }
   for (const imageUrl of [
     null,
