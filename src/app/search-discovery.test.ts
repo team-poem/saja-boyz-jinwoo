@@ -7,6 +7,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, assert, beforeEach, expect, test, vi } from 'vitest';
 
 vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
   notFound: () => {
     throw new Error('TEST_SEO_NOT_FOUND');
   },
@@ -359,7 +360,7 @@ test('serviceAnswersRemainPublicWithoutExtraBrowseLayers', async () => {
   const listView = view(await (list.default as Route)(props()));
   expect(listView.querySelector('a[href="/archive"]')).toBeNull();
   expect(listView.querySelector('a[href="/about"]')).toBeNull();
-  const home = await load('./(browse)/@background/page.tsx');
+  const home = await load('./(browse)/@background/(map)/page.tsx');
   vi.stubEnv('NEXT_PUBLIC_NAVER_MAP_CLIENT_ID', '');
   const homeView = view(await (home.default as Route)(props()));
   expect(

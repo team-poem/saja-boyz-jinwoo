@@ -77,3 +77,6 @@
 - 이미지 단계: 실제3종 컴포넌트에서 로딩 표시 누락과 실패 후 URL 교체 회귀를 RED로 확인했다. 공통 상태/장식 스켈레톤·브라우저 캐시 확인·URL별 이미지 key로 focused18개 및 전체147개·포맷·린트·소스/Git불변 GREEN. 이미지/캡션 기존 표시와 NoJS를 가리는 오버레이를 만들지 않는다.
 
 - 서버 로딩 단계: 홈API보류 중 스켈레톤 미표시 RED 뒤 named-slot fallback을추가해 focused생산회귀와전체148개가실패·생략없이GREEN. 내부기사시트로딩/느린직접NoJS제목·요약·원문/canonical·OG·JSONLD·정상색인·404 GET/HEAD를유지. 직접프로브/metadata응답전대기는앱로더로가리지않으며기존정책을변경하지않는다.
+
+- 액션 로딩 단계: 실제검색Button/Enter가전체문서GET으로바뀌며대기표시없음,NoJS검색본문숨김,내부/직접retrybusy/spinner없음을RED로확인했다. GETform+clienttransition/스켈레톤·상세refresh대기와중복차단을구현했다. 홈loading은(map)으로한정하고검색loading은기능컴포넌트로옮겨NoJS본문을보존한다. 기존테스트는뷰이동import/routerfixture만조정하고기대값은유지,전체149개·포맷·린트·소스/Git불변GREEN.
+28. 같은검색어재제출도새첫페이지를표시하고기존pagination을초기화한다. 이전추가페이지응답이늦게도착해도새결과에추가하지않으며,상세진입/복귀나일반refresh만으로검색pagination을초기화하지않는다.

@@ -3,11 +3,12 @@
 import { act, createElement, StrictMode } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
-let HomePage: typeof import('@/app/(browse)/@background/page').default;
+let HomePage: typeof import('@/app/(browse)/@background/(map)/page').default;
 
 beforeEach(async () => {
   vi.resetModules();
-  ({ default: HomePage } = await import('@/app/(browse)/@background/page'));
+  ({ default: HomePage } =
+    await import('@/app/(browse)/@background/(map)/page'));
 });
 
 const dom = { window };

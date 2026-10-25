@@ -4,7 +4,7 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, test, vi } from 'vitest';
 
-import SearchLoading from '@/app/(browse)/@background/search/loading';
+import { SearchLoading } from '@/features/search/ui/search-loading/search-loading';
 import IncidentsLoading from '@/app/(browse)/@background/incidents/loading';
 import ArticleDetailLoading from '@/app/(browse)/(.)incidents/[id]/loading';
 import { KeywordLinkStatus } from '@/features/search/ui/keyword-link-status/keyword-link-status';
