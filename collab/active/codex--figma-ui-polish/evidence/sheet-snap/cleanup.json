@@ -1,0 +1,20 @@
+{
+  "ownedServers": [
+    {
+      "port": 31151,
+      "pid": 7750,
+      "cwd": "/Users/jeong-gyuhwan/규환/projects/saja-boyz-jinwoo-codex--figma-ui-polish",
+      "command": "next-server (v16.3.8)",
+      "signal": "SIGTERM"
+    },
+    {
+      "port": 41151,
+      "pid": 7553,
+      "cwd": "/Users/jeong-gyuhwan/규환/projects/saja-boyz-jinwoo-codex--figma-ui-polish",
+      "command": "node /private/tmp/pr45-sheet-snap-qa/fixture.mjs",
+      "signal": "SIGTERM"
+    }
+  ],
+  "listeningAfter": [],
+  "browserClosedByRunner": true
+}

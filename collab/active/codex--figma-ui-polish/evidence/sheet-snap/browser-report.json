@@ -1,0 +1,3027 @@
+{
+  "sourceHead": "6c6c23b523079626d863c65446d2a8290df66737",
+  "buildId": "XqX4ZJdwETDiiPENL9Q0h",
+  "started": "2026-10-25T13:17:58.871Z",
+  "synthetic": true,
+  "personalLocation": false,
+  "SDKStubbed": false,
+  "SDKModified": false,
+  "checks": [
+    {
+      "name": "검증용 기사 · 높이검증 짧음 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 짧음 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 16,
+          "y": 542.5,
+          "width": 361,
+          "height": 140
+        },
+        "caption": {
+          "x": 16,
+          "y": 686.5,
+          "width": 361,
+          "height": 15
+        }
+      }
+    },
+    {
+      "name": "direct short initially uses the collapsed content-fit half ceiling",
+      "passed": true
+    },
+    {
+      "name": "normal direct default short respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 451.5,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "normal direct default short stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 400.5,
+        "width": 393,
+        "height": 451.5,
+        "top": 400.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "normal direct default short leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "normal direct default short has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "normal direct default short default state has no unused space below its last flow content",
+      "passed": true,
+      "evidence": {
+        "endGap": 0
+      }
+    },
+    {
+      "name": "검증용 기사 · 높이검증 중간 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 중간 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 16,
+          "y": 538.015625,
+          "width": 361,
+          "height": 140
+        },
+        "caption": {
+          "x": 16,
+          "y": 682.015625,
+          "width": 361,
+          "height": 15
+        }
+      }
+    },
+    {
+      "name": "direct medium initially uses the collapsed content-fit half ceiling",
+      "passed": true
+    },
+    {
+      "name": "normal direct default medium respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 455.984375,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "normal direct default medium stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "normal direct default medium leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "normal direct default medium has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 아주 긴 본문 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 아주 긴 본문 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 16,
+          "y": 538.015625,
+          "width": 361,
+          "height": 140
+        },
+        "caption": {
+          "x": 16,
+          "y": 682.015625,
+          "width": 361,
+          "height": 15
+        }
+      }
+    },
+    {
+      "name": "direct long initially uses the collapsed content-fit half ceiling",
+      "passed": true
+    },
+    {
+      "name": "normal direct default long respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 455.984375,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "normal direct default long stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "normal direct default long leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "normal direct default long has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "long default article scrolls inside its half-height ceiling",
+      "passed": true
+    },
+    {
+      "name": "long default article reaches the half ceiling instead of near-full height",
+      "passed": true
+    },
+    {
+      "name": "native sheet drag has a real handle target",
+      "passed": true
+    },
+    {
+      "name": "actual native up drag selects the expected snap state",
+      "passed": true
+    },
+    {
+      "name": "normal long after native up drag respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 803,
+        "cap": 803,
+        "expanded": true
+      }
+    },
+    {
+      "name": "normal long after native up drag stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "normal long after native up drag leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "normal long after native up drag has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "normal long after native up drag manual expansion uses the explicit near-full height",
+      "passed": true,
+      "evidence": {
+        "actual": 803,
+        "cap": 803
+      }
+    },
+    {
+      "name": "native up drag lets the very long article fill the near-full ceiling with49px reserved at top",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "normal long expanded share reachability reaches the real share button inside its reading scroller",
+      "passed": true,
+      "evidence": {
+        "visible": true,
+        "hit": true,
+        "rect": {
+          "x": 16,
+          "y": 787.5,
+          "width": 361,
+          "height": 48,
+          "top": 787.5,
+          "right": 377,
+          "bottom": 835.5,
+          "left": 16
+        }
+      }
+    },
+    {
+      "name": "normal long expanded share reachability share follows the previous content with the normal reading gap in every mode",
+      "passed": true,
+      "evidence": {
+        "footerGap": 16,
+        "readingGap": 16
+      }
+    },
+    {
+      "name": "normal long expanded share reachability default/overflow reading flow reaches its footer without artificial blank space",
+      "passed": true,
+      "evidence": {
+        "endGap": 0.5
+      }
+    },
+    {
+      "name": "normal long expanded share reachability scrolls the reading area without moving the page background",
+      "passed": true
+    },
+    {
+      "name": "native sheet drag has a real handle target",
+      "passed": true
+    },
+    {
+      "name": "actual native down drag selects the expected snap state",
+      "passed": true
+    },
+    {
+      "name": "normal long after native down drag respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 455.984375,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "normal long after native down drag stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "normal long after native down drag leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "normal long after native down drag has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "native down drag restores the original content-fit half state",
+      "passed": true,
+      "evidence": {
+        "before": 455.984375,
+        "after": 455.984375
+      }
+    },
+    {
+      "name": "default content heights are monotonic while capped content may share the half ceiling",
+      "passed": true,
+      "evidence": {
+        "short": 451.5,
+        "medium": 455.984375,
+        "long": 455.984375
+      }
+    },
+    {
+      "name": "uncapped short content remains shorter than the medium content",
+      "passed": true
+    },
+    {
+      "name": "list images have no AI badge or caption",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 짧음 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 짧음 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 16,
+          "y": 542.5,
+          "width": 361,
+          "height": 140
+        },
+        "caption": {
+          "x": 16,
+          "y": 686.5,
+          "width": 361,
+          "height": 15
+        }
+      }
+    },
+    {
+      "name": "list entry initially uses collapsed content-fit half mode",
+      "passed": true
+    },
+    {
+      "name": "list initial content-fit article respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 451.5,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "list initial content-fit article stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 400.5,
+        "width": 393,
+        "height": 451.5,
+        "top": 400.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "list initial content-fit article leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "list initial content-fit article has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "list initial content-fit article default state has no unused space below its last flow content",
+      "passed": true,
+      "evidence": {
+        "endGap": 0
+      }
+    },
+    {
+      "name": "list close restores the originating route",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 짧음 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 짧음 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 16,
+          "y": 542.5,
+          "width": 361,
+          "height": 140
+        },
+        "caption": {
+          "x": 16,
+          "y": 686.5,
+          "width": 361,
+          "height": 15
+        }
+      }
+    },
+    {
+      "name": "search entry initially uses collapsed content-fit half mode",
+      "passed": true
+    },
+    {
+      "name": "search initial content-fit article respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 451.5,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "search initial content-fit article stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 400.5,
+        "width": 393,
+        "height": 451.5,
+        "top": 400.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "search initial content-fit article leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "search initial content-fit article has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "search initial content-fit article default state has no unused space below its last flow content",
+      "passed": true,
+      "evidence": {
+        "endGap": 0
+      }
+    },
+    {
+      "name": "search close restores the originating route",
+      "passed": true
+    },
+    {
+      "name": "search close preserves its original query",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 짧음 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 짧음 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 16,
+          "y": 542.5,
+          "width": 361,
+          "height": 140
+        },
+        "caption": {
+          "x": 16,
+          "y": 686.5,
+          "width": 361,
+          "height": 15
+        }
+      }
+    },
+    {
+      "name": "manual URL added respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 455.984375,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "manual URL added stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "manual URL added leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "manual URL added has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "manual sharing URL increases content within the current natural-fit ceiling",
+      "passed": true,
+      "evidence": {
+        "before": 451.5,
+        "after": 455.984375,
+        "expected": 455.9904,
+        "cap": 455.9904
+      }
+    },
+    {
+      "name": "manual sharing addition preserves the default half snap mode",
+      "passed": true
+    },
+    {
+      "name": "manual sharing fallback retains the exact existing article URL",
+      "passed": true
+    },
+    {
+      "name": "manual URL low viewport 320 respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 171.25,
+        "cap": 171.264,
+        "expanded": false
+      }
+    },
+    {
+      "name": "manual URL low viewport 320 stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 148.75,
+        "width": 320,
+        "height": 171.25,
+        "top": 148.75,
+        "right": 320,
+        "bottom": 320,
+        "left": 0
+      }
+    },
+    {
+      "name": "manual URL low viewport 320 leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "manual URL low viewport 320 has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "manual URL remains reachable at 320x320",
+      "passed": true,
+      "evidence": {
+        "visible": true,
+        "hit": true,
+        "rect": {
+          "x": 16,
+          "y": 257.25,
+          "width": 288,
+          "height": 46,
+          "top": 257.25,
+          "right": 304,
+          "bottom": 303.25,
+          "left": 16
+        }
+      }
+    },
+    {
+      "name": "manual URL low viewport 1440 respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 171.25,
+        "cap": 171.264,
+        "expanded": false
+      }
+    },
+    {
+      "name": "manual URL low viewport 1440 stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 400,
+        "y": 148.75,
+        "width": 640,
+        "height": 171.25,
+        "top": 148.75,
+        "right": 1040,
+        "bottom": 320,
+        "left": 400
+      }
+    },
+    {
+      "name": "manual URL low viewport 1440 leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "manual URL low viewport 1440 has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "manual URL remains reachable at 1440x320",
+      "passed": true,
+      "evidence": {
+        "visible": true,
+        "hit": true,
+        "rect": {
+          "x": 416,
+          "y": 257.25,
+          "width": 608,
+          "height": 46,
+          "top": 257.25,
+          "right": 1024,
+          "bottom": 303.25,
+          "left": 416
+        }
+      }
+    },
+    {
+      "name": "actual Naver map displays synthetic1/2/12 groups",
+      "passed": true,
+      "evidence": [
+        "1",
+        "2",
+        "12"
+      ]
+    },
+    {
+      "name": "map carousel images have no AI badge or caption",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 짧음 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 짧음 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 16,
+          "y": 560.015625,
+          "width": 361,
+          "height": 140
+        },
+        "caption": {
+          "x": 16,
+          "y": 704.015625,
+          "width": 361,
+          "height": 15
+        }
+      }
+    },
+    {
+      "name": "map normal short initially uses collapsed content-fit half mode",
+      "passed": true
+    },
+    {
+      "name": "map normal default short respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 455.984375,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "map normal default short stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "map normal default short leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "map normal default short has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "native sheet drag has a real handle target",
+      "passed": true
+    },
+    {
+      "name": "actual native up drag selects the expected snap state",
+      "passed": true
+    },
+    {
+      "name": "map normal expanded short respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 803,
+        "cap": 803,
+        "expanded": true
+      }
+    },
+    {
+      "name": "map normal expanded short stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "map normal expanded short leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "map normal expanded short has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "map normal expanded short manual expansion uses the explicit near-full height",
+      "passed": true,
+      "evidence": {
+        "actual": 803,
+        "cap": 803
+      }
+    },
+    {
+      "name": "map normal short share reaches the real share button inside its reading scroller",
+      "passed": true,
+      "evidence": {
+        "visible": true,
+        "hit": true,
+        "rect": {
+          "x": 16,
+          "y": 458.5,
+          "width": 361,
+          "height": 48,
+          "top": 458.5,
+          "right": 377,
+          "bottom": 506.5,
+          "left": 16
+        }
+      }
+    },
+    {
+      "name": "map normal short share share follows the previous content with the normal reading gap in every mode",
+      "passed": true,
+      "evidence": {
+        "footerGap": 16,
+        "readingGap": 16
+      }
+    },
+    {
+      "name": "map normal short share scrolls the reading area without moving the page background",
+      "passed": true
+    },
+    {
+      "name": "all active article/selection dialogs close through actual Escape input",
+      "passed": true
+    },
+    {
+      "name": "map canvas DOM survives short detail entry and close",
+      "passed": true
+    },
+    {
+      "name": "new map chooser initially uses collapsed half mode",
+      "passed": true
+    },
+    {
+      "name": "map chooser medium respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 455.984375,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "map chooser medium stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "map chooser medium leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "map chooser medium has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "map chooser medium thumbnail1 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser medium thumbnail1 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 585.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 669.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser medium thumbnail2 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser medium thumbnail2 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 824.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 908.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "검증용 기사 · 높이검증 중간 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 중간 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 16,
+          "y": 560.015625,
+          "width": 361,
+          "height": 140
+        },
+        "caption": {
+          "x": 16,
+          "y": 704.015625,
+          "width": 361,
+          "height": 15
+        }
+      }
+    },
+    {
+      "name": "map normal medium initially uses collapsed content-fit half mode",
+      "passed": true
+    },
+    {
+      "name": "map normal default medium respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 455.984375,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "map normal default medium stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "map normal default medium leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "map normal default medium has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "native sheet drag has a real handle target",
+      "passed": true
+    },
+    {
+      "name": "actual native up drag selects the expected snap state",
+      "passed": true
+    },
+    {
+      "name": "map normal expanded medium respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 803,
+        "cap": 803,
+        "expanded": true
+      }
+    },
+    {
+      "name": "map normal expanded medium stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "map normal expanded medium leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "map normal expanded medium has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "map normal expanded medium manual expansion uses the explicit near-full height",
+      "passed": true,
+      "evidence": {
+        "actual": 803,
+        "cap": 803
+      }
+    },
+    {
+      "name": "map normal medium share reaches the real share button inside its reading scroller",
+      "passed": true,
+      "evidence": {
+        "visible": true,
+        "hit": true,
+        "rect": {
+          "x": 16,
+          "y": 614.5,
+          "width": 361,
+          "height": 48,
+          "top": 614.5,
+          "right": 377,
+          "bottom": 662.5,
+          "left": 16
+        }
+      }
+    },
+    {
+      "name": "map normal medium share share follows the previous content with the normal reading gap in every mode",
+      "passed": true,
+      "evidence": {
+        "footerGap": 16,
+        "readingGap": 16
+      }
+    },
+    {
+      "name": "map normal medium share scrolls the reading area without moving the page background",
+      "passed": true
+    },
+    {
+      "name": "all active article/selection dialogs close through actual Escape input",
+      "passed": true
+    },
+    {
+      "name": "map canvas DOM survives medium detail entry and close",
+      "passed": true
+    },
+    {
+      "name": "new map chooser initially uses collapsed half mode",
+      "passed": true
+    },
+    {
+      "name": "map chooser long respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 455.984375,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "map chooser long stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "map chooser long leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "map chooser long has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail1 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail1 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 585.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 669.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser long thumbnail2 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail2 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 4070.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 4154.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser long thumbnail3 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail3 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 4309.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 4393.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser long thumbnail4 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail4 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 4548.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 4632.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser long thumbnail5 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail5 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 4787.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 4871.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser long thumbnail6 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail6 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 5026.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 5110.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser long thumbnail7 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail7 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 5265.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 5349.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser long thumbnail8 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail8 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 5504.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 5588.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser long thumbnail9 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail9 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 5743.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 5827.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser long thumbnail10 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail10 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 5982.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 6066.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser long thumbnail11 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail11 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 6221.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 6305.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "map chooser long thumbnail12 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "map chooser long thumbnail12 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 27,
+          "y": 6460.015625,
+          "width": 80,
+          "height": 80
+        },
+        "caption": {
+          "x": 27,
+          "y": 6544.015625,
+          "width": 80,
+          "height": 24
+        }
+      }
+    },
+    {
+      "name": "검증용 기사 · 높이검증 아주 긴 본문 has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "검증용 기사 · 높이검증 아주 긴 본문 AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 16,
+          "y": 560.015625,
+          "width": 361,
+          "height": 140
+        },
+        "caption": {
+          "x": 16,
+          "y": 704.015625,
+          "width": 361,
+          "height": 15
+        }
+      }
+    },
+    {
+      "name": "map normal long initially uses collapsed content-fit half mode",
+      "passed": true
+    },
+    {
+      "name": "map normal default long respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 455.984375,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "map normal default long stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "map normal default long leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "map normal default long has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "map long default capture starts at readingTop0",
+      "passed": true
+    },
+    {
+      "name": "native sheet drag has a real handle target",
+      "passed": true
+    },
+    {
+      "name": "actual native up drag selects the expected snap state",
+      "passed": true
+    },
+    {
+      "name": "map normal expanded long respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 803,
+        "cap": 803,
+        "expanded": true
+      }
+    },
+    {
+      "name": "map normal expanded long stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "map normal expanded long leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "map normal expanded long has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "map normal expanded long manual expansion uses the explicit near-full height",
+      "passed": true,
+      "evidence": {
+        "actual": 803,
+        "cap": 803
+      }
+    },
+    {
+      "name": "map long expanded capture remains at readingTop0 after actual native up drag",
+      "passed": true
+    },
+    {
+      "name": "map normal long share reaches the real share button inside its reading scroller",
+      "passed": true,
+      "evidence": {
+        "visible": true,
+        "hit": true,
+        "rect": {
+          "x": 16,
+          "y": 787.5,
+          "width": 361,
+          "height": 48,
+          "top": 787.5,
+          "right": 377,
+          "bottom": 835.5,
+          "left": 16
+        }
+      }
+    },
+    {
+      "name": "map normal long share share follows the previous content with the normal reading gap in every mode",
+      "passed": true,
+      "evidence": {
+        "footerGap": 16,
+        "readingGap": 16
+      }
+    },
+    {
+      "name": "map normal long share default/overflow reading flow reaches its footer without artificial blank space",
+      "passed": true,
+      "evidence": {
+        "endGap": 0.5
+      }
+    },
+    {
+      "name": "map normal long share scrolls the reading area without moving the page background",
+      "passed": true
+    },
+    {
+      "name": "all active article/selection dialogs close through actual Escape input",
+      "passed": true
+    },
+    {
+      "name": "map canvas DOM survives long detail entry and close",
+      "passed": true
+    },
+    {
+      "name": "native sheet drag has a real handle target",
+      "passed": true
+    },
+    {
+      "name": "actual native up drag selects the expected snap state",
+      "passed": true
+    },
+    {
+      "name": "group12 chooser has a real nonzero reading position",
+      "passed": true
+    },
+    {
+      "name": "group12 resized respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 451,
+        "cap": 451,
+        "expanded": true
+      }
+    },
+    {
+      "name": "group12 resized stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 400,
+        "y": 49,
+        "width": 640,
+        "height": 451,
+        "top": 49,
+        "right": 1040,
+        "bottom": 500,
+        "left": 400
+      }
+    },
+    {
+      "name": "group12 resized leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "group12 resized has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "group12 resized manual expansion uses the explicit near-full height",
+      "passed": true,
+      "evidence": {
+        "actual": 451,
+        "cap": 451
+      }
+    },
+    {
+      "name": "resize preserves the selected group link DOM and keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "closing a detail restores the expanded group chooser",
+      "passed": true
+    },
+    {
+      "name": "closing a detail restores the actual reading position",
+      "passed": true,
+      "evidence": {
+        "before": 3429,
+        "after": 3429
+      }
+    },
+    {
+      "name": "closing a detail restores the same later article link focus",
+      "passed": true
+    },
+    {
+      "name": "selection close returns focus to the latest accessible group marker",
+      "passed": true
+    },
+    {
+      "name": "selection close releases the body scroll lock",
+      "passed": true
+    },
+    {
+      "name": "real SDK is not reinitialized by content height/resize/detail restoration",
+      "passed": true
+    },
+    {
+      "name": "existing auto filter sheet retains its90dvh ceiling at low height",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 32,
+        "width": 393,
+        "height": 288
+      }
+    },
+    {
+      "name": "existing filter apply action stays reachable inside its own scroll container",
+      "passed": true,
+      "evidence": {
+        "visible": true,
+        "hit": true,
+        "rect": {
+          "x": 99.3125,
+          "y": 253,
+          "width": 272.6875,
+          "height": 46,
+          "top": 253,
+          "right": 372,
+          "bottom": 299,
+          "left": 99.3125
+        }
+      }
+    },
+    {
+      "name": "filter close restores its own trigger focus and background interactivity",
+      "passed": true
+    },
+    {
+      "name": "NoJS long normal article status200",
+      "passed": true
+    },
+    {
+      "name": "NoJS normal article initially uses collapsed half mode",
+      "passed": true
+    },
+    {
+      "name": "NoJS long normal article respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 455.984375,
+        "cap": 455.9904,
+        "expanded": false
+      }
+    },
+    {
+      "name": "NoJS long normal article stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "NoJS long normal article leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "NoJS long normal article has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "NoJS detail image has one exact below-image AI notice",
+      "passed": true
+    },
+    {
+      "name": "NoJS detail image AI notice is below the image rather than overlaid",
+      "passed": true,
+      "evidence": {
+        "image": {
+          "x": 16,
+          "y": 538.015625,
+          "width": 361,
+          "height": 140
+        },
+        "caption": {
+          "x": 16,
+          "y": 682.015625,
+          "width": 361,
+          "height": 15
+        }
+      }
+    },
+    {
+      "name": "NoJS long summary uses a real CSS reading scroller",
+      "passed": true
+    },
+    {
+      "name": "NoJS actual summary content exists",
+      "passed": true
+    },
+    {
+      "name": "NoJS original source is reachable through native reading scroll",
+      "passed": true,
+      "evidence": {
+        "visible": true,
+        "hit": true,
+        "rect": {
+          "x": 46.203125,
+          "y": 752.515625,
+          "width": 160.90625,
+          "height": 15,
+          "top": 752.515625,
+          "right": 207.109375,
+          "bottom": 767.515625,
+          "left": 46.203125
+        }
+      }
+    },
+    {
+      "name": "bot receives the final normal article title and200",
+      "passed": true
+    },
+    {
+      "name": "adaptive sheet retains the public canonical article URL",
+      "passed": true
+    },
+    {
+      "name": "valid normal article remains indexable",
+      "passed": true
+    },
+    {
+      "name": "actual missing article remains HTTP404",
+      "passed": true
+    },
+    {
+      "name": "actual missing article remains noindex",
+      "passed": true
+    },
+    {
+      "name": "NoJS404 retains a visible explanation",
+      "passed": true
+    },
+    {
+      "name": "NoJS404 retains a real map escape link",
+      "passed": true
+    },
+    {
+      "name": "404 keeps the original article address and query",
+      "passed": true
+    },
+    {
+      "name": "no uncaught browser page errors",
+      "passed": true,
+      "evidence": []
+    },
+    {
+      "name": "no application write requests were initiated",
+      "passed": true,
+      "evidence": []
+    },
+    {
+      "name": "actual Naver raster tiles were loaded without a SDK stub",
+      "passed": true,
+      "evidence": {
+        "tiles200": 23
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "representative-normal-default-half-and-native-snap",
+      "completed": true,
+      "started": 1792934279794,
+      "elapsedMs": 6858
+    },
+    {
+      "name": "manual-url-growth-and-low-viewport",
+      "completed": true,
+      "started": 1792934286652,
+      "elapsedMs": 2799
+    },
+    {
+      "name": "real-map-normal-entry-group-retention-and-filter",
+      "completed": true,
+      "started": 1792934289451,
+      "elapsedMs": 12565
+    },
+    {
+      "name": "nojs-long-normal-body-bot-metadata-and404",
+      "completed": true,
+      "started": 1792934302016,
+      "elapsedMs": 1795
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "app/normal-short.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic short article; initial collapsed content fit with a half-height ceiling."
+    },
+    {
+      "file": "app/normal-medium.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic medium article; initial collapsed content fit with a half-height ceiling."
+    },
+    {
+      "file": "app/normal-long.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic long article; initial collapsed content fit with a half-height ceiling."
+    },
+    {
+      "file": "app/normal-long-expanded.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Same long article after an actual native handle up drag; near-full ceiling, with the reserved top area."
+    },
+    {
+      "file": "app/manual-url.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Only native share/clipboard capabilities fail synthetically; manual URL joins the same reading flow."
+    },
+    {
+      "file": "app/manual-url-low-height.png",
+      "viewport": {
+        "width": 1440,
+        "height": 320
+      },
+      "condition": "Wide desktop viewport with only320px height; sheet remains capped and the manual URL is reachable."
+    },
+    {
+      "file": "app/map-normal-short.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual Naver SDK and synthetic single-group marker open a normal article directly."
+    },
+    {
+      "file": "app/map-long-default.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual Naver background; same very long normal article in its initial content-fit half snap, readingTop0."
+    },
+    {
+      "file": "app/map-long-expanded.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Same actual Naver background and long article after an actual native up drag; explicit near-full height, readingTop0."
+    },
+    {
+      "file": "app/group12-reading-position.png",
+      "viewport": {
+        "width": 1440,
+        "height": 500
+      },
+      "condition": "Real Naver group12 chooser, expanded, reading a later article after viewport resize."
+    },
+    {
+      "file": "app/group12-returned.png",
+      "viewport": {
+        "width": 1440,
+        "height": 500
+      },
+      "condition": "Detail close returned to the same chooser, reading position and focused link."
+    },
+    {
+      "file": "app/filter-low-height.png",
+      "viewport": {
+        "width": 393,
+        "height": 320
+      },
+      "condition": "Existing auto-size whole-filter sheet; period/category/status design is unchanged."
+    },
+    {
+      "file": "app/nojs-long-normal.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "JavaScript disabled; CSS natural height/scroll retains the real summary and original source."
+    },
+    {
+      "file": "app/nojs404.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual404 without JavaScript; original address and safe escape remain available."
+    }
+  ],
+  "measurements": [
+    {
+      "label": "normal-direct-default-short",
+      "panel": {
+        "x": 0,
+        "y": 400.5,
+        "width": 393,
+        "height": 451.5,
+        "top": 400.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 477.5,
+        "width": 361,
+        "height": 358.5,
+        "top": 477.5,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 359,
+      "scrollHeight": 359,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 0,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "normal-direct-default-medium",
+      "panel": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 473.015625,
+        "width": 361,
+        "height": 362.984375,
+        "top": 473.015625,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 363,
+      "scrollHeight": 398,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -34.515625,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "normal-direct-default-long",
+      "panel": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 473.015625,
+        "width": 361,
+        "height": 362.984375,
+        "top": 473.015625,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 363,
+      "scrollHeight": 2621,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -2257.515625,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "normal-long-native-up-expanded",
+      "panel": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 126,
+        "width": 361,
+        "height": 710,
+        "top": 126,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 710,
+      "scrollHeight": 2621,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -1910.5,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "normal long expanded share reachability",
+      "panel": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 126,
+        "width": 361,
+        "height": 710,
+        "top": 126,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 1911,
+      "clientHeight": 710,
+      "scrollHeight": 2621,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 0.5,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "normal-long-native-down-half",
+      "panel": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 473.015625,
+        "width": 361,
+        "height": 362.984375,
+        "top": 473.015625,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 1911,
+      "clientHeight": 363,
+      "scrollHeight": 2621,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -346.515625,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "list-initial-collapsed",
+      "panel": {
+        "x": 0,
+        "y": 400.5,
+        "width": 393,
+        "height": 451.5,
+        "top": 400.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 477.5,
+        "width": 361,
+        "height": 358.5,
+        "top": 477.5,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 359,
+      "scrollHeight": 359,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 0,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "search-initial-collapsed",
+      "panel": {
+        "x": 0,
+        "y": 400.5,
+        "width": 393,
+        "height": 451.5,
+        "top": 400.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 477.5,
+        "width": 361,
+        "height": 358.5,
+        "top": 477.5,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 359,
+      "scrollHeight": 359,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 0,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "manual-url-before",
+      "panel": {
+        "x": 0,
+        "y": 400.5,
+        "width": 393,
+        "height": 451.5,
+        "top": 400.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 477.5,
+        "width": 361,
+        "height": 358.5,
+        "top": 477.5,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 359,
+      "scrollHeight": 359,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 0,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "manual-url-after",
+      "panel": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 473.015625,
+        "width": 361,
+        "height": 362.984375,
+        "top": 473.015625,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 363,
+      "scrollHeight": 441,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -77.515625,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "manual-low-320",
+      "panel": {
+        "x": 0,
+        "y": 148.75,
+        "width": 320,
+        "height": 171.25,
+        "top": 148.75,
+        "right": 320,
+        "bottom": 320,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 225.75,
+        "width": 288,
+        "height": 78.25,
+        "top": 225.75,
+        "right": 304,
+        "bottom": 304,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 320,
+        "height": 320
+      },
+      "scrollTop": 78,
+      "clientHeight": 78,
+      "scrollHeight": 441,
+      "clientWidth": 288,
+      "scrollWidth": 288,
+      "endGap": -284.25,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "manual-low-1440",
+      "panel": {
+        "x": 400,
+        "y": 148.75,
+        "width": 640,
+        "height": 171.25,
+        "top": 148.75,
+        "right": 1040,
+        "bottom": 320,
+        "left": 400
+      },
+      "reading": {
+        "x": 416,
+        "y": 225.75,
+        "width": 608,
+        "height": 78.25,
+        "top": 225.75,
+        "right": 1024,
+        "bottom": 304,
+        "left": 416
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 1440,
+        "height": 320
+      },
+      "scrollTop": 363,
+      "clientHeight": 78,
+      "scrollHeight": 441,
+      "clientWidth": 608,
+      "scrollWidth": 608,
+      "endGap": 0.75,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "map-normal-default-short",
+      "panel": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 473.015625,
+        "width": 361,
+        "height": 362.984375,
+        "top": 473.015625,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 363,
+      "scrollHeight": 381,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -17.515625,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "map-normal-expanded-short",
+      "panel": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 126,
+        "width": 361,
+        "height": 710,
+        "top": 126,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 710,
+      "scrollHeight": 710,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 329.5,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "map normal short share",
+      "panel": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 126,
+        "width": 361,
+        "height": 710,
+        "top": 126,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 710,
+      "scrollHeight": 710,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 329.5,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "map-chooser-medium",
+      "panel": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 473.015625,
+        "width": 361,
+        "height": 362.984375,
+        "top": 473.015625,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 363,
+      "scrollHeight": 498,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -135.015625,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "map-normal-default-medium",
+      "panel": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 473.015625,
+        "width": 361,
+        "height": 362.984375,
+        "top": 473.015625,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 363,
+      "scrollHeight": 537,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -173.515625,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "map-normal-expanded-medium",
+      "panel": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 126,
+        "width": 361,
+        "height": 710,
+        "top": 126,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 710,
+      "scrollHeight": 710,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 173.5,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "map normal medium share",
+      "panel": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 126,
+        "width": 361,
+        "height": 710,
+        "top": 126,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 710,
+      "scrollHeight": 710,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 173.5,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "map-chooser-long",
+      "panel": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 473.015625,
+        "width": 361,
+        "height": 362.984375,
+        "top": 473.015625,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 363,
+      "scrollHeight": 6134,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -5771.015625,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "map-normal-default-long",
+      "panel": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 473.015625,
+        "width": 361,
+        "height": 362.984375,
+        "top": 473.015625,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 363,
+      "scrollHeight": 2932,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -2568.515625,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "map-normal-expanded-long",
+      "panel": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 126,
+        "width": 361,
+        "height": 710,
+        "top": 126,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 710,
+      "scrollHeight": 2932,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -2221.5,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "map normal long share",
+      "panel": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 126,
+        "width": 361,
+        "height": 710,
+        "top": 126,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 2222,
+      "clientHeight": 710,
+      "scrollHeight": 2932,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 0.5,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "group12-before-resize",
+      "panel": {
+        "x": 0,
+        "y": 49,
+        "width": 393,
+        "height": 803,
+        "top": 49,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 126,
+        "width": 361,
+        "height": 710,
+        "top": 126,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 5100,
+      "clientHeight": 710,
+      "scrollHeight": 6134,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -324,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "group12-after-resize",
+      "panel": {
+        "x": 400,
+        "y": 49,
+        "width": 640,
+        "height": 451,
+        "top": 49,
+        "right": 1040,
+        "bottom": 500,
+        "left": 400
+      },
+      "reading": {
+        "x": 416,
+        "y": 126,
+        "width": 608,
+        "height": 358,
+        "top": 126,
+        "right": 1024,
+        "bottom": 484,
+        "left": 416
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 1440,
+        "height": 500
+      },
+      "scrollTop": 3423,
+      "clientHeight": 358,
+      "scrollHeight": 4457,
+      "clientWidth": 608,
+      "scrollWidth": 608,
+      "endGap": -676,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "group12-before-detail",
+      "panel": {
+        "x": 400,
+        "y": 49,
+        "width": 640,
+        "height": 451,
+        "top": 49,
+        "right": 1040,
+        "bottom": 500,
+        "left": 400
+      },
+      "reading": {
+        "x": 416,
+        "y": 126,
+        "width": 608,
+        "height": 358,
+        "top": 126,
+        "right": 1024,
+        "bottom": 484,
+        "left": 416
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 1440,
+        "height": 500
+      },
+      "scrollTop": 3429,
+      "clientHeight": 358,
+      "scrollHeight": 4457,
+      "clientWidth": 608,
+      "scrollWidth": 608,
+      "endGap": -670,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "group12-returned",
+      "panel": {
+        "x": 400,
+        "y": 49,
+        "width": 640,
+        "height": 451,
+        "top": 49,
+        "right": 1040,
+        "bottom": 500,
+        "left": 400
+      },
+      "reading": {
+        "x": 416,
+        "y": 126,
+        "width": 608,
+        "height": 358,
+        "top": 126,
+        "right": 1024,
+        "bottom": 484,
+        "left": 416
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 1440,
+        "height": 500
+      },
+      "scrollTop": 3429,
+      "clientHeight": 358,
+      "scrollHeight": 4457,
+      "clientWidth": 608,
+      "scrollWidth": 608,
+      "endGap": -670,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "nojs-long-normal",
+      "panel": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 473.015625,
+        "width": 361,
+        "height": 362.984375,
+        "top": 473.015625,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 363,
+      "scrollHeight": 2621,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -2257.515625,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "nojs-after-native-scroll",
+      "panel": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375,
+        "top": 396.015625,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 473.015625,
+        "width": 361,
+        "height": 362.984375,
+        "top": 473.015625,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": false,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 2258,
+      "clientHeight": 363,
+      "scrollHeight": 2621,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 0.484375,
+      "footerGap": 16,
+      "readingGap": 16,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    }
+  ],
+  "pageErrors": [],
+  "observedWrites": [],
+  "externalWrites": [
+    {
+      "method": "POST",
+      "origin": "https://kr-col-ext.nelo.navercorp.com",
+      "url": "https://kr-col-ext.nelo.navercorp.com/_store",
+      "path": "/_store",
+      "queryRedacted": false
+    }
+  ],
+  "tiles200": 23,
+  "notes": [
+    "Normal article content heights are the primary target; errors are only404/SEO regression.",
+    "All entries initially use content-fit half53.52dvh; manual native up drag allows a near-full ceiling with49px reserved at top.",
+    "Fixtures include short, medium and very long summaries plus real-map groups1/2/12.",
+    "At a low viewport height or with related reports, equal capped default heights are expected.",
+    "User-expanded mode has an explicit near-full height; trailing empty space is intentional for short content, while the gap before sharing must stay normal.",
+    "No product observer/state/SDK overrides; only actual UI actions and DOM geometry reads.",
+    "Clipboard/share failures are synthetic browser capabilities only in the manual-URL scenario.",
+    "The existing full product gate is reported separately and is not included in these check counts."
+  ],
+  "finished": "2026-10-25T13:18:23.892Z",
+  "summary": {
+    "checks": 224,
+    "failed": 0,
+    "scenarios": 4,
+    "incomplete": 0,
+    "screenshots": 14,
+    "pageErrors": 0,
+    "tiles200": 23
+  }
+}

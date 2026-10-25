@@ -2,9 +2,9 @@
 branch: codex/figma-ui-polish
 owner: easter721
 started: 2026-10-24
-status: active
+status: done
 goal: fix(ui): 상세 복귀 회귀와 최신 Figma 화면 세부 스타일 정렬
-next: Figma 기본절반·드래그 near-full과 시트 전용 AI 안내 구현
+next: PR45 최신 기본·드래그 확장/AI 안내 사용자 리뷰 대기
 base: dev
 ---
 
@@ -45,3 +45,5 @@ base: dev
 - 사용자최종변경: 정상기사상세상한은70이아닌80dvh. 내용auto·공유자연흐름·나머지동작은유지하고80상한기대값·새production캡처로갱신해PR45에커밋푸시한다. 이전70검증은별도후보로보존한다.
 
 - 최종사용자정정:70/80상한시안은대체한다. 처음에는내용auto+화면절반max,위로드래그하면상단가까이확장,아래로드래그하면기본복귀. 기본19:2865의456/852≈53.52dvh,확장504:269는상단49px/safe-area를남긴다. 모든진입기본접힘. AI문구는시트이미지아래작게“AI로 생성된 이미지입니다.”,carousel/list배지제거·선택시트도아래표시. 미커밋80구현은기준커밋으로되돌렸고80은완료기준이아니다.
+
+- 최종 시트 검증: 제품6c6c23b/BuildXqX4ZJdwETDiiPENL9Q0h, 소바야151개·gate exit0·포맷/린트/불변 검사·빌드/타입 통과. 실제 Naver224개/4시나리오/실패·미완료·pageErrors0/PNG14. 기본451.5~455.984/수동803 @852, 시트 AI 안내만 표시. QA31151/41151 종료. 계획 보관 후 최종 원격 CI 확인.
