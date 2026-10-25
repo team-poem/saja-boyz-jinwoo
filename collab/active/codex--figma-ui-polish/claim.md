@@ -2,9 +2,9 @@
 branch: codex/figma-ui-polish
 owner: easter721
 started: 2026-10-24
-status: done
+status: active
 goal: fix(ui): 상세 복귀 회귀와 최신 Figma 화면 세부 스타일 정렬
-next: PR45 재검토·승인 후 dev로 squash merge 대기
+next: 공통 아이콘·텍스트 디자인 기준, 로고 파비콘과 검색 발견성 재점검
 base: dev
 ---
 
@@ -21,3 +21,5 @@ base: dev
 - 2026-10-24 추가 사용자 승인: 목록 포커스 가림·검색 정렬·상세 공유 영역·제보 닫기 배경을 소바야로 보완하고 기존 PR45에 커밋·푸시한다. 댓글은 게시하지 않는다.
 
 - 후속 최종 검증: 소바야140개 실패·생략0, production 빌드·타입 통과. 실제 Naver·시각/동작37개 실패0·브라우저오류0·캡처17장. 제품36ac745, Build0yLuwuFKYffar7_ftmQYn.
+
+- 2026-10-25 사용자 승인: 캘린더·위치·공유 등 아이콘과 텍스트의 크기·정렬·간격을 공통 디자인 기준으로 통합하고, 흉흉 파비콘과 SEO/AEO/GEO를 재점검해 기존 PR45에 포함한다. 외부 댓글은 게시하지 않는다.
