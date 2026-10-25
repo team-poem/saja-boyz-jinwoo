@@ -2,7 +2,7 @@
 import { execFile, spawn, type ChildProcess } from 'node:child_process';
 import { once } from 'node:events';
 import { cp, mkdtemp, rm, symlink } from 'node:fs/promises';
-import { createServer, type Server } from 'node:http';
+import { createServer, type Server, type ServerResponse } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -61,12 +61,22 @@ const article = {
     link: '',
   },
 };
+let holdMap = false;
+let holdDetails = false;
+let detailDelay = 0;
+const waitingMap: ServerResponse[] = [];
+const waitingDetails: ServerResponse[] = [];
 let unavailable = false;
 let listArticles = [article];
 const detailRequests: number[] = [];
 const api = createServer((request, response) => {
   const url = new URL(request.url ?? '/', 'http://fixture.invalid');
   response.setHeader('Content-Type', 'application/json; charset=utf-8');
+  if (url.pathname === '/map/articles') {
+    if (holdMap) waitingMap.push(response);
+    else response.end(JSON.stringify({ total: 0, items: [] }));
+    return;
+  }
   if (url.pathname === '/news') {
     const offset = Number(url.searchParams.get('offset') ?? 0);
     const limit = Number(url.searchParams.get('limit') ?? 20);
@@ -82,7 +92,13 @@ const api = createServer((request, response) => {
     detailRequests.push(Date.now());
     // Leave this response pending until the app's actual fetch timeout aborts.
     if (unavailable) return;
-    response.end(JSON.stringify(article));
+    if (holdDetails) {
+      waitingDetails.push(response);
+      return;
+    }
+    if (detailDelay)
+      setTimeout(() => response.end(JSON.stringify(article)), detailDelay);
+    else response.end(JSON.stringify(article));
     return;
   }
   const item = listArticles.find(
@@ -128,6 +144,7 @@ beforeAll(async () => {
     ...process.env,
     NEWS_API_BASE_URL: 'http://127.0.0.1:' + apiPort,
     NEXT_TELEMETRY_DISABLED: '1',
+    NEXT_PUBLIC_NAVER_MAP_CLIENT_ID: 'local-loading-test',
   };
   const next = join(process.cwd(), 'node_modules/next/dist/bin/next');
   await execute(process.execPath, [next, 'build', '--webpack'], {
@@ -736,3 +753,165 @@ test('rasterFaviconsAreAdvertisedAndDecodeInChrome', async () => {
     .toBe(96);
   await page.close();
 }, 120000);
+
+test('serverLoadingBoundariesKeepMapFrameAndStandaloneArticleSeoAccessible', async () => {
+  const page = await openList();
+  const releaseMap = () => {
+    holdMap = false;
+    for (const response of waitingMap.splice(0))
+      response.end(JSON.stringify({ total: 0, items: [] }));
+  };
+  const releaseDetails = () => {
+    holdDetails = false;
+    for (const response of waitingDetails.splice(0))
+      response.end(JSON.stringify(article));
+  };
+  try {
+    holdMap = true;
+    const navigation = page.goto(origin + '/', {
+      waitUntil: 'domcontentloaded',
+    });
+    try {
+      await expect
+        .poll(() => waitingMap.length, { timeout: 5000 })
+        .toBeGreaterThan(0);
+      const loading = page.locator('[data-map-loading]');
+      await loading.waitFor({ timeout: 1500 }).catch(() => {});
+      expect
+        .soft(await loading.isVisible(), '기사 서버 대기 중 첫 지도 스켈레톤')
+        .toBe(true);
+      if (await loading.isVisible()) {
+        expect
+          .soft(
+            await loading.evaluate(
+              (node) => node.getBoundingClientRect().height,
+            ),
+          )
+          .toBe(852);
+        expect
+          .soft(
+            await loading.locator('[role="status"][aria-busy="true"]').count(),
+          )
+          .toBe(1);
+      }
+    } finally {
+      releaseMap();
+      await navigation;
+    }
+    await page.locator('[aria-label="주변 지도"] > .h-dvh').waitFor();
+    expect
+      .soft(await page.locator('[data-map-loading]').isVisible())
+      .toBe(false);
+
+    await page.goto(origin + '/archive');
+    const opener = page.getByRole('link', {
+      name: article.article.title,
+      exact: true,
+    });
+    await opener.waitFor();
+    holdDetails = true;
+    try {
+      await opener.click();
+      await expect
+        .poll(() => waitingDetails.length, { timeout: 5000 })
+        .toBeGreaterThan(0);
+      const loading = page
+        .getByRole('dialog')
+        .locator('[role="status"][aria-busy="true"]');
+      await loading.waitFor({ timeout: 1500 }).catch(() => {});
+      expect
+        .soft(
+          await loading.isVisible(),
+          '기사 주소로 내부 이동할 때 시트 스켈레톤',
+        )
+        .toBe(true);
+    } finally {
+      releaseDetails();
+    }
+    await page
+      .getByRole('heading', { level: 1, name: article.article.title })
+      .waitFor();
+
+    const noJsContext = await browser!.newContext({
+      javaScriptEnabled: false,
+      viewport: { width: 393, height: 852 },
+    });
+    contexts.push(noJsContext);
+    const noJs = await noJsContext.newPage();
+    detailDelay = 250;
+    const response = await noJs.goto(origin + '/incidents/' + id);
+    expect.soft(response?.status()).toBe(200);
+    expect
+      .soft(
+        await noJs
+          .getByRole('heading', { level: 1, name: article.article.title })
+          .isVisible(),
+        'NoJS 제목 가시성',
+      )
+      .toBe(true);
+    expect
+      .soft(
+        await noJs
+          .getByText(article.article.description, { exact: true })
+          .isVisible(),
+        'NoJS 요약 가시성',
+      )
+      .toBe(true);
+    expect
+      .soft(
+        await noJs
+          .locator('a[href="' + article.article.originallink + '"]')
+          .isVisible(),
+        'NoJS 원문 가시성',
+      )
+      .toBe(true);
+    expect
+      .soft(await noJs.locator('link[rel="canonical"]').getAttribute('href'))
+      .toBe('https://hyunghyung.vercel.app/incidents/' + id);
+    expect
+      .soft(
+        await noJs.locator('meta[property="og:title"]').getAttribute('content'),
+      )
+      .toContain(article.article.title);
+    expect
+      .soft(
+        (await noJs.locator('meta[name="robots"]').getAttribute('content')) ??
+          '',
+      )
+      .not.toContain('noindex');
+    const jsonLd = await noJs
+      .locator('script[type="application/ld+json"]')
+      .allTextContents();
+    expect
+      .soft(jsonLd.some((text) => text.includes(article.article.title)))
+      .toBe(true);
+
+    const missing = await noJs.goto(origin + '/incidents/' + missingId);
+    expect.soft(missing?.status(), '없는 기사 실제404').toBe(404);
+    expect
+      .soft(
+        await noJs
+          .getByRole('heading', { name: '페이지를 찾을 수 없어요' })
+          .isVisible(),
+      )
+      .toBe(true);
+    expect
+      .soft(await noJs.locator('meta[name="robots"]').getAttribute('content'))
+      .toContain('noindex');
+    expect
+      .soft(
+        await noJs
+          .getByRole('link', { name: '지도 홈', exact: true })
+          .isVisible(),
+      )
+      .toBe(true);
+    const head = await fetch(origin + '/incidents/' + missingId, {
+      method: 'HEAD',
+    });
+    expect.soft(head.status).toBe(404);
+  } finally {
+    releaseMap();
+    releaseDetails();
+    detailDelay = 0;
+  }
+}, 90000);
