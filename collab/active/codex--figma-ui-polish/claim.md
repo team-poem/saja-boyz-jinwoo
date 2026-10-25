@@ -2,9 +2,9 @@
 branch: codex/figma-ui-polish
 owner: easter721
 started: 2026-10-24
-status: done
+status: active
 goal: fix(ui): 상세 복귀 회귀와 최신 Figma 화면 세부 스타일 정렬
-next: PR45 사용자 리뷰 대기
+next: CI 재검색 회귀의 RSC 스트림 대기 진단과 안정화
 base: dev
 ---
 
@@ -33,3 +33,5 @@ base: dev
 - 2026-10-25 사용자 승인: 이미지·최초 지도·공유 주소 직접 진입·검색 제출·재시도의 빠진 로딩을 소바야로 보완하고 SEO/실제404를 보존해 PR45에 커밋·푸시한다. Figma의 필터와 비활성 표면은 유지한다. 외부 댓글·리뷰 요청·머지는 하지 않는다.
 
 - 로딩 최종: 소스56d4c1c/BuildpRhNY7upYLIiB9oD27vRG, 소바야150개 실패·생략0·포맷/린트/소스Git불변exit0·빌드타입 통과. 실제Naver Chrome91개 실패0·시나리오16·캡처31·pageErrors0. 직접주소 첫HTML전대기는유지하고서버본문/NoJS/404보존. Figma필터유지. QA서버/포트정리. 댓글/리뷰요청/승인/머지/Draft전환없음.
+
+- 원격 ab52ab4 CI에서 같은검색어회귀1개가60초timeout으로실패했다. 로컬150gate/실제UI91은통과했으나완료근거와구분하고,기대값/전체상한을유지한채브라우저phase·요청·cleanup을진단한다. 제품UI는수정하지않는다.
