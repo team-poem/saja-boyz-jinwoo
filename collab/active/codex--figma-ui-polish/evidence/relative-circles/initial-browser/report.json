@@ -1,0 +1,1574 @@
+{
+  "sourceHead": "b8c9ddb08bc3e6a1ff3f7361cbcf7c33e1977455",
+  "buildId": "EOy55uv3v2rCdB4mj5gVQ",
+  "synthetic": true,
+  "personalLocation": false,
+  "SDKStubbed": false,
+  "SDKModified": false,
+  "checks": [
+    {
+      "passed": true,
+      "name": "baseline3/4/8/4; remote19 excluded",
+      "counts": [
+        3,
+        4,
+        4,
+        8
+      ]
+    },
+    {
+      "passed": true,
+      "name": "remote19 excluded from visible distribution"
+    },
+    {
+      "passed": true,
+      "name": "baseline finite circles inside camera"
+    },
+    {
+      "passed": true,
+      "name": "baseline no circle-fill overlap",
+      "overlap": []
+    },
+    {
+      "passed": true,
+      "name": "baseline count text fits"
+    },
+    {
+      "passed": true,
+      "name": "baseline equal count equal diameter 3"
+    },
+    {
+      "passed": true,
+      "name": "baseline equal count equal diameter 4"
+    },
+    {
+      "passed": true,
+      "name": "baseline equal count equal diameter 8"
+    },
+    {
+      "passed": true,
+      "name": "baseline larger count larger diameter 3→4"
+    },
+    {
+      "passed": true,
+      "name": "baseline larger count larger diameter 4→8"
+    },
+    {
+      "passed": false,
+      "name": "max8 removed while3/4/4 retained",
+      "counts": [
+        3,
+        4,
+        4,
+        8
+      ]
+    },
+    {
+      "passed": false,
+      "name": "panned finite circles inside camera"
+    },
+    {
+      "passed": true,
+      "name": "panned no circle-fill overlap",
+      "overlap": []
+    },
+    {
+      "passed": true,
+      "name": "panned count text fits"
+    },
+    {
+      "passed": true,
+      "name": "panned equal count equal diameter 3"
+    },
+    {
+      "passed": true,
+      "name": "panned equal count equal diameter 4"
+    },
+    {
+      "passed": true,
+      "name": "panned equal count equal diameter 8"
+    },
+    {
+      "passed": true,
+      "name": "panned larger count larger diameter 3→4"
+    },
+    {
+      "passed": true,
+      "name": "panned larger count larger diameter 4→8"
+    },
+    {
+      "passed": false,
+      "name": "remaining4 rescales after max8 leaves",
+      "before": 54.59375,
+      "after": 54.59375
+    },
+    {
+      "passed": true,
+      "name": "selection fixture has a nonzero reading scroll",
+      "scroll": {
+        "top": 20,
+        "max": 614
+      }
+    },
+    {
+      "passed": true,
+      "name": "wide-selection finite circles inside camera"
+    },
+    {
+      "passed": true,
+      "name": "wide-selection no circle-fill overlap",
+      "overlap": []
+    },
+    {
+      "passed": true,
+      "name": "wide-selection count text fits"
+    },
+    {
+      "passed": true,
+      "name": "wide-selection equal count equal diameter 3"
+    },
+    {
+      "passed": true,
+      "name": "wide-selection equal count equal diameter 4"
+    },
+    {
+      "passed": true,
+      "name": "wide-selection equal count equal diameter 8"
+    },
+    {
+      "passed": true,
+      "name": "wide-selection larger count larger diameter 3→4"
+    },
+    {
+      "passed": true,
+      "name": "wide-selection larger count larger diameter 4→8"
+    },
+    {
+      "passed": false,
+      "name": "resize brings8 in and changes selected4 diameter",
+      "before": 54.59375,
+      "after": 54.59375
+    },
+    {
+      "passed": true,
+      "name": "same group preserves sheet link focus and reading scroll",
+      "kept": {
+        "samePanel": true,
+        "sameFocusedLink": true,
+        "href": "/incidents/0000000000000000000000000000000000000000000000000000000000002713"
+      },
+      "beforeScroll": 20,
+      "afterScroll": 20
+    },
+    {
+      "passed": true,
+      "name": "close restores focus to latest marker after inert and trap cleanup",
+      "markerExists": true,
+      "focused": true,
+      "markerInert": false,
+      "backgroundInert": false,
+      "overflow": ""
+    },
+    {
+      "passed": false,
+      "name": "resize320 finite circles inside camera"
+    },
+    {
+      "passed": true,
+      "name": "resize320 no circle-fill overlap",
+      "overlap": []
+    },
+    {
+      "passed": true,
+      "name": "resize320 count text fits"
+    },
+    {
+      "passed": true,
+      "name": "resize320 equal count equal diameter 3"
+    },
+    {
+      "passed": true,
+      "name": "resize320 equal count equal diameter 4"
+    },
+    {
+      "passed": true,
+      "name": "resize320 equal count equal diameter 8"
+    },
+    {
+      "passed": true,
+      "name": "resize320 larger count larger diameter 3→4"
+    },
+    {
+      "passed": true,
+      "name": "resize320 larger count larger diameter 4→8"
+    },
+    {
+      "passed": true,
+      "name": "24h publication dates produce2/3/4/4",
+      "counts": [
+        2,
+        3,
+        4,
+        4
+      ]
+    },
+    {
+      "passed": true,
+      "name": "period24h finite circles inside camera"
+    },
+    {
+      "passed": true,
+      "name": "period24h no circle-fill overlap",
+      "overlap": []
+    },
+    {
+      "passed": true,
+      "name": "period24h count text fits"
+    },
+    {
+      "passed": true,
+      "name": "period24h equal count equal diameter 2"
+    },
+    {
+      "passed": true,
+      "name": "period24h equal count equal diameter 3"
+    },
+    {
+      "passed": true,
+      "name": "period24h equal count equal diameter 4"
+    },
+    {
+      "passed": true,
+      "name": "period24h larger count larger diameter 2→3"
+    },
+    {
+      "passed": true,
+      "name": "period24h larger count larger diameter 3→4"
+    },
+    {
+      "passed": true,
+      "name": "period filter recomputes current distribution instead of fixed buckets"
+    },
+    {
+      "passed": false,
+      "name": "zoom-out-1 finite circles inside camera"
+    },
+    {
+      "passed": true,
+      "name": "zoom-out-1 no circle-fill overlap",
+      "overlap": []
+    },
+    {
+      "passed": false,
+      "name": "zoom-out-1 count text fits"
+    },
+    {
+      "passed": true,
+      "name": "zoom-out-1 equal count equal diameter 3"
+    },
+    {
+      "passed": true,
+      "name": "zoom-out-1 equal count equal diameter 4"
+    },
+    {
+      "passed": true,
+      "name": "zoom-out-1 equal count equal diameter 8"
+    },
+    {
+      "passed": false,
+      "name": "zoom-out-1 larger count larger diameter 3→4"
+    },
+    {
+      "passed": false,
+      "name": "zoom-out-1 larger count larger diameter 4→8"
+    },
+    {
+      "passed": true,
+      "name": "zoom-out-2 finite circles inside camera"
+    },
+    {
+      "passed": true,
+      "name": "zoom-out-2 no circle-fill overlap",
+      "overlap": []
+    },
+    {
+      "passed": true,
+      "name": "zoom-out-2 count text fits"
+    },
+    {
+      "passed": true,
+      "name": "zoom-out-2 equal count equal diameter 19"
+    },
+    {
+      "passed": true,
+      "name": "real zoom merges visual overlaps",
+      "steps": 2,
+      "counts": [
+        19
+      ]
+    },
+    {
+      "passed": true,
+      "name": "zoom preserves visible article total19 without remote group"
+    },
+    {
+      "passed": true,
+      "name": "zoom-return finite circles inside camera"
+    },
+    {
+      "passed": true,
+      "name": "zoom-return no circle-fill overlap",
+      "overlap": []
+    },
+    {
+      "passed": true,
+      "name": "zoom-return count text fits"
+    },
+    {
+      "passed": true,
+      "name": "zoom-return equal count equal diameter 3"
+    },
+    {
+      "passed": true,
+      "name": "zoom-return equal count equal diameter 4"
+    },
+    {
+      "passed": true,
+      "name": "zoom-return equal count equal diameter 8"
+    },
+    {
+      "passed": true,
+      "name": "zoom-return larger count larger diameter 3→4"
+    },
+    {
+      "passed": true,
+      "name": "zoom-return larger count larger diameter 4→8"
+    },
+    {
+      "passed": true,
+      "name": "zoom back rebuilds individual original regions"
+    },
+    {
+      "passed": true,
+      "name": "local comparison1/2/12 visible"
+    },
+    {
+      "passed": true,
+      "name": "comparison finite circles inside camera"
+    },
+    {
+      "passed": true,
+      "name": "comparison no circle-fill overlap",
+      "overlap": []
+    },
+    {
+      "passed": true,
+      "name": "comparison count text fits"
+    },
+    {
+      "passed": true,
+      "name": "comparison equal count equal diameter 1"
+    },
+    {
+      "passed": true,
+      "name": "comparison equal count equal diameter 2"
+    },
+    {
+      "passed": true,
+      "name": "comparison equal count equal diameter 12"
+    },
+    {
+      "passed": true,
+      "name": "comparison larger count larger diameter 1→2"
+    },
+    {
+      "passed": true,
+      "name": "comparison larger count larger diameter 2→12"
+    },
+    {
+      "passed": true,
+      "name": "actual Naver raster tile200 without SDK stub",
+      "tiles200": 124
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "relative-pan-selection-resize-and-close",
+      "completed": true
+    },
+    {
+      "name": "period-filter-changes-relative-scale",
+      "completed": true
+    },
+    {
+      "name": "native-zoom-merge-and-unmerge",
+      "completed": true
+    },
+    {
+      "name": "optional1-2-12-reference",
+      "completed": true
+    }
+  ],
+  "states": [
+    {
+      "label": "baseline3-4-8-4",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 852,
+        "top": 0,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-D 남쪽 검증 지역 · QA-D 남쪽 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 146,
+            "y": 495,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 495,
+            "right": 200.59375,
+            "bottom": 549.59375,
+            "left": 146
+          },
+          "cx": 173.296875,
+          "cy": 522.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-A 종로 검증 지역 · QA-A 종로 검증 지역 · 기사 3건",
+          "count": 3,
+          "rect": {
+            "x": 178,
+            "y": 407,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 407,
+            "right": 216.390625,
+            "bottom": 445.390625,
+            "left": 178
+          },
+          "cx": 197.1953125,
+          "cy": 426.1953125,
+          "diameter": 38.390625,
+          "textWidth": 9.453125,
+          "textHeight": 17,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-B 서북 검증 지역 · QA-B 서북 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 91,
+            "y": 311,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 311,
+            "right": 145.59375,
+            "bottom": 365.59375,
+            "left": 91
+          },
+          "cx": 118.296875,
+          "cy": 338.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-C 동북 검증 지역 · QA-C 동북 검증 지역 · 기사 8건",
+          "count": 8,
+          "rect": {
+            "x": 231,
+            "y": 286,
+            "width": 88,
+            "height": 88,
+            "top": 286,
+            "right": 319,
+            "bottom": 374,
+            "left": 231
+          },
+          "cx": 275,
+          "cy": 330,
+          "diameter": 88,
+          "textWidth": 17.21875,
+          "textHeight": 33,
+          "inside": true
+        }
+      ]
+    },
+    {
+      "label": "max8-outside",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 852,
+        "top": 0,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-D 남쪽 검증 지역 · QA-D 남쪽 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 302,
+            "y": 495,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 495,
+            "right": 356.59375,
+            "bottom": 549.59375,
+            "left": 302
+          },
+          "cx": 329.296875,
+          "cy": 522.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-A 종로 검증 지역 · QA-A 종로 검증 지역 · 기사 3건",
+          "count": 3,
+          "rect": {
+            "x": 334,
+            "y": 407,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 407,
+            "right": 372.390625,
+            "bottom": 445.390625,
+            "left": 334
+          },
+          "cx": 353.1953125,
+          "cy": 426.1953125,
+          "diameter": 38.390625,
+          "textWidth": 9.453125,
+          "textHeight": 17,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-B 서북 검증 지역 · QA-B 서북 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 247,
+            "y": 311,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 311,
+            "right": 301.59375,
+            "bottom": 365.59375,
+            "left": 247
+          },
+          "cx": 274.296875,
+          "cy": 338.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-C 동북 검증 지역 · QA-C 동북 검증 지역 · 기사 8건",
+          "count": 8,
+          "rect": {
+            "x": 387,
+            "y": 286,
+            "width": 88,
+            "height": 88,
+            "top": 286,
+            "right": 475,
+            "bottom": 374,
+            "left": 387
+          },
+          "cx": 431,
+          "cy": 330,
+          "diameter": 88,
+          "textWidth": 17.21875,
+          "textHeight": 33,
+          "inside": false
+        }
+      ]
+    },
+    {
+      "label": "selected-before-resize",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 640,
+        "top": 0,
+        "right": 393,
+        "bottom": 640,
+        "left": 0
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-D 남쪽 검증 지역 · QA-D 남쪽 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 302,
+            "y": 389,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 389,
+            "right": 356.59375,
+            "bottom": 443.59375,
+            "left": 302
+          },
+          "cx": 329.296875,
+          "cy": 416.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-A 종로 검증 지역 · QA-A 종로 검증 지역 · 기사 3건",
+          "count": 3,
+          "rect": {
+            "x": 334,
+            "y": 301,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 301,
+            "right": 372.390625,
+            "bottom": 339.390625,
+            "left": 334
+          },
+          "cx": 353.1953125,
+          "cy": 320.1953125,
+          "diameter": 38.390625,
+          "textWidth": 9.453125,
+          "textHeight": 17,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-B 서북 검증 지역 · QA-B 서북 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 247,
+            "y": 205,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 205,
+            "right": 301.59375,
+            "bottom": 259.59375,
+            "left": 247
+          },
+          "cx": 274.296875,
+          "cy": 232.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-C 동북 검증 지역 · QA-C 동북 검증 지역 · 기사 8건",
+          "count": 8,
+          "rect": {
+            "x": 387,
+            "y": 180,
+            "width": 88,
+            "height": 88,
+            "top": 180,
+            "right": 475,
+            "bottom": 268,
+            "left": 387
+          },
+          "cx": 431,
+          "cy": 224,
+          "diameter": 88,
+          "textWidth": 17.21875,
+          "textHeight": 33,
+          "inside": false
+        }
+      ]
+    },
+    {
+      "label": "selected-after-wide-resize",
+      "canvas": {
+        "x": 400,
+        "y": 0,
+        "width": 640,
+        "height": 640,
+        "top": 0,
+        "right": 1040,
+        "bottom": 640,
+        "left": 400
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-D 남쪽 검증 지역 · QA-D 남쪽 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 826,
+            "y": 389,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 389,
+            "right": 880.59375,
+            "bottom": 443.59375,
+            "left": 826
+          },
+          "cx": 853.296875,
+          "cy": 416.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-A 종로 검증 지역 · QA-A 종로 검증 지역 · 기사 3건",
+          "count": 3,
+          "rect": {
+            "x": 857,
+            "y": 301,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 301,
+            "right": 895.390625,
+            "bottom": 339.390625,
+            "left": 857
+          },
+          "cx": 876.1953125,
+          "cy": 320.1953125,
+          "diameter": 38.390625,
+          "textWidth": 9.453125,
+          "textHeight": 17,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-B 서북 검증 지역 · QA-B 서북 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 770,
+            "y": 205,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 205,
+            "right": 824.59375,
+            "bottom": 259.59375,
+            "left": 770
+          },
+          "cx": 797.296875,
+          "cy": 232.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-C 동북 검증 지역 · QA-C 동북 검증 지역 · 기사 8건",
+          "count": 8,
+          "rect": {
+            "x": 911,
+            "y": 180,
+            "width": 88,
+            "height": 88,
+            "top": 180,
+            "right": 999,
+            "bottom": 268,
+            "left": 911
+          },
+          "cx": 955,
+          "cy": 224,
+          "diameter": 88,
+          "textWidth": 17.21875,
+          "textHeight": 33,
+          "inside": true
+        }
+      ]
+    },
+    {
+      "label": "resize320",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 852,
+        "top": 0,
+        "right": 320,
+        "bottom": 852,
+        "left": 0
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-D 남쪽 검증 지역 · QA-D 남쪽 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 266,
+            "y": 495,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 495,
+            "right": 320.59375,
+            "bottom": 549.59375,
+            "left": 266
+          },
+          "cx": 293.296875,
+          "cy": 522.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-A 종로 검증 지역 · QA-A 종로 검증 지역 · 기사 3건",
+          "count": 3,
+          "rect": {
+            "x": 297,
+            "y": 407,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 407,
+            "right": 335.390625,
+            "bottom": 445.390625,
+            "left": 297
+          },
+          "cx": 316.1953125,
+          "cy": 426.1953125,
+          "diameter": 38.390625,
+          "textWidth": 9.453125,
+          "textHeight": 17,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-B 서북 검증 지역 · QA-B 서북 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 210,
+            "y": 311,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 311,
+            "right": 264.59375,
+            "bottom": 365.59375,
+            "left": 210
+          },
+          "cx": 237.296875,
+          "cy": 338.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-C 동북 검증 지역 · QA-C 동북 검증 지역 · 기사 8건",
+          "count": 8,
+          "rect": {
+            "x": 351,
+            "y": 286,
+            "width": 88,
+            "height": 88,
+            "top": 286,
+            "right": 439,
+            "bottom": 374,
+            "left": 351
+          },
+          "cx": 395,
+          "cy": 330,
+          "diameter": 88,
+          "textWidth": 17.21875,
+          "textHeight": 33,
+          "inside": false
+        }
+      ]
+    },
+    {
+      "label": "period-all",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 852,
+        "top": 0,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-D 남쪽 검증 지역 · QA-D 남쪽 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 146,
+            "y": 495,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 495,
+            "right": 200.59375,
+            "bottom": 549.59375,
+            "left": 146
+          },
+          "cx": 173.296875,
+          "cy": 522.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-A 종로 검증 지역 · QA-A 종로 검증 지역 · 기사 3건",
+          "count": 3,
+          "rect": {
+            "x": 178,
+            "y": 407,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 407,
+            "right": 216.390625,
+            "bottom": 445.390625,
+            "left": 178
+          },
+          "cx": 197.1953125,
+          "cy": 426.1953125,
+          "diameter": 38.390625,
+          "textWidth": 9.453125,
+          "textHeight": 17,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-B 서북 검증 지역 · QA-B 서북 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 91,
+            "y": 311,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 311,
+            "right": 145.59375,
+            "bottom": 365.59375,
+            "left": 91
+          },
+          "cx": 118.296875,
+          "cy": 338.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-C 동북 검증 지역 · QA-C 동북 검증 지역 · 기사 8건",
+          "count": 8,
+          "rect": {
+            "x": 231,
+            "y": 286,
+            "width": 88,
+            "height": 88,
+            "top": 286,
+            "right": 319,
+            "bottom": 374,
+            "left": 231
+          },
+          "cx": 275,
+          "cy": 330,
+          "diameter": 88,
+          "textWidth": 17.21875,
+          "textHeight": 33,
+          "inside": true
+        }
+      ]
+    },
+    {
+      "label": "period24h",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 852,
+        "top": 0,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-D 남쪽 검증 지역 · QA-D 남쪽 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 129,
+            "y": 478,
+            "width": 88,
+            "height": 88,
+            "top": 478,
+            "right": 217,
+            "bottom": 566,
+            "left": 129
+          },
+          "cx": 173,
+          "cy": 522,
+          "diameter": 88,
+          "textWidth": 18.296875,
+          "textHeight": 33,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-A 종로 검증 지역 · QA-A 종로 검증 지역 · 기사 3건",
+          "count": 3,
+          "rect": {
+            "x": 164,
+            "y": 393,
+            "width": 66.734375,
+            "height": 66.734375,
+            "top": 393,
+            "right": 230.734375,
+            "bottom": 459.734375,
+            "left": 164
+          },
+          "cx": 197.3671875,
+          "cy": 426.3671875,
+          "diameter": 66.734375,
+          "textWidth": 16,
+          "textHeight": 30,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-B 서북 검증 지역 · QA-B 서북 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 74,
+            "y": 294,
+            "width": 88,
+            "height": 88,
+            "top": 294,
+            "right": 162,
+            "bottom": 382,
+            "left": 74
+          },
+          "cx": 118,
+          "cy": 338,
+          "diameter": 88,
+          "textWidth": 18.296875,
+          "textHeight": 33,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-C 동북 검증 지역 · QA-C 동북 검증 지역 · 기사 2건",
+          "count": 2,
+          "rect": {
+            "x": 256,
+            "y": 311,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 311,
+            "right": 294.390625,
+            "bottom": 349.390625,
+            "left": 256
+          },
+          "cx": 275.1953125,
+          "cy": 330.1953125,
+          "diameter": 38.390625,
+          "textWidth": 9.1875,
+          "textHeight": 17,
+          "inside": true
+        }
+      ]
+    },
+    {
+      "label": "zoom-original",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 852,
+        "top": 0,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-D 남쪽 검증 지역 · QA-D 남쪽 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 146,
+            "y": 495,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 495,
+            "right": 200.59375,
+            "bottom": 549.59375,
+            "left": 146
+          },
+          "cx": 173.296875,
+          "cy": 522.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-A 종로 검증 지역 · QA-A 종로 검증 지역 · 기사 3건",
+          "count": 3,
+          "rect": {
+            "x": 178,
+            "y": 407,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 407,
+            "right": 216.390625,
+            "bottom": 445.390625,
+            "left": 178
+          },
+          "cx": 197.1953125,
+          "cy": 426.1953125,
+          "diameter": 38.390625,
+          "textWidth": 9.453125,
+          "textHeight": 17,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-B 서북 검증 지역 · QA-B 서북 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 91,
+            "y": 311,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 311,
+            "right": 145.59375,
+            "bottom": 365.59375,
+            "left": 91
+          },
+          "cx": 118.296875,
+          "cy": 338.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-C 동북 검증 지역 · QA-C 동북 검증 지역 · 기사 8건",
+          "count": 8,
+          "rect": {
+            "x": 231,
+            "y": 286,
+            "width": 88,
+            "height": 88,
+            "top": 286,
+            "right": 319,
+            "bottom": 374,
+            "left": 231
+          },
+          "cx": 275,
+          "cy": 330,
+          "diameter": 88,
+          "textWidth": 17.21875,
+          "textHeight": 33,
+          "inside": true
+        }
+      ]
+    },
+    {
+      "label": "zoom-out-1",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 852,
+        "top": 0,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-D 남쪽 검증 지역 · QA-D 남쪽 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "cx": 0,
+          "cy": 0,
+          "diameter": 0,
+          "textWidth": 0,
+          "textHeight": 0,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-A 종로 검증 지역 · QA-A 종로 검증 지역 · 기사 3건",
+          "count": 3,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "cx": 0,
+          "cy": 0,
+          "diameter": 0,
+          "textWidth": 0,
+          "textHeight": 0,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-B 서북 검증 지역 · QA-B 서북 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "cx": 0,
+          "cy": 0,
+          "diameter": 0,
+          "textWidth": 0,
+          "textHeight": 0,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-C 동북 검증 지역 · QA-C 동북 검증 지역 · 기사 8건",
+          "count": 8,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "cx": 0,
+          "cy": 0,
+          "diameter": 0,
+          "textWidth": 0,
+          "textHeight": 0,
+          "inside": true
+        }
+      ]
+    },
+    {
+      "label": "zoom-out-2",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 852,
+        "top": 0,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-D 남쪽 검증 지역 · QA-D 남쪽 검증 지역 · 기사 19건 · 지역 묶음",
+          "count": 19,
+          "rect": {
+            "x": 166,
+            "y": 309,
+            "width": 48,
+            "height": 48,
+            "top": 309,
+            "right": 214,
+            "bottom": 357,
+            "left": 166
+          },
+          "cx": 190,
+          "cy": 333,
+          "diameter": 48,
+          "textWidth": 19.578125,
+          "textHeight": 21,
+          "inside": true
+        }
+      ]
+    },
+    {
+      "label": "zoom-return",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 852,
+        "top": 0,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-D 남쪽 검증 지역 · QA-D 남쪽 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 146,
+            "y": 495,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 495,
+            "right": 200.59375,
+            "bottom": 549.59375,
+            "left": 146
+          },
+          "cx": 173.296875,
+          "cy": 522.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-A 종로 검증 지역 · QA-A 종로 검증 지역 · 기사 3건",
+          "count": 3,
+          "rect": {
+            "x": 178,
+            "y": 407,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 407,
+            "right": 216.390625,
+            "bottom": 445.390625,
+            "left": 178
+          },
+          "cx": 197.1953125,
+          "cy": 426.1953125,
+          "diameter": 38.390625,
+          "textWidth": 9.453125,
+          "textHeight": 17,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-B 서북 검증 지역 · QA-B 서북 검증 지역 · 기사 4건",
+          "count": 4,
+          "rect": {
+            "x": 91,
+            "y": 311,
+            "width": 54.59375,
+            "height": 54.59375,
+            "top": 311,
+            "right": 145.59375,
+            "bottom": 365.59375,
+            "left": 91
+          },
+          "cx": 118.296875,
+          "cy": 338.296875,
+          "diameter": 54.59375,
+          "textWidth": 13.984375,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-C 동북 검증 지역 · QA-C 동북 검증 지역 · 기사 8건",
+          "count": 8,
+          "rect": {
+            "x": 231,
+            "y": 286,
+            "width": 88,
+            "height": 88,
+            "top": 286,
+            "right": 319,
+            "bottom": 374,
+            "left": 231
+          },
+          "cx": 275,
+          "cy": 330,
+          "diameter": 88,
+          "textWidth": 17.21875,
+          "textHeight": 33,
+          "inside": true
+        }
+      ]
+    },
+    {
+      "label": "current1-2-12",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 393,
+        "height": 852,
+        "top": 0,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "markers": [
+        {
+          "label": "지역 대표 위치: QA-A 종로 검증 지역 · 검증용 기사 · QA-A 종로 검증 지역 · 1번째 보도",
+          "count": 1,
+          "rect": {
+            "x": 178,
+            "y": 407,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 407,
+            "right": 216.390625,
+            "bottom": 445.390625,
+            "left": 178
+          },
+          "cx": 197.1953125,
+          "cy": 426.1953125,
+          "diameter": 38.390625,
+          "textWidth": 6.34375,
+          "textHeight": 17,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-B 서북 검증 지역 · QA-B 서북 검증 지역 · 기사 2건",
+          "count": 2,
+          "rect": {
+            "x": 91,
+            "y": 311,
+            "width": 54,
+            "height": 54,
+            "top": 311,
+            "right": 145,
+            "bottom": 365,
+            "left": 91
+          },
+          "cx": 118,
+          "cy": 338,
+          "diameter": 54,
+          "textWidth": 12.75,
+          "textHeight": 25,
+          "inside": true
+        },
+        {
+          "label": "지역 대표 위치: QA-C 동북 검증 지역 · QA-C 동북 검증 지역 · 기사 12건",
+          "count": 12,
+          "rect": {
+            "x": 231,
+            "y": 286,
+            "width": 88,
+            "height": 88,
+            "top": 286,
+            "right": 319,
+            "bottom": 374,
+            "left": 231
+          },
+          "cx": 275,
+          "cy": 330,
+          "diameter": 88,
+          "textWidth": 27.890625,
+          "textHeight": 33,
+          "inside": true
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "relative-baseline.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-baseline.png",
+      "description": "Actual Naver map with synthetic3/4/8/4; remote19 exists in API only."
+    },
+    {
+      "file": "relative-max8-outside.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-max8-outside.png",
+      "description": "Native pointer drag removes8 and rescales remaining4."
+    },
+    {
+      "file": "relative-selection-resize.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-selection-resize.png",
+      "description": "Selected group membership unchanged while radius changes; sheet/link/scroll must persist."
+    },
+    {
+      "file": "relative-close-latest-marker.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-close-latest-marker.png",
+      "description": "After selection close, focus belongs to the current marker and background is interactive."
+    },
+    {
+      "file": "relative-period24h.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-period24h.png",
+      "description": "Recent dates remove6 of8;4 becomes visible maximum."
+    },
+    {
+      "file": "relative-zoom-merged.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-zoom-merged.png",
+      "description": "Real wheel zoom and SDK projection; no SDK object edits."
+    },
+    {
+      "file": "relative-comparison-1-2-12.png",
+      "path": "/private/tmp/pr45-relative-circles-qa/run/app/relative-comparison-1-2-12.png",
+      "description": "Current relative1/2/12 near fixed synthetic position; geography differs from historical reference."
+    }
+  ],
+  "pageErrors": [],
+  "tiles200": 124,
+  "blockedWrites": 4,
+  "historicalReference": {
+    "path": "/private/tmp/pr45-relative-circles-qa/run/app/reference-before-relative-1-2-12.png",
+    "buildId": "XRLrbvZf66XLorkUFX5Fp",
+    "sourceHead": "e39f064d49c4aa10daed38c221c95389620b1156",
+    "note": "Historical whole-country map. Different camera/geography; visual size reference only."
+  },
+  "summary": {
+    "checks": 83,
+    "failed": [
+      {
+        "passed": false,
+        "name": "max8 removed while3/4/4 retained",
+        "counts": [
+          3,
+          4,
+          4,
+          8
+        ]
+      },
+      {
+        "passed": false,
+        "name": "panned finite circles inside camera"
+      },
+      {
+        "passed": false,
+        "name": "remaining4 rescales after max8 leaves",
+        "before": 54.59375,
+        "after": 54.59375
+      },
+      {
+        "passed": false,
+        "name": "resize brings8 in and changes selected4 diameter",
+        "before": 54.59375,
+        "after": 54.59375
+      },
+      {
+        "passed": false,
+        "name": "resize320 finite circles inside camera"
+      },
+      {
+        "passed": false,
+        "name": "zoom-out-1 finite circles inside camera"
+      },
+      {
+        "passed": false,
+        "name": "zoom-out-1 count text fits"
+      },
+      {
+        "passed": false,
+        "name": "zoom-out-1 larger count larger diameter 3→4"
+      },
+      {
+        "passed": false,
+        "name": "zoom-out-1 larger count larger diameter 4→8"
+      }
+    ],
+    "scenarios": 4,
+    "scenarioFailures": [],
+    "pageErrors": 0
+  }
+}
