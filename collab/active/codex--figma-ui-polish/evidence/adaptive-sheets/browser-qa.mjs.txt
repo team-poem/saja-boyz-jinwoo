@@ -1,0 +1,375 @@
+import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+
+const app = process.env.QA_APP || '/Users/jeong-gyuhwan/규환/projects/saja-boyz-jinwoo-codex--figma-ui-polish';
+const origin = process.env.QA_ORIGIN || 'http://localhost:31148';
+const api = process.env.QA_API || 'http://127.0.0.1:41148';
+const output = process.env.QA_OUTPUT || '/private/tmp/pr45-adaptive-sheet-qa/final';
+const siteOrigin = process.env.QA_SITE_ORIGIN || 'https://hyunghyung.vercel.app';
+const buildId = (await readFile(app + '/.next/BUILD_ID', 'utf8')).trim();
+if (process.env.QA_EXPECT_BUILD_ID && buildId !== process.env.QA_EXPECT_BUILD_ID) throw new Error('Unexpected build ID');
+const healthResponse = await fetch(api + '/__qa/health');
+if (!healthResponse.ok) throw new Error('Synthetic fixture is unavailable');
+const fixture = await healthResponse.json();
+const require = createRequire(app + '/package.json');
+const { chromium } = require('playwright-core');
+const { JSDOM } = require('jsdom');
+const report = {
+  sourceHead: process.env.QA_COMMIT || 'not supplied',
+  buildId, started: new Date().toISOString(), synthetic: true,
+  personalLocation: false, SDKStubbed: false, SDKModified: false,
+  checks: [], scenarios: [], screenshots: [], measurements: [], pageErrors: [], observedWrites: [], externalWrites: [], tiles200: 0,
+  notes: [
+    'Normal article content heights are the primary target; errors are only404/SEO regression.',
+    'Expanded70dvh and collapsed53.52dvh are ceilings, not required fixed heights.',
+    'Fixtures include short, medium and very long summaries plus real-map groups1/2/12.',
+    'At a low viewport height or with related reports, equal capped heights are expected.',
+    'No product observer/state/SDK overrides; only actual UI actions and DOM geometry reads.',
+    'Clipboard/share failures are synthetic browser capabilities only in the manual-URL scenario.',
+    'The existing full product gate is reported separately and is not included in these check counts.',
+  ],
+};
+await mkdir(output + '/app', { recursive: true });
+function check(passed, name, evidence) {
+  report.checks.push({ name, passed: Boolean(passed), ...(evidence === undefined ? {} : { evidence }) });
+  return Boolean(passed);
+}
+function must(passed, name, evidence) { if (!check(passed, name, evidence)) throw new Error(name); }
+let browser;
+const contexts = new Set();
+async function pageFor(options = {}) {
+  const { manualShareFailure = false, ...rest } = options;
+  const context = await browser.newContext({
+    viewport: { width: 393, height: 852 }, reducedMotion: 'reduce',
+    permissions: ['geolocation'], geolocation: { latitude: 37.56, longitude: 126.99, accuracy: 1000 },
+    ...rest,
+  });
+  contexts.add(context);
+  // No browser route interception or SDK stub is installed.
+  if (manualShareFailure) await context.addInitScript(() => {
+    Object.defineProperty(navigator, 'share', { configurable: true, value: async () => { throw new Error('Synthetic QA share unavailable'); } });
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('Synthetic QA clipboard unavailable'); } } });
+  });
+  const page = await context.newPage();
+  page.on('pageerror', error => report.pageErrors.push(error.message));
+  page.on('request', request => {
+    if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method())) {
+      const url = new URL(request.url());
+      const entry = { method: request.method(), origin: url.origin, url: url.origin + url.pathname, path: url.pathname, queryRedacted: Boolean(url.search) };
+      if ([new URL(origin).origin, new URL(api).origin].includes(url.origin)) report.observedWrites.push(entry);
+      else report.externalWrites.push(entry);
+    }
+  });
+  page.on('response', response => {
+    if (new URL(response.url()).hostname === 'nrbe.map.naver.net' && response.status() === 200) report.tiles200++;
+  });
+  return page;
+}
+async function scenario(name, task) {
+  const entry = { name, completed: false, started: Date.now() };
+  report.scenarios.push(entry);
+  try { await task(); entry.completed = true; }
+  catch (error) { entry.error = String(error?.stack || error); check(false, name + ' completed', entry.error); }
+  finally {
+    for (const context of [...contexts]) { contexts.delete(context); await context.close().catch(() => {}); }
+    entry.elapsedMs = Date.now() - entry.started;
+  }
+}
+async function capture(page, name, condition) {
+  await page.evaluate(() => document.fonts.ready.then(() => undefined));
+  const file = 'app/' + name + '.png';
+  await page.screenshot({ path: output + '/' + file, animations: 'disabled' });
+  report.screenshots.push({ file, viewport: page.viewportSize(), condition });
+}
+const dialogFor = page => page.getByRole('dialog');
+const readingFor = dialog => dialog.locator(':scope > div[tabindex="0"]').first();
+async function metrics(dialog) {
+  return dialog.evaluate(panel => {
+    const reading = [...panel.children].find(child => child.getAttribute('tabindex') === '0');
+    if (!reading) throw new Error('Reading scroller missing');
+    const p = panel.getBoundingClientRect(), r = reading.getBoundingClientRect();
+    const last = reading.lastElementChild?.getBoundingClientRect();
+    return {
+      panel: p.toJSON(), reading: r.toJSON(),
+      expanded: panel.getAttribute('data-expanded') === 'true',
+      viewport: { width: innerWidth, height: innerHeight },
+      scrollTop: reading.scrollTop, clientHeight: reading.clientHeight, scrollHeight: reading.scrollHeight,
+      clientWidth: reading.clientWidth, scrollWidth: reading.scrollWidth,
+      endGap: last ? r.bottom - last.bottom : null,
+      paddingBottom: parseFloat(getComputedStyle(panel).paddingBottom),
+      bodyScrollY: scrollY,
+    };
+  });
+}
+async function settled(dialog, label) {
+  await dialog.page().evaluate(() => document.fonts.ready.then(() => undefined));
+  let previous = '', consecutive = 0, value;
+  const started = Date.now();
+  for (let attempt = 0; attempt < 60; attempt++) {
+    value = await metrics(dialog);
+    const signature = JSON.stringify([value.panel.height, value.panel.width, value.clientHeight, value.scrollHeight, value.scrollTop].map(number => Math.round(number * 10)));
+    consecutive = signature === previous ? consecutive + 1 : 0;
+    if (value.panel.height > 0 && Date.now() - started >= 350 && consecutive >= 3) {
+      if (label) report.measurements.push({ label, ...value });
+      return value;
+    }
+    previous = signature;
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+  throw new Error('Sheet geometry did not settle: ' + label);
+}
+function geometryChecks(value, label) {
+  const cap = value.viewport.height * (value.expanded ? 0.7 : 0.5352);
+  check(value.panel.height <= cap + 1.5, label + ' respects the current height ceiling', { actual: value.panel.height, cap, expanded: value.expanded });
+  check(value.panel.top >= -1 && value.panel.bottom <= value.viewport.height + 1, label + ' stays inside the viewport', value.panel);
+  check(value.clientHeight > 0, label + ' leaves an actual reading area');
+  check(value.scrollWidth <= value.clientWidth + 1, label + ' has no horizontal reading overflow');
+  if (value.scrollHeight <= value.clientHeight + 1) check(value.endGap !== null && Math.abs(value.endGap) <= 3, label + ' has no unused space below its last flow content', { endGap: value.endGap });
+}
+async function setExpanded(dialog, expanded) {
+  const handle = dialog.locator('button[aria-expanded]').first();
+  if ((await handle.getAttribute('aria-expanded')) !== String(expanded)) await handle.click();
+  await dialog.page().waitForTimeout(250);
+}
+async function articleReady(page, variant) {
+  const dialog = dialogFor(page);
+  await dialog.getByRole('heading', { level: 1, name: variant.article.title, exact: true }).waitFor({ state: 'visible' });
+  const image = dialog.locator('img').first();
+  if (await image.count()) await image.evaluate(image => image.decode());
+  await dialog.locator('[data-image-loading]').waitFor({ state: 'detached' });
+  return dialog;
+}
+async function hitVisible(control) {
+  return control.evaluate(element => {
+    const rect = element.getBoundingClientRect();
+    let left = Math.max(rect.left, 0), right = Math.min(rect.right, innerWidth);
+    let top = Math.max(rect.top, 0), bottom = Math.min(rect.bottom, innerHeight);
+    for (let node = element.parentElement; node; node = node.parentElement) {
+      const style = getComputedStyle(node);
+      if (/(auto|scroll|hidden|clip)/.test(style.overflowY + style.overflowX)) {
+        const clip = node.getBoundingClientRect();
+        left = Math.max(left, clip.left); right = Math.min(right, clip.right);
+        top = Math.max(top, clip.top); bottom = Math.min(bottom, clip.bottom);
+      }
+    }
+    const visible = right > left && bottom > top;
+    const hit = visible ? document.elementFromPoint((left + right) / 2, (top + bottom) / 2) : null;
+    return { visible, hit: Boolean(hit && (element === hit || element.contains(hit))), rect: rect.toJSON() };
+  });
+}
+async function scrollToEnd(page, dialog) {
+  const reading = readingFor(dialog);
+  await reading.focus();
+  await page.keyboard.press('End');
+  return settled(dialog);
+}
+async function shareAtEnd(page, dialog, label) {
+  const beforeY = await page.evaluate(() => scrollY);
+  let value = await scrollToEnd(page, dialog);
+  const share = dialog.getByRole('button', { name: '기사 공유하기', exact: true });
+  await share.scrollIntoViewIfNeeded();
+  value = await settled(dialog, label);
+  const hit = await hitVisible(share);
+  check(hit.visible && hit.hit, label + ' reaches the real share button inside its reading scroller', hit);
+  check(Math.abs(value.endGap ?? Infinity) <= 3, label + ' reading flow ends at its footer without artificial blank space', { endGap: value.endGap });
+  check(Math.abs(value.bodyScrollY - beforeY) <= 1, label + ' scrolls the reading area without moving the page background');
+  return value;
+}
+async function openMap(page) {
+  await page.goto(origin + '/', { waitUntil: 'domcontentloaded' });
+  await page.locator('button[aria-label^="지역 대표 위치:"]').first().waitFor({ timeout: 20000 });
+  const counts = await page.locator('button[aria-label^="지역 대표 위치:"]').allTextContents();
+  check(JSON.stringify(counts.map(text => Number(text.trim())).sort((a, b) => a - b)) === JSON.stringify([1, 2, 12]), 'actual Naver map displays synthetic1/2/12 groups', counts);
+}
+function marker(page, label) { return page.locator('button[aria-label^="지역 대표 위치:"][aria-label*="' + label + '"]'); }
+async function enterMarker(page, label) {
+  const target = marker(page, label);
+  await target.focus();
+  await page.keyboard.press('Enter');
+}
+async function closeDialogs(page) {
+  for (let attempt = 0; attempt < 3 && await dialogFor(page).count(); attempt++) {
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(200);
+  }
+  must(await dialogFor(page).count() === 0, 'all active article/selection dialogs close through actual Escape input');
+}
+try {
+  browser = await chromium.launch({ channel: 'chrome', headless: true });
+  await scenario('representative-normal-short-medium-long', async () => {
+    const page = await pageFor();
+    const values = {};
+    for (const kind of ['short', 'medium', 'long']) {
+      const variant = fixture.variants[kind];
+      await page.goto(origin + '/incidents/' + variant.article_id, { waitUntil: 'domcontentloaded' });
+      const dialog = await articleReady(page, variant);
+      values[kind] = await settled(dialog, 'normal-direct-' + kind);
+      geometryChecks(values[kind], 'normal direct ' + kind);
+      await capture(page, 'normal-' + kind, 'Normal synthetic ' + kind + ' article; direct entry, natural height with an expanded70dvh ceiling.');
+      if (kind === 'long') {
+        check(values[kind].scrollHeight > values[kind].clientHeight + 1, 'long normal article uses internal reading scroll');
+        await shareAtEnd(page, dialog, 'normal long share reachability');
+      }
+    }
+    check(values.short.panel.height + 2 < values.medium.panel.height, 'short and medium normal articles have different natural heights', { short: values.short.panel.height, medium: values.medium.panel.height });
+    check(values.medium.panel.height + 2 < values.long.panel.height, 'medium article remains shorter than a capped very long article', { medium: values.medium.panel.height, long: values.long.panel.height });
+  });
+  await scenario('manual-url-growth-and-low-viewport', async () => {
+    const page = await pageFor({ manualShareFailure: true });
+    const variant = fixture.variants.short;
+    await page.goto(origin + '/incidents/' + variant.article_id, { waitUntil: 'domcontentloaded' });
+    const dialog = await articleReady(page, variant);
+    const before = await settled(dialog, 'manual-url-before');
+    const share = dialog.getByRole('button', { name: '기사 공유하기', exact: true });
+    await share.scrollIntoViewIfNeeded();
+    await share.click();
+    const input = dialog.getByRole('textbox', { name: '공유 링크', exact: true });
+    await input.waitFor({ state: 'visible' });
+    const after = await settled(dialog, 'manual-url-after');
+    geometryChecks(after, 'manual URL added');
+    check(after.panel.height > before.panel.height + 2, 'short sheet grows naturally when the manual sharing URL is inserted', { before: before.panel.height, after: after.panel.height });
+    check(await input.inputValue() === origin + '/incidents/' + variant.article_id, 'manual sharing fallback retains the exact existing article URL');
+    await input.scrollIntoViewIfNeeded();
+    await settled(dialog);
+    await capture(page, 'manual-url', 'Only native share/clipboard capabilities fail synthetically; manual URL joins the same reading flow.');
+    for (const viewport of [{ width: 320, height: 320 }, { width: 1440, height: 320 }]) {
+      await page.setViewportSize(viewport);
+      const value = await settled(dialog, 'manual-low-' + viewport.width);
+      geometryChecks(value, 'manual URL low viewport ' + viewport.width);
+      await input.scrollIntoViewIfNeeded();
+      const hit = await hitVisible(input);
+      check(hit.visible && hit.hit, 'manual URL remains reachable at ' + viewport.width + 'x320', hit);
+    }
+    await capture(page, 'manual-url-low-height', 'Wide desktop viewport with only320px height; sheet remains capped and the manual URL is reachable.');
+  });
+  await scenario('real-map-normal-entry-group-retention-and-filter', async () => {
+    const page = await pageFor();
+    await openMap(page);
+    const canvas = await page.locator('[aria-label="주변 지도"] > .h-dvh').elementHandle();
+    const sdkScripts = await page.locator('script[src*="maps.js"]').count();
+    for (const [kind, label] of [['short', 'QA-A'], ['medium', 'QA-B'], ['long', 'QA-C']]) {
+      await enterMarker(page, label);
+      if (kind !== 'short') {
+        const chooser = dialogFor(page);
+        await chooser.getByRole('heading', { level: 1, name: /선택한 위치의 기사/ }).waitFor();
+        geometryChecks(await settled(chooser, 'map-chooser-' + kind), 'map chooser ' + kind);
+        await chooser.getByRole('link', { name: fixture.variants[kind].article.title, exact: true }).click();
+      }
+      const dialog = await articleReady(page, fixture.variants[kind]);
+      geometryChecks(await settled(dialog, 'map-normal-default-' + kind), 'map normal default ' + kind);
+      await setExpanded(dialog, true);
+      geometryChecks(await settled(dialog, 'map-normal-expanded-' + kind), 'map normal expanded ' + kind);
+      await shareAtEnd(page, dialog, 'map normal ' + kind + ' share');
+      if (kind === 'short') await capture(page, 'map-normal-short', 'Actual Naver SDK and synthetic single-group marker open a normal article directly.');
+      await closeDialogs(page);
+      check(await canvas.evaluate(element => element.isConnected && element === document.querySelector('[aria-label="주변 지도"] > .h-dvh')), 'map canvas DOM survives ' + kind + ' detail entry and close');
+    }
+    await enterMarker(page, 'QA-C');
+    let chooser = dialogFor(page);
+    await chooser.getByRole('heading', { level: 1, name: '선택한 위치의 기사 12건', exact: true }).waitFor();
+    await setExpanded(chooser, true);
+    const tenthId = fixture.group12Ids[9];
+    const link = chooser.locator('article a[href="/incidents/' + tenthId + '"]');
+    await link.scrollIntoViewIfNeeded();
+    await link.focus();
+    const linkNode = await link.elementHandle();
+    const beforeResize = await settled(chooser, 'group12-before-resize');
+    check(beforeResize.scrollTop > 0, 'group12 chooser has a real nonzero reading position');
+    await page.setViewportSize({ width: 1440, height: 500 });
+    const resized = await settled(chooser, 'group12-after-resize');
+    geometryChecks(resized, 'group12 resized');
+    check(await linkNode.evaluate(element => element.isConnected && document.activeElement === element), 'resize preserves the selected group link DOM and keyboard focus');
+    await link.scrollIntoViewIfNeeded();
+    await link.focus();
+    const returnState = await settled(chooser, 'group12-before-detail');
+    await capture(page, 'group12-reading-position', 'Real Naver group12 chooser, expanded, reading a later article after viewport resize.');
+    await link.click();
+    await page.getByRole('heading', { level: 1, name: '검증용 기사 · 높이검증 그룹12 보도 10', exact: true }).waitFor();
+    await page.keyboard.press('Escape');
+    chooser = dialogFor(page);
+    await chooser.getByRole('heading', { level: 1, name: '선택한 위치의 기사 12건', exact: true }).waitFor();
+    const returned = await settled(chooser, 'group12-returned');
+    check(returned.expanded, 'closing a detail restores the expanded group chooser');
+    check(Math.abs(returned.scrollTop - returnState.scrollTop) <= 2, 'closing a detail restores the actual reading position', { before: returnState.scrollTop, after: returned.scrollTop });
+    check(await linkNode.evaluate(element => element.isConnected && document.activeElement === element), 'closing a detail restores the same later article link focus');
+    await capture(page, 'group12-returned', 'Detail close returned to the same chooser, reading position and focused link.');
+    await page.keyboard.press('Escape');
+    await dialogFor(page).waitFor({ state: 'hidden' });
+    check(await page.evaluate(() => { const element = document.activeElement; return Boolean(element?.matches('button[aria-label^="지역 대표 위치:"]') && element.getAttribute('aria-label')?.includes('QA-C') && !element.closest('[inert]')); }), 'selection close returns focus to the latest accessible group marker');
+    check(await page.evaluate(() => document.body.style.overflow !== 'hidden'), 'selection close releases the body scroll lock');
+    check(await page.locator('script[src*="maps.js"]').count() === sdkScripts && sdkScripts === 1, 'real SDK is not reinitialized by content height/resize/detail restoration');
+    await page.setViewportSize({ width: 393, height: 320 });
+    const filter = page.getByRole('button', { name: '전체 필터', exact: true });
+    await filter.click();
+    const filterDialog = page.getByRole('dialog', { name: '전체 필터', exact: true });
+    await filterDialog.waitFor();
+    const bounds = await filterDialog.boundingBox();
+    check(bounds.height <= 320 * 0.9 + 1 && bounds.y >= -1, 'existing auto filter sheet retains its90dvh ceiling at low height', bounds);
+    const apply = filterDialog.getByRole('button', { name: '필터 적용하기', exact: true });
+    await apply.scrollIntoViewIfNeeded();
+    const applyHit = await hitVisible(apply);
+    check(applyHit.visible && applyHit.hit, 'existing filter apply action stays reachable inside its own scroll container', applyHit);
+    await capture(page, 'filter-low-height', 'Existing auto-size whole-filter sheet; period/category/status design is unchanged.');
+    await page.keyboard.press('Escape');
+    await filterDialog.waitFor({ state: 'hidden' });
+    check(await filter.evaluate(element => document.activeElement === element && !element.closest('[inert]')), 'filter close restores its own trigger focus and background interactivity');
+  });
+  await scenario('nojs-long-normal-body-bot-metadata-and404', async () => {
+    const page = await pageFor({ javaScriptEnabled: false });
+    const variant = fixture.variants.long, path = '/incidents/' + variant.article_id;
+    const response = await page.goto(origin + path, { waitUntil: 'load' });
+    check(response.status() === 200, 'NoJS long normal article status200');
+    const dialog = dialogFor(page);
+    await dialog.getByRole('heading', { level: 1, name: variant.article.title, exact: true }).waitFor();
+    const value = await settled(dialog, 'nojs-long-normal');
+    geometryChecks(value, 'NoJS long normal article');
+    check(value.scrollHeight > value.clientHeight + 1, 'NoJS long summary uses a real CSS reading scroller');
+    check(await dialog.getByRole('region', { name: '기사 요약' }).textContent().then(text => text.includes('아주 긴 본문')), 'NoJS actual summary content exists');
+    await readingFor(dialog).focus();
+    await page.keyboard.press('End');
+    const source = dialog.locator('a[href="' + variant.article.originallink + '"]');
+    // Playwright's scrollIntoViewIfNeeded stability/rAF helper can stall when
+    // page JavaScript is disabled, even for an already visible stable source.
+    // Keep the same clip/hit expectation and use actual native wheel input.
+    let sourceHit;
+    for (let attempt = 0; attempt < 6; attempt++) {
+      const readingBounds = await readingFor(dialog).boundingBox();
+      await page.mouse.move(readingBounds.x + readingBounds.width / 2, readingBounds.y + readingBounds.height / 2);
+      await page.mouse.wheel(0, 900);
+      await page.waitForTimeout(200);
+      sourceHit = await hitVisible(source);
+      if (sourceHit.visible && sourceHit.hit) break;
+    }
+    await settled(dialog, 'nojs-after-native-scroll');
+    check(sourceHit.visible && sourceHit.hit, 'NoJS original source is reachable through native reading scroll', sourceHit);
+    await capture(page, 'nojs-long-normal', 'JavaScript disabled; CSS natural height/scroll retains the real summary and original source.');
+    const bot = await fetch(origin + path, { headers: { 'user-agent': 'Googlebot' } });
+    const html = await bot.text(), doc = new JSDOM(html).window.document;
+    check(bot.status === 200 && doc.querySelector('title')?.textContent.includes(variant.article.title), 'bot receives the final normal article title and200');
+    check(doc.querySelector('link[rel="canonical"]')?.getAttribute('href') === siteOrigin + path, 'adaptive sheet retains the public canonical article URL');
+    const robots = doc.querySelector('meta[name="robots"]')?.getAttribute('content') || '';
+    check(!/noindex/.test(robots), 'valid normal article remains indexable');
+    const missingPath = '/incidents/' + fixture.ids.missing;
+    const missing = await page.goto(origin + missingPath + '?qa=adaptive', { waitUntil: 'load' });
+    check(missing.status() === 404, 'actual missing article remains HTTP404');
+    check(/noindex/.test(await page.locator('meta[name="robots"]').getAttribute('content')), 'actual missing article remains noindex');
+    check(await page.getByRole('heading', { level: 1 }).isVisible(), 'NoJS404 retains a visible explanation');
+    check(await page.getByRole('link', { name: '지도 홈', exact: true }).isVisible(), 'NoJS404 retains a real map escape link');
+    check(new URL(page.url()).pathname === missingPath && new URL(page.url()).searchParams.get('qa') === 'adaptive', '404 keeps the original article address and query');
+    await capture(page, 'nojs404', 'Actual404 without JavaScript; original address and safe escape remain available.');
+  });
+} finally {
+  for (const context of contexts) await context.close().catch(() => {});
+  await browser?.close();
+  check(report.pageErrors.length === 0, 'no uncaught browser page errors', report.pageErrors);
+  check(report.observedWrites.length === 0, 'no application write requests were initiated', report.observedWrites);
+  check(report.tiles200 > 0, 'actual Naver raster tiles were loaded without a SDK stub', { tiles200: report.tiles200 });
+  const requests = await fetch(api + '/__qa/requests').then(response => response.json()).catch(error => ({ unavailable: String(error) }));
+  await writeFile(output + '/fixture-observations.json', JSON.stringify(requests, null, 2));
+  report.finished = new Date().toISOString();
+  report.summary = { checks: report.checks.length, failed: report.checks.filter(check => !check.passed).length, scenarios: report.scenarios.length, incomplete: report.scenarios.filter(scenario => !scenario.completed).length, screenshots: report.screenshots.length, pageErrors: report.pageErrors.length, tiles200: report.tiles200 };
+  await writeFile(output + '/report.json', JSON.stringify(report, null, 2));
+  await writeFile(output + '/manifest.json', JSON.stringify({ sourceHead: report.sourceHead, buildId, synthetic: true, personalLocation: false, SDKStubbed: false, summary: report.summary, screenshots: report.screenshots, report: 'report.json', execution: 'Prepared only until parent QA_READY; no product source/server/build mutations.' }, null, 2));
+}
+console.log(JSON.stringify({ buildId, output, ...report.summary }));
+if (report.summary.failed || report.summary.incomplete) process.exitCode = 1;

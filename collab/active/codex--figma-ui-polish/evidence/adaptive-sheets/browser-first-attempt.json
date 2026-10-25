@@ -1,0 +1,813 @@
+{
+  "sourceHead": "9f33c546c1ef5894d3351e7bf0496f1b8278dfc1",
+  "buildId": "3az_4QQ5E5r7rXctQkgo6",
+  "started": "2026-10-25T12:15:08.032Z",
+  "synthetic": true,
+  "personalLocation": false,
+  "SDKStubbed": false,
+  "SDKModified": false,
+  "checks": [
+    {
+      "name": "normal direct short respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 451.5,
+        "cap": 596.4,
+        "expanded": true
+      }
+    },
+    {
+      "name": "normal direct short stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 400.5,
+        "width": 393,
+        "height": 451.5,
+        "top": 400.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "normal direct short leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "normal direct short has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "normal direct short has no unused space below its last flow content",
+      "passed": true,
+      "evidence": {
+        "endGap": 0
+      }
+    },
+    {
+      "name": "normal direct medium respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 490.5,
+        "cap": 596.4,
+        "expanded": true
+      }
+    },
+    {
+      "name": "normal direct medium stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 361.5,
+        "width": 393,
+        "height": 490.5,
+        "top": 361.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "normal direct medium leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "normal direct medium has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "normal direct medium has no unused space below its last flow content",
+      "passed": true,
+      "evidence": {
+        "endGap": 0
+      }
+    },
+    {
+      "name": "normal direct long respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 596.390625,
+        "cap": 596.4,
+        "expanded": true
+      }
+    },
+    {
+      "name": "normal direct long stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 255.609375,
+        "width": 393,
+        "height": 596.390625,
+        "top": 255.609375,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "normal direct long leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "normal direct long has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "long normal article uses internal reading scroll",
+      "passed": true
+    },
+    {
+      "name": "normal long share reachability reaches the real share button inside its reading scroller",
+      "passed": true,
+      "evidence": {
+        "visible": true,
+        "hit": true,
+        "rect": {
+          "x": 16,
+          "y": 788.109375,
+          "width": 361,
+          "height": 48,
+          "top": 788.109375,
+          "right": 377,
+          "bottom": 836.109375,
+          "left": 16
+        }
+      }
+    },
+    {
+      "name": "normal long share reachability reading flow ends at its footer without artificial blank space",
+      "passed": true,
+      "evidence": {
+        "endGap": -0.109375
+      }
+    },
+    {
+      "name": "normal long share reachability scrolls the reading area without moving the page background",
+      "passed": true
+    },
+    {
+      "name": "short and medium normal articles have different natural heights",
+      "passed": true,
+      "evidence": {
+        "short": 451.5,
+        "medium": 490.5
+      }
+    },
+    {
+      "name": "medium article remains shorter than a capped very long article",
+      "passed": true,
+      "evidence": {
+        "medium": 490.5,
+        "long": 596.390625
+      }
+    },
+    {
+      "name": "manual URL added respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 533.5,
+        "cap": 596.4,
+        "expanded": true
+      }
+    },
+    {
+      "name": "manual URL added stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 318.5,
+        "width": 393,
+        "height": 533.5,
+        "top": 318.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "manual URL added leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "manual URL added has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "manual URL added has no unused space below its last flow content",
+      "passed": true,
+      "evidence": {
+        "endGap": 0
+      }
+    },
+    {
+      "name": "short sheet grows naturally when the manual sharing URL is inserted",
+      "passed": true,
+      "evidence": {
+        "before": 451.5,
+        "after": 533.5
+      }
+    },
+    {
+      "name": "manual sharing fallback retains the exact existing article URL",
+      "passed": true
+    },
+    {
+      "name": "manual URL low viewport 320 respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 224,
+        "cap": 224,
+        "expanded": true
+      }
+    },
+    {
+      "name": "manual URL low viewport 320 stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 96,
+        "width": 320,
+        "height": 224,
+        "top": 96,
+        "right": 320,
+        "bottom": 320,
+        "left": 0
+      }
+    },
+    {
+      "name": "manual URL low viewport 320 leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "manual URL low viewport 320 has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "manual URL remains reachable at 320x320",
+      "passed": true,
+      "evidence": {
+        "visible": true,
+        "hit": true,
+        "rect": {
+          "x": 16,
+          "y": 257.5,
+          "width": 288,
+          "height": 46,
+          "top": 257.5,
+          "right": 304,
+          "bottom": 303.5,
+          "left": 16
+        }
+      }
+    },
+    {
+      "name": "manual URL low viewport 1440 respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 224,
+        "cap": 224,
+        "expanded": true
+      }
+    },
+    {
+      "name": "manual URL low viewport 1440 stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 400,
+        "y": 96,
+        "width": 640,
+        "height": 224,
+        "top": 96,
+        "right": 1040,
+        "bottom": 320,
+        "left": 400
+      }
+    },
+    {
+      "name": "manual URL low viewport 1440 leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "manual URL low viewport 1440 has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "manual URL remains reachable at 1440x320",
+      "passed": true,
+      "evidence": {
+        "visible": true,
+        "hit": true,
+        "rect": {
+          "x": 416,
+          "y": 257.5,
+          "width": 608,
+          "height": 46,
+          "top": 257.5,
+          "right": 1024,
+          "bottom": 303.5,
+          "left": 416
+        }
+      }
+    },
+    {
+      "name": "real-map-normal-entry-group-retention-and-filter completed",
+      "passed": false,
+      "evidence": "locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[aria-label^=\"지역 대표 위치:\"]').first() to be visible\u001b[22m\n\n    at openMap (/private/tmp/pr45-adaptive-sheet-qa/qa.mjs:175:65)\n    at async file:///private/tmp/pr45-adaptive-sheet-qa/qa.mjs:242:5\n    at async scenario (/private/tmp/pr45-adaptive-sheet-qa/qa.mjs:66:9)\n    at async file:///private/tmp/pr45-adaptive-sheet-qa/qa.mjs:240:3"
+    },
+    {
+      "name": "NoJS long normal article status200",
+      "passed": true
+    },
+    {
+      "name": "NoJS long normal article respects the current height ceiling",
+      "passed": true,
+      "evidence": {
+        "actual": 596.390625,
+        "cap": 596.4,
+        "expanded": true
+      }
+    },
+    {
+      "name": "NoJS long normal article stays inside the viewport",
+      "passed": true,
+      "evidence": {
+        "x": 0,
+        "y": 255.609375,
+        "width": 393,
+        "height": 596.390625,
+        "top": 255.609375,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      }
+    },
+    {
+      "name": "NoJS long normal article leaves an actual reading area",
+      "passed": true
+    },
+    {
+      "name": "NoJS long normal article has no horizontal reading overflow",
+      "passed": true
+    },
+    {
+      "name": "NoJS long summary uses a real CSS reading scroller",
+      "passed": true
+    },
+    {
+      "name": "NoJS actual summary content exists",
+      "passed": true
+    },
+    {
+      "name": "nojs-long-normal-body-bot-metadata-and404 completed",
+      "passed": false,
+      "evidence": "locator.scrollIntoViewIfNeeded: Timeout 29996.85ms exceeded.\nCall log:\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not stable\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\n    at /private/tmp/pr45-adaptive-sheet-qa/qa.mjs:326:18\n    at async scenario (/private/tmp/pr45-adaptive-sheet-qa/qa.mjs:66:9)\n    at async file:///private/tmp/pr45-adaptive-sheet-qa/qa.mjs:312:3"
+    },
+    {
+      "name": "no uncaught browser page errors",
+      "passed": true,
+      "evidence": []
+    },
+    {
+      "name": "no application write requests were initiated",
+      "passed": false,
+      "evidence": [
+        {
+          "method": "POST",
+          "path": "/_store"
+        }
+      ]
+    },
+    {
+      "name": "actual Naver raster tiles were loaded without a SDK stub",
+      "passed": true,
+      "evidence": {
+        "tiles200": 23
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "representative-normal-short-medium-long",
+      "completed": true,
+      "started": 1792930508783,
+      "elapsedMs": 3336
+    },
+    {
+      "name": "manual-url-growth-and-low-viewport",
+      "completed": true,
+      "started": 1792930512119,
+      "elapsedMs": 2848
+    },
+    {
+      "name": "real-map-normal-entry-group-retention-and-filter",
+      "completed": false,
+      "started": 1792930514967,
+      "error": "locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[aria-label^=\"지역 대표 위치:\"]').first() to be visible\u001b[22m\n\n    at openMap (/private/tmp/pr45-adaptive-sheet-qa/qa.mjs:175:65)\n    at async file:///private/tmp/pr45-adaptive-sheet-qa/qa.mjs:242:5\n    at async scenario (/private/tmp/pr45-adaptive-sheet-qa/qa.mjs:66:9)\n    at async file:///private/tmp/pr45-adaptive-sheet-qa/qa.mjs:240:3",
+      "elapsedMs": 20245
+    },
+    {
+      "name": "nojs-long-normal-body-bot-metadata-and404",
+      "completed": false,
+      "started": 1792930535212,
+      "error": "locator.scrollIntoViewIfNeeded: Timeout 29996.85ms exceeded.\nCall log:\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not stable\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\n    at /private/tmp/pr45-adaptive-sheet-qa/qa.mjs:326:18\n    at async scenario (/private/tmp/pr45-adaptive-sheet-qa/qa.mjs:66:9)\n    at async file:///private/tmp/pr45-adaptive-sheet-qa/qa.mjs:312:3",
+      "elapsedMs": 30928
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "app/normal-short.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic short article; direct entry, natural height with an expanded70dvh ceiling."
+    },
+    {
+      "file": "app/normal-medium.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic medium article; direct entry, natural height with an expanded70dvh ceiling."
+    },
+    {
+      "file": "app/normal-long.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Normal synthetic long article; direct entry, natural height with an expanded70dvh ceiling."
+    },
+    {
+      "file": "app/manual-url.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Only native share/clipboard capabilities fail synthetically; manual URL joins the same reading flow."
+    },
+    {
+      "file": "app/manual-url-low-height.png",
+      "viewport": {
+        "width": 1440,
+        "height": 320
+      },
+      "condition": "Wide desktop viewport with only320px height; sheet remains capped and the manual URL is reachable."
+    }
+  ],
+  "measurements": [
+    {
+      "label": "normal-direct-short",
+      "panel": {
+        "x": 0,
+        "y": 400.5,
+        "width": 393,
+        "height": 451.5,
+        "top": 400.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 477.5,
+        "width": 361,
+        "height": 358.5,
+        "top": 477.5,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 359,
+      "scrollHeight": 359,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 0,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "normal-direct-medium",
+      "panel": {
+        "x": 0,
+        "y": 361.5,
+        "width": 393,
+        "height": 490.5,
+        "top": 361.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 438.5,
+        "width": 361,
+        "height": 397.5,
+        "top": 438.5,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 398,
+      "scrollHeight": 398,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 0,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "normal-direct-long",
+      "panel": {
+        "x": 0,
+        "y": 255.609375,
+        "width": 393,
+        "height": 596.390625,
+        "top": 255.609375,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 332.609375,
+        "width": 361,
+        "height": 503.390625,
+        "top": 332.609375,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 503,
+      "scrollHeight": 2621,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -2117.109375,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "normal long share reachability",
+      "panel": {
+        "x": 0,
+        "y": 255.609375,
+        "width": 393,
+        "height": 596.390625,
+        "top": 255.609375,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 332.609375,
+        "width": 361,
+        "height": 503.390625,
+        "top": 332.609375,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 2117,
+      "clientHeight": 503,
+      "scrollHeight": 2621,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -0.109375,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "manual-url-before",
+      "panel": {
+        "x": 0,
+        "y": 400.5,
+        "width": 393,
+        "height": 451.5,
+        "top": 400.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 477.5,
+        "width": 361,
+        "height": 358.5,
+        "top": 477.5,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 359,
+      "scrollHeight": 359,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 0,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "manual-url-after",
+      "panel": {
+        "x": 0,
+        "y": 318.5,
+        "width": 393,
+        "height": 533.5,
+        "top": 318.5,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 395.5,
+        "width": 361,
+        "height": 440.5,
+        "top": 395.5,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 441,
+      "scrollHeight": 441,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": 0,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "manual-low-320",
+      "panel": {
+        "x": 0,
+        "y": 96,
+        "width": 320,
+        "height": 224,
+        "top": 96,
+        "right": 320,
+        "bottom": 320,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 173,
+        "width": 288,
+        "height": 131,
+        "top": 173,
+        "right": 304,
+        "bottom": 304,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 320,
+        "height": 320
+      },
+      "scrollTop": 0,
+      "clientHeight": 131,
+      "scrollHeight": 441,
+      "clientWidth": 288,
+      "scrollWidth": 288,
+      "endGap": -309.5,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "manual-low-1440",
+      "panel": {
+        "x": 400,
+        "y": 96,
+        "width": 640,
+        "height": 224,
+        "top": 96,
+        "right": 1040,
+        "bottom": 320,
+        "left": 400
+      },
+      "reading": {
+        "x": 416,
+        "y": 173,
+        "width": 608,
+        "height": 131,
+        "top": 173,
+        "right": 1024,
+        "bottom": 304,
+        "left": 416
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 1440,
+        "height": 320
+      },
+      "scrollTop": 310,
+      "clientHeight": 131,
+      "scrollHeight": 441,
+      "clientWidth": 608,
+      "scrollWidth": 608,
+      "endGap": 0.5,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    },
+    {
+      "label": "nojs-long-normal",
+      "panel": {
+        "x": 0,
+        "y": 255.609375,
+        "width": 393,
+        "height": 596.390625,
+        "top": 255.609375,
+        "right": 393,
+        "bottom": 852,
+        "left": 0
+      },
+      "reading": {
+        "x": 16,
+        "y": 332.609375,
+        "width": 361,
+        "height": 503.390625,
+        "top": 332.609375,
+        "right": 377,
+        "bottom": 836,
+        "left": 16
+      },
+      "expanded": true,
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "scrollTop": 0,
+      "clientHeight": 503,
+      "scrollHeight": 2621,
+      "clientWidth": 361,
+      "scrollWidth": 361,
+      "endGap": -2117.109375,
+      "paddingBottom": 16,
+      "bodyScrollY": 0
+    }
+  ],
+  "pageErrors": [],
+  "observedWrites": [
+    {
+      "method": "POST",
+      "path": "/_store"
+    }
+  ],
+  "tiles200": 23,
+  "notes": [
+    "Normal article content heights are the primary target; errors are only404/SEO regression.",
+    "Expanded70dvh and collapsed53.52dvh are ceilings, not required fixed heights.",
+    "Fixtures include short, medium and very long summaries plus real-map groups1/2/12.",
+    "At a low viewport height or with related reports, equal capped heights are expected.",
+    "No product observer/state/SDK overrides; only actual UI actions and DOM geometry reads.",
+    "Clipboard/share failures are synthetic browser capabilities only in the manual-URL scenario.",
+    "The existing full product gate is reported separately and is not included in these check counts."
+  ],
+  "finished": "2026-10-25T12:16:06.240Z",
+  "summary": {
+    "checks": 49,
+    "failed": 3,
+    "scenarios": 4,
+    "incomplete": 2,
+    "screenshots": 5,
+    "pageErrors": 0,
+    "tiles200": 23
+  }
+}

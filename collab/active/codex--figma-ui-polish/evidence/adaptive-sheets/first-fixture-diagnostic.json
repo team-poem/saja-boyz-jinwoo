@@ -1,0 +1,11 @@
+{
+  "total": 15,
+  "items": 15,
+  "validEvidence": 0,
+  "first": {
+    "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "evidenceText": "QA-A 단일 검증 지역",
+    "title": "검증용 기사 · 높이검증 짧음",
+    "matches": false
+  }
+}

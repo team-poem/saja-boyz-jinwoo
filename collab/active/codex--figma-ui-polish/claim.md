@@ -2,9 +2,9 @@
 branch: codex/figma-ui-polish
 owner: easter721
 started: 2026-10-24
-status: active
+status: done
 goal: fix(ui): 상세 복귀 회귀와 최신 Figma 화면 세부 스타일 정렬
-next: 정상 기사 상세를 내용 높이와70dvh 상한으로 조정
+next: PR45 사용자 리뷰 대기
 base: dev
 ---
 
@@ -39,3 +39,5 @@ base: dev
 - 원격timeout후속: 제품파일변경없이테스트별context정리·무기한RSC EOF대기를실제UI완료검증으로교체·단계진단추가. 같은60초상한/기대값으로9개브라우저회귀·전체150개gateexit0통과. 신규계획보관후원격최종CI확인한다.
 
 - 2026-10-25 추가사용자지시: 오류안내가아니라정상기사상세가내용보다크게열리고아래공백이남는문제를고친다. height:auto·max-height약70dvh,긴본문만내부스크롤,기존공유/SEO/404/드래그/복귀를보존해PR45에포함한다. 직전c99b4bb의로딩보완CI4개는모두통과했다.
+
+- 정상기사높이최종: 제품9f33c54/Build3az_4QQ5E5r7rXctQkgo6, 소바야151개/실패생략0/gateexit0·포맷린트소스Git불변·빌드타입통과. 실제Naver120개/4scenario/실패미완료0/pageErrors0/PNG11. short451.5/medium490.5/long596.39 @852,공유URL+82,NoJS/404·12건복귀·필터유지. QA31148/41148종료. 외부댓글/리뷰요청/승인/머지/Draft변경없음.
