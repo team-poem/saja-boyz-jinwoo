@@ -312,3 +312,5 @@ Inter와 Pretendard 표기가 함께 나온다. 실제 웹 폰트와 라이선�
 ## 추가 화면 실측과 사용자 피드백
 
 검색 초기11:1797·결과11:1864·목록11:2123·상세19:3061을 같은393px 폭의 실제 Chrome 캡처와 다시 비교했다. 검색 전용 텍스트 카드와 강조, 최근/추천 간격, 목록 정보 계층, 상세190px 사진·출처/본문/공유 배치를 보정한다. iOS 상태바를 웹에 복제하거나 예시 사건 메타데이터를 생성하지 않는다. 구체적인 차이/제약과 보정 전후 근거는 codex--figma-map-home의 all-screen-gaps.md와 관련 캡처를 따른다.
+
+지도 좌표 보완: Naver의 `fromCoordToOffset`은 SDK가 삽입한 이동 DOM pane 기준이다. 현재 지도 중심의 offset을 빼고 외부 canvas 반폭/반높이를 더해 viewport 좌표로 정규화한다. 원점이 우연히 일치하는 최초 화면만으로 pan·resize 처리를 검증하지 않는다. [공식 좌표계 문서](https://navermaps.github.io/maps.js.ncp/docs/tutorial-Projection.html).

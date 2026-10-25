@@ -470,23 +470,45 @@ export function MapHome({
         const groups = groupMapArticles(items);
 
         const projection = map.getProjection?.();
-
-        const nextGroups = groupMapDisplayPoints(
-          groups,
-          projection
-            ? ({ latitude, longitude }) =>
-                projection.fromCoordToOffset(
-                  new maps.LatLng(latitude, longitude),
-                )
-            : undefined,
+        const viewSize =
           canvas.current &&
-            canvas.current.clientWidth > 0 &&
-            canvas.current.clientHeight > 0
+          canvas.current.clientWidth > 0 &&
+          canvas.current.clientHeight > 0
             ? {
                 width: canvas.current.clientWidth,
                 height: canvas.current.clientHeight,
               }
+            : undefined;
+        const center = map.getCenter?.();
+        const centerOffset =
+          projection && viewSize && center
+            ? projection.fromCoordToOffset(center)
+            : undefined;
+        const camera =
+          centerOffset &&
+          Number.isFinite(centerOffset.x) &&
+          Number.isFinite(centerOffset.y)
+            ? viewSize
+            : undefined;
+
+        const nextGroups = groupMapDisplayPoints(
+          groups,
+          projection
+            ? ({ latitude, longitude }) => {
+                const point = projection.fromCoordToOffset(
+                  new maps.LatLng(latitude, longitude),
+                );
+
+                // SDK pane의 이동 원점을 바깥 canvas의 화면 좌표로 정규화한다.
+                return camera && centerOffset
+                  ? {
+                      x: point.x - centerOffset.x + camera.width / 2,
+                      y: point.y - centerOffset.y + camera.height / 2,
+                    }
+                  : point;
+              }
             : undefined,
+          camera,
         );
 
         if (sameMapDisplayGroups(displayGroups, nextGroups)) return;
