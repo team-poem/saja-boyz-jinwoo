@@ -196,7 +196,7 @@ export function DetailSheet({
           rememberedFocus.current = event.target;
       }}
       data-expanded={expanded}
-      className={`ui-sheet-enter fixed bottom-0 left-1/2 z-40 flex max-h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))] w-full max-w-[640px] min-w-0 -translate-x-1/2 flex-col gap-4 overflow-hidden overscroll-contain rounded-t-3xl border-0 border-t border-solid border-[#e3e8f0] bg-surface p-4 pb-[max(16px,env(safe-area-inset-bottom))] text-text shadow-[0_-8px_16px_rgb(0_0_0/10%)] motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-out ${expanded ? 'h-[calc(100dvh_-_max(49px,env(safe-area-inset-top)))]' : 'h-[53.52dvh]'}`}
+      className={`ui-sheet-enter fixed bottom-0 left-1/2 z-40 flex h-auto w-full max-w-[640px] min-w-0 -translate-x-1/2 flex-col gap-4 overflow-hidden overscroll-contain rounded-t-3xl border-0 border-t border-solid border-[#e3e8f0] bg-surface p-4 pb-[max(16px,env(safe-area-inset-bottom))] text-text shadow-[0_-8px_16px_rgb(0_0_0/10%)] motion-safe:transition-[max-height] motion-safe:duration-200 motion-safe:ease-out ${expanded ? 'max-h-[70dvh]' : 'max-h-[53.52dvh]'}`}
       onKeyDown={(event) => {
         if (!active) return;
 
@@ -337,10 +337,10 @@ export function DetailSheet({
         onScroll={(event) => {
           if (active) scrollPosition.current = event.currentTarget.scrollTop;
         }}
-        className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain [overflow-wrap:anywhere]"
+        className="flex min-h-0 flex-auto flex-col gap-4 overflow-y-auto overscroll-contain [overflow-wrap:anywhere] [&>*]:shrink-0"
       >
         {children}
-        {footer && <div className="mt-auto shrink-0">{footer}</div>}
+        {footer && <div className="shrink-0">{footer}</div>}
       </div>
     </div>
   );

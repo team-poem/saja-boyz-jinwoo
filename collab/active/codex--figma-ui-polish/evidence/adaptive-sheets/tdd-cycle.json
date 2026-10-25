@@ -1,0 +1,18 @@
+{
+  "baseline": 150,
+  "test": "normalArticleSheetsFitTheirContentWithinSeventyDvh",
+  "red": "normal-article-red.json",
+  "observed": "정상 짧은/중간 기사 모두803px 고정·짧은내용뒤370.5px빈공간. 목록/검색/직접/NoJS 동일. 기존확장높이가70dvh를넘음.",
+  "green": "normal-article-focused-green.json",
+  "full": "gate151.json",
+  "gateExitCode": 0,
+  "passed": 151,
+  "failed": 0,
+  "skipped": 0,
+  "changes": "공통시트height:auto,확장70dvh/접힘53.52dvh상한. scroller자연높이/본문수축방지,footer mt-auto 제거. 초기사용자모드·포커스/observer효과불변.",
+  "figma": [
+    "19:2865/504:441",
+    "504:269/504:502"
+  ],
+  "userPolicy": "정적인frame높이를고정height로사용하지않고내용에맞추며상한약70dvh를적용한다."
+}

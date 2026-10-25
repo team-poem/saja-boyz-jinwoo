@@ -1237,3 +1237,151 @@ test('repeatingTheSameSearchReplacesCardsAndResetsPagination', async () => {
     listArticles = saved;
   }
 }, 60000);
+
+test('normalArticleSheetsFitTheirContentWithinSeventyDvh', async () => {
+  const savedDescription = article.article.description;
+  const size = (page: Awaited<ReturnType<typeof openList>>) =>
+    page.getByRole('dialog').evaluate((panel) => {
+      const reading = panel.querySelector<HTMLElement>(
+        ':scope > [tabindex="0"]',
+      )!;
+      const content = [...reading.children].filter(
+        (child) => getComputedStyle(child).display !== 'none',
+      );
+      const height = panel.getBoundingClientRect().height;
+      const readingHeight = reading.getBoundingClientRect().height;
+      const gap = parseFloat(getComputedStyle(reading).rowGap);
+      const natural =
+        height -
+        readingHeight +
+        content.reduce(
+          (total, child) => total + child.getBoundingClientRect().height,
+          0,
+        ) +
+        gap * Math.max(0, content.length - 1);
+      return {
+        height,
+        natural,
+        readingHeight,
+        scrollHeight: reading.scrollHeight,
+        top: panel.getBoundingClientRect().top,
+        bottom: panel.getBoundingClientRect().bottom,
+        viewport: window.innerHeight,
+      };
+    });
+  try {
+    for (const entry of ['list', 'search', 'direct', 'nojs']) {
+      const heights: number[] = [];
+      for (const description of [
+        '짧은 기사 요약입니다.',
+        '동네 소식과 안전 안내를 확인해 주세요. '.repeat(10),
+      ]) {
+        article.article.description = description;
+        const page =
+          entry === 'nojs'
+            ? await (async () => {
+                const context = await browser!.newContext({
+                  javaScriptEnabled: false,
+                  viewport: { width: 393, height: 852 },
+                });
+                contexts.push(context);
+                return context.newPage();
+              })()
+            : await openList();
+        await page.emulateMedia({ reducedMotion: 'reduce' });
+        if (entry === 'search')
+          await page.goto(origin + '/search?q=' + encodeURIComponent('검증'));
+        if (entry === 'list' || entry === 'search')
+          await page
+            .getByRole('link', { name: article.article.title, exact: true })
+            .click();
+        else await page.goto(origin + '/incidents/' + id);
+        await page
+          .getByRole('heading', { name: article.article.title, exact: true })
+          .waitFor();
+        const geometry = await size(page);
+        heights.push(geometry.height);
+        expect
+          .soft(geometry.height, entry + ' 정상 기사 상한70dvh')
+          .toBeLessThanOrEqual(geometry.viewport * 0.7 + 1);
+        expect
+          .soft(
+            Math.abs(
+              geometry.height -
+                Math.min(geometry.natural, geometry.viewport * 0.7),
+            ),
+            entry + ' 내용 뒤 빈 공간을 만들지 않음',
+          )
+          .toBeLessThan(2);
+        expect
+          .soft(geometry.bottom, entry + ' 화면 아래에 정렬')
+          .toBeCloseTo(geometry.viewport, 0);
+        const context = page.context();
+        contexts.splice(contexts.indexOf(context), 1);
+        await context.close();
+      }
+      expect
+        .soft(heights[1], entry + ' 내용이 늘면 실제 시트도 커짐')
+        .toBeGreaterThan(heights[0] + 20);
+    }
+
+    article.article.description =
+      '긴 본문을 읽고 안전 안내를 확인해 주세요. '.repeat(300);
+    const page = await openList();
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page
+      .getByRole('link', { name: article.article.title, exact: true })
+      .click();
+    await page
+      .getByRole('heading', { name: article.article.title, exact: true })
+      .waitFor();
+    const dialog = page.getByRole('dialog');
+    const long = await size(page);
+    expect
+      .soft(long.height, '긴 기사도70dvh 안에 유지')
+      .toBeCloseTo(long.viewport * 0.7, 0);
+    expect
+      .soft(long.scrollHeight, '긴 본문은 내부에서만 스크롤')
+      .toBeGreaterThan(long.readingHeight + 100);
+    const share = dialog.getByRole('button', {
+      name: '기사 공유하기',
+      exact: true,
+    });
+    await share.scrollIntoViewIfNeeded();
+    expect.soft(await share.isVisible(), '긴 본문 끝 공유에 도달').toBe(true);
+    await dialog.getByRole('button', { name: '기사 시트 접기' }).click();
+    const folded = await size(page);
+    expect
+      .soft(folded.height, '접힘은 기존 미리보기 상한')
+      .toBeCloseTo(folded.viewport * 0.5352, 0);
+    await dialog.getByRole('button', { name: '기사 시트 펼치기' }).click();
+    await page.setViewportSize({ width: 320, height: 320 });
+    const compact = await size(page);
+    expect
+      .soft(compact.height, '낮은 화면에서도70dvh 상한')
+      .toBeLessThanOrEqual(225);
+    expect
+      .soft(compact.readingHeight, '작은 화면에도 본문 스크롤 영역 유지')
+      .toBeGreaterThan(24);
+    const close = await dialog
+      .getByRole('link', { name: '닫기', exact: true })
+      .boundingBox();
+    expect
+      .soft(close?.y ?? -1, '닫기 버튼이 화면 안에 남음')
+      .toBeGreaterThanOrEqual(0);
+    await share.scrollIntoViewIfNeeded();
+    expect
+      .soft(await share.isVisible(), '작은 화면에서도 공유에 도달')
+      .toBe(true);
+    await dialog.getByRole('link', { name: '닫기', exact: true }).click();
+    await expect.poll(() => page.getByRole('dialog').count()).toBe(0);
+    expect
+      .soft(
+        await page.locator('[data-article-background]').getAttribute('inert'),
+        '닫으면 배경 접근 복원',
+      )
+      .toBeNull();
+  } finally {
+    article.article.description = savedDescription;
+  }
+}, 60000);
