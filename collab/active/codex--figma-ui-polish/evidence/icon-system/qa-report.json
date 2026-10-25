@@ -1,0 +1,782 @@
+{
+  "commit": "e39f064d49c4aa10daed38c221c95389620b1156",
+  "buildId": "XRLrbvZf66XLorkUFX5Fp",
+  "sdkStubbed": false,
+  "location": "Fixed synthetic browser position; no personal position.",
+  "data": "Local61 synthetic articles;1/2/12 region groups;short/long summaries,long synthetic source/region,no-source variants.",
+  "checks": [
+    {
+      "passed": true,
+      "name": "actual Naver raster tiles200 without SDK stub",
+      "tiles": 20
+    },
+    {
+      "passed": true,
+      "name": "map horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "real SDK count1/2/12 visible together",
+      "markers": [
+        {
+          "count": 1,
+          "rect": {
+            "x": 81,
+            "y": 185,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 185,
+            "right": 119.390625,
+            "bottom": 223.390625,
+            "left": 81
+          },
+          "font": "14.4px",
+          "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+        },
+        {
+          "count": 2,
+          "rect": {
+            "x": 272,
+            "y": 455,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 455,
+            "right": 310.390625,
+            "bottom": 493.390625,
+            "left": 272
+          },
+          "font": "14.4px",
+          "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+        },
+        {
+          "count": 12,
+          "rect": {
+            "x": 212,
+            "y": 361,
+            "width": 72,
+            "height": 72,
+            "top": 361,
+            "right": 284,
+            "bottom": 433,
+            "left": 212
+          },
+          "font": "27px",
+          "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+        }
+      ]
+    },
+    {
+      "passed": true,
+      "name": "map-counts horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "source target rel preserved",
+      "href": "https://longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.invalid/reports/00000000000000000000000000000000000000000000000000000000000003e8",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "hostWidth": 313,
+      "hostScroll": 795,
+      "hostUnderline": "underline",
+      "iconUnderline": "none",
+      "outerUnderline": "none",
+      "iconSize": 12
+    },
+    {
+      "passed": true,
+      "name": "long hostname truncates and only hostname is underlined",
+      "href": "https://longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.invalid/reports/00000000000000000000000000000000000000000000000000000000000003e8",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "hostWidth": 313,
+      "hostScroll": 795,
+      "hostUnderline": "underline",
+      "iconUnderline": "none",
+      "outerUnderline": "none",
+      "iconSize": 12
+    },
+    {
+      "passed": true,
+      "name": "related reports limited to three"
+    },
+    {
+      "passed": true,
+      "name": "detail-long-source horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "image caption15px line-height"
+    },
+    {
+      "passed": true,
+      "name": "detail-three-related-share horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "map short article starts collapsed"
+    },
+    {
+      "passed": true,
+      "name": "detail horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "detail-expanded horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "expanded detail hides only home search header"
+    },
+    {
+      "passed": true,
+      "name": "share is inside the reading scroller"
+    },
+    {
+      "passed": true,
+      "name": "copy uses exact clean article URL"
+    },
+    {
+      "passed": true,
+      "name": "clipboard failure exposes readonly exact URL"
+    },
+    {
+      "passed": true,
+      "name": "manual URL remains in same reading scroller"
+    },
+    {
+      "passed": true,
+      "name": "detail-manual-url horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "collapsed long summary share starts after content below fold",
+      "share": {
+        "x": 16,
+        "y": 1215.015625,
+        "width": 361,
+        "height": 48
+      },
+      "dialog": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375
+      }
+    },
+    {
+      "passed": true,
+      "name": "detail-long-collapsed horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "long summary share reached by internal scrolling"
+    },
+    {
+      "passed": true,
+      "name": "detail-long-share-scrolled horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "missing original source has explicit information without fake link"
+    },
+    {
+      "passed": true,
+      "name": "detail-source-unavailable horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search-recent horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search uses matching keyword and populated results"
+    },
+    {
+      "passed": true,
+      "name": "search-results horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "list-393x852 horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "list horizontal overflow absent",
+      "width": 393,
+      "height": 918,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "report horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "report-bottom horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "report final SVG24/44hit/transparent/resize-none",
+      "box": {
+        "x": 339,
+        "y": 6,
+        "width": 44,
+        "height": 44,
+        "top": 6,
+        "right": 383,
+        "bottom": 50,
+        "left": 339
+      },
+      "background": "rgba(0, 0, 0, 0)",
+      "image": {
+        "x": 349,
+        "y": 16,
+        "width": 24,
+        "height": 24,
+        "top": 16,
+        "right": 373,
+        "bottom": 40,
+        "left": 349
+      },
+      "imagePath": "/report/close.svg",
+      "resize": "none"
+    },
+    {
+      "passed": true,
+      "name": "favicon HTTP svg"
+    },
+    {
+      "passed": true,
+      "name": "favicon metadata tag svg"
+    },
+    {
+      "passed": true,
+      "name": "favicon HTTP ico"
+    },
+    {
+      "passed": true,
+      "name": "favicon metadata tag ico"
+    },
+    {
+      "passed": true,
+      "name": "favicon HTTP raster96"
+    },
+    {
+      "passed": true,
+      "name": "favicon metadata tag raster96"
+    },
+    {
+      "passed": true,
+      "name": "favicon HTTP apple"
+    },
+    {
+      "passed": true,
+      "name": "favicon metadata tag apple"
+    },
+    {
+      "passed": true,
+      "name": "real HTTP image decode without routing /icon.svg",
+      "path": "/icon.svg",
+      "decoded": true,
+      "width": 48,
+      "height": 48
+    },
+    {
+      "passed": true,
+      "name": "real HTTP image decode without routing /favicon.ico",
+      "path": "/favicon.ico",
+      "decoded": true,
+      "width": 48,
+      "height": 48
+    },
+    {
+      "passed": true,
+      "name": "real HTTP image decode without routing /icon.png",
+      "path": "/icon.png",
+      "decoded": true,
+      "width": 96,
+      "height": 96
+    },
+    {
+      "passed": true,
+      "name": "real HTTP image decode without routing /apple-icon.png",
+      "path": "/apple-icon.png",
+      "decoded": true,
+      "width": 180,
+      "height": 180
+    },
+    {
+      "passed": true,
+      "name": "96px PNG favicon advertised and decoded"
+    },
+    {
+      "passed": true,
+      "name": "Apple favicon natural180"
+    },
+    {
+      "passed": true,
+      "name": "favicon contact sheet all original images decode",
+      "strip": [
+        {
+          "src": "/icon.svg",
+          "ok": true,
+          "width": 48
+        },
+        {
+          "src": "/icon.svg",
+          "ok": true,
+          "width": 48
+        },
+        {
+          "src": "/icon.svg",
+          "ok": true,
+          "width": 48
+        },
+        {
+          "src": "/favicon.ico",
+          "ok": true,
+          "width": 48
+        },
+        {
+          "src": "/favicon.ico",
+          "ok": true,
+          "width": 48
+        },
+        {
+          "src": "/favicon.ico",
+          "ok": true,
+          "width": 48
+        },
+        {
+          "src": "/icon.png",
+          "ok": true,
+          "width": 96
+        },
+        {
+          "src": "/icon.png",
+          "ok": true,
+          "width": 96
+        },
+        {
+          "src": "/icon.png",
+          "ok": true,
+          "width": 96
+        },
+        {
+          "src": "/apple-icon.png",
+          "ok": true,
+          "width": 180
+        },
+        {
+          "src": "/apple-icon.png",
+          "ok": true,
+          "width": 180
+        },
+        {
+          "src": "/apple-icon.png",
+          "ok": true,
+          "width": 180
+        }
+      ]
+    },
+    {
+      "passed": true,
+      "name": "favicon-assets horizontal overflow absent",
+      "width": 900,
+      "height": 440,
+      "scrollWidth": 900
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "real-map-and-count-overview",
+      "completed": true
+    },
+    {
+      "name": "detail-short-long-share-and-manual-url",
+      "completed": true
+    },
+    {
+      "name": "search-layout-results-and-keyboard-probe",
+      "completed": true
+    },
+    {
+      "name": "list-and-report-representative-captures",
+      "completed": true
+    },
+    {
+      "name": "raster-favicon-normal-context",
+      "completed": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "map.png",
+      "description": "Actual Naver tiles, fixed synthetic location and synthetic articles.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "map-counts.png",
+      "description": "Actual SDK overview via browser wheel and pointer drag only.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-long-source.png",
+      "description": "Long synthetic hostname underline/ellipsis, long region and three related articles.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-two-line.png",
+      "description": "Same long-region SVG layout, refreshed on the final raster-favicon build.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-three-related-share.png",
+      "description": "Three related articles and share remain in a single reading scroller.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail.png",
+      "description": "Collapsed short synthetic article from actual map.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-expanded.png",
+      "description": "Same short article expanded; share follows reading content and uses remaining space.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-manual-url.png",
+      "description": "Clipboard failure: readonly clean URL in the same reading scroller.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-long-collapsed.png",
+      "description": "Long summary before scrolling, with share correctly after content.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-long-share-scrolled.png",
+      "description": "Long summary share reached by internal reading scroll; no fixed overlay footer.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-source-unavailable.png",
+      "description": "Article with no valid source displays explicit no-source information.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "search.png",
+      "description": "Initial empty search state.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "search-recent.png",
+      "description": "Four seeded local entries matching Figma labels.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "search-results.png",
+      "description": "Populated synthetic search results using matching query.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "list-393x852.png",
+      "description": "Article list at393×852.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "list.png",
+      "description": "Article list at393×918 matching latest Figma frame.",
+      "width": 393,
+      "height": 918,
+      "scrollWidth": 393
+    },
+    {
+      "file": "report.png",
+      "description": "Report initial state without submission.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "report-bottom.png",
+      "description": "Report bottom; no form input or submission.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "favicon-assets.png",
+      "description": "HTTP-served SVG, ICO,96PNG and Apple PNG at150/32/16px. New ordinary context with no route.",
+      "width": 900,
+      "height": 440,
+      "scrollWidth": 900
+    }
+  ],
+  "pageErrors": [],
+  "focus": [],
+  "blockedWrites": 2,
+  "tiles200": 133,
+  "markers": [
+    {
+      "count": 1,
+      "rect": {
+        "x": 81,
+        "y": 185,
+        "width": 38.390625,
+        "height": 38.390625,
+        "top": 185,
+        "right": 119.390625,
+        "bottom": 223.390625,
+        "left": 81
+      },
+      "font": "14.4px",
+      "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+    },
+    {
+      "count": 2,
+      "rect": {
+        "x": 272,
+        "y": 455,
+        "width": 38.390625,
+        "height": 38.390625,
+        "top": 455,
+        "right": 310.390625,
+        "bottom": 493.390625,
+        "left": 272
+      },
+      "font": "14.4px",
+      "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+    },
+    {
+      "count": 12,
+      "rect": {
+        "x": 212,
+        "y": 361,
+        "width": 72,
+        "height": 72,
+        "top": 361,
+        "right": 284,
+        "bottom": 433,
+        "left": 212
+      },
+      "font": "27px",
+      "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+    }
+  ],
+  "searchGeometry": {
+    "form": {
+      "x": 64,
+      "y": 20,
+      "width": 313,
+      "height": 37,
+      "top": 20,
+      "right": 377,
+      "bottom": 57,
+      "left": 64
+    },
+    "input": {
+      "x": 101,
+      "y": 21,
+      "width": 275,
+      "height": 35,
+      "top": 21,
+      "right": 376,
+      "bottom": 56,
+      "left": 101
+    },
+    "images": [
+      {
+        "file": "/navigation/map-pin.svg",
+        "box": {
+          "x": 84.25,
+          "y": 792,
+          "width": 22,
+          "height": 22,
+          "top": 792,
+          "right": 106.25,
+          "bottom": 814,
+          "left": 84.25
+        }
+      }
+    ]
+  },
+  "favicon": {
+    "context": "New ordinary BrowserContext with no route/interception; no shared UI request fixture.",
+    "tags": [
+      {
+        "rel": "icon",
+        "path": "/favicon.ico",
+        "type": "image/x-icon",
+        "sizes": "16x16"
+      },
+      {
+        "rel": "icon",
+        "path": "/icon.png",
+        "type": "image/png",
+        "sizes": "96x96"
+      },
+      {
+        "rel": "icon",
+        "path": "/icon.svg",
+        "type": "image/svg+xml",
+        "sizes": "any"
+      },
+      {
+        "rel": "apple-touch-icon",
+        "path": "/apple-icon.png",
+        "type": "image/png",
+        "sizes": "180x180"
+      }
+    ],
+    "assets": [
+      {
+        "path": "/icon.svg",
+        "status": 200,
+        "contentType": "image/svg+xml",
+        "bytes": 635
+      },
+      {
+        "path": "/favicon.ico",
+        "status": 200,
+        "contentType": "image/x-icon",
+        "bytes": 2685
+      },
+      {
+        "path": "/icon.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 3522
+      },
+      {
+        "path": "/apple-icon.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 6796
+      }
+    ],
+    "decoded": [
+      {
+        "path": "/icon.svg",
+        "decoded": true,
+        "width": 48,
+        "height": 48
+      },
+      {
+        "path": "/favicon.ico",
+        "decoded": true,
+        "width": 48,
+        "height": 48
+      },
+      {
+        "path": "/icon.png",
+        "decoded": true,
+        "width": 96,
+        "height": 96
+      },
+      {
+        "path": "/apple-icon.png",
+        "decoded": true,
+        "width": 180,
+        "height": 180
+      }
+    ]
+  },
+  "summary": {
+    "checks": 51,
+    "failed": [],
+    "scenarios": 5,
+    "scenarioFailures": [],
+    "pageErrors": 0
+  }
+}

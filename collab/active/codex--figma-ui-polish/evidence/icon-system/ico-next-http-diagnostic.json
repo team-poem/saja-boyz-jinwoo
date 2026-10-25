@@ -1,0 +1,107 @@
+{
+  "scope": "Read-only existing Next build. No rebuild/source/Git changes.",
+  "buildId": "fwzXRin30pZvx7lF2HIuC",
+  "buildSourceCommit": "8393d30bd3d2261aad960486da3fb7786341177f",
+  "committedICO": {
+    "sha256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+    "length": 2685
+  },
+  "currentSourceICO": {
+    "sha256": "1bee783f5621e2cc915632d0fbeebc766ba90cee37f12da5702c950f433fb250",
+    "length": 3709
+  },
+  "nativeFetch": [
+    {
+      "accept": "*/*",
+      "status": 200,
+      "headers": {
+        "content-type": "image/x-icon",
+        "content-length": null,
+        "content-encoding": null,
+        "content-disposition": null,
+        "cache-control": "public, max-age=0, must-revalidate",
+        "x-content-type-options": null,
+        "cross-origin-resource-policy": null,
+        "content-security-policy": null,
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "etag": null
+      },
+      "length": 2685,
+      "sha256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+      "firstBytes": "0000010003001010000001002000e10100003600000020200000010020005c03"
+    },
+    {
+      "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "status": 200,
+      "headers": {
+        "content-type": "image/x-icon",
+        "content-length": null,
+        "content-encoding": null,
+        "content-disposition": null,
+        "cache-control": "public, max-age=0, must-revalidate",
+        "x-content-type-options": null,
+        "cross-origin-resource-policy": null,
+        "content-security-policy": null,
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "etag": null
+      },
+      "length": 2685,
+      "sha256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+      "firstBytes": "0000010003001010000001002000e10100003600000020200000010020005c03"
+    }
+  ],
+  "browser": [
+    {
+      "mode": "no-route",
+      "decoded": true,
+      "error": null,
+      "width": 48,
+      "height": 48,
+      "browserFetchLength": 2685,
+      "browserFetchSHA256": "5b49509823e8de599dc232743d2ad81e89b8e7455a36cac2ceff871a687c4222",
+      "firstBytes": [
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        16,
+        16,
+        0,
+        0,
+        1,
+        0,
+        32,
+        0,
+        225,
+        1,
+        0,
+        0,
+        54,
+        0,
+        0,
+        0,
+        32,
+        32,
+        0,
+        0,
+        1,
+        0,
+        32,
+        0,
+        92,
+        3
+      ],
+      "dataDecoded": true,
+      "dataWidth": 48,
+      "responses": []
+    }
+  ],
+  "pageErrors": [],
+  "cleanup": {
+    "pid": 84291,
+    "exitCode": 143,
+    "signal": null
+  }
+}
