@@ -47,6 +47,7 @@ async function mount(
   items: LocatedArticle[],
   failure = false,
   viewport?: { width: number; height: number },
+  paneProjection = false,
 ) {
   vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
   vi.useFakeTimers({ toFake: ['Date'] });
@@ -92,13 +93,23 @@ async function mount(
         fromCoordToOffset(point: LatLng) {
           const scale = zoom >= 15 ? 100000 : 1000;
           return {
-            x: (point.lng() - 129) * scale + panX,
-            y: (point.lat() - 35) * scale + panY,
+            x: (point.lng() - 129) * scale + (paneProjection ? 1000 : panX),
+            y: (point.lat() - 35) * scale + (paneProjection ? -500 : panY),
           };
         },
       };
     }
     getCenter() {
+      if (viewport) {
+        const canvas = host.querySelector<HTMLElement>(
+          '[aria-label="주변 지도"] > .h-dvh',
+        )!;
+        const scale = zoom >= 15 ? 100000 : 1000;
+        return new LatLng(
+          35 + (canvas.clientHeight / 2 - panY) / scale,
+          129 + (canvas.clientWidth / 2 - panX) / scale,
+        );
+      }
       return new LatLng(37.56, 126.99);
     }
     getZoom() {
@@ -541,6 +552,51 @@ test('mapRelativeResizingKeepsUnchangedSelectionAndReturnsToCurrentMarker', asyn
       .toBe(current.content);
     expect.soft(current.content.getAttribute('aria-pressed')).toBe('false');
   }
+  expect(fixture.created).toHaveBeenCalledTimes(1);
+  expect(fixture.setCenter).not.toHaveBeenCalled();
+  expect(fixture.setZoom).not.toHaveBeenCalled();
+});
+
+test('mapPaneProjectionNormalizesCameraCenterBeforeViewportSizing', async () => {
+  let id = 500;
+  const items = [
+    { count: 3, x: 80 },
+    { count: 4, x: 230 },
+    { count: 8, x: 400 },
+  ].flatMap((group, region) =>
+    Array.from({ length: group.count }, () => {
+      const entry = item(++id, 0, `이동 레이어 지역 ${region}`);
+      return {
+        ...entry,
+        location: {
+          ...entry.location,
+          latitude: 35.12,
+          longitude: 129 + group.x / 1000,
+        },
+      };
+    }),
+  );
+  const fixture = await mount(items, false, { width: 480, height: 300 }, true);
+  const width = (count: number) =>
+    parseFloat(
+      [...fixture.active].find(
+        (entry) => Number(entry.content.textContent) === count,
+      )?.content.style.width ?? 'NaN',
+    );
+  expect
+    .soft(counts(fixture), '레이어 원점이 화면 원점과 달라도 화면 안 그룹 표시')
+    .toEqual(['3', '4', '8']);
+  const middle = width(4);
+  await fixture.pan(-180, 0);
+  expect
+    .soft(counts(fixture), '지도 이동 시 중심 기준으로 화면 밖3 제외')
+    .toEqual(['4', '8']);
+  expect
+    .soft(width(4), '새 화면 안 최소 건수에 따라 재계산')
+    .toBeLessThan(middle);
+  await fixture.resize(200, 300);
+  expect.soft(counts(fixture), '화면 축소 시 밖으로 나간8 제외').toEqual(['4']);
+  expect.soft(Number.isFinite(width(4))).toBe(true);
   expect(fixture.created).toHaveBeenCalledTimes(1);
   expect(fixture.setCenter).not.toHaveBeenCalled();
   expect(fixture.setZoom).not.toHaveBeenCalled();

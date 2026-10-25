@@ -21,6 +21,17 @@
       "passed": 145,
       "failed": 0,
       "skipped": 0
+    },
+    {
+      "test": "mapPaneProjectionNormalizesCameraCenterBeforeViewportSizing",
+      "red": "pane-red.json",
+      "browserRed": "initial-browser/report.json",
+      "observed": "실제 SDK pan6.5초 뒤에도 화면 밖8이 남아 비율이 고정됨. 이동 pane 원점과 바깥 canvas 원점이 다름. 합성 pane offset1000/-500에서도 같은 제외 오류를 RED로 재현.",
+      "green": "pane-focused-green.json",
+      "fullSuite": "gate146.json",
+      "passed": 146,
+      "failed": 0,
+      "skipped": 0
     }
   ],
   "existingTests": "기존 고정 anchor2곳만 실제 지름/anchor 일치와 건수별 차이 검사로 변경. 기사 수·선택·포커스·수명주기 기대값 유지.",
