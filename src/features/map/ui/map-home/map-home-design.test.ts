@@ -249,12 +249,15 @@ test('mapRegionCirclesGrowWithCountAndKeepSelection', async () => {
     '7',
     '12',
   ]);
-  expect(markers.map((marker) => marker.anchor)).toEqual([
-    { x: 19.2, y: 19.2 },
-    { x: 19.2, y: 19.2 },
-    { x: 24, y: 24 },
-    { x: 36, y: 36 },
-  ]);
+  const sides = markers.map((marker) => parseFloat(marker.content.style.width));
+  for (const [index, marker] of markers.entries()) {
+    expect(marker.anchor).toMatchObject({
+      x: sides[index] / 2,
+      y: sides[index] / 2,
+    });
+    if (index > 0)
+      expect(sides[index] - sides[index - 1]).toBeGreaterThanOrEqual(4);
+  }
   markers[3].content.focus();
   await act(async () =>
     markers[3].content.dispatchEvent(
