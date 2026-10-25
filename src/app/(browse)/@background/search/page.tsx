@@ -1,18 +1,20 @@
 import Link from 'next/link';
 
+import { Icon, type IconName } from '@/components/ui/icon/icon';
+import { IconText } from '@/components/ui/icon-text/icon-text';
 import { Notice } from '@/components/feedback/notice';
 import { loadSearchPage } from '@/features/search/api/load-search-page';
 import { SearchResults } from '@/features/search/ui/search-results/search-results';
 import { RecentSearches } from '@/features/search/ui/recent-searches/recent-searches';
 import { KeywordLinkStatus } from '@/features/search/ui/keyword-link-status/keyword-link-status';
 
-const suggestedKeywords = [
-  { keyword: '대형화재', symbol: '🔥' },
-  { keyword: '교통통제', symbol: '🚨' },
-  { keyword: '붕괴위험', symbol: '⚠︎' },
-  { keyword: '폭설피해', symbol: '❄️' },
-  { keyword: '가스누출', symbol: '💨' },
-  { keyword: '테러경보', symbol: '' },
+const suggestedKeywords: { keyword: string; icon?: IconName }[] = [
+  { keyword: '대형화재', icon: 'flame' },
+  { keyword: '교통통제', icon: 'traffic' },
+  { keyword: '붕괴위험', icon: 'warning' },
+  { keyword: '폭설피해', icon: 'snow' },
+  { keyword: '가스누출', icon: 'wind' },
+  { keyword: '테러경보' },
 ];
 
 export default async function SearchPage({
@@ -44,12 +46,7 @@ export default async function SearchPage({
             aria-label="검색"
             className="-ml-2 flex size-11 shrink-0 cursor-pointer items-center justify-end rounded-xl border-0 bg-transparent p-0 pr-2 text-muted hover:opacity-80 active:opacity-60 motion-safe:transition-opacity"
           >
-            <span
-              aria-hidden="true"
-              className="size-3.5 shrink-0 text-[14px]/[14px]"
-            >
-              🔍
-            </span>
+            <Icon name="search" />
           </button>
           <input
             key={keyword}
@@ -106,21 +103,23 @@ export default async function SearchPage({
             추천 검색어
           </h1>
           <div className="flex flex-wrap gap-2">
-            {suggestedKeywords.map(({ keyword, symbol }) => (
+            {suggestedKeywords.map(({ keyword, icon }) => (
               <Link
                 key={keyword}
                 href={`/search?q=${encodeURIComponent(keyword)}`}
                 className="ui-control relative inline-flex min-h-8 items-center gap-1 rounded-lg border border-solid border-border bg-surface px-3 py-0 text-[13px]/4"
               >
-                {symbol && (
-                  <span
-                    aria-hidden="true"
-                    className="w-3.5 shrink-0 text-[14px]/4"
+                {icon ? (
+                  <IconText
+                    icon={icon}
+                    spacing="compact"
+                    iconClassName="text-muted"
                   >
-                    {symbol}
-                  </span>
+                    {keyword}
+                  </IconText>
+                ) : (
+                  <span>{keyword}</span>
                 )}
-                <span>{keyword}</span>
                 <KeywordLinkStatus />
               </Link>
             ))}

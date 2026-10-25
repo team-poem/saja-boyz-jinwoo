@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+import { IconText } from '@/components/ui/icon-text/icon-text';
 import { Notice } from '@/components/feedback/notice';
 import { KeywordLinkStatus } from '@/features/search/ui/keyword-link-status/keyword-link-status';
 
@@ -88,13 +89,14 @@ export function RecentSearches({ executedKeyword = '' }) {
                 href={`/search?q=${encodeURIComponent(keyword)}`}
                 className="ui-control relative flex min-h-8 min-w-0 flex-1 items-center gap-2 font-medium"
               >
-                <span
-                  aria-hidden="true"
-                  className="size-3.5 shrink-0 text-[14px]/[14px] font-normal text-muted"
+                <IconText
+                  icon="clock"
+                  spacing="comfortable"
+                  textClassName="truncate"
+                  iconClassName="text-muted"
                 >
-                  🕒
-                </span>
-                <span className="min-w-0 truncate">{keyword}</span>
+                  {keyword}
+                </IconText>
                 <KeywordLinkStatus />
               </Link>
               <button

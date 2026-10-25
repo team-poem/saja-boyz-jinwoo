@@ -400,7 +400,7 @@ test('searchAlignmentPreservesFullTargetsAndWorkingControls', async () => {
       submit: box(form.querySelector('button[type="submit"]')!),
       input: box(form.querySelector('input[name="q"]')!),
       row: box(row),
-      clock: box(row.querySelector('a > span')!),
+      clock: box(row.querySelector('a svg')!),
       remove: box(remove),
       removeGlyph: box(remove.querySelector('span')!),
       chip: box(document.querySelector('#suggested-keywords + div > a')!),
@@ -549,4 +549,130 @@ test('searchResultFocusStaysAboveNavigationAndReturnsToItsOpener', async () => {
   } finally {
     listArticles = [article];
   }
+}, 120000);
+
+test('inlineIconsPreserveSpacingAndAccessibleControls', async () => {
+  const page = await openList();
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page
+    .getByRole('link', { name: article.article.title, exact: true })
+    .click();
+  const dialog = page.getByRole('dialog');
+  await dialog
+    .getByRole('heading', { level: 1, name: article.article.title })
+    .waitFor();
+  const expand = dialog.getByRole('button', {
+    name: '기사 시트 펼치기',
+    exact: true,
+  });
+  if (await expand.count()) await expand.click();
+  await dialog
+    .getByRole('button', { name: '기사 시트 접기', exact: true })
+    .waitFor();
+  async function checkRow(
+    element: import('playwright-core').Locator,
+    label: string,
+    size: number,
+    gap: number,
+    trailing = false,
+  ) {
+    const actual = await element.evaluate(
+      (element, { label, trailing }) => {
+        const icon = element.querySelector('[aria-hidden="true"]')!;
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+        let node: Node | null;
+        let text: Node | undefined;
+        while ((node = walker.nextNode())) {
+          if (node.textContent?.trim() === label) {
+            text = node;
+            break;
+          }
+        }
+        if (!text) throw new Error('Missing visible label: ' + label);
+        const range = document.createRange();
+        range.selectNodeContents(text);
+        const a = icon.getBoundingClientRect(),
+          b = range.getBoundingClientRect();
+        return {
+          svg: icon.tagName.toLowerCase() === 'svg',
+          width: a.width,
+          height: a.height,
+          gap: trailing ? a.left - b.right : b.left - a.right,
+          centerDelta: Math.abs((a.top + a.bottom - b.top - b.bottom) / 2),
+          shrink: getComputedStyle(icon).flexShrink,
+          hidden: icon.getAttribute('aria-hidden'),
+          focusable: icon.getAttribute('focusable'),
+        };
+      },
+      { label, trailing },
+    );
+    expect.soft(actual.svg, label + ' OS 글꼴에 의존하지 않는 SVG').toBe(true);
+    expect.soft(actual.width, label + ' 고정 너비').toBe(size);
+    expect.soft(actual.height, label + ' 고정 높이').toBe(size);
+    expect
+      .soft(actual.gap, label + ' 아이콘과 실제 글자 간격')
+      .toBeCloseTo(gap, 0);
+    expect
+      .soft(actual.centerDelta, label + ' 시각 중앙 정렬')
+      .toBeLessThanOrEqual(1.5);
+    expect.soft(actual.shrink).toBe('0');
+    expect.soft(actual.hidden).toBe('true');
+    expect.soft(actual.focusable).toBe('false');
+  }
+  const date = dialog.locator('p:has(time)').first();
+  const dateText = (await date.locator('time').textContent())!;
+  await checkRow(date, dateText, 12, 6);
+  const share = dialog.getByRole('button', {
+    name: '기사 공유하기',
+    exact: true,
+  });
+  await checkRow(share, '기사 공유하기', 16, 8);
+  expect((await share.boundingBox())!.height).toBeGreaterThanOrEqual(48);
+  const source = dialog.getByRole('link', {
+    name: '기사 원문 · publisher.example.invalid',
+    exact: true,
+  });
+  await checkRow(source, 'publisher.example.invalid', 12, 6, true);
+  expect(await source.getAttribute('href')).toBe(article.article.originallink);
+  await page.keyboard.press('Escape');
+  await page.evaluate(() =>
+    localStorage.setItem(
+      'hh:recent-searches:v1',
+      JSON.stringify(['간격 검증']),
+    ),
+  );
+  await page.goto(origin + '/search');
+  const recent = page.getByRole('link', { name: '간격 검증', exact: true });
+  await checkRow(recent, '간격 검증', 14, 8);
+  expect(
+    (await page
+      .getByRole('button', { name: '간격 검증 삭제', exact: true })
+      .boundingBox())!.width,
+  ).toBe(32);
+  await page.goto(origin + '/report');
+  const input = page.getByRole('textbox', { name: '발생 위치', exact: true });
+  const field = await input.evaluate((input) => {
+    const icon = input.parentElement!.querySelector('[aria-hidden="true"]')!;
+    const a = icon.getBoundingClientRect(),
+      b = input.getBoundingClientRect();
+    const style = getComputedStyle(input);
+    return {
+      svg: icon.tagName.toLowerCase() === 'svg',
+      width: a.width,
+      height: a.height,
+      gap:
+        b.left +
+        parseFloat(style.borderLeftWidth) +
+        parseFloat(style.paddingLeft) -
+        a.right,
+      centerDelta: Math.abs((a.top + a.bottom - b.top - b.bottom) / 2),
+    };
+  });
+  expect.soft(field.svg, '제보 위치도 동일 SVG').toBe(true);
+  expect.soft(field.width).toBe(14);
+  expect.soft(field.height).toBe(14);
+  expect.soft(field.gap).toBeGreaterThanOrEqual(6);
+  expect.soft(field.gap).toBeLessThanOrEqual(8);
+  expect.soft(field.centerDelta).toBeLessThanOrEqual(0.5);
+  await page.close();
 }, 120000);

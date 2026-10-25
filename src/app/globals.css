@@ -29,6 +29,13 @@
   --color-brand: #e8192c;
   --color-progress: #ff4a5a;
   --color-closed: #10b981;
+  --spacing-icon-indicator: 8px;
+  --spacing-icon-compact: 12px;
+  --spacing-icon-default: 14px;
+  --spacing-icon-action: 16px;
+  --spacing-icon-gap-compact: 4px;
+  --spacing-icon-gap: 6px;
+  --spacing-icon-gap-comfortable: 8px;
   --radius-card: 14px;
   --radius-pill: 28px;
   --shadow-floating: 0 8px 24px rgb(0 0 0 / 7%);

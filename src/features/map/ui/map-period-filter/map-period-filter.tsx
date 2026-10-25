@@ -1,5 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { IconText } from '@/components/ui/icon-text/icon-text';
+
 import { mapPeriods, type MapPeriod } from '../../model/map-period-filter';
 
 export function MapPeriodFilter({
@@ -58,10 +60,15 @@ export function MapPeriodFilter({
         onClick={() => setOpen(!open)}
         className={`ui-control flex h-[27px] w-[60px] items-center justify-center gap-1 rounded-[20px] border border-solid bg-floating px-1 py-[5px] text-[12px]/[15px] font-semibold backdrop-blur-[8px] ${value === 'all' ? 'border-[rgba(200,210,220,0.6)] text-text' : 'border-brand text-brand'}`}
       >
-        {value === 'all' ? '기간' : selected.label.replace('최근 ', '')}
-        <span aria-hidden="true" className="text-[8px]/[10px] text-muted">
-          ▼
-        </span>
+        <IconText
+          icon="chevron-down"
+          size="indicator"
+          spacing="compact"
+          position="end"
+          iconClassName="text-muted"
+        >
+          {value === 'all' ? '기간' : selected.label.replace('최근 ', '')}
+        </IconText>
       </button>
       <span id={explanationId} className="sr-only">
         발행일 기준

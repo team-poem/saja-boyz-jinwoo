@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { Icon } from '@/components/ui/icon/icon';
+
 import { Brand } from '../brand/brand';
 
 export function SearchHeader({ isHome }: { isHome: boolean }) {
@@ -19,7 +21,7 @@ export function SearchHeader({ isHome }: { isHome: boolean }) {
           aria-hidden="true"
           className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#f1f5f9] text-[14px]/[normal] text-black"
         >
-          🔍
+          <Icon name="search" />
         </span>
       </Link>
     </header>

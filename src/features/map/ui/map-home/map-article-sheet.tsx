@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { createPortal } from 'react-dom';
 
+import { IconText } from '@/components/ui/icon-text/icon-text';
 import { DetailSheet } from '@/features/article-detail/ui/detail-sheet/detail-sheet';
 import { useArticleSheetRoute } from '@/features/article-detail/model/article-sheet-context';
 import {
@@ -86,8 +87,13 @@ export function MapArticleSheet({
             </h2>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <p className="m-0 text-[13px]/[18px] font-medium text-muted">
-                <span aria-hidden="true">📍 </span>
-                {item.location.label}
+                <IconText
+                  icon="pin"
+                  iconClassName="text-brand"
+                  textClassName="[overflow-wrap:anywhere]"
+                >
+                  {item.location.label}
+                </IconText>
               </p>
               <p className="m-0 text-[12px]/4 text-slate-400">
                 {Number.isNaN(publishedAt.getTime()) ? (

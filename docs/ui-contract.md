@@ -60,3 +60,20 @@ API에 없는 사건 분류·상태·발생 시각·타임라인·인용 수·�
 - 사용자 요청의 모션은 컨트롤 눌림·필터/시트 진입·검색 결과 교체에만 짧게 적용하며 prefers-reduced-motion을 존중한다. 데이터/SDK/복귀/공유나 포커스 수명주기는 바꾸지 않는다.
 
 모션 클래스: ui-control/ui-link는120ms 색상·그림자, 실제 button만scale0.98, ui-dropdown-enter는140ms/4px, ui-sheet-enter는190ms/10px, ui-overlay-enter는190ms opacity, ui-results-enter는140ms opacity다. CSS는prefers-reduced-motion:no-preference 아래에만 공간 이동/등장을 두며 reduce에서는animation/transition을none으로한다. disabled/aria-disabled 컨트롤은활성피드백에서제외한다. 추가JS상태나닫기지연을사용하지않는다.
+
+## 아이콘과 텍스트
+
+일반 UI는 `components/ui/icon/icon.tsx`와 `icon-text/icon-text.tsx`를 사용한다. OS별 이모지의 실제 폭이나 문자 공백으로 간격을 맞추지 않는다. 외부 아이콘 패키지는 추가하지 않는다.
+
+| 역할      | SVG 박스 | 사용                         |
+| --------- | -------- | ---------------------------- |
+| indicator | 8px      | 좁은 필터의 펼침 표시        |
+| compact   | 12px     | 날짜·출처·작은 보조 링크     |
+| default   | 14px     | 위치·시계·돋보기·추천 키워드 |
+| action    | 16px     | 기사 공유                    |
+
+`globals.css`의 `--spacing-icon-*` 토큰이 실제 박스와 gap을 정한다. `IconText`는 중앙 정렬, 아이콘 수축 방지, 텍스트 min-width0를 기본으로 한다. 간격은 compact4px, default6px, comfortable8px이며 작은 칩/필터·메타정보·공유/최근 검색에 맞춰 선택한다. 출처는 suffix 아이콘과 텍스트만 밑줄·말줄임을 유지하고, 긴 위치는 줄바꿈하되 아이콘과 겹치지 않는다.
+
+아이콘은 장식용 `aria-hidden`/`focusable=false` SVG다. 실제 버튼·링크·입력의 접근 이름과 조작 영역은 사용처가 유지한다. 제보 위치 affix는 좌측14px+아이콘14px+간격6px의 입력 패딩을 사용하며 테두리1px은 별도로 남는다. 고정 폭 필터는 아이콘을 키우지 않고 작은 표시 역할과 안쪽 패딩으로 글자를 온전히 유지한다.
+
+승인된 브랜드 로고, 지도 숫자원·마커, 메가폰, 내 위치/닫기/필터의 독립 SVG, 로딩 스피너와 네이티브 날짜 선택기는 별도 목적의 크기를 유지한다. 이를 inline 아이콘 크기로 일괄 축소하지 않는다.

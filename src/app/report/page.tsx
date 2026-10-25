@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ErrorBoundary, useErrorBoundary } from '@suspensive/react';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 
+import { Icon } from '@/components/ui/icon/icon';
 import { Notice } from '@/components/feedback/notice';
 import { LoadingSpinner } from '@/components/feedback/loading-spinner';
 import { categoryLabels } from '@/features/incidents/model/labels';
@@ -400,14 +401,12 @@ export default function ReportPage() {
               발생 위치
             </label>
             <div className="relative">
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-[14px]/[17px]"
-              >
-                📍
-              </span>
+              <Icon
+                name="pin"
+                className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-brand"
+              />
               <input
-                className="box-border h-[41px] w-full min-w-0 appearance-none rounded-[10px] border border-solid border-border bg-background py-[11px] pr-3.5 pl-10 text-[14px]/[17px] text-text placeholder:text-slate-400"
+                className="box-border h-[41px] w-full min-w-0 appearance-none rounded-[10px] border border-solid border-border bg-background py-[11px] pr-3.5 pl-[34px] text-[14px]/[17px] text-text placeholder:text-slate-400"
                 id="report-location"
                 name="location"
                 disabled={formLocked}
