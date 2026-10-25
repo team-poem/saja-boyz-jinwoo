@@ -154,5 +154,5 @@
   ],
   "failed": [],
   "skipped": [],
-  "output": "JSON report written to /var/folders/nl/x25_3f7s5xq6pkv5m9l1jnr00000gn/T/tmp.irOY3twoyM/vitest.json\n협업: components/ui/button.tsx 를 @solp(feat--checkout) 도 바꾸는 중\n"
+  "output": "JSON report written to /var/folders/nl/x25_3f7s5xq6pkv5m9l1jnr00000gn/T/tmp.dv7Q4NVf1K/vitest.json\n협업: components/ui/button.tsx 를 @solp(feat--checkout) 도 바꾸는 중\n"
 }

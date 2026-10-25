@@ -1,0 +1,3601 @@
+{
+  "sourceHead": "56d4c1c60d5558d08e5495d1a31b21903b83f213",
+  "buildId": "pRhNY7upYLIiB9oD27vRG",
+  "started": "2026-10-25T11:30:11.191Z",
+  "synthetic": true,
+  "personalLocation": false,
+  "SDKStubbed": false,
+  "SDKModified": false,
+  "checks": [
+    {
+      "name": "list image skeleton is decorative",
+      "passed": true,
+      "evidence": {
+        "figure": {
+          "x": 29,
+          "y": 137,
+          "width": 80,
+          "height": 80,
+          "top": 137,
+          "right": 109,
+          "bottom": 217,
+          "left": 29
+        },
+        "image": {
+          "x": 29,
+          "y": 137,
+          "width": 80,
+          "height": 80,
+          "top": 137,
+          "right": 109,
+          "bottom": 217,
+          "left": 29
+        },
+        "skeleton": {
+          "x": 29,
+          "y": 137,
+          "width": 80,
+          "height": 80,
+          "top": 137,
+          "right": 109,
+          "bottom": 217,
+          "left": 29
+        },
+        "skeletonHidden": "true",
+        "complete": false,
+        "naturalWidth": 0,
+        "caption": "AI 생성 이미지"
+      }
+    },
+    {
+      "name": "list pending image retains SSR caption",
+      "passed": true
+    },
+    {
+      "name": "list skeleton reserves the image area",
+      "passed": true,
+      "evidence": {
+        "figure": {
+          "x": 29,
+          "y": 137,
+          "width": 80,
+          "height": 80,
+          "top": 137,
+          "right": 109,
+          "bottom": 217,
+          "left": 29
+        },
+        "image": {
+          "x": 29,
+          "y": 137,
+          "width": 80,
+          "height": 80,
+          "top": 137,
+          "right": 109,
+          "bottom": 217,
+          "left": 29
+        },
+        "skeleton": {
+          "x": 29,
+          "y": 137,
+          "width": 80,
+          "height": 80,
+          "top": 137,
+          "right": 109,
+          "bottom": 217,
+          "left": 29
+        },
+        "skeletonHidden": "true",
+        "complete": false,
+        "naturalWidth": 0,
+        "caption": "AI 생성 이미지"
+      }
+    },
+    {
+      "name": "list real image decodes after release",
+      "passed": true
+    },
+    {
+      "name": "list pending/success image geometry is stable",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "figure": {
+            "x": 29,
+            "y": 137,
+            "width": 80,
+            "height": 80,
+            "top": 137,
+            "right": 109,
+            "bottom": 217,
+            "left": 29
+          },
+          "image": {
+            "x": 29,
+            "y": 137,
+            "width": 80,
+            "height": 80,
+            "top": 137,
+            "right": 109,
+            "bottom": 217,
+            "left": 29
+          },
+          "skeleton": {
+            "x": 29,
+            "y": 137,
+            "width": 80,
+            "height": 80,
+            "top": 137,
+            "right": 109,
+            "bottom": 217,
+            "left": 29
+          },
+          "skeletonHidden": "true",
+          "complete": false,
+          "naturalWidth": 0,
+          "caption": "AI 생성 이미지"
+        },
+        "after": {
+          "figure": {
+            "x": 29,
+            "y": 137,
+            "width": 80,
+            "height": 80,
+            "top": 137,
+            "right": 109,
+            "bottom": 217,
+            "left": 29
+          },
+          "image": {
+            "x": 29,
+            "y": 137,
+            "width": 80,
+            "height": 80,
+            "top": 137,
+            "right": 109,
+            "bottom": 217,
+            "left": 29
+          },
+          "complete": true,
+          "naturalWidth": 720,
+          "caption": "AI 생성 이미지"
+        }
+      }
+    },
+    {
+      "name": "list cache reuses the image without another fixture GET",
+      "passed": true
+    },
+    {
+      "name": "list cache does not leave a skeleton or held image request",
+      "passed": true
+    },
+    {
+      "name": "list failed image terminates skeleton",
+      "passed": true
+    },
+    {
+      "name": "map image skeleton is decorative",
+      "passed": true,
+      "evidence": {
+        "figure": {
+          "x": 28,
+          "y": 666,
+          "width": 176,
+          "height": 80,
+          "top": 666,
+          "right": 204,
+          "bottom": 746,
+          "left": 28
+        },
+        "image": {
+          "x": 28,
+          "y": 666,
+          "width": 176,
+          "height": 80,
+          "top": 666,
+          "right": 204,
+          "bottom": 746,
+          "left": 28
+        },
+        "skeleton": {
+          "x": 28,
+          "y": 666,
+          "width": 176,
+          "height": 80,
+          "top": 666,
+          "right": 204,
+          "bottom": 746,
+          "left": 28
+        },
+        "skeletonHidden": "true",
+        "complete": false,
+        "naturalWidth": 0,
+        "caption": "AI 생성 이미지"
+      }
+    },
+    {
+      "name": "map pending image retains SSR caption",
+      "passed": true
+    },
+    {
+      "name": "map skeleton reserves the image area",
+      "passed": true,
+      "evidence": {
+        "figure": {
+          "x": 28,
+          "y": 666,
+          "width": 176,
+          "height": 80,
+          "top": 666,
+          "right": 204,
+          "bottom": 746,
+          "left": 28
+        },
+        "image": {
+          "x": 28,
+          "y": 666,
+          "width": 176,
+          "height": 80,
+          "top": 666,
+          "right": 204,
+          "bottom": 746,
+          "left": 28
+        },
+        "skeleton": {
+          "x": 28,
+          "y": 666,
+          "width": 176,
+          "height": 80,
+          "top": 666,
+          "right": 204,
+          "bottom": 746,
+          "left": 28
+        },
+        "skeletonHidden": "true",
+        "complete": false,
+        "naturalWidth": 0,
+        "caption": "AI 생성 이미지"
+      }
+    },
+    {
+      "name": "map real image decodes after release",
+      "passed": true
+    },
+    {
+      "name": "map pending/success image geometry is stable",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "figure": {
+            "x": 28,
+            "y": 666,
+            "width": 176,
+            "height": 80,
+            "top": 666,
+            "right": 204,
+            "bottom": 746,
+            "left": 28
+          },
+          "image": {
+            "x": 28,
+            "y": 666,
+            "width": 176,
+            "height": 80,
+            "top": 666,
+            "right": 204,
+            "bottom": 746,
+            "left": 28
+          },
+          "skeleton": {
+            "x": 28,
+            "y": 666,
+            "width": 176,
+            "height": 80,
+            "top": 666,
+            "right": 204,
+            "bottom": 746,
+            "left": 28
+          },
+          "skeletonHidden": "true",
+          "complete": false,
+          "naturalWidth": 0,
+          "caption": "AI 생성 이미지"
+        },
+        "after": {
+          "figure": {
+            "x": 28,
+            "y": 666,
+            "width": 176,
+            "height": 80,
+            "top": 666,
+            "right": 204,
+            "bottom": 746,
+            "left": 28
+          },
+          "image": {
+            "x": 28,
+            "y": 666,
+            "width": 176,
+            "height": 80,
+            "top": 666,
+            "right": 204,
+            "bottom": 746,
+            "left": 28
+          },
+          "complete": true,
+          "naturalWidth": 720,
+          "caption": "AI 생성 이미지"
+        }
+      }
+    },
+    {
+      "name": "map cache reuses the image without another fixture GET",
+      "passed": true
+    },
+    {
+      "name": "map cache does not leave a skeleton or held image request",
+      "passed": true
+    },
+    {
+      "name": "map failed image terminates skeleton",
+      "passed": true
+    },
+    {
+      "name": "detail image skeleton is decorative",
+      "passed": true,
+      "evidence": {
+        "figure": {
+          "x": 16,
+          "y": 212,
+          "width": 361,
+          "height": 159,
+          "top": 212,
+          "right": 377,
+          "bottom": 371,
+          "left": 16
+        },
+        "image": {
+          "x": 16,
+          "y": 212,
+          "width": 361,
+          "height": 140,
+          "top": 212,
+          "right": 377,
+          "bottom": 352,
+          "left": 16
+        },
+        "skeleton": {
+          "x": 16,
+          "y": 212,
+          "width": 361,
+          "height": 140,
+          "top": 212,
+          "right": 377,
+          "bottom": 352,
+          "left": 16
+        },
+        "skeletonHidden": "true",
+        "complete": false,
+        "naturalWidth": 0,
+        "caption": "AI 생성 이미지"
+      }
+    },
+    {
+      "name": "detail pending image retains SSR caption",
+      "passed": true
+    },
+    {
+      "name": "detail skeleton reserves the image area",
+      "passed": true,
+      "evidence": {
+        "figure": {
+          "x": 16,
+          "y": 212,
+          "width": 361,
+          "height": 159,
+          "top": 212,
+          "right": 377,
+          "bottom": 371,
+          "left": 16
+        },
+        "image": {
+          "x": 16,
+          "y": 212,
+          "width": 361,
+          "height": 140,
+          "top": 212,
+          "right": 377,
+          "bottom": 352,
+          "left": 16
+        },
+        "skeleton": {
+          "x": 16,
+          "y": 212,
+          "width": 361,
+          "height": 140,
+          "top": 212,
+          "right": 377,
+          "bottom": 352,
+          "left": 16
+        },
+        "skeletonHidden": "true",
+        "complete": false,
+        "naturalWidth": 0,
+        "caption": "AI 생성 이미지"
+      }
+    },
+    {
+      "name": "detail real image decodes after release",
+      "passed": true
+    },
+    {
+      "name": "detail pending/success image geometry is stable",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "figure": {
+            "x": 16,
+            "y": 212,
+            "width": 361,
+            "height": 159,
+            "top": 212,
+            "right": 377,
+            "bottom": 371,
+            "left": 16
+          },
+          "image": {
+            "x": 16,
+            "y": 212,
+            "width": 361,
+            "height": 140,
+            "top": 212,
+            "right": 377,
+            "bottom": 352,
+            "left": 16
+          },
+          "skeleton": {
+            "x": 16,
+            "y": 212,
+            "width": 361,
+            "height": 140,
+            "top": 212,
+            "right": 377,
+            "bottom": 352,
+            "left": 16
+          },
+          "skeletonHidden": "true",
+          "complete": false,
+          "naturalWidth": 0,
+          "caption": "AI 생성 이미지"
+        },
+        "after": {
+          "figure": {
+            "x": 16,
+            "y": 212,
+            "width": 361,
+            "height": 159,
+            "top": 212,
+            "right": 377,
+            "bottom": 371,
+            "left": 16
+          },
+          "image": {
+            "x": 16,
+            "y": 212,
+            "width": 361,
+            "height": 140,
+            "top": 212,
+            "right": 377,
+            "bottom": 352,
+            "left": 16
+          },
+          "complete": true,
+          "naturalWidth": 720,
+          "caption": "AI 생성 이미지"
+        }
+      }
+    },
+    {
+      "name": "detail cache reuses the image without another fixture GET",
+      "passed": true
+    },
+    {
+      "name": "detail cache does not leave a skeleton or held image request",
+      "passed": true
+    },
+    {
+      "name": "detail failed image terminates skeleton",
+      "passed": true
+    },
+    {
+      "name": "home held API shows a full-height skeleton",
+      "passed": true,
+      "evidence": {
+        "height": 852,
+        "viewport": 852
+      }
+    },
+    {
+      "name": "home does not initialize real SDK before held map data resolves",
+      "passed": true
+    },
+    {
+      "name": "home starts real SDK exactly once after API release",
+      "passed": true
+    },
+    {
+      "name": "home fallback leaves after the real map mounts",
+      "passed": true
+    },
+    {
+      "name": "search fixture step only submits GET",
+      "passed": true
+    },
+    {
+      "name": "enter submit button has one decorative pending spinner",
+      "passed": true
+    },
+    {
+      "name": "enter form and button expose busy state",
+      "passed": true
+    },
+    {
+      "name": "enter pending prevents duplicate submit and query edits",
+      "passed": true
+    },
+    {
+      "name": "enter pending has one visible search skeleton status",
+      "passed": true
+    },
+    {
+      "name": "enter pending retains the typed query",
+      "passed": true
+    },
+    {
+      "name": "enter search skeleton clears when actual results arrive",
+      "passed": true
+    },
+    {
+      "name": "enter completed search restores the form controls",
+      "passed": true
+    },
+    {
+      "name": "search fixture step only submits GET",
+      "passed": true
+    },
+    {
+      "name": "button submit button has one decorative pending spinner",
+      "passed": true
+    },
+    {
+      "name": "button form and button expose busy state",
+      "passed": true
+    },
+    {
+      "name": "button pending prevents duplicate submit and query edits",
+      "passed": true
+    },
+    {
+      "name": "button pending has one visible search skeleton status",
+      "passed": true
+    },
+    {
+      "name": "button pending retains the typed query",
+      "passed": true
+    },
+    {
+      "name": "button search skeleton clears when actual results arrive",
+      "passed": true
+    },
+    {
+      "name": "button completed search restores the form controls",
+      "passed": true
+    },
+    {
+      "name": "search error starts from an actual URL containing whitespace",
+      "passed": true
+    },
+    {
+      "name": "server search trims the keyword while retaining the meaningful query",
+      "passed": true
+    },
+    {
+      "name": "whitespace query reaches the matching trimmed fixture keyword and503",
+      "passed": true
+    },
+    {
+      "name": "server search error Link exposes one KeywordLinkStatus spinner before503",
+      "passed": true
+    },
+    {
+      "name": "server search retry performs one held keyword request before503",
+      "passed": true
+    },
+    {
+      "name": "failed server search retry ends pending and retains an available retry Link",
+      "passed": true
+    },
+    {
+      "name": "failed Link retry keeps the normalized keyword URL for the same-href retry",
+      "passed": true
+    },
+    {
+      "name": "server search error Link exposes one KeywordLinkStatus spinner before200",
+      "passed": true
+    },
+    {
+      "name": "server search retry performs one held keyword request before200",
+      "passed": true
+    },
+    {
+      "name": "successful server search retry replaces the error notice with actual matching articles",
+      "passed": true
+    },
+    {
+      "name": "successful same-href search retry keeps the normalized shared query URL",
+      "passed": true
+    },
+    {
+      "name": "overlay real RSC entry uses one upstream detail GET",
+      "passed": true
+    },
+    {
+      "name": "overlay uses an actual NextLink RSC request",
+      "passed": true
+    },
+    {
+      "name": "overlay detail loader clears after response",
+      "passed": true
+    },
+    {
+      "name": "archive real RSC entry uses one upstream detail GET",
+      "passed": true
+    },
+    {
+      "name": "archive uses an actual NextLink RSC request",
+      "passed": true
+    },
+    {
+      "name": "archive detail loader clears after response",
+      "passed": true
+    },
+    {
+      "name": "refresh exposes busy and disabled state on its fixed-label link",
+      "passed": true
+    },
+    {
+      "name": "refresh exposes one pending spinner",
+      "passed": true
+    },
+    {
+      "name": "pending refresh blocks duplicate keyboard submissions",
+      "passed": true
+    },
+    {
+      "name": "refresh pending preserves the shared article URL",
+      "passed": true
+    },
+    {
+      "name": "refresh spinner terminates after 200",
+      "passed": true
+    },
+    {
+      "name": "refresh exposes busy and disabled state on its fixed-label link",
+      "passed": true
+    },
+    {
+      "name": "refresh exposes one pending spinner",
+      "passed": true
+    },
+    {
+      "name": "pending refresh blocks duplicate keyboard submissions",
+      "passed": true
+    },
+    {
+      "name": "refresh pending preserves the shared article URL",
+      "passed": true
+    },
+    {
+      "name": "failed refresh restores an enabled non-busy retry path",
+      "passed": true
+    },
+    {
+      "name": "refresh spinner terminates after 503",
+      "passed": true
+    },
+    {
+      "name": "direct document initially waits on the existence probe",
+      "passed": true
+    },
+    {
+      "name": "delayed direct document returns200",
+      "passed": true
+    },
+    {
+      "name": "direct probe and cached page/metadata load remain two upstream GETs",
+      "passed": true
+    },
+    {
+      "name": "NoJS valid article document status200",
+      "passed": true
+    },
+    {
+      "name": "NoJS actual article summary is visible",
+      "passed": true
+    },
+    {
+      "name": "NoJS actual source link is visible",
+      "passed": true
+    },
+    {
+      "name": "NoJS image loads visibly without a client onLoad callback",
+      "passed": true,
+      "evidence": {
+        "complete": true,
+        "naturalWidth": 720,
+        "width": 361,
+        "height": 140
+      }
+    },
+    {
+      "name": "native fetch bot response status is numeric200",
+      "passed": true
+    },
+    {
+      "name": "bot receives the actual article title",
+      "passed": true
+    },
+    {
+      "name": "bot canonical is the stable public article URL",
+      "passed": true
+    },
+    {
+      "name": "successful bot article is indexable",
+      "passed": true
+    },
+    {
+      "name": "NoJS missing article keeps a real404",
+      "passed": true
+    },
+    {
+      "name": "NoJS missing article is noindex",
+      "passed": true
+    },
+    {
+      "name": "NoJS missing article has a visible explanation",
+      "passed": true
+    },
+    {
+      "name": "NoJS404 retains visible list/map escape paths",
+      "passed": true
+    },
+    {
+      "name": "NoJS404 preserves the original URL and query",
+      "passed": true
+    },
+    {
+      "name": "runner initiated no application write requests",
+      "passed": true,
+      "evidence": [
+        {
+          "method": "POST",
+          "origin": "https://kr-col-ext.nelo.navercorp.com",
+          "path": "/_store"
+        },
+        {
+          "method": "POST",
+          "origin": "https://kr-col-ext.nelo.navercorp.com",
+          "path": "/_store"
+        },
+        {
+          "method": "POST",
+          "origin": "https://kr-col-ext.nelo.navercorp.com",
+          "path": "/_store"
+        },
+        {
+          "method": "POST",
+          "origin": "https://kr-col-ext.nelo.navercorp.com",
+          "path": "/_store"
+        }
+      ]
+    },
+    {
+      "name": "no uncaught browser page errors",
+      "passed": true,
+      "evidence": []
+    },
+    {
+      "name": "actual Naver raster tiles loaded without SDK stub",
+      "passed": true,
+      "evidence": {
+        "tiles200": 80
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "image-list-pending-success-cache",
+      "started": 1792927811534,
+      "completed": true,
+      "elapsedMs": 794,
+      "checks": 7
+    },
+    {
+      "name": "image-list-pending-failure",
+      "started": 1792927812328,
+      "completed": true,
+      "elapsedMs": 565,
+      "checks": 1
+    },
+    {
+      "name": "image-map-pending-success-cache",
+      "started": 1792927812893,
+      "completed": true,
+      "elapsedMs": 1465,
+      "checks": 7
+    },
+    {
+      "name": "image-map-pending-failure",
+      "started": 1792927814358,
+      "completed": true,
+      "elapsedMs": 579,
+      "checks": 1
+    },
+    {
+      "name": "image-detail-pending-success-cache",
+      "started": 1792927814937,
+      "completed": true,
+      "elapsedMs": 654,
+      "checks": 7
+    },
+    {
+      "name": "image-detail-pending-failure",
+      "started": 1792927815591,
+      "completed": true,
+      "elapsedMs": 339,
+      "checks": 1
+    },
+    {
+      "name": "home-api-hold-skeleton-then-single-real-sdk",
+      "started": 1792927815930,
+      "completed": true,
+      "elapsedMs": 1138,
+      "checks": 4
+    },
+    {
+      "name": "manual-search-enter-pending",
+      "started": 1792927817068,
+      "completed": true,
+      "elapsedMs": 457,
+      "checks": 8
+    },
+    {
+      "name": "manual-search-button-pending",
+      "started": 1792927817525,
+      "completed": true,
+      "elapsedMs": 509,
+      "checks": 8
+    },
+    {
+      "name": "server-search-error-link-retry-failure-then-recovery",
+      "started": 1792927818034,
+      "completed": true,
+      "elapsedMs": 619,
+      "checks": 11
+    },
+    {
+      "name": "detail-rsc-overlay-loader",
+      "started": 1792927818653,
+      "completed": true,
+      "elapsedMs": 952,
+      "checks": 3
+    },
+    {
+      "name": "detail-rsc-archive-loader",
+      "started": 1792927819605,
+      "completed": true,
+      "elapsedMs": 864,
+      "checks": 3
+    },
+    {
+      "name": "detail-refresh-pending-200",
+      "started": 1792927820469,
+      "completed": true,
+      "elapsedMs": 750,
+      "checks": 5
+    },
+    {
+      "name": "detail-refresh-pending-503",
+      "started": 1792927821219,
+      "completed": true,
+      "elapsedMs": 777,
+      "checks": 6
+    },
+    {
+      "name": "direct-document-probe-and-metadata-delay",
+      "started": 1792927821996,
+      "completed": true,
+      "elapsedMs": 969,
+      "checks": 3
+    },
+    {
+      "name": "nojs-visible-body-bot-metadata-and-real404",
+      "started": 1792927822965,
+      "completed": true,
+      "elapsedMs": 497,
+      "checks": 13
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "app/image-list-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Held synthetic image; caption intentionally retains its SSR presence."
+    },
+    {
+      "file": "app/image-list-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Released and decoded synthetic image."
+    },
+    {
+      "file": "app/image-list-cache.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "New page, same normal browser context; general navigation shares HTTP max-age cache without route interception or forced reload validation."
+    },
+    {
+      "file": "app/image-list-failure.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Synthetic image HTTP503; product fallback visible."
+    },
+    {
+      "file": "app/image-map-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Held synthetic image; caption intentionally retains its SSR presence."
+    },
+    {
+      "file": "app/image-map-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Released and decoded synthetic image."
+    },
+    {
+      "file": "app/image-map-cache.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "New page, same normal browser context; general navigation shares HTTP max-age cache without route interception or forced reload validation."
+    },
+    {
+      "file": "app/image-map-failure.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Synthetic image HTTP503; product fallback visible."
+    },
+    {
+      "file": "app/image-detail-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Held synthetic image; caption intentionally retains its SSR presence."
+    },
+    {
+      "file": "app/image-detail-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Released and decoded synthetic image."
+    },
+    {
+      "file": "app/image-detail-cache.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "New page, same normal browser context; general navigation shares HTTP max-age cache without route interception or forced reload validation."
+    },
+    {
+      "file": "app/image-detail-failure.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Synthetic image HTTP503; product fallback visible."
+    },
+    {
+      "file": "app/home-api-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Server map API held; full-height fallback, SDK intentionally not yet mounted."
+    },
+    {
+      "file": "app/home-api-ready.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual Naver SDK/tiles with fixed synthetic browser location and synthetic article groups."
+    },
+    {
+      "file": "app/search-enter-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Manual GET submission is held in the local article API."
+    },
+    {
+      "file": "app/search-enter-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "The matching synthetic result set has replaced the pending state."
+    },
+    {
+      "file": "app/search-button-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Manual GET submission is held in the local article API."
+    },
+    {
+      "file": "app/search-button-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "The matching synthetic result set has replaced the pending state."
+    },
+    {
+      "file": "app/search-error-retry-503-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Server search error Link pending; original query included whitespace and this retry normalizes its URL."
+    },
+    {
+      "file": "app/search-error-retry-503-result.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "The first retry failed again; its spinner ended and the same-href retry remains available."
+    },
+    {
+      "file": "app/search-error-retry-200-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Server search error Link pending; original query included whitespace and this retry normalizes its URL."
+    },
+    {
+      "file": "app/search-error-retry-200-result.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Second retry used the same normalized href and recovered the real synthetic search results."
+    },
+    {
+      "file": "app/detail-overlay-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual NextLink RSC entry; upstream detail held, prefetch blocked only in this context."
+    },
+    {
+      "file": "app/detail-archive-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual NextLink RSC entry; upstream detail held, prefetch blocked only in this context."
+    },
+    {
+      "file": "app/detail-refresh-200-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "An error sheet retries with router.refresh; repeated Enter must not add upstream requests."
+    },
+    {
+      "file": "app/detail-refresh-200-result.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Retry recovered the article."
+    },
+    {
+      "file": "app/detail-refresh-503-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "An error sheet retries with router.refresh; repeated Enter must not add upstream requests."
+    },
+    {
+      "file": "app/detail-refresh-503-result.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Retry failed again; the pending state ended and retry is available."
+    },
+    {
+      "file": "app/direct-delayed-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Both direct-request stages were gated and explicitly released; initial pre-HTML delay is expected."
+    },
+    {
+      "file": "app/direct-nojs-valid.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "JavaScript disabled; final article title, summary, source and image must remain visible."
+    },
+    {
+      "file": "app/direct-nojs404.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual upstream404, no JavaScript, unchanged original address and visible escape paths."
+    }
+  ],
+  "pageErrors": [],
+  "fixtureStates": [
+    {
+      "label": "image-list-pending-success-cache:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "image:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": true,
+            "status": 200
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 130,
+            "scope": "list",
+            "key": "",
+            "path": "/news",
+            "started": 1792927811761,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 131,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927811887,
+            "held": true,
+            "released": 1792927812004,
+            "status": 200,
+            "closedAfterMs": 118,
+            "completed": true
+          },
+          {
+            "token": 132,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007531.jpg",
+            "started": 1792927811887,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 133,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007532.jpg",
+            "started": 1792927811888,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 134,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007533.jpg",
+            "started": 1792927811888,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 135,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007534",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007534.jpg",
+            "started": 1792927811889,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 136,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007535",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007535.jpg",
+            "started": 1792927811889,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 137,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007536",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007536.jpg",
+            "started": 1792927811889,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 138,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927811968,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 139,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007531",
+            "started": 1792927811970,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 140,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007532",
+            "started": 1792927811972,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 141,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007533",
+            "started": 1792927811976,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 142,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007534",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007534",
+            "started": 1792927811983,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 143,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007535",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007535",
+            "started": 1792927811987,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 144,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007536",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007536",
+            "started": 1792927811988,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 145,
+            "scope": "list",
+            "key": "",
+            "path": "/news",
+            "started": 1792927812100,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 146,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927812286,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 147,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007531",
+            "started": 1792927812294,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 148,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007532",
+            "started": 1792927812297,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 149,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007533",
+            "started": 1792927812297,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 150,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007534",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007534",
+            "started": 1792927812305,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 151,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007535",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007535",
+            "started": 1792927812306,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 152,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007536",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007536",
+            "started": 1792927812307,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "image-list-pending-failure:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "image:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": false,
+            "status": 503
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 153,
+            "scope": "list",
+            "key": "",
+            "path": "/news",
+            "started": 1792927812456,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 154,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927812780,
+            "held": true,
+            "released": 1792927812830,
+            "status": 503,
+            "closedAfterMs": 50,
+            "completed": true
+          },
+          {
+            "token": 155,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007531.jpg",
+            "started": 1792927812780,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 156,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007532.jpg",
+            "started": 1792927812780,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 157,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007533.jpg",
+            "started": 1792927812781,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 158,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007534",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007534.jpg",
+            "started": 1792927812781,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 159,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007535",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007535.jpg",
+            "started": 1792927812781,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 160,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007536",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007536.jpg",
+            "started": 1792927812782,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 161,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927812816,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 162,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007531",
+            "started": 1792927812821,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 163,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007532",
+            "started": 1792927812823,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 164,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007533",
+            "started": 1792927812824,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 165,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007534",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007534",
+            "started": 1792927812839,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 166,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007535",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007535",
+            "started": 1792927812839,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 167,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007536",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007536",
+            "started": 1792927812843,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "image-map-pending-success-cache:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "image:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": true,
+            "status": 200
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 168,
+            "scope": "map",
+            "key": "all",
+            "path": "/map/articles",
+            "started": 1792927813043,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 169,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927813613,
+            "held": true,
+            "released": 1792927813995,
+            "status": 200,
+            "closedAfterMs": 382,
+            "completed": true
+          },
+          {
+            "token": 170,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007531.jpg",
+            "started": 1792927813613,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 171,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007532.jpg",
+            "started": 1792927813613,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 172,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007533.jpg",
+            "started": 1792927813613,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 173,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927813625,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 174,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007531",
+            "started": 1792927813626,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 175,
+            "scope": "map",
+            "key": "all",
+            "path": "/map/articles",
+            "started": 1792927814091,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 176,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927814273,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 177,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007531",
+            "started": 1792927814273,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "image-map-pending-failure:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "image:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": false,
+            "status": 503
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 178,
+            "scope": "map",
+            "key": "all",
+            "path": "/map/articles",
+            "started": 1792927814496,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 179,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927814836,
+            "held": true,
+            "released": 1792927814895,
+            "status": 503,
+            "closedAfterMs": 59,
+            "completed": true
+          },
+          {
+            "token": 180,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007531.jpg",
+            "started": 1792927814836,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 181,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007532.jpg",
+            "started": 1792927814836,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 182,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007533.jpg",
+            "started": 1792927814836,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 183,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927814847,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 184,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007531",
+            "started": 1792927814848,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "image-detail-pending-success-cache:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "image:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": true,
+            "status": 200
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 185,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927815073,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 186,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927815078,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 187,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927815140,
+            "held": true,
+            "released": 1792927815296,
+            "status": 200,
+            "closedAfterMs": 156,
+            "completed": true
+          },
+          {
+            "token": 188,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927815371,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 189,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927815374,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "image-detail-pending-failure:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "image:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": false,
+            "status": 503
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 190,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927815714,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 191,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927815717,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 192,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927815779,
+            "held": true,
+            "released": 1792927815876,
+            "status": 503,
+            "closedAfterMs": 97,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "home-api-hold-skeleton-then-single-real-sdk:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "map:*",
+            "hold": false,
+            "status": 200
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 193,
+            "scope": "map",
+            "key": "all",
+            "path": "/map/articles",
+            "started": 1792927816062,
+            "held": true,
+            "released": 1792927816241,
+            "status": 200,
+            "closedAfterMs": 179,
+            "completed": true
+          },
+          {
+            "token": 194,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927816583,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 195,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007531.jpg",
+            "started": 1792927816583,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 196,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007532.jpg",
+            "started": 1792927816583,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 197,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007533.jpg",
+            "started": 1792927816584,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 198,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927816595,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 199,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007531",
+            "started": 1792927816595,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "manual-search-enter-pending:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "list:느린검색",
+            "hold": false,
+            "status": 200
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 200,
+            "scope": "list",
+            "key": "느린검색",
+            "path": "/news",
+            "started": 1792927817384,
+            "held": true,
+            "released": 1792927817462,
+            "status": 200,
+            "closedAfterMs": 78,
+            "completed": true
+          },
+          {
+            "token": 201,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927817490,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 202,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007531",
+            "started": 1792927817498,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 203,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007532",
+            "started": 1792927817498,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 204,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007533",
+            "started": 1792927817498,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 205,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007534",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007534",
+            "started": 1792927817507,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 206,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007535",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007535",
+            "started": 1792927817508,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 207,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007536",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007536",
+            "started": 1792927817509,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "manual-search-button-pending:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "list:느린검색",
+            "hold": false,
+            "status": 200
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 208,
+            "scope": "list",
+            "key": "느린검색",
+            "path": "/news",
+            "started": 1792927817873,
+            "held": true,
+            "released": 1792927817958,
+            "status": 200,
+            "closedAfterMs": 85,
+            "completed": true
+          },
+          {
+            "token": 209,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927817989,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 210,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007531",
+            "started": 1792927817995,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 211,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007532",
+            "started": 1792927817996,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 212,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007533",
+            "started": 1792927817997,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 213,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007534",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007534",
+            "started": 1792927818005,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 214,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007535",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007535",
+            "started": 1792927818006,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 215,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007536",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007536",
+            "started": 1792927818007,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "server-search-error-link-retry-failure-then-recovery:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "list:느린검색",
+            "hold": false,
+            "status": 200
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 216,
+            "scope": "list",
+            "key": "느린검색",
+            "path": "/news",
+            "started": 1792927818184,
+            "held": false,
+            "status": 503,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 217,
+            "scope": "list",
+            "key": "느린검색",
+            "path": "/news",
+            "started": 1792927818400,
+            "held": true,
+            "released": 1792927818477,
+            "status": 503,
+            "closedAfterMs": 77,
+            "completed": true
+          },
+          {
+            "token": 218,
+            "scope": "list",
+            "key": "느린검색",
+            "path": "/news",
+            "started": 1792927818553,
+            "held": true,
+            "released": 1792927818595,
+            "status": 200,
+            "closedAfterMs": 42,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "detail-rsc-overlay-loader:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "detail:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": false,
+            "status": 200
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 219,
+            "scope": "list",
+            "key": "",
+            "path": "/news",
+            "started": 1792927818804,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 220,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927819125,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 221,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007531.jpg",
+            "started": 1792927819125,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 222,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007532.jpg",
+            "started": 1792927819125,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 223,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007533.jpg",
+            "started": 1792927819125,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 224,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007534",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007534.jpg",
+            "started": 1792927819125,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 225,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007535",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007535.jpg",
+            "started": 1792927819126,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 226,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007536",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007536.jpg",
+            "started": 1792927819129,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 227,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927819210,
+            "held": true,
+            "released": 1792927819313,
+            "status": 200,
+            "closedAfterMs": 103,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "detail-rsc-archive-loader:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "detail:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": false,
+            "status": 200
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 228,
+            "scope": "list",
+            "key": "",
+            "path": "/news",
+            "started": 1792927819796,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 229,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927819970,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 230,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007531.jpg",
+            "started": 1792927819970,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 231,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007532.jpg",
+            "started": 1792927819970,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 232,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007533.jpg",
+            "started": 1792927819971,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 233,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007534",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007534.jpg",
+            "started": 1792927819971,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 234,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007535",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007535.jpg",
+            "started": 1792927819971,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 235,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007536",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007536.jpg",
+            "started": 1792927819974,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 236,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927820116,
+            "held": true,
+            "released": 1792927820179,
+            "status": 200,
+            "closedAfterMs": 63,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "detail-refresh-pending-200:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "detail:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": false,
+            "status": 200
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 237,
+            "scope": "list",
+            "key": "",
+            "path": "/news",
+            "started": 1792927820641,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 238,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927820717,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 239,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007531.jpg",
+            "started": 1792927820718,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 240,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007532.jpg",
+            "started": 1792927820718,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 241,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007533.jpg",
+            "started": 1792927820718,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 242,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007534",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007534.jpg",
+            "started": 1792927820720,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 243,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007535",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007535.jpg",
+            "started": 1792927820720,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 244,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007536",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007536.jpg",
+            "started": 1792927820720,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 245,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927820853,
+            "held": false,
+            "status": 503,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 246,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927820970,
+            "held": true,
+            "released": 1792927821163,
+            "status": 200,
+            "closedAfterMs": 193,
+            "completed": true
+          },
+          {
+            "token": 247,
+            "scope": "list",
+            "key": "",
+            "path": "/news",
+            "started": 1792927820972,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "detail-refresh-pending-503:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "detail:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": false,
+            "status": 503
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 248,
+            "scope": "list",
+            "key": "",
+            "path": "/news",
+            "started": 1792927821385,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 249,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927821516,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 250,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007531",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007531.jpg",
+            "started": 1792927821517,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 251,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007532",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007532.jpg",
+            "started": 1792927821517,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 252,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007533",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007533.jpg",
+            "started": 1792927821517,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 253,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007534",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007534.jpg",
+            "started": 1792927821518,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 254,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007535",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007535.jpg",
+            "started": 1792927821518,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 255,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007536",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007536.jpg",
+            "started": 1792927821519,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 256,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927821640,
+            "held": false,
+            "status": 503,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 257,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927821737,
+            "held": true,
+            "released": 1792927821939,
+            "status": 503,
+            "closedAfterMs": 202,
+            "completed": true
+          },
+          {
+            "token": 258,
+            "scope": "list",
+            "key": "",
+            "path": "/news",
+            "started": 1792927821739,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "direct:probe-held",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "detail:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": true,
+            "status": 200
+          }
+        ],
+        "pending": [
+          {
+            "token": 259,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530"
+          }
+        ],
+        "requests": [
+          {
+            "token": 259,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927822146,
+            "held": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "direct:metadata-held",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "detail:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": true,
+            "status": 200
+          }
+        ],
+        "pending": [
+          {
+            "token": 260,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530"
+          }
+        ],
+        "requests": [
+          {
+            "token": 259,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927822146,
+            "held": true,
+            "released": 1792927822441,
+            "status": 200,
+            "closedAfterMs": 296,
+            "completed": true
+          },
+          {
+            "token": 260,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927822445,
+            "held": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "direct-document-probe-and-metadata-delay:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [
+          {
+            "key": "detail:0000000000000000000000000000000000000000000000000000000000007530",
+            "hold": false,
+            "status": 200
+          }
+        ],
+        "pending": [],
+        "requests": [
+          {
+            "token": 259,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927822146,
+            "held": true,
+            "released": 1792927822441,
+            "status": 200,
+            "closedAfterMs": 296,
+            "completed": true
+          },
+          {
+            "token": 260,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927822445,
+            "held": true,
+            "released": 1792927822752,
+            "status": 200,
+            "closedAfterMs": 307,
+            "completed": true
+          },
+          {
+            "token": 261,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927822808,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "nojs-visible-body-bot-metadata-and-real404:end",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [],
+        "pending": [],
+        "requests": [
+          {
+            "token": 262,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927823128,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 1,
+            "completed": true
+          },
+          {
+            "token": 263,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927823132,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 264,
+            "scope": "image",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/images/0000000000000000000000000000000000000000000000000000000000007530.jpg",
+            "started": 1792927823141,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 265,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927823317,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 266,
+            "scope": "detail",
+            "key": "0000000000000000000000000000000000000000000000000000000000007530",
+            "path": "/news/0000000000000000000000000000000000000000000000000000000000007530",
+            "started": 1792927823319,
+            "held": false,
+            "status": 200,
+            "closedAfterMs": 0,
+            "completed": true
+          },
+          {
+            "token": 267,
+            "scope": "detail",
+            "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "path": "/news/ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "started": 1792927823371,
+            "held": false,
+            "status": 404,
+            "closedAfterMs": 0,
+            "completed": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "final",
+      "value": {
+        "ok": true,
+        "synthetic": true,
+        "personalLocation": false,
+        "ids": {
+          "single": "0000000000000000000000000000000000000000000000000000000000007530",
+          "second": "0000000000000000000000000000000000000000000000000000000000007531",
+          "missing": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "title": "검증용 기사 · 느린검색 · QA-A 종로 검증 지역 · 1번째 보도",
+        "summary": "이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.",
+        "total": 7,
+        "groups": [
+          {
+            "label": "QA-A 종로 검증 지역",
+            "count": 1
+          },
+          {
+            "label": "QA-B 서북 검증 지역",
+            "count": 2
+          },
+          {
+            "label": "QA-C 동북 검증 지역",
+            "count": 4
+          }
+        ],
+        "rules": [],
+        "pending": [],
+        "requests": []
+      }
+    }
+  ],
+  "tiles200": 80,
+  "observedWrites": [
+    {
+      "method": "POST",
+      "origin": "https://kr-col-ext.nelo.navercorp.com",
+      "path": "/_store"
+    },
+    {
+      "method": "POST",
+      "origin": "https://kr-col-ext.nelo.navercorp.com",
+      "path": "/_store"
+    },
+    {
+      "method": "POST",
+      "origin": "https://kr-col-ext.nelo.navercorp.com",
+      "path": "/_store"
+    },
+    {
+      "method": "POST",
+      "origin": "https://kr-col-ext.nelo.navercorp.com",
+      "path": "/_store"
+    }
+  ],
+  "notes": [
+    "All articles, illustrations and the browser location are synthetic.",
+    "Home API hold expects an h-dvh skeleton; real SDK is expected only after release.",
+    "Direct document probe/metadata waits before HTML are timing evidence, not missing-loader failures.",
+    "AI captions retain their existing SSR presence while an image is pending.",
+    "A separate no-routing context is used for image cache verification.",
+    "Browser steps never submit reports or invoke application write APIs."
+  ],
+  "rscEntries": [
+    {
+      "from": "/incidents",
+      "requests": [
+        {
+          "rsc": "1",
+          "queryHasRsc": true
+        }
+      ],
+      "upstreamRequests": 1,
+      "dialogPresent": 1,
+      "sourceArchiveHeadingVisible": false,
+      "classification": "Observed route/UI only; archive entry is not assumed standalone."
+    },
+    {
+      "from": "/archive",
+      "requests": [
+        {
+          "rsc": "1",
+          "queryHasRsc": true
+        }
+      ],
+      "upstreamRequests": 1,
+      "dialogPresent": 1,
+      "sourceArchiveHeadingVisible": false,
+      "classification": "Observed route/UI only; archive entry is not assumed standalone."
+    }
+  ],
+  "directTiming": {
+    "elapsedMs": 767,
+    "probeToken": 259,
+    "detailToken": 260,
+    "preHtmlDelayIsExpected": true
+  },
+  "providerPosts": [
+    {
+      "method": "POST",
+      "origin": "https://kr-col-ext.nelo.navercorp.com",
+      "path": "/_store"
+    },
+    {
+      "method": "POST",
+      "origin": "https://kr-col-ext.nelo.navercorp.com",
+      "path": "/_store"
+    },
+    {
+      "method": "POST",
+      "origin": "https://kr-col-ext.nelo.navercorp.com",
+      "path": "/_store"
+    },
+    {
+      "method": "POST",
+      "origin": "https://kr-col-ext.nelo.navercorp.com",
+      "path": "/_store"
+    }
+  ],
+  "finished": "2026-10-25T11:30:23.548Z",
+  "summary": {
+    "checks": 91,
+    "failed": 0,
+    "scenarios": 16,
+    "incompleteScenarios": 0,
+    "screenshots": 31,
+    "pageErrors": 0
+  }
+}

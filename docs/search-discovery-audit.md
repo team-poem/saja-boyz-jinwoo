@@ -49,3 +49,7 @@ JSON-LD는 `WebPage`와 원문의 `CreativeWork` 인용으로 제목·원문 URL
 - [Next app icons](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/app-icons): app 파일 기반 아이콘에서 head 태그를 생성한다. 현재 배치는 이 방식과 일치하며 실제 태그는 위 응답으로 확인했다.
 
 특수 파일·키워드 랜딩 페이지·허위 구조화 데이터를 늘리는 대신 검증 가능한 본문·출처·링크를 보존한다. 이 점검은 검색 순위·AI 답변 채택·파비콘 노출 보장이 아니다. 배포 후 잘못된 기사 주소의 실제404와 Apple 자산 변경을 재확인한다.
+
+## 로딩 보완 뒤 본문·색인 회귀
+
+로딩 후보 `56d4c1c`에서 느린 직접 기사와 JS 없는 실제 본문·이미지, 공유 canonical/OG/JSON-LD·정상 색인·GET/HEAD404/noindex를 재검증했다. 검색은 native GET을 유지하고 route loading을 client pending 표면으로 옮겨 JS 없는 검색 결과가 숨겨지지 않게 했다. 직접 기사에는 loading 파일이나 전역 metadata 정책을 추가하지 않았다. Proxy/metadata의 첫 HTML 이전 대기는 남으며 이를 앱 로더로 해결했다고 주장하지 않는다. [최종 검증](../collab/active/codex--figma-ui-polish/evidence/loading-feedback/README.md)을 참고한다.
