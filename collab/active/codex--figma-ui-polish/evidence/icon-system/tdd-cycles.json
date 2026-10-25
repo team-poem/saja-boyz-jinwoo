@@ -1,0 +1,68 @@
+{
+  "source": "e39f064d49c4aa10daed38c221c95389620b1156",
+  "runtime": "0d051213e7fc1bb869474c2ad144e08cd9a09dd2",
+  "cycles": [
+    {
+      "scenario": "실제 아이콘·텍스트 크기/간격/중앙 정렬·조작 영역",
+      "red_failed": 1,
+      "red_failures": [
+        "AssertionError: 2026-10-24 09:00 KST OS 글꼴에 의존하지 않는 SVG: expected false to be true // Object.is equality",
+        "AssertionError: 2026-10-24 09:00 KST 고정 너비: expected 14 to be 12 // Object.is equality",
+        "AssertionError: 2026-10-24 09:00 KST 고정 높이: expected 16 to be 12 // Object.is equality",
+        "AssertionError: 2026-10-24 09:00 KST 아이콘과 실제 글자 간격: expected 4 to be close to 6, received difference is 2, but expected 0.5",
+        "AssertionError: expected null to be 'false' // Object.is equality",
+        "AssertionError: 기사 공유하기 OS 글꼴에 의존하지 않는 SVG: expected false to be true // Object.is equality",
+        "AssertionError: 기사 공유하기 고정 너비: expected 15 to be 16 // Object.is equality",
+        "AssertionError: 기사 공유하기 고정 높이: expected 15 to be 16 // Object.is equality",
+        "AssertionError: 기사 공유하기 아이콘과 실제 글자 간격: expected 4 to be close to 8, received difference is 4, but expected 0.5",
+        "AssertionError: expected null to be 'false' // Object.is equality",
+        "AssertionError: publisher.example.invalid OS 글꼴에 의존하지 않는 SVG: expected false to be true // Object.is equality",
+        "AssertionError: publisher.example.invalid 고정 너비: expected 14 to be 12 // Object.is equality",
+        "AssertionError: publisher.example.invalid 고정 높이: expected 15 to be 12 // Object.is equality",
+        "AssertionError: expected null to be 'false' // Object.is equality",
+        "AssertionError: 간격 검증 OS 글꼴에 의존하지 않는 SVG: expected false to be true // Object.is equality",
+        "AssertionError: expected null to be 'false' // Object.is equality",
+        "AssertionError: 제보 위치도 동일 SVG: expected false to be true // Object.is equality",
+        "AssertionError: expected 18 to be 14 // Object.is equality",
+        "AssertionError: expected 17 to be 14 // Object.is equality",
+        "AssertionError: expected 9 to be less than or equal to 8"
+      ],
+      "green_full_suite": 141,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "scenario": "Apple·ICO 단일 로고와 잘림 없는 픽셀",
+      "red_failed": 1,
+      "red_failures": [
+        "AssertionError: Apple180 끊기거나 반복되지 않는 한 개의 윤곽: expected 2 to be 1 // Object.is equality",
+        "AssertionError: Apple180 하단 잘림 없는 여백: expected false to be true // Object.is equality"
+      ],
+      "green_full_suite": 142,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "scenario": "PNG96 메타데이터·일반 Chrome의4개 로고 형식 디코딩",
+      "red_failed": 1,
+      "red_failures": [
+        "AssertionError: 검색용 PNG 파비콘도 head에 제공: expected undefined to be defined",
+        "AssertionError: /icon.png Chrome 실제 디코딩: expected false to be true // Object.is equality",
+        "AssertionError: /icon.png 보이는 이미지 너비: expected 0 to be greater than 0",
+        "AssertionError: expected +0 to be 96 // Object.is equality"
+      ],
+      "green_full_suite": 143,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "notes": [
+    "첫 아이콘 테스트의 시트 버튼 이름 조회 오류를 기존 aria-label로 정정하고 확정 RED를 다시 관찰했다. 이 설정 실패는 제품 결함 근거로 사용하지 않는다.",
+    "기존 시계14px 검사는 기대값을 유지하고 SVG 조회로만 바꿨다.",
+    "코드 구획 린트 오류를 수정한 뒤 전체141개 gate를 다시 통과했다.",
+    "Apple은 SVG에서 재생성했으며 정상 ICO/SVG/OG는 보존했다.",
+    "가로채기 컨텍스트의 ICO 실패를 일반 HTTP·Next 무가로채기 브라우저의 성공과 분리했다. 정상 ICO는 보존한다.",
+    "브라우저 자산 검증을 일반 context로 고친 뒤 PNG96 누락만 RED로 다시 확인했으며 기대값은 유지했다.",
+    "SVG 원본·ICO 바이트·OG는 변경하지 않고 PNG96·Apple180만 생성한다."
+  ]
+}

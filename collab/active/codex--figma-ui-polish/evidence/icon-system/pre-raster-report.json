@@ -1,0 +1,7379 @@
+{
+  "commit": "8393d30bd3d2261aad960486da3fb7786341177f",
+  "buildId": "fwzXRin30pZvx7lF2HIuC",
+  "sdkStubbed": false,
+  "location": "Fixed synthetic browser position; no personal position.",
+  "data": "Local61 synthetic articles;1/2/12 region groups;short/long summaries,long synthetic source/region,no-source variants.",
+  "checks": [
+    {
+      "passed": true,
+      "name": "actual Naver raster tiles200 without SDK stub",
+      "tiles": 20
+    },
+    {
+      "passed": true,
+      "name": "map semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "filter 카테고리 text/arrow geometry 320",
+      "label": "카테고리",
+      "button": {
+        "x": 130,
+        "y": 68,
+        "width": 82,
+        "height": 27,
+        "top": 68,
+        "right": 212,
+        "bottom": 95,
+        "left": 130
+      },
+      "text": {
+        "x": 144.25,
+        "y": 74,
+        "width": 41.484375,
+        "height": 15,
+        "top": 74,
+        "right": 185.734375,
+        "bottom": 89,
+        "left": 144.25
+      },
+      "svg": {
+        "x": 189.734375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 197.734375,
+        "bottom": 85.5,
+        "left": 189.734375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter 상태 text/arrow geometry 320",
+      "label": "상태",
+      "button": {
+        "x": 218,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 278,
+        "bottom": 95,
+        "left": 218
+      },
+      "text": {
+        "x": 231.625,
+        "y": 74,
+        "width": 20.75,
+        "height": 15,
+        "top": 74,
+        "right": 252.375,
+        "bottom": 89,
+        "left": 231.625
+      },
+      "svg": {
+        "x": 256.375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 264.375,
+        "bottom": 85.5,
+        "left": 256.375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter24시간 text/arrow no overlap 320",
+      "label": "기간: 최근 24시간",
+      "button": {
+        "x": 64,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 124,
+        "bottom": 95,
+        "left": 64
+      },
+      "text": {
+        "x": 69.984375,
+        "y": 74,
+        "width": 36.03125,
+        "height": 15,
+        "top": 74,
+        "right": 106.015625,
+        "bottom": 89,
+        "left": 69.984375
+      },
+      "svg": {
+        "x": 110.015625,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 118.015625,
+        "bottom": 85.5,
+        "left": 110.015625
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 4,
+      "paddingRight": 4,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "map-320 semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map-320 actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "filter 카테고리 text/arrow geometry 393",
+      "label": "카테고리",
+      "button": {
+        "x": 130,
+        "y": 68,
+        "width": 82,
+        "height": 27,
+        "top": 68,
+        "right": 212,
+        "bottom": 95,
+        "left": 130
+      },
+      "text": {
+        "x": 144.25,
+        "y": 74,
+        "width": 41.484375,
+        "height": 15,
+        "top": 74,
+        "right": 185.734375,
+        "bottom": 89,
+        "left": 144.25
+      },
+      "svg": {
+        "x": 189.734375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 197.734375,
+        "bottom": 85.5,
+        "left": 189.734375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter 상태 text/arrow geometry 393",
+      "label": "상태",
+      "button": {
+        "x": 218,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 278,
+        "bottom": 95,
+        "left": 218
+      },
+      "text": {
+        "x": 231.625,
+        "y": 74,
+        "width": 20.75,
+        "height": 15,
+        "top": 74,
+        "right": 252.375,
+        "bottom": 89,
+        "left": 231.625
+      },
+      "svg": {
+        "x": 256.375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 264.375,
+        "bottom": 85.5,
+        "left": 256.375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter24시간 text/arrow no overlap 393",
+      "label": "기간: 최근 24시간",
+      "button": {
+        "x": 64,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 124,
+        "bottom": 95,
+        "left": 64
+      },
+      "text": {
+        "x": 69.984375,
+        "y": 74,
+        "width": 36.03125,
+        "height": 15,
+        "top": 74,
+        "right": 106.015625,
+        "bottom": 89,
+        "left": 69.984375
+      },
+      "svg": {
+        "x": 110.015625,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 118.015625,
+        "bottom": 85.5,
+        "left": 110.015625
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 4,
+      "paddingRight": 4,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "map-393 semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map-393 actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "filter 카테고리 text/arrow geometry 1440",
+      "label": "카테고리",
+      "button": {
+        "x": 530,
+        "y": 68,
+        "width": 82,
+        "height": 27,
+        "top": 68,
+        "right": 612,
+        "bottom": 95,
+        "left": 530
+      },
+      "text": {
+        "x": 544.25,
+        "y": 74,
+        "width": 41.484375,
+        "height": 15,
+        "top": 74,
+        "right": 585.734375,
+        "bottom": 89,
+        "left": 544.25
+      },
+      "svg": {
+        "x": 589.734375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 597.734375,
+        "bottom": 85.5,
+        "left": 589.734375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter 상태 text/arrow geometry 1440",
+      "label": "상태",
+      "button": {
+        "x": 618,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 678,
+        "bottom": 95,
+        "left": 618
+      },
+      "text": {
+        "x": 631.625,
+        "y": 74,
+        "width": 20.75,
+        "height": 15,
+        "top": 74,
+        "right": 652.375,
+        "bottom": 89,
+        "left": 631.625
+      },
+      "svg": {
+        "x": 656.375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 664.375,
+        "bottom": 85.5,
+        "left": 656.375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "filter24시간 text/arrow no overlap 1440",
+      "label": "기간: 최근 24시간",
+      "button": {
+        "x": 464,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 524,
+        "bottom": 95,
+        "left": 464
+      },
+      "text": {
+        "x": 469.984375,
+        "y": 74,
+        "width": 36.03125,
+        "height": 15,
+        "top": 74,
+        "right": 506.015625,
+        "bottom": 89,
+        "left": 469.984375
+      },
+      "svg": {
+        "x": 510.015625,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 518.015625,
+        "bottom": 85.5,
+        "left": 510.015625
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 4,
+      "paddingRight": 4,
+      "fits": true
+    },
+    {
+      "passed": true,
+      "name": "map-1440 semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map-1440 actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "real SDK count1/2/12 visible together",
+      "markers": [
+        {
+          "count": 1,
+          "rect": {
+            "x": 81,
+            "y": 185,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 185,
+            "right": 119.390625,
+            "bottom": 223.390625,
+            "left": 81
+          },
+          "font": "14.4px",
+          "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+        },
+        {
+          "count": 2,
+          "rect": {
+            "x": 272,
+            "y": 455,
+            "width": 38.390625,
+            "height": 38.390625,
+            "top": 455,
+            "right": 310.390625,
+            "bottom": 493.390625,
+            "left": 272
+          },
+          "font": "14.4px",
+          "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+        },
+        {
+          "count": 12,
+          "rect": {
+            "x": 212,
+            "y": 361,
+            "width": 72,
+            "height": 72,
+            "top": 361,
+            "right": 284,
+            "bottom": 433,
+            "left": 212
+          },
+          "font": "27px",
+          "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+        }
+      ]
+    },
+    {
+      "passed": true,
+      "name": "map-counts semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map-counts actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "map-counts horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "source target rel preserved",
+      "href": "https://longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.invalid/reports/00000000000000000000000000000000000000000000000000000000000003e8",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "hostWidth": 313,
+      "hostScroll": 795,
+      "hostUnderline": "underline",
+      "iconUnderline": "none",
+      "outerUnderline": "none",
+      "iconSize": 12
+    },
+    {
+      "passed": true,
+      "name": "long hostname truncates and only hostname is underlined",
+      "href": "https://longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.invalid/reports/00000000000000000000000000000000000000000000000000000000000003e8",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "hostWidth": 313,
+      "hostScroll": 795,
+      "hostUnderline": "underline",
+      "iconUnderline": "none",
+      "outerUnderline": "none",
+      "iconSize": 12
+    },
+    {
+      "passed": true,
+      "name": "related reports limited to three"
+    },
+    {
+      "passed": true,
+      "name": "detail-long-source semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-source actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-source horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "image caption15px line-height"
+    },
+    {
+      "passed": true,
+      "name": "detail-three-related-share semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-three-related-share actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-three-related-share horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "map short article starts collapsed"
+    },
+    {
+      "passed": true,
+      "name": "detail semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "detail-expanded semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-expanded actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-expanded horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "expanded detail hides only home search header"
+    },
+    {
+      "passed": true,
+      "name": "share is inside the reading scroller"
+    },
+    {
+      "passed": true,
+      "name": "copy uses exact clean article URL"
+    },
+    {
+      "passed": true,
+      "name": "clipboard failure exposes readonly exact URL"
+    },
+    {
+      "passed": true,
+      "name": "manual URL remains in same reading scroller"
+    },
+    {
+      "passed": true,
+      "name": "detail-manual-url semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-manual-url actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-manual-url horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "collapsed long summary share starts after content below fold",
+      "share": {
+        "x": 16,
+        "y": 1215.015625,
+        "width": 361,
+        "height": 48
+      },
+      "dialog": {
+        "x": 0,
+        "y": 396.015625,
+        "width": 393,
+        "height": 455.984375
+      }
+    },
+    {
+      "passed": true,
+      "name": "detail-long-collapsed semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-collapsed actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-collapsed horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "long summary share reached by internal scrolling"
+    },
+    {
+      "passed": true,
+      "name": "detail-long-share-scrolled semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-share-scrolled actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-long-share-scrolled horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "missing original source has explicit information without fake link"
+    },
+    {
+      "passed": true,
+      "name": "detail-source-unavailable semantic SVG size and hidden decoration",
+      "count": 2,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-source-unavailable actual textRange gap and vertical center",
+      "count": 2,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-source-unavailable horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search semantic SVG size and hidden decoration",
+      "count": 6,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search actual textRange gap and vertical center",
+      "count": 5,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search-recent semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-recent actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-recent horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search uses matching keyword and populated results"
+    },
+    {
+      "passed": true,
+      "name": "search-results semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-results actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-results horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search result Tab unobscured 320",
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search result Tab unobscured 393",
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search result Tab unobscured 1440",
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "list-393x852 semantic SVG size and hidden decoration",
+      "count": 4,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "list-393x852 actual textRange gap and vertical center",
+      "count": 3,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "list-393x852 horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "list semantic SVG size and hidden decoration",
+      "count": 4,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "list actual textRange gap and vertical center",
+      "count": 3,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "list horizontal overflow absent",
+      "width": 393,
+      "height": 918,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "report semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "report-bottom semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report-bottom actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report-bottom horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "report final SVG24/44hit/transparent/resize-none",
+      "box": {
+        "x": 339,
+        "y": 6,
+        "width": 44,
+        "height": 44,
+        "top": 6,
+        "right": 383,
+        "bottom": 50,
+        "left": 339
+      },
+      "background": "rgba(0, 0, 0, 0)",
+      "image": {
+        "x": 349,
+        "y": 16,
+        "width": 24,
+        "height": 24,
+        "top": 16,
+        "right": 373,
+        "bottom": 40,
+        "left": 349
+      },
+      "imagePath": "/report/close.svg",
+      "resize": "none"
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-320 semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-320 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "long region/detail no overflow 320",
+      "horizontal": true,
+      "svg": {
+        "x": 16,
+        "y": 170,
+        "width": 14,
+        "height": 14,
+        "top": 170,
+        "right": 30,
+        "bottom": 184,
+        "left": 16
+      }
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-393 semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-393 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "long region/detail no overflow 393",
+      "horizontal": true,
+      "svg": {
+        "x": 16,
+        "y": 170,
+        "width": 14,
+        "height": 14,
+        "top": 170,
+        "right": 30,
+        "bottom": 184,
+        "left": 16
+      }
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-1440 semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line-1440 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "long region/detail no overflow 1440",
+      "horizontal": true,
+      "svg": {
+        "x": 416,
+        "y": 161,
+        "width": 14,
+        "height": 14,
+        "top": 161,
+        "right": 430,
+        "bottom": 175,
+        "left": 416
+      }
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line semantic SVG size and hidden decoration",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "detail-two-line horizontal overflow absent",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "passed": true,
+      "name": "search-recent-320 semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-recent-320 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search independent44/32 targets 320",
+      "submit": {
+        "x": 57,
+        "y": 16.5,
+        "width": 44,
+        "height": 44,
+        "top": 16.5,
+        "right": 101,
+        "bottom": 60.5,
+        "left": 57
+      },
+      "recent": [
+        {
+          "link": {
+            "x": 16,
+            "y": 104,
+            "width": 248,
+            "height": 32,
+            "top": 104,
+            "right": 264,
+            "bottom": 136,
+            "left": 16
+          },
+          "remove": {
+            "x": 272,
+            "y": 104,
+            "width": 32,
+            "height": 32,
+            "top": 104,
+            "right": 304,
+            "bottom": 136,
+            "left": 272
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 145,
+            "width": 248,
+            "height": 32,
+            "top": 145,
+            "right": 264,
+            "bottom": 177,
+            "left": 16
+          },
+          "remove": {
+            "x": 272,
+            "y": 145,
+            "width": 32,
+            "height": 32,
+            "top": 145,
+            "right": 304,
+            "bottom": 177,
+            "left": 272
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 186,
+            "width": 248,
+            "height": 32,
+            "top": 186,
+            "right": 264,
+            "bottom": 218,
+            "left": 16
+          },
+          "remove": {
+            "x": 272,
+            "y": 186,
+            "width": 32,
+            "height": 32,
+            "top": 186,
+            "right": 304,
+            "bottom": 218,
+            "left": 272
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 227,
+            "width": 248,
+            "height": 32,
+            "top": 227,
+            "right": 264,
+            "bottom": 259,
+            "left": 16
+          },
+          "remove": {
+            "x": 272,
+            "y": 227,
+            "width": 32,
+            "height": 32,
+            "top": 227,
+            "right": 304,
+            "bottom": 259,
+            "left": 272
+          }
+        }
+      ],
+      "searchSVG": {
+        "x": 79,
+        "y": 31.5,
+        "width": 14,
+        "height": 14,
+        "top": 31.5,
+        "right": 93,
+        "bottom": 45.5,
+        "left": 79
+      },
+      "input": {
+        "x": 101,
+        "y": 21,
+        "width": 202,
+        "height": 35,
+        "top": 21,
+        "right": 303,
+        "bottom": 56,
+        "left": 101
+      }
+    },
+    {
+      "passed": true,
+      "name": "search-recent-393 semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-recent-393 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search independent44/32 targets 393",
+      "submit": {
+        "x": 57,
+        "y": 16.5,
+        "width": 44,
+        "height": 44,
+        "top": 16.5,
+        "right": 101,
+        "bottom": 60.5,
+        "left": 57
+      },
+      "recent": [
+        {
+          "link": {
+            "x": 16,
+            "y": 104,
+            "width": 321,
+            "height": 32,
+            "top": 104,
+            "right": 337,
+            "bottom": 136,
+            "left": 16
+          },
+          "remove": {
+            "x": 345,
+            "y": 104,
+            "width": 32,
+            "height": 32,
+            "top": 104,
+            "right": 377,
+            "bottom": 136,
+            "left": 345
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 145,
+            "width": 321,
+            "height": 32,
+            "top": 145,
+            "right": 337,
+            "bottom": 177,
+            "left": 16
+          },
+          "remove": {
+            "x": 345,
+            "y": 145,
+            "width": 32,
+            "height": 32,
+            "top": 145,
+            "right": 377,
+            "bottom": 177,
+            "left": 345
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 186,
+            "width": 321,
+            "height": 32,
+            "top": 186,
+            "right": 337,
+            "bottom": 218,
+            "left": 16
+          },
+          "remove": {
+            "x": 345,
+            "y": 186,
+            "width": 32,
+            "height": 32,
+            "top": 186,
+            "right": 377,
+            "bottom": 218,
+            "left": 345
+          }
+        },
+        {
+          "link": {
+            "x": 16,
+            "y": 227,
+            "width": 321,
+            "height": 32,
+            "top": 227,
+            "right": 337,
+            "bottom": 259,
+            "left": 16
+          },
+          "remove": {
+            "x": 345,
+            "y": 227,
+            "width": 32,
+            "height": 32,
+            "top": 227,
+            "right": 377,
+            "bottom": 259,
+            "left": 345
+          }
+        }
+      ],
+      "searchSVG": {
+        "x": 79,
+        "y": 31.5,
+        "width": 14,
+        "height": 14,
+        "top": 31.5,
+        "right": 93,
+        "bottom": 45.5,
+        "left": 79
+      },
+      "input": {
+        "x": 101,
+        "y": 21,
+        "width": 275,
+        "height": 35,
+        "top": 21,
+        "right": 376,
+        "bottom": 56,
+        "left": 101
+      }
+    },
+    {
+      "passed": true,
+      "name": "search-recent-1440 semantic SVG size and hidden decoration",
+      "count": 10,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search-recent-1440 actual textRange gap and vertical center",
+      "count": 9,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "search independent44/32 targets 1440",
+      "submit": {
+        "x": 457,
+        "y": 16.5,
+        "width": 44,
+        "height": 44,
+        "top": 16.5,
+        "right": 501,
+        "bottom": 60.5,
+        "left": 457
+      },
+      "recent": [
+        {
+          "link": {
+            "x": 416,
+            "y": 104,
+            "width": 568,
+            "height": 32,
+            "top": 104,
+            "right": 984,
+            "bottom": 136,
+            "left": 416
+          },
+          "remove": {
+            "x": 992,
+            "y": 104,
+            "width": 32,
+            "height": 32,
+            "top": 104,
+            "right": 1024,
+            "bottom": 136,
+            "left": 992
+          }
+        },
+        {
+          "link": {
+            "x": 416,
+            "y": 145,
+            "width": 568,
+            "height": 32,
+            "top": 145,
+            "right": 984,
+            "bottom": 177,
+            "left": 416
+          },
+          "remove": {
+            "x": 992,
+            "y": 145,
+            "width": 32,
+            "height": 32,
+            "top": 145,
+            "right": 1024,
+            "bottom": 177,
+            "left": 992
+          }
+        },
+        {
+          "link": {
+            "x": 416,
+            "y": 186,
+            "width": 568,
+            "height": 32,
+            "top": 186,
+            "right": 984,
+            "bottom": 218,
+            "left": 416
+          },
+          "remove": {
+            "x": 992,
+            "y": 186,
+            "width": 32,
+            "height": 32,
+            "top": 186,
+            "right": 1024,
+            "bottom": 218,
+            "left": 992
+          }
+        },
+        {
+          "link": {
+            "x": 416,
+            "y": 227,
+            "width": 568,
+            "height": 32,
+            "top": 227,
+            "right": 984,
+            "bottom": 259,
+            "left": 416
+          },
+          "remove": {
+            "x": 992,
+            "y": 227,
+            "width": 32,
+            "height": 32,
+            "top": 227,
+            "right": 1024,
+            "bottom": 259,
+            "left": 992
+          }
+        }
+      ],
+      "searchSVG": {
+        "x": 479,
+        "y": 31.5,
+        "width": 14,
+        "height": 14,
+        "top": 31.5,
+        "right": 493,
+        "bottom": 45.5,
+        "left": 479
+      },
+      "input": {
+        "x": 501,
+        "y": 21,
+        "width": 522,
+        "height": 35,
+        "top": 21,
+        "right": 1023,
+        "bottom": 56,
+        "left": 501
+      }
+    },
+    {
+      "passed": true,
+      "name": "report-320 semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report-320 actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report prefix14 padding34 and no text overlap 320",
+      "svg": {
+        "x": 30,
+        "y": 369.5,
+        "width": 14,
+        "height": 14,
+        "top": 369.5,
+        "right": 44,
+        "bottom": 383.5,
+        "left": 30
+      },
+      "input": {
+        "x": 16,
+        "y": 356,
+        "width": 288,
+        "height": 41,
+        "top": 356,
+        "right": 304,
+        "bottom": 397,
+        "left": 16
+      },
+      "paddingLeft": 34,
+      "centerDelta": 0,
+      "textStart": 51
+    },
+    {
+      "passed": true,
+      "name": "report-393 semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report-393 actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report prefix14 padding34 and no text overlap 393",
+      "svg": {
+        "x": 30,
+        "y": 369.5,
+        "width": 14,
+        "height": 14,
+        "top": 369.5,
+        "right": 44,
+        "bottom": 383.5,
+        "left": 30
+      },
+      "input": {
+        "x": 16,
+        "y": 356,
+        "width": 361,
+        "height": 41,
+        "top": 356,
+        "right": 377,
+        "bottom": 397,
+        "left": 16
+      },
+      "paddingLeft": 34,
+      "centerDelta": 0,
+      "textStart": 51
+    },
+    {
+      "passed": true,
+      "name": "report-1440 semantic SVG size and hidden decoration",
+      "count": 1,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report-1440 actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "report prefix14 padding34 and no text overlap 1440",
+      "svg": {
+        "x": 430,
+        "y": 365.5,
+        "width": 14,
+        "height": 14,
+        "top": 365.5,
+        "right": 444,
+        "bottom": 379.5,
+        "left": 430
+      },
+      "input": {
+        "x": 416,
+        "y": 352,
+        "width": 608,
+        "height": 41,
+        "top": 352,
+        "right": 1024,
+        "bottom": 393,
+        "left": 416
+      },
+      "paddingLeft": 34,
+      "centerDelta": 0,
+      "textStart": 451
+    },
+    {
+      "passed": true,
+      "name": "favicon HTTP svg"
+    },
+    {
+      "passed": true,
+      "name": "favicon metadata tag svg"
+    },
+    {
+      "passed": true,
+      "name": "favicon HTTP ico"
+    },
+    {
+      "passed": true,
+      "name": "favicon metadata tag ico"
+    },
+    {
+      "passed": true,
+      "name": "favicon HTTP apple"
+    },
+    {
+      "passed": true,
+      "name": "favicon metadata tag apple"
+    },
+    {
+      "passed": true,
+      "name": "favicon-assets semantic SVG size and hidden decoration",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "favicon-assets actual textRange gap and vertical center",
+      "count": 0,
+      "failures": []
+    },
+    {
+      "passed": true,
+      "name": "favicon-assets horizontal overflow absent",
+      "width": 900,
+      "height": 420,
+      "scrollWidth": 900
+    },
+    {
+      "passed": true,
+      "name": "Apple180 served image contains visible brand pixels",
+      "width": 180,
+      "height": 180,
+      "opaque": 31316,
+      "red": 1622
+    },
+    {
+      "passed": true,
+      "name": "minimal bot shared-link body and canonical"
+    },
+    {
+      "passed": true,
+      "name": "JSoff shared article body/title/original link"
+    },
+    {
+      "passed": true,
+      "name": "JSoff actual404 visible safe escape"
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "real-map-and-count-overview",
+      "completed": true
+    },
+    {
+      "name": "detail-short-long-share-and-manual-url",
+      "completed": true
+    },
+    {
+      "name": "search-layout-results-and-keyboard-probe",
+      "completed": true
+    },
+    {
+      "name": "list-and-report-representative-captures",
+      "completed": true
+    },
+    {
+      "name": "icon-text-three-width-targets-and-two-line-detail",
+      "completed": true
+    },
+    {
+      "name": "favicon-assets-tags-and-minimal-server-rendering",
+      "completed": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "map.png",
+      "description": "Actual Naver tiles, fixed synthetic location and synthetic articles.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "map-counts.png",
+      "description": "Actual SDK overview via browser wheel and pointer drag only.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-long-source.png",
+      "description": "Long synthetic hostname underline/ellipsis, long region and three related articles.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-three-related-share.png",
+      "description": "Three related articles and share remain in a single reading scroller.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail.png",
+      "description": "Collapsed short synthetic article from actual map.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-expanded.png",
+      "description": "Same short article expanded; share follows reading content and uses remaining space.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-manual-url.png",
+      "description": "Clipboard failure: readonly clean URL in the same reading scroller.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-long-collapsed.png",
+      "description": "Long summary before scrolling, with share correctly after content.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-long-share-scrolled.png",
+      "description": "Long summary share reached by internal reading scroll; no fixed overlay footer.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-source-unavailable.png",
+      "description": "Article with no valid source displays explicit no-source information.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "search.png",
+      "description": "Initial empty search state.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "search-recent.png",
+      "description": "Four seeded local entries matching Figma labels.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "search-results.png",
+      "description": "Populated synthetic search results using matching query.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "list-393x852.png",
+      "description": "Article list at393×852.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "list.png",
+      "description": "Article list at393×918 matching latest Figma frame.",
+      "width": 393,
+      "height": 918,
+      "scrollWidth": 393
+    },
+    {
+      "file": "report.png",
+      "description": "Report initial state without submission.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "report-bottom.png",
+      "description": "Report bottom; no form input or submission.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "detail-two-line.png",
+      "description": "Long synthetic region shows the common location SVG centered against wrapped text.",
+      "width": 393,
+      "height": 852,
+      "scrollWidth": 393
+    },
+    {
+      "file": "favicon-assets.png",
+      "description": "Original HTTP-served SVG, ICO and Apple PNG shown at180/32/16px in a QA-only contact sheet.",
+      "width": 900,
+      "height": 420,
+      "scrollWidth": 900
+    }
+  ],
+  "pageErrors": [],
+  "focus": [
+    {
+      "surface": "search-forward-probe",
+      "width": 320,
+      "records": 28,
+      "failures": []
+    },
+    {
+      "surface": "search-forward-probe",
+      "width": 393,
+      "records": 28,
+      "failures": []
+    },
+    {
+      "surface": "search-forward-probe",
+      "width": 1440,
+      "records": 28,
+      "failures": []
+    }
+  ],
+  "blockedWrites": 3,
+  "tiles200": 153,
+  "iconGeometry": [
+    {
+      "label": "map",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 337,
+            "y": 27,
+            "width": 14,
+            "height": 14,
+            "top": 27,
+            "right": 351,
+            "bottom": 41,
+            "left": 337
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "map-320",
+      "width": 320,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 264,
+            "y": 27,
+            "width": 14,
+            "height": 14,
+            "top": 27,
+            "right": 278,
+            "bottom": 41,
+            "left": 264
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 292,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 304,
+            "bottom": 591.5,
+            "left": 292
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 249.96875,
+            "right": 288,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "map-393",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 337,
+            "y": 27,
+            "width": 14,
+            "height": 14,
+            "top": 27,
+            "right": 351,
+            "bottom": 41,
+            "left": 337
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "map-1440",
+      "width": 1440,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 984,
+            "y": 27,
+            "width": 14,
+            "height": 14,
+            "top": 27,
+            "right": 998,
+            "bottom": 41,
+            "left": 984
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 502.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 510.375,
+            "bottom": 85.5,
+            "left": 502.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 477.625,
+            "right": 498.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 589.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 597.734375,
+            "bottom": 85.5,
+            "left": 589.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 544.25,
+            "right": 585.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 656.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 664.375,
+            "bottom": 85.5,
+            "left": 656.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 631.625,
+            "right": 652.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 416,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 430,
+            "bottom": 592.5,
+            "left": 416
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 436,
+            "right": 514.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 1012,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 1024,
+            "bottom": 591.5,
+            "left": 1012
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 969.96875,
+            "right": 1008,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "map-counts",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 337,
+            "y": 27,
+            "width": 14,
+            "height": 14,
+            "top": 27,
+            "right": 351,
+            "bottom": 41,
+            "left": 337
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "detail-long-source",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 170,
+            "width": 14,
+            "height": 14,
+            "top": 170,
+            "right": 30,
+            "bottom": 184,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "대구광역시 중구 동성로 일대 도로 점검 및 보행 안전 확인을 위한 긴 지역 이름 · 지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다",
+          "textBox": {
+            "left": 36,
+            "right": 362.765625,
+            "top": 160,
+            "bottom": 194
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 16,
+            "y": 201,
+            "width": 12,
+            "height": 12,
+            "top": 201,
+            "right": 28,
+            "bottom": 213,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 08:57 KST",
+          "textBox": {
+            "left": 34,
+            "right": 163.921875,
+            "top": 199,
+            "bottom": 214
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 638,
+            "width": 12,
+            "height": 12,
+            "top": 638,
+            "right": 377,
+            "bottom": 650,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 원문 · longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.",
+          "textBox": {
+            "left": 46.203125,
+            "right": 359,
+            "top": 636.5,
+            "bottom": 651.5
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 143.96875,
+            "y": 976.5,
+            "width": 16,
+            "height": 16,
+            "top": 976.5,
+            "right": 159.96875,
+            "bottom": 992.5,
+            "left": 143.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 167.96875,
+            "right": 249.03125,
+            "top": 974.5,
+            "bottom": 993.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "detail-three-related-share",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": -3,
+            "width": 14,
+            "height": 14,
+            "top": -3,
+            "right": 30,
+            "bottom": 11,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "대구광역시 중구 동성로 일대 도로 점검 및 보행 안전 확인을 위한 긴 지역 이름 · 지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다",
+          "textBox": {
+            "left": 36,
+            "right": 362.765625,
+            "top": -13,
+            "bottom": 21
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 16,
+            "y": 28,
+            "width": 12,
+            "height": 12,
+            "top": 28,
+            "right": 28,
+            "bottom": 40,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 08:57 KST",
+          "textBox": {
+            "left": 34,
+            "right": 163.921875,
+            "top": 26,
+            "bottom": 41
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 465,
+            "width": 12,
+            "height": 12,
+            "top": 465,
+            "right": 377,
+            "bottom": 477,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 원문 · longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.",
+          "textBox": {
+            "left": 46.203125,
+            "right": 359,
+            "top": 463.5,
+            "bottom": 478.5
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 143.96875,
+            "y": 803.5,
+            "width": 16,
+            "height": 16,
+            "top": 803.5,
+            "right": 159.96875,
+            "bottom": 819.5,
+            "left": 143.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 167.96875,
+            "right": 249.03125,
+            "top": 801.5,
+            "bottom": 820.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "detail",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 337,
+            "y": 27,
+            "width": 14,
+            "height": 14,
+            "top": 27,
+            "right": 351,
+            "bottom": 41,
+            "left": 337
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 508.015625,
+            "width": 14,
+            "height": 14,
+            "top": 508.015625,
+            "right": 30,
+            "bottom": 522.015625,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "부산 · 지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다",
+          "textBox": {
+            "left": 36,
+            "right": 143.703125,
+            "top": 507.015625,
+            "bottom": 523.015625
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 16,
+            "y": 530.015625,
+            "width": 12,
+            "height": 12,
+            "top": 530.015625,
+            "right": 28,
+            "bottom": 542.015625,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 08:59 KST",
+          "textBox": {
+            "left": 34,
+            "right": 164.5625,
+            "top": 528.015625,
+            "bottom": 543.015625
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 195.109375,
+            "y": 830.515625,
+            "width": 12,
+            "height": 12,
+            "top": 830.515625,
+            "right": 207.109375,
+            "bottom": 842.515625,
+            "left": 195.109375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 원문 · publisher.example.invalid",
+          "textBox": {
+            "left": 46.203125,
+            "right": 189.109375,
+            "top": 829.015625,
+            "bottom": 844.015625
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 143.96875,
+            "y": 997.015625,
+            "width": 16,
+            "height": 16,
+            "top": 997.015625,
+            "right": 159.96875,
+            "bottom": 1013.015625,
+            "left": 143.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 167.96875,
+            "right": 249.03125,
+            "top": 995.015625,
+            "bottom": 1014.015625
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "detail-expanded",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 161,
+            "width": 14,
+            "height": 14,
+            "top": 161,
+            "right": 30,
+            "bottom": 175,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "부산 · 지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다",
+          "textBox": {
+            "left": 36,
+            "right": 143.703125,
+            "top": 160,
+            "bottom": 176
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 16,
+            "y": 183,
+            "width": 12,
+            "height": 12,
+            "top": 183,
+            "right": 28,
+            "bottom": 195,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 08:59 KST",
+          "textBox": {
+            "left": 34,
+            "right": 164.5625,
+            "top": 181,
+            "bottom": 196
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 195.109375,
+            "y": 483.5,
+            "width": 12,
+            "height": 12,
+            "top": 483.5,
+            "right": 207.109375,
+            "bottom": 495.5,
+            "left": 195.109375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 원문 · publisher.example.invalid",
+          "textBox": {
+            "left": 46.203125,
+            "right": 189.109375,
+            "top": 482,
+            "bottom": 497
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 143.96875,
+            "y": 804,
+            "width": 16,
+            "height": 16,
+            "top": 804,
+            "right": 159.96875,
+            "bottom": 820,
+            "left": 143.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 167.96875,
+            "right": 249.03125,
+            "top": 802,
+            "bottom": 821
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "detail-manual-url",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 161,
+            "width": 14,
+            "height": 14,
+            "top": 161,
+            "right": 30,
+            "bottom": 175,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "부산 · 지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다",
+          "textBox": {
+            "left": 36,
+            "right": 143.703125,
+            "top": 160,
+            "bottom": 176
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 16,
+            "y": 183,
+            "width": 12,
+            "height": 12,
+            "top": 183,
+            "right": 28,
+            "bottom": 195,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 08:59 KST",
+          "textBox": {
+            "left": 34,
+            "right": 164.5625,
+            "top": 181,
+            "bottom": 196
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 195.109375,
+            "y": 483.5,
+            "width": 12,
+            "height": 12,
+            "top": 483.5,
+            "right": 207.109375,
+            "bottom": 495.5,
+            "left": 195.109375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 원문 · publisher.example.invalid",
+          "textBox": {
+            "left": 46.203125,
+            "right": 189.109375,
+            "top": 482,
+            "bottom": 497
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 143.96875,
+            "y": 722,
+            "width": 16,
+            "height": 16,
+            "top": 722,
+            "right": 159.96875,
+            "bottom": 738,
+            "left": 143.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 167.96875,
+            "right": 249.03125,
+            "top": 720,
+            "bottom": 739
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "detail-long-collapsed",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 337,
+            "y": 27,
+            "width": 14,
+            "height": 14,
+            "top": 27,
+            "right": 351,
+            "bottom": 41,
+            "left": 337
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 508.015625,
+            "width": 14,
+            "height": 14,
+            "top": 508.015625,
+            "right": 30,
+            "bottom": 522.015625,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "서울 · 지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다",
+          "textBox": {
+            "left": 36,
+            "right": 143.703125,
+            "top": 507.015625,
+            "bottom": 523.015625
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 16,
+            "y": 530.015625,
+            "width": 12,
+            "height": 12,
+            "top": 530.015625,
+            "right": 28,
+            "bottom": 542.015625,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 09:00 KST",
+          "textBox": {
+            "left": 34,
+            "right": 165.15625,
+            "top": 528.015625,
+            "bottom": 543.015625
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 195.109375,
+            "y": 1181.515625,
+            "width": 12,
+            "height": 12,
+            "top": 1181.515625,
+            "right": 207.109375,
+            "bottom": 1193.515625,
+            "left": 195.109375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 원문 · publisher.example.invalid",
+          "textBox": {
+            "left": 46.203125,
+            "right": 189.109375,
+            "top": 1180.015625,
+            "bottom": 1195.015625
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 143.96875,
+            "y": 1231.015625,
+            "width": 16,
+            "height": 16,
+            "top": 1231.015625,
+            "right": 159.96875,
+            "bottom": 1247.015625,
+            "left": 143.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 167.96875,
+            "right": 249.03125,
+            "top": 1229.015625,
+            "bottom": 1248.015625
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "detail-long-share-scrolled",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 337,
+            "y": 27,
+            "width": 14,
+            "height": 14,
+            "top": 27,
+            "right": 351,
+            "bottom": 41,
+            "left": 337
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 81.015625,
+            "width": 14,
+            "height": 14,
+            "top": 81.015625,
+            "right": 30,
+            "bottom": 95.015625,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "서울 · 지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다",
+          "textBox": {
+            "left": 36,
+            "right": 143.703125,
+            "top": 80.015625,
+            "bottom": 96.015625
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 16,
+            "y": 103.015625,
+            "width": 12,
+            "height": 12,
+            "top": 103.015625,
+            "right": 28,
+            "bottom": 115.015625,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 09:00 KST",
+          "textBox": {
+            "left": 34,
+            "right": 165.15625,
+            "top": 101.015625,
+            "bottom": 116.015625
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 195.109375,
+            "y": 754.515625,
+            "width": 12,
+            "height": 12,
+            "top": 754.515625,
+            "right": 207.109375,
+            "bottom": 766.515625,
+            "left": 195.109375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 원문 · publisher.example.invalid",
+          "textBox": {
+            "left": 46.203125,
+            "right": 189.109375,
+            "top": 753.015625,
+            "bottom": 768.015625
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 143.96875,
+            "y": 804.015625,
+            "width": 16,
+            "height": 16,
+            "top": 804.015625,
+            "right": 159.96875,
+            "bottom": 820.015625,
+            "left": 143.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 167.96875,
+            "right": 249.03125,
+            "top": 802.015625,
+            "bottom": 821.015625
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "detail-source-unavailable",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 16,
+            "y": 161,
+            "width": 12,
+            "height": 12,
+            "top": 161,
+            "right": 28,
+            "bottom": 173,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 08:58 KST",
+          "textBox": {
+            "left": 34,
+            "right": 164.546875,
+            "top": 159,
+            "bottom": 174
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 143.96875,
+            "y": 804,
+            "width": 16,
+            "height": 16,
+            "top": 804,
+            "right": 159.96875,
+            "bottom": 820,
+            "left": 143.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 167.96875,
+            "right": 249.03125,
+            "top": 802,
+            "bottom": 821
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "search",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 79,
+            "y": 31.5,
+            "width": 14,
+            "height": 14,
+            "top": 31.5,
+            "right": 93,
+            "bottom": 45.5,
+            "left": 79
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 29,
+            "y": 246,
+            "width": 14,
+            "height": 14,
+            "top": 246,
+            "right": 43,
+            "bottom": 260,
+            "left": 29
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "대형화재",
+          "textBox": {
+            "left": 47,
+            "right": 91.953125,
+            "top": 245,
+            "bottom": 261
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 125.953125,
+            "y": 246,
+            "width": 14,
+            "height": 14,
+            "top": 246,
+            "right": 139.953125,
+            "bottom": 260,
+            "left": 125.953125
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "교통통제",
+          "textBox": {
+            "left": 143.953125,
+            "right": 188.90625,
+            "top": 245,
+            "bottom": 261
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 222.90625,
+            "y": 246,
+            "width": 14,
+            "height": 14,
+            "top": 246,
+            "right": 236.90625,
+            "bottom": 260,
+            "left": 222.90625
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "붕괴위험",
+          "textBox": {
+            "left": 240.90625,
+            "right": 285.859375,
+            "top": 245,
+            "bottom": 261
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 29,
+            "y": 286,
+            "width": 14,
+            "height": 14,
+            "top": 286,
+            "right": 43,
+            "bottom": 300,
+            "left": 29
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "폭설피해",
+          "textBox": {
+            "left": 47,
+            "right": 91.953125,
+            "top": 285,
+            "bottom": 301
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 125.953125,
+            "y": 286,
+            "width": 14,
+            "height": 14,
+            "top": 286,
+            "right": 139.953125,
+            "bottom": 300,
+            "left": 125.953125
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "가스누출",
+          "textBox": {
+            "left": 143.953125,
+            "right": 188.90625,
+            "top": 285,
+            "bottom": 301
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "search-recent",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 79,
+            "y": 31.5,
+            "width": 14,
+            "height": 14,
+            "top": 31.5,
+            "right": 93,
+            "bottom": 45.5,
+            "left": 79
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 113,
+            "width": 14,
+            "height": 14,
+            "top": 113,
+            "right": 30,
+            "bottom": 127,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "서울소방서",
+          "textBox": {
+            "left": 38,
+            "right": 98.5,
+            "top": 111.5,
+            "bottom": 128.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 154,
+            "width": 14,
+            "height": 14,
+            "top": 154,
+            "right": 30,
+            "bottom": 168,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "서교동화재",
+          "textBox": {
+            "left": 38,
+            "right": 98.5,
+            "top": 152.5,
+            "bottom": 169.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 195,
+            "width": 14,
+            "height": 14,
+            "top": 195,
+            "right": 30,
+            "bottom": 209,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "실시간강남역",
+          "textBox": {
+            "left": 38,
+            "right": 110.609375,
+            "top": 193.5,
+            "bottom": 210.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 236,
+            "width": 14,
+            "height": 14,
+            "top": 236,
+            "right": 30,
+            "bottom": 250,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "싱크홀경보",
+          "textBox": {
+            "left": 38,
+            "right": 98.5,
+            "top": 234.5,
+            "bottom": 251.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 29,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 43,
+            "bottom": 330,
+            "left": 29
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "대형화재",
+          "textBox": {
+            "left": 47,
+            "right": 91.953125,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 125.953125,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 139.953125,
+            "bottom": 330,
+            "left": 125.953125
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "교통통제",
+          "textBox": {
+            "left": 143.953125,
+            "right": 188.90625,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 222.90625,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 236.90625,
+            "bottom": 330,
+            "left": 222.90625
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "붕괴위험",
+          "textBox": {
+            "left": 240.90625,
+            "right": 285.859375,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 29,
+            "y": 356,
+            "width": 14,
+            "height": 14,
+            "top": 356,
+            "right": 43,
+            "bottom": 370,
+            "left": 29
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "폭설피해",
+          "textBox": {
+            "left": 47,
+            "right": 91.953125,
+            "top": 355,
+            "bottom": 371
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 125.953125,
+            "y": 356,
+            "width": 14,
+            "height": 14,
+            "top": 356,
+            "right": 139.953125,
+            "bottom": 370,
+            "left": 125.953125
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "가스누출",
+          "textBox": {
+            "left": 143.953125,
+            "right": 188.90625,
+            "top": 355,
+            "bottom": 371
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "search-results",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 79,
+            "y": 31.5,
+            "width": 14,
+            "height": 14,
+            "top": 31.5,
+            "right": 93,
+            "bottom": 45.5,
+            "left": 79
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        }
+      ]
+    },
+    {
+      "label": "list-393x852",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 337,
+            "y": 31,
+            "width": 14,
+            "height": 14,
+            "top": 31,
+            "right": 351,
+            "bottom": 45,
+            "left": 337
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 55.484375,
+            "y": 86,
+            "width": 8,
+            "height": 8,
+            "top": 86,
+            "right": 63.484375,
+            "bottom": 94,
+            "left": 55.484375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 29,
+            "right": 51.484375,
+            "top": 82,
+            "bottom": 98
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 144.4375,
+            "y": 86,
+            "width": 8,
+            "height": 8,
+            "top": 86,
+            "right": 152.4375,
+            "bottom": 94,
+            "left": 144.4375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 95.484375,
+            "right": 140.4375,
+            "top": 82,
+            "bottom": 98
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 210.921875,
+            "y": 86,
+            "width": 8,
+            "height": 8,
+            "top": 86,
+            "right": 218.921875,
+            "bottom": 94,
+            "left": 210.921875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 184.4375,
+            "right": 206.921875,
+            "top": 82,
+            "bottom": 98
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "list",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 337,
+            "y": 31,
+            "width": 14,
+            "height": 14,
+            "top": 31,
+            "right": 351,
+            "bottom": 45,
+            "left": 337
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 55.484375,
+            "y": 86,
+            "width": 8,
+            "height": 8,
+            "top": 86,
+            "right": 63.484375,
+            "bottom": 94,
+            "left": 55.484375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 29,
+            "right": 51.484375,
+            "top": 82,
+            "bottom": 98
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 144.4375,
+            "y": 86,
+            "width": 8,
+            "height": 8,
+            "top": 86,
+            "right": 152.4375,
+            "bottom": 94,
+            "left": 144.4375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 95.484375,
+            "right": 140.4375,
+            "top": 82,
+            "bottom": 98
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 210.921875,
+            "y": 86,
+            "width": 8,
+            "height": 8,
+            "top": 86,
+            "right": 218.921875,
+            "bottom": 94,
+            "left": 210.921875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 184.4375,
+            "right": 206.921875,
+            "top": 82,
+            "bottom": 98
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "report",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 30,
+            "y": 365.5,
+            "width": 14,
+            "height": 14,
+            "top": 365.5,
+            "right": 44,
+            "bottom": 379.5,
+            "left": 30
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        }
+      ]
+    },
+    {
+      "label": "report-bottom",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 30,
+            "y": 365.5,
+            "width": 14,
+            "height": 14,
+            "top": 365.5,
+            "right": 44,
+            "bottom": 379.5,
+            "left": 30
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        }
+      ]
+    },
+    {
+      "label": "detail-two-line-320",
+      "width": 320,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 264,
+            "y": 27,
+            "width": 14,
+            "height": 14,
+            "top": 27,
+            "right": 278,
+            "bottom": 41,
+            "left": 264
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 292,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 304,
+            "bottom": 591.5,
+            "left": 292
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 249.96875,
+            "right": 288,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 170,
+            "width": 14,
+            "height": 14,
+            "top": 170,
+            "right": 30,
+            "bottom": 184,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "대구광역시 중구 동성로 일대 도로 점검 및 보행 안전 확인을 위한 긴 지역 이름 · 지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다",
+          "textBox": {
+            "left": 36,
+            "right": 299.671875,
+            "top": 160,
+            "bottom": 194
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 16,
+            "y": 201,
+            "width": 12,
+            "height": 12,
+            "top": 201,
+            "right": 28,
+            "bottom": 213,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 08:57 KST",
+          "textBox": {
+            "left": 34,
+            "right": 163.921875,
+            "top": 199,
+            "bottom": 214
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 292,
+            "y": 696.5,
+            "width": 12,
+            "height": 12,
+            "top": 696.5,
+            "right": 304,
+            "bottom": 708.5,
+            "left": 292
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 원문 · longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.",
+          "textBox": {
+            "left": 46.203125,
+            "right": 286,
+            "top": 695,
+            "bottom": 710
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 107.46875,
+            "y": 1074,
+            "width": 16,
+            "height": 16,
+            "top": 1074,
+            "right": 123.46875,
+            "bottom": 1090,
+            "left": 107.46875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 131.46875,
+            "right": 212.53125,
+            "top": 1072,
+            "bottom": 1091
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "detail-two-line-393",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 170,
+            "width": 14,
+            "height": 14,
+            "top": 170,
+            "right": 30,
+            "bottom": 184,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "대구광역시 중구 동성로 일대 도로 점검 및 보행 안전 확인을 위한 긴 지역 이름 · 지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다",
+          "textBox": {
+            "left": 36,
+            "right": 362.765625,
+            "top": 160,
+            "bottom": 194
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 16,
+            "y": 201,
+            "width": 12,
+            "height": 12,
+            "top": 201,
+            "right": 28,
+            "bottom": 213,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 08:57 KST",
+          "textBox": {
+            "left": 34,
+            "right": 163.921875,
+            "top": 199,
+            "bottom": 214
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 638,
+            "width": 12,
+            "height": 12,
+            "top": 638,
+            "right": 377,
+            "bottom": 650,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 원문 · longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.",
+          "textBox": {
+            "left": 46.203125,
+            "right": 359,
+            "top": 636.5,
+            "bottom": 651.5
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 143.96875,
+            "y": 976.5,
+            "width": 16,
+            "height": 16,
+            "top": 976.5,
+            "right": 159.96875,
+            "bottom": 992.5,
+            "left": 143.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 167.96875,
+            "right": 249.03125,
+            "top": 974.5,
+            "bottom": 993.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "detail-two-line-1440",
+      "width": 1440,
+      "items": [
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 502.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 510.375,
+            "bottom": 85.5,
+            "left": 502.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 477.625,
+            "right": 498.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 589.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 597.734375,
+            "bottom": 85.5,
+            "left": 589.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 544.25,
+            "right": 585.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 656.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 664.375,
+            "bottom": 85.5,
+            "left": 656.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 631.625,
+            "right": 652.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 416,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 430,
+            "bottom": 592.5,
+            "left": 416
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 436,
+            "right": 514.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 1012,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 1024,
+            "bottom": 591.5,
+            "left": 1012
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 969.96875,
+            "right": 1008,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 416,
+            "y": 161,
+            "width": 14,
+            "height": 14,
+            "top": 161,
+            "right": 430,
+            "bottom": 175,
+            "left": 416
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "대구광역시 중구 동성로 일대 도로 점검 및 보행 안전 확인을 위한 긴 지역 이름 · 지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다",
+          "textBox": {
+            "left": 436,
+            "right": 914.5625,
+            "top": 160,
+            "bottom": 176
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 416,
+            "y": 183,
+            "width": 12,
+            "height": 12,
+            "top": 183,
+            "right": 428,
+            "bottom": 195,
+            "left": 416
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 08:57 KST",
+          "textBox": {
+            "left": 434,
+            "right": 563.921875,
+            "top": 181,
+            "bottom": 196
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 1012,
+            "y": 542,
+            "width": 12,
+            "height": 12,
+            "top": 542,
+            "right": 1024,
+            "bottom": 554,
+            "left": 1012
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 원문 · longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.",
+          "textBox": {
+            "left": 446.203125,
+            "right": 1006,
+            "top": 540.5,
+            "bottom": 555.5
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 667.46875,
+            "y": 880.5,
+            "width": 16,
+            "height": 16,
+            "top": 880.5,
+            "right": 683.46875,
+            "bottom": 896.5,
+            "left": 667.46875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 691.46875,
+            "right": 772.53125,
+            "top": 878.5,
+            "bottom": 897.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "detail-two-line",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 102.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 110.375,
+            "bottom": 85.5,
+            "left": 102.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기간",
+          "textBox": {
+            "left": 77.625,
+            "right": 98.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 189.734375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 197.734375,
+            "bottom": 85.5,
+            "left": 189.734375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "카테고리",
+          "textBox": {
+            "left": 144.25,
+            "right": 185.734375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-indicator",
+          "expected": 8,
+          "box": {
+            "x": 256.375,
+            "y": 77.5,
+            "width": 8,
+            "height": 8,
+            "top": 77.5,
+            "right": 264.375,
+            "bottom": 85.5,
+            "left": 256.375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "상태",
+          "textBox": {
+            "left": 231.625,
+            "right": 252.375,
+            "top": 74,
+            "bottom": 89
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 578.5,
+            "width": 14,
+            "height": 14,
+            "top": 578.5,
+            "right": 30,
+            "bottom": 592.5,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "최근 보도 기사",
+          "textBox": {
+            "left": 36,
+            "right": 114.734375,
+            "top": 577,
+            "bottom": 594
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 579.5,
+            "width": 12,
+            "height": 12,
+            "top": 579.5,
+            "right": 377,
+            "bottom": 591.5,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "전체보기",
+          "textBox": {
+            "left": 322.96875,
+            "right": 361,
+            "top": 578.5,
+            "bottom": 592.5
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 170,
+            "width": 14,
+            "height": 14,
+            "top": 170,
+            "right": 30,
+            "bottom": 184,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "대구광역시 중구 동성로 일대 도로 점검 및 보행 안전 확인을 위한 긴 지역 이름 · 지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다",
+          "textBox": {
+            "left": 36,
+            "right": 362.765625,
+            "top": 160,
+            "bottom": 194
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 16,
+            "y": 201,
+            "width": 12,
+            "height": 12,
+            "top": 201,
+            "right": 28,
+            "bottom": 213,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 발행 2026-10-23 08:57 KST",
+          "textBox": {
+            "left": 34,
+            "right": 163.921875,
+            "top": 199,
+            "bottom": 214
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0.5
+        },
+        {
+          "sizeName": "size-icon-compact",
+          "expected": 12,
+          "box": {
+            "x": 365,
+            "y": 638,
+            "width": 12,
+            "height": 12,
+            "top": 638,
+            "right": 377,
+            "bottom": 650,
+            "left": 365
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 원문 · longnewslongnewslongnewslongnewslongnewslongnewslongnews.regionalregionalregionalregionalregionalregionalregional.example.",
+          "textBox": {
+            "left": 46.203125,
+            "right": 359,
+            "top": 636.5,
+            "bottom": 651.5
+          },
+          "gap": 6,
+          "cssGap": 6,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-action",
+          "expected": 16,
+          "box": {
+            "x": 143.96875,
+            "y": 976.5,
+            "width": 16,
+            "height": 16,
+            "top": 976.5,
+            "right": 159.96875,
+            "bottom": 992.5,
+            "left": 143.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "기사 공유하기",
+          "textBox": {
+            "left": 167.96875,
+            "right": 249.03125,
+            "top": 974.5,
+            "bottom": 993.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0.5
+        }
+      ]
+    },
+    {
+      "label": "search-recent-320",
+      "width": 320,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 79,
+            "y": 31.5,
+            "width": 14,
+            "height": 14,
+            "top": 31.5,
+            "right": 93,
+            "bottom": 45.5,
+            "left": 79
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 113,
+            "width": 14,
+            "height": 14,
+            "top": 113,
+            "right": 30,
+            "bottom": 127,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "서울소방서",
+          "textBox": {
+            "left": 38,
+            "right": 98.5625,
+            "top": 111.5,
+            "bottom": 128.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 154,
+            "width": 14,
+            "height": 14,
+            "top": 154,
+            "right": 30,
+            "bottom": 168,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "서교동화재",
+          "textBox": {
+            "left": 38,
+            "right": 98.5625,
+            "top": 152.5,
+            "bottom": 169.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 195,
+            "width": 14,
+            "height": 14,
+            "top": 195,
+            "right": 30,
+            "bottom": 209,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "실시간강남역",
+          "textBox": {
+            "left": 38,
+            "right": 110.671875,
+            "top": 193.5,
+            "bottom": 210.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 236,
+            "width": 14,
+            "height": 14,
+            "top": 236,
+            "right": 30,
+            "bottom": 250,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "싱크홀경보",
+          "textBox": {
+            "left": 38,
+            "right": 98.5625,
+            "top": 234.5,
+            "bottom": 251.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 29,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 43,
+            "bottom": 330,
+            "left": 29
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "대형화재",
+          "textBox": {
+            "left": 47,
+            "right": 91.984375,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 125.984375,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 139.984375,
+            "bottom": 330,
+            "left": 125.984375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "교통통제",
+          "textBox": {
+            "left": 143.984375,
+            "right": 188.96875,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 222.96875,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 236.96875,
+            "bottom": 330,
+            "left": 222.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "붕괴위험",
+          "textBox": {
+            "left": 240.96875,
+            "right": 285.953125,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 29,
+            "y": 356,
+            "width": 14,
+            "height": 14,
+            "top": 356,
+            "right": 43,
+            "bottom": 370,
+            "left": 29
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "폭설피해",
+          "textBox": {
+            "left": 47,
+            "right": 91.984375,
+            "top": 355,
+            "bottom": 371
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 125.984375,
+            "y": 356,
+            "width": 14,
+            "height": 14,
+            "top": 356,
+            "right": 139.984375,
+            "bottom": 370,
+            "left": 125.984375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "가스누출",
+          "textBox": {
+            "left": 143.984375,
+            "right": 188.96875,
+            "top": 355,
+            "bottom": 371
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "search-recent-393",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 79,
+            "y": 31.5,
+            "width": 14,
+            "height": 14,
+            "top": 31.5,
+            "right": 93,
+            "bottom": 45.5,
+            "left": 79
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 113,
+            "width": 14,
+            "height": 14,
+            "top": 113,
+            "right": 30,
+            "bottom": 127,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "서울소방서",
+          "textBox": {
+            "left": 38,
+            "right": 98.5625,
+            "top": 111.5,
+            "bottom": 128.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 154,
+            "width": 14,
+            "height": 14,
+            "top": 154,
+            "right": 30,
+            "bottom": 168,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "서교동화재",
+          "textBox": {
+            "left": 38,
+            "right": 98.5625,
+            "top": 152.5,
+            "bottom": 169.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 195,
+            "width": 14,
+            "height": 14,
+            "top": 195,
+            "right": 30,
+            "bottom": 209,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "실시간강남역",
+          "textBox": {
+            "left": 38,
+            "right": 110.671875,
+            "top": 193.5,
+            "bottom": 210.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 16,
+            "y": 236,
+            "width": 14,
+            "height": 14,
+            "top": 236,
+            "right": 30,
+            "bottom": 250,
+            "left": 16
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "싱크홀경보",
+          "textBox": {
+            "left": 38,
+            "right": 98.5625,
+            "top": 234.5,
+            "bottom": 251.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 29,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 43,
+            "bottom": 330,
+            "left": 29
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "대형화재",
+          "textBox": {
+            "left": 47,
+            "right": 91.984375,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 125.984375,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 139.984375,
+            "bottom": 330,
+            "left": 125.984375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "교통통제",
+          "textBox": {
+            "left": 143.984375,
+            "right": 188.96875,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 222.96875,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 236.96875,
+            "bottom": 330,
+            "left": 222.96875
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "붕괴위험",
+          "textBox": {
+            "left": 240.96875,
+            "right": 285.953125,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 29,
+            "y": 356,
+            "width": 14,
+            "height": 14,
+            "top": 356,
+            "right": 43,
+            "bottom": 370,
+            "left": 29
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "폭설피해",
+          "textBox": {
+            "left": 47,
+            "right": 91.984375,
+            "top": 355,
+            "bottom": 371
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 125.984375,
+            "y": 356,
+            "width": 14,
+            "height": 14,
+            "top": 356,
+            "right": 139.984375,
+            "bottom": 370,
+            "left": 125.984375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "가스누출",
+          "textBox": {
+            "left": 143.984375,
+            "right": 188.96875,
+            "top": 355,
+            "bottom": 371
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "search-recent-1440",
+      "width": 1440,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 479,
+            "y": 31.5,
+            "width": 14,
+            "height": 14,
+            "top": 31.5,
+            "right": 493,
+            "bottom": 45.5,
+            "left": 479
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 416,
+            "y": 113,
+            "width": 14,
+            "height": 14,
+            "top": 113,
+            "right": 430,
+            "bottom": 127,
+            "left": 416
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "서울소방서",
+          "textBox": {
+            "left": 438,
+            "right": 498.5,
+            "top": 111.5,
+            "bottom": 128.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 416,
+            "y": 154,
+            "width": 14,
+            "height": 14,
+            "top": 154,
+            "right": 430,
+            "bottom": 168,
+            "left": 416
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "서교동화재",
+          "textBox": {
+            "left": 438,
+            "right": 498.5,
+            "top": 152.5,
+            "bottom": 169.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 416,
+            "y": 195,
+            "width": 14,
+            "height": 14,
+            "top": 195,
+            "right": 430,
+            "bottom": 209,
+            "left": 416
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "실시간강남역",
+          "textBox": {
+            "left": 438,
+            "right": 510.609375,
+            "top": 193.5,
+            "bottom": 210.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 416,
+            "y": 236,
+            "width": 14,
+            "height": 14,
+            "top": 236,
+            "right": 430,
+            "bottom": 250,
+            "left": 416
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "싱크홀경보",
+          "textBox": {
+            "left": 438,
+            "right": 498.5,
+            "top": 234.5,
+            "bottom": 251.5
+          },
+          "gap": 8,
+          "cssGap": 8,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 429,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 443,
+            "bottom": 330,
+            "left": 429
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "대형화재",
+          "textBox": {
+            "left": 447,
+            "right": 491.953125,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 525.953125,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 539.953125,
+            "bottom": 330,
+            "left": 525.953125
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "교통통제",
+          "textBox": {
+            "left": 543.953125,
+            "right": 588.90625,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 622.90625,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 636.90625,
+            "bottom": 330,
+            "left": 622.90625
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "붕괴위험",
+          "textBox": {
+            "left": 640.90625,
+            "right": 685.859375,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 719.859375,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 733.859375,
+            "bottom": 330,
+            "left": 719.859375
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "폭설피해",
+          "textBox": {
+            "left": 737.859375,
+            "right": 782.8125,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        },
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 816.8125,
+            "y": 316,
+            "width": 14,
+            "height": 14,
+            "top": 316,
+            "right": 830.8125,
+            "bottom": 330,
+            "left": 816.8125
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "text": "가스누출",
+          "textBox": {
+            "left": 834.8125,
+            "right": 879.765625,
+            "top": 315,
+            "bottom": 331
+          },
+          "gap": 4,
+          "cssGap": 4,
+          "centerDelta": 0
+        }
+      ]
+    },
+    {
+      "label": "report-320",
+      "width": 320,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 30,
+            "y": 369.5,
+            "width": 14,
+            "height": 14,
+            "top": 369.5,
+            "right": 44,
+            "bottom": 383.5,
+            "left": 30
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        }
+      ]
+    },
+    {
+      "label": "report-393",
+      "width": 393,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 30,
+            "y": 369.5,
+            "width": 14,
+            "height": 14,
+            "top": 369.5,
+            "right": 44,
+            "bottom": 383.5,
+            "left": 30
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        }
+      ]
+    },
+    {
+      "label": "report-1440",
+      "width": 1440,
+      "items": [
+        {
+          "sizeName": "size-icon-default",
+          "expected": 14,
+          "box": {
+            "x": 430,
+            "y": 365.5,
+            "width": 14,
+            "height": 14,
+            "top": 365.5,
+            "right": 444,
+            "bottom": 379.5,
+            "left": 430
+          },
+          "ariaHidden": "true",
+          "focusable": "false",
+          "gap": null,
+          "cssGap": null,
+          "centerDelta": null
+        }
+      ]
+    }
+  ],
+  "filterGeometry": [
+    {
+      "width": 320,
+      "label": "카테고리",
+      "button": {
+        "x": 130,
+        "y": 68,
+        "width": 82,
+        "height": 27,
+        "top": 68,
+        "right": 212,
+        "bottom": 95,
+        "left": 130
+      },
+      "text": {
+        "x": 144.25,
+        "y": 74,
+        "width": 41.484375,
+        "height": 15,
+        "top": 74,
+        "right": 185.734375,
+        "bottom": 89,
+        "left": 144.25
+      },
+      "svg": {
+        "x": 189.734375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 197.734375,
+        "bottom": 85.5,
+        "left": 189.734375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "width": 320,
+      "label": "상태",
+      "button": {
+        "x": 218,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 278,
+        "bottom": 95,
+        "left": 218
+      },
+      "text": {
+        "x": 231.625,
+        "y": 74,
+        "width": 20.75,
+        "height": 15,
+        "top": 74,
+        "right": 252.375,
+        "bottom": 89,
+        "left": 231.625
+      },
+      "svg": {
+        "x": 256.375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 264.375,
+        "bottom": 85.5,
+        "left": 256.375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "width": 320,
+      "label": "기간: 최근 24시간",
+      "button": {
+        "x": 64,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 124,
+        "bottom": 95,
+        "left": 64
+      },
+      "text": {
+        "x": 69.984375,
+        "y": 74,
+        "width": 36.03125,
+        "height": 15,
+        "top": 74,
+        "right": 106.015625,
+        "bottom": 89,
+        "left": 69.984375
+      },
+      "svg": {
+        "x": 110.015625,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 118.015625,
+        "bottom": 85.5,
+        "left": 110.015625
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 4,
+      "paddingRight": 4,
+      "fits": true
+    },
+    {
+      "width": 393,
+      "label": "카테고리",
+      "button": {
+        "x": 130,
+        "y": 68,
+        "width": 82,
+        "height": 27,
+        "top": 68,
+        "right": 212,
+        "bottom": 95,
+        "left": 130
+      },
+      "text": {
+        "x": 144.25,
+        "y": 74,
+        "width": 41.484375,
+        "height": 15,
+        "top": 74,
+        "right": 185.734375,
+        "bottom": 89,
+        "left": 144.25
+      },
+      "svg": {
+        "x": 189.734375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 197.734375,
+        "bottom": 85.5,
+        "left": 189.734375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "width": 393,
+      "label": "상태",
+      "button": {
+        "x": 218,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 278,
+        "bottom": 95,
+        "left": 218
+      },
+      "text": {
+        "x": 231.625,
+        "y": 74,
+        "width": 20.75,
+        "height": 15,
+        "top": 74,
+        "right": 252.375,
+        "bottom": 89,
+        "left": 231.625
+      },
+      "svg": {
+        "x": 256.375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 264.375,
+        "bottom": 85.5,
+        "left": 256.375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "width": 393,
+      "label": "기간: 최근 24시간",
+      "button": {
+        "x": 64,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 124,
+        "bottom": 95,
+        "left": 64
+      },
+      "text": {
+        "x": 69.984375,
+        "y": 74,
+        "width": 36.03125,
+        "height": 15,
+        "top": 74,
+        "right": 106.015625,
+        "bottom": 89,
+        "left": 69.984375
+      },
+      "svg": {
+        "x": 110.015625,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 118.015625,
+        "bottom": 85.5,
+        "left": 110.015625
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 4,
+      "paddingRight": 4,
+      "fits": true
+    },
+    {
+      "width": 1440,
+      "label": "카테고리",
+      "button": {
+        "x": 530,
+        "y": 68,
+        "width": 82,
+        "height": 27,
+        "top": 68,
+        "right": 612,
+        "bottom": 95,
+        "left": 530
+      },
+      "text": {
+        "x": 544.25,
+        "y": 74,
+        "width": 41.484375,
+        "height": 15,
+        "top": 74,
+        "right": 585.734375,
+        "bottom": 89,
+        "left": 544.25
+      },
+      "svg": {
+        "x": 589.734375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 597.734375,
+        "bottom": 85.5,
+        "left": 589.734375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "width": 1440,
+      "label": "상태",
+      "button": {
+        "x": 618,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 678,
+        "bottom": 95,
+        "left": 618
+      },
+      "text": {
+        "x": 631.625,
+        "y": 74,
+        "width": 20.75,
+        "height": 15,
+        "top": 74,
+        "right": 652.375,
+        "bottom": 89,
+        "left": 631.625
+      },
+      "svg": {
+        "x": 656.375,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 664.375,
+        "bottom": 85.5,
+        "left": 656.375
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "fits": true
+    },
+    {
+      "width": 1440,
+      "label": "기간: 최근 24시간",
+      "button": {
+        "x": 464,
+        "y": 68,
+        "width": 60,
+        "height": 27,
+        "top": 68,
+        "right": 524,
+        "bottom": 95,
+        "left": 464
+      },
+      "text": {
+        "x": 469.984375,
+        "y": 74,
+        "width": 36.03125,
+        "height": 15,
+        "top": 74,
+        "right": 506.015625,
+        "bottom": 89,
+        "left": 469.984375
+      },
+      "svg": {
+        "x": 510.015625,
+        "y": 77.5,
+        "width": 8,
+        "height": 8,
+        "top": 77.5,
+        "right": 518.015625,
+        "bottom": 85.5,
+        "left": 510.015625
+      },
+      "gap": 4,
+      "overlap": 0,
+      "paddingLeft": 4,
+      "paddingRight": 4,
+      "fits": true
+    }
+  ],
+  "markers": [
+    {
+      "count": 1,
+      "rect": {
+        "x": 81,
+        "y": 185,
+        "width": 38.390625,
+        "height": 38.390625,
+        "top": 185,
+        "right": 119.390625,
+        "bottom": 223.390625,
+        "left": 81
+      },
+      "font": "14.4px",
+      "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+    },
+    {
+      "count": 2,
+      "rect": {
+        "x": 272,
+        "y": 455,
+        "width": 38.390625,
+        "height": 38.390625,
+        "top": 455,
+        "right": 310.390625,
+        "bottom": 493.390625,
+        "left": 272
+      },
+      "font": "14.4px",
+      "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+    },
+    {
+      "count": 12,
+      "rect": {
+        "x": 212,
+        "y": 361,
+        "width": 72,
+        "height": 72,
+        "top": 361,
+        "right": 284,
+        "bottom": 433,
+        "left": 212
+      },
+      "font": "27px",
+      "bg": "oklab(0.593308 0.209201 0.098094 / 0.6)"
+    }
+  ],
+  "searchGeometry": {
+    "form": {
+      "x": 64,
+      "y": 20,
+      "width": 313,
+      "height": 37,
+      "top": 20,
+      "right": 377,
+      "bottom": 57,
+      "left": 64
+    },
+    "input": {
+      "x": 101,
+      "y": 21,
+      "width": 275,
+      "height": 35,
+      "top": 21,
+      "right": 376,
+      "bottom": 56,
+      "left": 101
+    },
+    "images": [
+      {
+        "file": "/navigation/map-pin.svg",
+        "box": {
+          "x": 84.25,
+          "y": 792,
+          "width": 22,
+          "height": 22,
+          "top": 792,
+          "right": 106.25,
+          "bottom": 814,
+          "left": 84.25
+        }
+      }
+    ]
+  },
+  "favicon": {
+    "tags": [
+      {
+        "rel": "icon",
+        "path": "/favicon.ico",
+        "type": "image/x-icon",
+        "sizes": "16x16"
+      },
+      {
+        "rel": "icon",
+        "path": "/icon.svg",
+        "type": "image/svg+xml",
+        "sizes": "any"
+      },
+      {
+        "rel": "apple-touch-icon",
+        "path": "/apple-icon.png",
+        "type": "image/png",
+        "sizes": "180x180"
+      }
+    ],
+    "assets": [
+      {
+        "path": "/icon.svg",
+        "status": 200,
+        "contentType": "image/svg+xml",
+        "bytes": 635
+      },
+      {
+        "path": "/favicon.ico",
+        "status": 200,
+        "contentType": "image/x-icon",
+        "bytes": 2685
+      },
+      {
+        "path": "/apple-icon.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 6796
+      }
+    ],
+    "applePixels": {
+      "width": 180,
+      "height": 180,
+      "opaque": 31316,
+      "red": 1622
+    }
+  },
+  "summary": {
+    "checks": 129,
+    "failed": [],
+    "scenarios": 6,
+    "scenarioFailures": [],
+    "pageErrors": 0
+  },
+  "executionHistory": {
+    "firstRun": "/private/tmp/pr45-icon-system-qa/final/initial-full-run/report.json",
+    "followup": "/private/tmp/pr45-icon-system-qa/final/favicon-followup-report.json",
+    "reason": "QA used native fetch Response.status as a method while recording favicon HTTP status. Corrected to numeric property; Playwright response.status() remains a method. Same source/build and unchanged expected values. Only final favicon/bot/JSoff/404 bundle reran."
+  }
+}
