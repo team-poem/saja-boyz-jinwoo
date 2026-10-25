@@ -5,6 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import DetailPage from './[id]/page';
 
 vi.mock('next/navigation', () => ({
+  usePathname: () => null,
   notFound: () => {
     throw new Error('TEST_ARTICLE_NOT_FOUND');
   },

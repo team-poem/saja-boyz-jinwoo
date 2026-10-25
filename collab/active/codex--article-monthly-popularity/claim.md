@@ -2,9 +2,9 @@
 branch: codex/article-monthly-popularity
 owner: amazon
 started: 2026-10-25
-status: active
+status: done
 goal: feat(news): 최근 30일 고유 조회수 기록과 인기순 목록 연결
-next: 검증된 조회수 기능을 복원하고 PR 생성
+next: 서버 PR11 선배포 후 프런트 배포
 base: dev
 ---
 

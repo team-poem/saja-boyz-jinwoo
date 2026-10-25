@@ -210,8 +210,13 @@ test('articleListMoreAppendsWithRawOffsetsAndFirstSeenIdentity', async () => {
     const url = new URL(input instanceof Request ? input.url : String(input));
     expect(url.origin).toBe(apiOrigin);
     expect(url.pathname).toBe('/news');
-    expect([...url.searchParams.keys()].sort()).toEqual(['limit', 'offset']);
+    expect([...url.searchParams.keys()].sort()).toEqual([
+      'limit',
+      'offset',
+      'sort',
+    ]);
     expect(url.searchParams.get('limit')).toBe('20');
+    expect(url.searchParams.get('sort')).toBe('popular');
     expect(init?.method).toBe('GET');
     expect(init?.cache).toBe('no-store');
     expect(init?.signal).toBeTruthy();
