@@ -11,6 +11,17 @@
       "passed": 147,
       "failed": 0,
       "skipped": 0
+    },
+    {
+      "test": "serverLoadingBoundariesKeepMapFrameAndStandaloneArticleSeoAccessible",
+      "red": "server-red.json",
+      "observed": "홈 기사 API 보류 중 지도 로딩 표면이 없음",
+      "green": "server-focused-green.json",
+      "full": "gate148.json",
+      "passed": 148,
+      "failed": 0,
+      "skipped": 0,
+      "learning": "직접 loading 파일만 추가하면 NoJS본문이 숨고 모든UA메타대기는첫로더없이전역정책만변경함. 직접SSR/proxy/메타데이터를유지하고느린직접본문·SEO·404회귀를추가."
     }
   ]
 }
