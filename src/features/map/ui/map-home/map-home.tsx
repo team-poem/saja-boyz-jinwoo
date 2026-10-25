@@ -133,6 +133,7 @@ export function MapHome({
   const clearSelection = useRef<((restoreFocus?: boolean) => void) | null>(
     null,
   );
+  const restoreSelectionFocus = useRef<HTMLButtonElement | null>(null);
   const automaticLocation = useRef<{
     started: boolean;
     request?: Promise<LocationResult>;
@@ -166,6 +167,15 @@ export function MapHome({
 
     previousDetailOpen.current = detailOpen;
   }, [detailOpen, selectedArticles.length]);
+
+  useEffect(() => {
+    if (selectedArticles.length || !restoreSelectionFocus.current) return;
+    const target = restoreSelectionFocus.current;
+
+    restoreSelectionFocus.current = null;
+    // 시트의 포커스 가드와 배경 inert가 해제된 commit 뒤에 복귀한다.
+    if (target.isConnected) target.focus({ preventScroll: true });
+  }, [selectedArticles]);
 
   useLayoutEffect(() => {
     if (!locating && !locationError && restoreLocateFocus.current) {
@@ -208,6 +218,7 @@ export function MapHome({
     let map: MapInstance | undefined;
     let marker: MarkerInstance | undefined;
     let selectedMarker: HTMLButtonElement | undefined;
+    let selectedPoint: string | undefined;
     const articleMarkers: {
       marker: MarkerInstance;
       listener: unknown;
@@ -443,8 +454,11 @@ export function MapHome({
 
       clearSelection.current = (restoreFocus = false) => {
         for (const entry of articleMarkers) entry.setSelected(false);
-        if (restoreFocus) selectedMarker?.focus({ preventScroll: true });
+        restoreSelectionFocus.current = restoreFocus
+          ? (selectedMarker ?? null)
+          : null;
         selectedMarker = undefined;
+        selectedPoint = undefined;
       };
 
       let currentItems: LocatedArticle[] = [];
@@ -465,15 +479,48 @@ export function MapHome({
                   new maps.LatLng(latitude, longitude),
                 )
             : undefined,
+          canvas.current &&
+            canvas.current.clientWidth > 0 &&
+            canvas.current.clientHeight > 0
+            ? {
+                width: canvas.current.clientWidth,
+                height: canvas.current.clientHeight,
+              }
+            : undefined,
         );
 
         if (sameMapDisplayGroups(displayGroups, nextGroups)) return;
+        const previousSelection = selectedPoint
+          ? displayGroups.get(selectedPoint)
+          : undefined;
+        const nextSelection = selectedPoint
+          ? nextGroups.get(selectedPoint)
+          : undefined;
+        const selectedIds = new Set(
+          previousSelection?.items.map((item) => item.article_id),
+        );
+        const retainedSelection =
+          nextSelection &&
+          nextSelection.items.length === selectedIds.size &&
+          nextSelection.items.every((item) => selectedIds.has(item.article_id))
+            ? nextSelection
+            : undefined;
+        const restoreMarkerFocus = document.activeElement === selectedMarker;
+
+        if (retainedSelection) {
+          setSelectedArticles(retainedSelection.items);
+        } else {
+          clearSelection.current?.();
+          setSelectedArticles([]);
+        }
+
         displayGroups = nextGroups;
-        clearSelection.current?.();
-        setSelectedArticles([]);
         clearArticles();
 
-        for (const { items: group, regionCount } of displayGroups.values()) {
+        for (const [
+          point,
+          { items: group, regionCount, diameter },
+        ] of displayGroups) {
           const item = group[0];
           const title =
             group.length === 1
@@ -488,7 +535,7 @@ export function MapHome({
           const visual = createArticleMarker(
             group.length,
             `${positionLabel}: ${item.location.label} · ${title}${regionCount > 1 ? ' · 지역 묶음' : ''}`,
-            regionCount > 1,
+            diameter,
           );
 
           const articleMarker = new maps.Marker({
@@ -508,6 +555,7 @@ export function MapHome({
             clearSelection.current?.();
             visual.setSelected(true);
             selectedMarker = visual.content;
+            selectedPoint = point;
             setSelectedArticles(group);
             if (group.length === 1)
               openArticleRef.current?.(group[0].article_id);
@@ -530,6 +578,13 @@ export function MapHome({
             listener,
             setSelected: visual.setSelected,
           });
+
+          if (retainedSelection && point === selectedPoint) {
+            visual.setSelected(true);
+            selectedMarker = visual.content;
+            if (restoreMarkerFocus)
+              visual.content.focus({ preventScroll: true });
+          }
         }
       };
 

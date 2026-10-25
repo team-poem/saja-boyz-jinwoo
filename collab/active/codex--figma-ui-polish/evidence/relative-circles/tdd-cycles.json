@@ -1,0 +1,28 @@
+{
+  "runtime": "sobaya 0d051213e7fc1bb869474c2ad144e08cd9a09dd2",
+  "suite": "./node_modules/.bin/vitest run",
+  "cycles": [
+    {
+      "test": "mapCircleSizesCompareOnlyCurrentViewportAndKeepDistinctCountsVisible",
+      "red": "counts-red.json",
+      "observed": "화면 밖19/3이 남고3/4가 같은 고정 크기이며 실제 동적 지름이 없음",
+      "green": "counts-focused-green.json",
+      "fullSuite": "gate144.json",
+      "passed": 144,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "test": "mapRelativeResizingKeepsUnchangedSelectionAndReturnsToCurrentMarker",
+      "red": "selection-red.json",
+      "observed": "새 그룹 유입으로 크기만 바뀌어도 선택 시트·링크 포커스·선택 표시가 사라짐",
+      "green": "focused-green.json",
+      "fullSuite": "gate145.json",
+      "passed": 145,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "existingTests": "기존 고정 anchor2곳만 실제 지름/anchor 일치와 건수별 차이 검사로 변경. 기사 수·선택·포커스·수명주기 기대값 유지.",
+  "review": "읽기 리뷰의 선택 유지·닫기 복귀 지적을 같은 회귀로 재현해 수정. 조기 focus와 microtask 시도는 실패해 폐기하고 시트 정리 뒤 commit effect에서 최신 마커로 복귀."
+}
