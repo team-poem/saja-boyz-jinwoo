@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useTransition, type ReactNode } from 'react';
+import { useState, useTransition, type ReactNode } from 'react';
 
 import { Icon } from '@/components/ui/icon/icon';
 import { LoadingSpinner } from '@/components/feedback/loading-spinner';
@@ -18,6 +18,7 @@ export function SearchForm({
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const [revision, setRevision] = useState(0);
 
   return (
     <div className="flex flex-col gap-5 pb-5 text-sm [&_article_a]:scroll-mt-3 [&_article_a]:scroll-mb-[calc(84px_+_env(safe-area-inset-bottom))]">
@@ -43,6 +44,7 @@ export function SearchForm({
             const href = '/search?' + params.toString();
 
             startTransition(() => {
+              setRevision((value) => value + 1);
               if (window.location.pathname + window.location.search === href)
                 router.refresh();
               else router.push(href);
@@ -88,6 +90,7 @@ export function SearchForm({
       </div>
       {pending && <SearchLoading initial={false} />}
       <div
+        key={revision}
         hidden={pending}
         inert={pending || undefined}
         className={pending ? 'hidden' : 'flex flex-col gap-5'}

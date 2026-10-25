@@ -69,6 +69,7 @@ const waitingMap: ServerResponse[] = [];
 const waitingDetails: ServerResponse[] = [];
 let unavailable = false;
 let listArticles = [article];
+const newsOffsets: number[] = [];
 const detailRequests: number[] = [];
 const api = createServer((request, response) => {
   const url = new URL(request.url ?? '/', 'http://fixture.invalid');
@@ -80,6 +81,7 @@ const api = createServer((request, response) => {
   }
   if (url.pathname === '/news') {
     const offset = Number(url.searchParams.get('offset') ?? 0);
+    if (url.searchParams.get('keyword') === '재검색') newsOffsets.push(offset);
     const limit = Number(url.searchParams.get('limit') ?? 20);
     response.end(
       JSON.stringify({
@@ -1102,3 +1104,107 @@ test('searchSubmissionsAndDetailRetriesExposePendingWithoutLosingGetOrRecovery',
       if (!response.destroyed) response.end(JSON.stringify(article));
   }
 }, 90000);
+
+test('repeatingTheSameSearchReplacesCardsAndResetsPagination', async () => {
+  const saved = listArticles;
+  const batch = (prefix: string, size: number, base: number) =>
+    Array.from({ length: size }, (_, index) => ({
+      ...article,
+      article_id: (base + index).toString(16).padStart(64, '0'),
+      article: { ...article.article, title: prefix + (index + 1) },
+    }));
+  try {
+    const page = await openList();
+    listArticles = batch('이전 검색 기사 ', 41, 50000);
+    await page.goto(origin + '/search?q=' + encodeURIComponent('재검색'));
+    await expect
+      .poll(() => page.locator('main article').count(), { timeout: 5000 })
+      .toBe(20);
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await expect
+      .poll(() => page.locator('main article').count(), { timeout: 5000 })
+      .toBe(40);
+
+    for (const [index, replacement] of [
+      batch('새 검색 기사 ', 23, 60000),
+      batch('마지막 검색 기사 ', 3, 70000),
+      [],
+    ].entries()) {
+      listArticles = replacement;
+      await page
+        .getByRole('searchbox', { name: '기사 키워드 검색' })
+        .scrollIntoViewIfNeeded();
+      const response = page.waitForResponse(
+        (response) =>
+          new URL(response.url()).pathname === '/search' &&
+          response.request().headers().rsc === '1' &&
+          !response.request().headers()['next-router-prefetch'],
+      );
+      if (index)
+        await page
+          .getByRole('searchbox', { name: '기사 키워드 검색' })
+          .press('Enter');
+      else
+        await page.getByRole('button', { name: '검색', exact: true }).click();
+      await (await response).finished();
+      await expect
+        .poll(() =>
+          page
+            .getByRole('button', { name: '검색', exact: true })
+            .getAttribute('aria-busy'),
+        )
+        .not.toBe('true');
+      await expect
+        .poll(() => page.locator('main article h2').allTextContents(), {
+          message: '같은 검색어도 새 첫 페이지로 교체',
+          timeout: 5000,
+        })
+        .toEqual(replacement.slice(0, 20).map((item) => item.article.title));
+      expect
+        .soft(await page.getByRole('searchbox').inputValue())
+        .toBe('재검색');
+      const replaced =
+        JSON.stringify(
+          await page.locator('main article h2').allTextContents(),
+        ) ===
+        JSON.stringify(
+          replacement.slice(0, 20).map((item) => item.article.title),
+        );
+      const requests = newsOffsets.length;
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      if (replaced && replacement.length > 20) {
+        await expect
+          .poll(() => page.locator('main article').count(), { timeout: 5000 })
+          .toBe(23);
+        expect
+          .soft(
+            newsOffsets.slice(requests),
+            '새 결과의 추가 페이지는 offset20에서 시작',
+          )
+          .toEqual([20]);
+        expect
+          .soft(await page.locator('main article h2').allTextContents())
+          .toEqual(replacement.map((item) => item.article.title));
+      } else {
+        await wait(150);
+        expect
+          .soft(
+            newsOffsets.length,
+            '새 결과의 total에 맞춰 이전 pagination 종료',
+          )
+          .toBe(requests);
+      }
+      if (!replaced) break;
+      if (!replacement.length)
+        expect
+          .soft(
+            await page
+              .getByText('검색 결과가 없어요', { exact: true })
+              .isVisible(),
+          )
+          .toBe(true);
+    }
+  } finally {
+    listArticles = saved;
+  }
+}, 60000);
