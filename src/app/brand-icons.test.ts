@@ -73,6 +73,7 @@ test('brandIconsKeepOneCompleteLogoAtEverySize', async () => {
     }
   }
 
+  await inspect(readFileSync('src/app/icon.png'), 96, 'PNG96');
   await inspect(readFileSync('src/app/apple-icon.png'), 180, 'Apple180');
   const ico = readFileSync('src/app/favicon.ico');
   expect(ico.readUInt16LE(0)).toBe(0);

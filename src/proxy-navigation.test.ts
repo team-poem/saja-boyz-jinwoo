@@ -676,3 +676,63 @@ test('inlineIconsPreserveSpacingAndAccessibleControls', async () => {
   expect.soft(field.centerDelta).toBeLessThanOrEqual(0.5);
   await page.close();
 }, 120000);
+
+test('rasterFaviconsAreAdvertisedAndDecodeInChrome', async () => {
+  const context = await browser!.newContext({
+    viewport: { width: 393, height: 852 },
+  });
+  contexts.push(context);
+  const page = await context.newPage();
+  await page.goto(origin + '/incidents');
+  const pngTag = await page.locator('link[rel="icon"]').evaluateAll((links) =>
+    links
+      .map((link) => ({
+        href: link.getAttribute('href'),
+        type: link.getAttribute('type'),
+        sizes: link.getAttribute('sizes'),
+      }))
+      .find((link) => link.href?.startsWith('/icon.png')),
+  );
+  expect.soft(pngTag, '검색용 PNG 파비콘도 head에 제공').toBeDefined();
+  if (pngTag) {
+    expect(pngTag.type).toBe('image/png');
+    expect(pngTag.sizes).toBe('96x96');
+  }
+  const images = await page.evaluate(async () =>
+    Promise.all(
+      ['/favicon.ico', '/icon.png', '/icon.svg', '/apple-icon.png'].map(
+        async (url) => {
+          const image = new Image();
+          image.src = url;
+          try {
+            await image.decode();
+            return {
+              url,
+              decoded: true,
+              width: image.naturalWidth,
+              height: image.naturalHeight,
+            };
+          } catch {
+            return {
+              url,
+              decoded: false,
+              width: image.naturalWidth,
+              height: image.naturalHeight,
+            };
+          }
+        },
+      ),
+    ),
+  );
+  for (const image of images) {
+    expect.soft(image.decoded, image.url + ' Chrome 실제 디코딩').toBe(true);
+    expect
+      .soft(image.width, image.url + ' 보이는 이미지 너비')
+      .toBeGreaterThan(0);
+    expect.soft(image.height).toBe(image.width);
+  }
+  expect
+    .soft(images.find((image) => image.url === '/icon.png')?.width)
+    .toBe(96);
+  await page.close();
+}, 120000);
