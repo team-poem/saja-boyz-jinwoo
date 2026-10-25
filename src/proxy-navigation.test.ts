@@ -63,6 +63,7 @@ const article = {
 };
 let holdMap = false;
 let holdDetails = false;
+let failDetail = false;
 let detailDelay = 0;
 const waitingMap: ServerResponse[] = [];
 const waitingDetails: ServerResponse[] = [];
@@ -94,6 +95,10 @@ const api = createServer((request, response) => {
     if (unavailable) return;
     if (holdDetails) {
       waitingDetails.push(response);
+      return;
+    }
+    if (failDetail) {
+      response.writeHead(503).end('{"error":"QA_PRIVATE_DETAIL"}');
       return;
     }
     if (detailDelay)
@@ -913,5 +918,187 @@ test('serverLoadingBoundariesKeepMapFrameAndStandaloneArticleSeoAccessible', asy
     releaseMap();
     releaseDetails();
     detailDelay = 0;
+  }
+}, 90000);
+
+test('searchSubmissionsAndDetailRetriesExposePendingWithoutLosingGetOrRecovery', async () => {
+  const page = await openList();
+  for (const [index, mode] of ['button', 'enter'].entries()) {
+    await page.goto(origin + '/search');
+    const keyword = index ? '침수 + 통제' : '서울 & 화재';
+    const input = page.getByRole('searchbox', { name: '기사 키워드 검색' });
+    await input.fill(keyword);
+    let release: () => void = () => {};
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const requests: { rsc?: string; method: string }[] = [];
+    await page.route('**/search?**', async (route) => {
+      if (route.request().headers()['next-router-prefetch'])
+        return route.abort();
+      if (new URL(route.request().url()).searchParams.get('q') !== keyword)
+        return route.continue();
+      requests.push({
+        rsc: route.request().headers().rsc,
+        method: route.request().method(),
+      });
+      if (route.request().resourceType() === 'document') return route.abort();
+      await gate;
+      await route.continue();
+    });
+    const submitting =
+      mode === 'enter'
+        ? input.press('Enter')
+        : page.getByRole('button', { name: '검색', exact: true }).click();
+    try {
+      await expect
+        .poll(() => requests.length, { timeout: 5000 })
+        .toBeGreaterThan(0);
+      expect
+        .soft(requests[0].rsc, '문서 전체 재요청 대신 검색 transition')
+        .toBe('1');
+      expect.soft(requests[0].method).toBe('GET');
+      if (requests[0].rsc === '1') {
+        const feedback = page
+          .locator(
+            'main [role="status"][aria-busy="true"], button[aria-label="검색"][aria-busy="true"]',
+          )
+          .first();
+        await feedback.waitFor({ timeout: 1500 }).catch(() => {});
+        expect
+          .soft(await feedback.isVisible(), mode + ' 제출 직후 시각 로딩')
+          .toBe(true);
+        const recent = page.locator('section[aria-label="최근 검색"]');
+        if (await recent.count())
+          expect
+            .soft(await recent.isVisible(), '대기 중 이전 검색 영역 가림')
+            .toBe(false);
+        const button = page.getByRole('button', { name: '검색', exact: true });
+        if (await button.count())
+          await button.evaluate((node) => (node as HTMLButtonElement).click());
+        await wait(100);
+        expect.soft(requests.length, '대기 중 중복 제출 방지').toBe(1);
+      }
+    } finally {
+      release();
+      await submitting.catch(() => {});
+      await page.unroute('**/search?**');
+    }
+    if (requests[0]?.rsc !== '1') continue;
+    await page
+      .getByRole('heading', { name: '기사 검색 결과', exact: true })
+      .waitFor();
+    expect.soft(new URL(page.url()).searchParams.get('q')).toBe(keyword);
+    expect
+      .soft(
+        await page
+          .getByRole('searchbox', { name: '기사 키워드 검색' })
+          .inputValue(),
+      )
+      .toBe(keyword);
+    expect
+      .soft(
+        await page
+          .getByRole('button', { name: '검색', exact: true })
+          .getAttribute('aria-busy'),
+      )
+      .not.toBe('true');
+  }
+
+  const noJsContext = await browser!.newContext({ javaScriptEnabled: false });
+  contexts.push(noJsContext);
+  const noJs = await noJsContext.newPage();
+  await noJs.goto(origin + '/search');
+  await noJs.getByRole('searchbox').fill('서울 & 안전');
+  await Promise.all([
+    noJs.waitForURL(
+      (url) =>
+        url.pathname === '/search' &&
+        url.searchParams.get('q') === '서울 & 안전',
+    ),
+    noJs.getByRole('button', { name: '검색', exact: true }).click(),
+  ]);
+  expect
+    .soft(
+      await noJs
+        .getByRole('heading', { name: '기사 검색 결과', exact: true })
+        .isVisible(),
+      'NoJS 실제GET검색',
+    )
+    .toBe(true);
+
+  try {
+    for (const mode of ['internal', 'direct']) {
+      const retryPage = await openList();
+      failDetail = true;
+      if (mode === 'internal')
+        await retryPage
+          .getByRole('link', { name: article.article.title, exact: true })
+          .click();
+      else await retryPage.goto(origin + '/incidents/' + id);
+      for (const status of [503, 200]) {
+        const retry = retryPage.getByRole('link', {
+          name: '다시 시도',
+          exact: true,
+        });
+        await retry.waitFor();
+        holdDetails = true;
+        const before = detailRequests.length;
+        const retrying = retry.click();
+        try {
+          await expect
+            .poll(() => waitingDetails.length, { timeout: 5000 })
+            .toBeGreaterThan(0);
+          expect
+            .soft(await retry.getAttribute('aria-busy'), mode + ' 재시도 대기')
+            .toBe('true');
+          expect
+            .soft(await retry.locator('svg').count(), '재시도 스피너')
+            .toBe(1);
+          if ((await retry.getAttribute('aria-busy')) === 'true') {
+            await retry.evaluate((node) => (node as HTMLAnchorElement).click());
+            await retryPage.keyboard.press('Enter');
+          }
+          await wait(100);
+          expect
+            .soft(detailRequests.length - before, '동일 재시도 중복 차단')
+            .toBe(1);
+        } finally {
+          holdDetails = false;
+          failDetail = status === 503;
+          for (const response of waitingDetails.splice(0)) {
+            if (!response.destroyed)
+              response
+                .writeHead(status)
+                .end(
+                  status === 200
+                    ? JSON.stringify(article)
+                    : '{"error":"QA_PRIVATE_DETAIL"}',
+                );
+          }
+          await retrying;
+        }
+        if (status === 503) {
+          await expect
+            .poll(() => retry.getAttribute('aria-busy'), { timeout: 5000 })
+            .not.toBe('true');
+          expect
+            .soft(await retry.isVisible(), '재실패 후 다시 시도 유지')
+            .toBe(true);
+        } else {
+          await retryPage
+            .getByRole('heading', { name: article.article.title, exact: true })
+            .waitFor();
+          expect
+            .soft(new URL(retryPage.url()).pathname)
+            .toBe('/incidents/' + id);
+        }
+      }
+    }
+  } finally {
+    failDetail = false;
+    holdDetails = false;
+    for (const response of waitingDetails.splice(0))
+      if (!response.destroyed) response.end(JSON.stringify(article));
   }
 }, 90000);

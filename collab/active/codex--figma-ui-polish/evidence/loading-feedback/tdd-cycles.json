@@ -22,6 +22,17 @@
       "failed": 0,
       "skipped": 0,
       "learning": "직접 loading 파일만 추가하면 NoJS본문이 숨고 모든UA메타대기는첫로더없이전역정책만변경함. 직접SSR/proxy/메타데이터를유지하고느린직접본문·SEO·404회귀를추가."
+    },
+    {
+      "test": "searchSubmissionsAndDetailRetriesExposePendingWithoutLosingGetOrRecovery",
+      "red": "actions-red.json",
+      "observed": "수동검색이전체문서GET으로제출되고NoJS결과가숨음,내부/직접상세재시도의busy/spinner없음",
+      "green": "actions-focused-green.json",
+      "full": "gate149.json",
+      "passed": 149,
+      "failed": 0,
+      "skipped": 0,
+      "support": "기존기대값은유지하고이동한뷰의import경로와새router의SSRfixture만갱신. 홈loading을(map)routegroup으로한정하고검색Skeleton을clientpending뷰로이동해NoJSGET검색복구."
     }
   ]
 }
