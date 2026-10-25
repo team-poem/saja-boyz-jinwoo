@@ -1,0 +1,26 @@
+{
+  "baselineTests": 151,
+  "finalTests": 151,
+  "tests": [
+    "normalArticleSheetsStartHalfAndDragNearTopWithSheetOnlyAiDisclosure",
+    "mapCarouselUsesRealArticlesAndSafeImages",
+    "articleImagesShowSkeletonUntilLoadAndRecoverAcrossUrlsAndCachedImages"
+  ],
+  "red": "red.json",
+  "observed": "목록/검색/직접/NoJS가초기expanded=true·기본half초과,실제drag해도70상한/카드AI배지유지·상세문구불일치",
+  "focusedGreen": "focused-green.json",
+  "full": "gate151.json",
+  "gateExitCode": 0,
+  "passed": 151,
+  "failed": 0,
+  "skipped": 0,
+  "support": "기존초기상태와caption기대값만사용자최종정책으로변경. 이미지크기/로딩성공실패cache/기사API·공유·포커스·404조건유지. 80시안은최종정책이아님.",
+  "learning": "첫생산fixture의dummy SDK에서중복carousel진입이불가해실제지도조작은유효SDK QA에두고카드요구를기존지도unit회귀로유지했다. 첫측정은교체된DOM의0치수여서현재document의연결된유효치수를관측하도록고쳤다. 높이기대값은유지했다.",
+  "figma": [
+    "19:2865/504:441",
+    "504:269/504:502"
+  ],
+  "default": "내용auto,max53.52dvh,모든진입접힘",
+  "manualExpanded": "height/max=100dvh-max(49px,safe-top)",
+  "caption": "시트이미지아래만 AI로 생성된 이미지입니다.; list/carousel없음"
+}

@@ -68,9 +68,7 @@ test('articleImageErrorPreservesCards', async () => {
   expect(image.getAttribute('alt')).toBe('');
   expect(image.getAttribute('width')).toBe('80');
   expect(image.getAttribute('height')).toBe('80');
-  expect(initialCards[0].querySelector('figcaption')?.textContent).toBe(
-    'AI 생성 이미지',
-  );
+  expect(initialCards[0].querySelector('figcaption')).toBeNull();
 
   await failImage(image);
 
@@ -100,9 +98,7 @@ test('articleImageErrorPreservesCards', async () => {
   expect(cards[1].querySelector('img')?.src).toBe(
     `${apiOrigin}/images/${idB}.jpg`,
   );
-  expect(cards[1].querySelector('figcaption')?.textContent).toBe(
-    'AI 생성 이미지',
-  );
+  expect(cards[1].querySelector('figcaption')).toBeNull();
   expect(cards[1].textContent).not.toContain('이미지 없음');
   expect(cards[2].querySelector('img')).toBeNull();
   expect(cards[2].textContent).toContain('이미지 없음');
@@ -126,9 +122,7 @@ test('articleImageRecoversForNewSource', async () => {
   expect(nextImage.src).toBe(`${nextOrigin}/images/${idA}.jpg`);
   expect(nextImage.getAttribute('alt')).toBe('');
   expect(container.textContent).not.toContain('이미지 없음');
-  expect(container.querySelector('figcaption')?.textContent).toBe(
-    'AI 생성 이미지',
-  );
+  expect(container.querySelector('figcaption')).toBeNull();
   expect(
     container
       .querySelector('a[href="https://publisher.example.invalid/A"]')

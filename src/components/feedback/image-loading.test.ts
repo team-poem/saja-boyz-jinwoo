@@ -52,7 +52,11 @@ test('articleImagesShowSkeletonUntilLoadAndRecoverAcrossUrlsAndCachedImages', as
     expect
       .soft(host.querySelector('img'), '요청할 실제 이미지 유지')
       .not.toBeNull();
-    expect.soft(host.textContent).toContain('AI 생성 이미지');
+    if (Component === DetailImage)
+      expect
+        .soft(host.querySelector('figcaption')?.textContent)
+        .toBe('AI로 생성된 이미지입니다.');
+    else expect.soft(host.querySelector('figcaption')).toBeNull();
     await settle('load');
     expect.soft(loading(), '성공 시 스켈레톤 종료').toBeNull();
     expect.soft(host.querySelector('img')).not.toBeNull();
@@ -63,7 +67,7 @@ test('articleImagesShowSkeletonUntilLoadAndRecoverAcrossUrlsAndCachedImages', as
     expect.soft(loading(), '실패 시 무한 로딩 없음').toBeNull();
     expect.soft(host.querySelector('img')).toBeNull();
     expect.soft(host.textContent).toContain('이미지 없음');
-    expect.soft(host.textContent).not.toContain('AI 생성 이미지');
+    expect.soft(host.querySelector('figcaption')).toBeNull();
 
     await draw('https://image.example.invalid/c.jpg');
     expect

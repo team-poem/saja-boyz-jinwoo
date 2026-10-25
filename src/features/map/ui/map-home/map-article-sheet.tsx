@@ -110,7 +110,7 @@ export function MapArticleSheet({
             </div>
             <div className="flex items-start gap-3">
               <div className="w-20 shrink-0">
-                <ArticleImage key={imageUrl} src={imageUrl} />
+                <ArticleImage key={imageUrl} src={imageUrl} showAiCaption />
               </div>
               <p className="m-0 min-w-0 text-[13px]/[1.5] text-muted [overflow-wrap:anywhere]">
                 {articleText(item.article.description)}

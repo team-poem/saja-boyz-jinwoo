@@ -36,7 +36,7 @@ export function DetailImage({ src }: { src: string | null }) {
         />
       </div>
       <figcaption className="mt-1 text-[10px]/[15px] text-muted">
-        AI 생성 이미지
+        AI로 생성된 이미지입니다.
       </figcaption>
     </figure>
   );

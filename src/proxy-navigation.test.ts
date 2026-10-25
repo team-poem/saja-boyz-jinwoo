@@ -65,6 +65,16 @@ let holdMap = false;
 let holdDetails = false;
 let failDetail = false;
 let detailDelay = 0;
+let imageEnabled = false;
+function presentArticle(item: typeof article) {
+  return imageEnabled
+    ? {
+        ...item,
+        image_status: 'ready',
+        image_url: '/images/' + item.article_id + '.jpg',
+      }
+    : item;
+}
 const waitingMap: ServerResponse[] = [];
 const waitingDetails: ServerResponse[] = [];
 let unavailable = false;
@@ -74,6 +84,13 @@ const detailRequests: number[] = [];
 const api = createServer((request, response) => {
   const url = new URL(request.url ?? '/', 'http://fixture.invalid');
   response.setHeader('Content-Type', 'application/json; charset=utf-8');
+  if (/^\/images\/[a-f0-9]{64}\.jpg$/.test(url.pathname)) {
+    response.setHeader('Content-Type', 'image/svg+xml');
+    response.end(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="160" height="80"><rect width="160" height="80" fill="#dae6ee"/></svg>',
+    );
+    return;
+  }
   if (url.pathname === '/map/articles') {
     if (holdMap) waitingMap.push(response);
     else response.end(JSON.stringify({ total: 0, items: [] }));
@@ -86,7 +103,7 @@ const api = createServer((request, response) => {
     response.end(
       JSON.stringify({
         total: listArticles.length,
-        items: listArticles.slice(offset, offset + limit),
+        items: listArticles.slice(offset, offset + limit).map(presentArticle),
       }),
     );
     return;
@@ -104,8 +121,11 @@ const api = createServer((request, response) => {
       return;
     }
     if (detailDelay)
-      setTimeout(() => response.end(JSON.stringify(article)), detailDelay);
-    else response.end(JSON.stringify(article));
+      setTimeout(
+        () => response.end(JSON.stringify(presentArticle(article))),
+        detailDelay,
+      );
+    else response.end(JSON.stringify(presentArticle(article)));
     return;
   }
   const item = listArticles.find(
@@ -1238,37 +1258,53 @@ test('repeatingTheSameSearchReplacesCardsAndResetsPagination', async () => {
   }
 }, 60000);
 
-test('normalArticleSheetsFitTheirContentWithinSeventyDvh', async () => {
+test('normalArticleSheetsStartHalfAndDragNearTopWithSheetOnlyAiDisclosure', async () => {
   const savedDescription = article.article.description;
-  const size = (page: Awaited<ReturnType<typeof openList>>) =>
-    page.getByRole('dialog').evaluate((panel) => {
-      const reading = panel.querySelector<HTMLElement>(
-        ':scope > [tabindex="0"]',
-      )!;
-      const content = [...reading.children].filter(
-        (child) => getComputedStyle(child).display !== 'none',
-      );
-      const height = panel.getBoundingClientRect().height;
-      const readingHeight = reading.getBoundingClientRect().height;
-      const gap = parseFloat(getComputedStyle(reading).rowGap);
-      const natural =
-        height -
-        readingHeight +
-        content.reduce(
-          (total, child) => total + child.getBoundingClientRect().height,
-          0,
-        ) +
-        gap * Math.max(0, content.length - 1);
-      return {
-        height,
-        natural,
-        readingHeight,
-        scrollHeight: reading.scrollHeight,
-        top: panel.getBoundingClientRect().top,
-        bottom: panel.getBoundingClientRect().bottom,
-        viewport: window.innerHeight,
-      };
-    });
+  const size = async (page: Awaited<ReturnType<typeof openList>>) => {
+    const read = () =>
+      page.evaluate(() => {
+        const panel = document.querySelector<HTMLElement>('[role="dialog"]');
+        const reading = panel?.querySelector<HTMLElement>(
+          ':scope > [tabindex="0"]',
+        );
+        if (!panel || !reading || panel.hidden) return null;
+        const content = [...reading.children].filter(
+          (child) => getComputedStyle(child).display !== 'none',
+        );
+        const height = panel.getBoundingClientRect().height;
+        const readingHeight = reading.getBoundingClientRect().height;
+        const natural =
+          height -
+          readingHeight +
+          content.reduce(
+            (total, child) => total + child.getBoundingClientRect().height,
+            0,
+          ) +
+          parseFloat(getComputedStyle(reading).rowGap) *
+            Math.max(0, content.length - 1);
+        if (height <= 0 || !Number.isFinite(natural)) return null;
+        return {
+          height,
+          natural,
+          readingHeight,
+          scrollHeight: reading.scrollHeight,
+          bottom: panel.getBoundingClientRect().bottom,
+          viewport: innerHeight,
+        };
+      });
+    let geometry = await read();
+    await expect
+      .poll(
+        async () => {
+          geometry = await read();
+          return geometry;
+        },
+        { timeout: 5000 },
+      )
+      .not.toBeNull();
+    if (!geometry) throw new Error('연결된 시트 치수가 없음');
+    return geometry;
+  };
   try {
     for (const entry of ['list', 'search', 'direct', 'nojs']) {
       const heights: number[] = [];
@@ -1302,28 +1338,67 @@ test('normalArticleSheetsFitTheirContentWithinSeventyDvh', async () => {
         const geometry = await size(page);
         heights.push(geometry.height);
         expect
-          .soft(geometry.height, entry + ' 정상 기사 상한70dvh')
-          .toBeLessThanOrEqual(geometry.viewport * 0.7 + 1);
+          .soft(
+            await page.getByRole('dialog').getAttribute('data-expanded'),
+            entry + ' 기본은 접힘',
+          )
+          .toBe('false');
         expect
           .soft(
             Math.abs(
               geometry.height -
-                Math.min(geometry.natural, geometry.viewport * 0.7),
+                Math.min(geometry.natural, geometry.viewport * 0.5352),
             ),
-            entry + ' 내용 뒤 빈 공간을 만들지 않음',
+            entry + ' 기본은 내용 높이와 Figma 절반 상한',
           )
           .toBeLessThan(2);
         expect
-          .soft(geometry.bottom, entry + ' 화면 아래에 정렬')
+          .soft(geometry.bottom, entry + ' 화면 아래 정렬')
           .toBeCloseTo(geometry.viewport, 0);
         const context = page.context();
         contexts.splice(contexts.indexOf(context), 1);
         await context.close();
       }
       expect
-        .soft(heights[1], entry + ' 내용이 늘면 실제 시트도 커짐')
+        .soft(heights[1], entry + ' 기본 상태도 내용이 짧으면 작게 열림')
         .toBeGreaterThan(heights[0] + 20);
     }
+
+    imageEnabled = true;
+    article.article.description = '이미지 안내 위치를 확인하는 기사입니다.';
+    const images = await openList();
+    const listCard = images.locator('main article').first();
+    expect
+      .soft(await listCard.locator('img').count(), '목록의 실제 이미지 유지')
+      .toBe(1);
+    expect
+      .soft(
+        await listCard.locator('figcaption').count(),
+        '목록에는 AI 배지를 표시하지 않음',
+      )
+      .toBe(0);
+    await images
+      .getByRole('link', { name: article.article.title, exact: true })
+      .click();
+    const detail = images.getByRole('dialog');
+    await detail
+      .getByRole('heading', { name: article.article.title, exact: true })
+      .waitFor();
+    const photo = detail.locator('figure img').first();
+    await photo.evaluate((element) => (element as HTMLImageElement).decode());
+    const caption = detail.locator('figcaption');
+    expect
+      .soft((await caption.textContent())?.trim(), '시트에서만 정확한 AI 안내')
+      .toBe('AI로 생성된 이미지입니다.');
+    const photoBox = await photo.boundingBox(),
+      captionBox = await caption.boundingBox();
+    expect
+      .soft(captionBox?.y ?? -1, 'AI 문구는 이미지 아래')
+      .toBeGreaterThanOrEqual((photoBox?.y ?? 0) + (photoBox?.height ?? 0));
+    const imageContext = images.context();
+    contexts.splice(contexts.indexOf(imageContext), 1);
+    await imageContext.close();
+    imageEnabled = false;
 
     article.article.description =
       '긴 본문을 읽고 안전 안내를 확인해 주세요. '.repeat(300);
@@ -1332,56 +1407,68 @@ test('normalArticleSheetsFitTheirContentWithinSeventyDvh', async () => {
     await page
       .getByRole('link', { name: article.article.title, exact: true })
       .click();
-    await page
+    const dialog = page.getByRole('dialog');
+    await dialog
       .getByRole('heading', { name: article.article.title, exact: true })
       .waitFor();
-    const dialog = page.getByRole('dialog');
-    const long = await size(page);
+    const initial = await size(page);
     expect
-      .soft(long.height, '긴 기사도70dvh 안에 유지')
-      .toBeCloseTo(long.viewport * 0.7, 0);
+      .soft(initial.height, '긴 기사도 기본은 절반 상한')
+      .toBeCloseTo(initial.viewport * 0.5352, 0);
     expect
-      .soft(long.scrollHeight, '긴 본문은 내부에서만 스크롤')
-      .toBeGreaterThan(long.readingHeight + 100);
+      .soft(initial.scrollHeight, '기본 상태에서 긴 본문 내부 스크롤')
+      .toBeGreaterThan(initial.readingHeight + 100);
+    const drag = async (delta: number) => {
+      const box = await dialog.locator('button[aria-expanded]').boundingBox();
+      if (!box) throw new Error('실제 드래그할 핸들이 없음');
+      const x = box.x + box.width / 2,
+        y = box.y + box.height / 2;
+      await page.mouse.move(x, y);
+      await page.mouse.down();
+      await page.mouse.move(x, y + delta, { steps: 6 });
+      await page.mouse.up();
+    };
+    await drag(-120);
+    expect
+      .soft(await dialog.getAttribute('data-expanded'), '실제 위 드래그로 확장')
+      .toBe('true');
+    const expanded = await size(page);
+    expect
+      .soft(expanded.height, '수동 확장은 상단49px를 남김')
+      .toBeCloseTo(expanded.viewport - 49, 0);
     const share = dialog.getByRole('button', {
       name: '기사 공유하기',
       exact: true,
     });
     await share.scrollIntoViewIfNeeded();
-    expect.soft(await share.isVisible(), '긴 본문 끝 공유에 도달').toBe(true);
-    await dialog.getByRole('button', { name: '기사 시트 접기' }).click();
-    const folded = await size(page);
+    expect.soft(await share.isVisible(), '확장 본문 끝 공유 접근').toBe(true);
+    await drag(120);
     expect
-      .soft(folded.height, '접힘은 기존 미리보기 상한')
-      .toBeCloseTo(folded.viewport * 0.5352, 0);
-    await dialog.getByRole('button', { name: '기사 시트 펼치기' }).click();
+      .soft(
+        await dialog.getAttribute('data-expanded'),
+        '실제 아래 드래그로 기본 복귀',
+      )
+      .toBe('false');
+    const folded = await size(page);
+    expect.soft(folded.height).toBeCloseTo(folded.viewport * 0.5352, 0);
+    await drag(-120);
     await page.setViewportSize({ width: 320, height: 320 });
     const compact = await size(page);
     expect
-      .soft(compact.height, '낮은 화면에서도70dvh 상한')
-      .toBeLessThanOrEqual(225);
-    expect
-      .soft(compact.readingHeight, '작은 화면에도 본문 스크롤 영역 유지')
-      .toBeGreaterThan(24);
-    const close = await dialog
-      .getByRole('link', { name: '닫기', exact: true })
-      .boundingBox();
-    expect
-      .soft(close?.y ?? -1, '닫기 버튼이 화면 안에 남음')
-      .toBeGreaterThanOrEqual(0);
+      .soft(compact.height, '낮은 화면도 상단 여백 유지')
+      .toBeCloseTo(compact.viewport - 49, 0);
+    expect.soft(compact.readingHeight).toBeGreaterThan(24);
     await share.scrollIntoViewIfNeeded();
-    expect
-      .soft(await share.isVisible(), '작은 화면에서도 공유에 도달')
-      .toBe(true);
+    expect.soft(await share.isVisible(), '작은 화면 공유 접근').toBe(true);
     await dialog.getByRole('link', { name: '닫기', exact: true }).click();
     await expect.poll(() => page.getByRole('dialog').count()).toBe(0);
     expect
       .soft(
         await page.locator('[data-article-background]').getAttribute('inert'),
-        '닫으면 배경 접근 복원',
       )
       .toBeNull();
   } finally {
+    imageEnabled = false;
     article.article.description = savedDescription;
   }
 }, 60000);
