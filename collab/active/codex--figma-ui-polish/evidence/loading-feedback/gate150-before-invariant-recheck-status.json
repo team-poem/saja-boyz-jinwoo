@@ -1,0 +1,6 @@
+{
+  "exitCode": 1,
+  "testsPassed": 150,
+  "failedTests": 0,
+  "reason": "증거 저장 워커가 suite JSON 출력 직후 gate의 최종 source/Git 불변 비교 전에 시작되었다. 이 결과는 최종 GREEN으로 사용하지 않는다. 동일 제품 56d4c1c에서 수정 없는 최종 재검증 exit0을 gate150.json으로 대체했다."
+}

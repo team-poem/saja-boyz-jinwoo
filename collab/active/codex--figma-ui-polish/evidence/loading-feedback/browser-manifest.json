@@ -1,0 +1,268 @@
+{
+  "sourceHead": "56d4c1c60d5558d08e5495d1a31b21903b83f213",
+  "buildId": "pRhNY7upYLIiB9oD27vRG",
+  "synthetic": true,
+  "personalLocation": false,
+  "SDKStubbed": false,
+  "SDKModified": false,
+  "summary": {
+    "checks": 91,
+    "failed": 0,
+    "scenarios": 16,
+    "incompleteScenarios": 0,
+    "screenshots": 31,
+    "pageErrors": 0
+  },
+  "screenshots": [
+    {
+      "file": "app/image-list-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Held synthetic image; caption intentionally retains its SSR presence."
+    },
+    {
+      "file": "app/image-list-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Released and decoded synthetic image."
+    },
+    {
+      "file": "app/image-list-cache.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "New page, same normal browser context; general navigation shares HTTP max-age cache without route interception or forced reload validation."
+    },
+    {
+      "file": "app/image-list-failure.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Synthetic image HTTP503; product fallback visible."
+    },
+    {
+      "file": "app/image-map-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Held synthetic image; caption intentionally retains its SSR presence."
+    },
+    {
+      "file": "app/image-map-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Released and decoded synthetic image."
+    },
+    {
+      "file": "app/image-map-cache.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "New page, same normal browser context; general navigation shares HTTP max-age cache without route interception or forced reload validation."
+    },
+    {
+      "file": "app/image-map-failure.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Synthetic image HTTP503; product fallback visible."
+    },
+    {
+      "file": "app/image-detail-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Held synthetic image; caption intentionally retains its SSR presence."
+    },
+    {
+      "file": "app/image-detail-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Released and decoded synthetic image."
+    },
+    {
+      "file": "app/image-detail-cache.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "New page, same normal browser context; general navigation shares HTTP max-age cache without route interception or forced reload validation."
+    },
+    {
+      "file": "app/image-detail-failure.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Synthetic image HTTP503; product fallback visible."
+    },
+    {
+      "file": "app/home-api-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Server map API held; full-height fallback, SDK intentionally not yet mounted."
+    },
+    {
+      "file": "app/home-api-ready.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual Naver SDK/tiles with fixed synthetic browser location and synthetic article groups."
+    },
+    {
+      "file": "app/search-enter-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Manual GET submission is held in the local article API."
+    },
+    {
+      "file": "app/search-enter-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "The matching synthetic result set has replaced the pending state."
+    },
+    {
+      "file": "app/search-button-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Manual GET submission is held in the local article API."
+    },
+    {
+      "file": "app/search-button-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "The matching synthetic result set has replaced the pending state."
+    },
+    {
+      "file": "app/search-error-retry-503-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Server search error Link pending; original query included whitespace and this retry normalizes its URL."
+    },
+    {
+      "file": "app/search-error-retry-503-result.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "The first retry failed again; its spinner ended and the same-href retry remains available."
+    },
+    {
+      "file": "app/search-error-retry-200-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Server search error Link pending; original query included whitespace and this retry normalizes its URL."
+    },
+    {
+      "file": "app/search-error-retry-200-result.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Second retry used the same normalized href and recovered the real synthetic search results."
+    },
+    {
+      "file": "app/detail-overlay-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual NextLink RSC entry; upstream detail held, prefetch blocked only in this context."
+    },
+    {
+      "file": "app/detail-archive-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual NextLink RSC entry; upstream detail held, prefetch blocked only in this context."
+    },
+    {
+      "file": "app/detail-refresh-200-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "An error sheet retries with router.refresh; repeated Enter must not add upstream requests."
+    },
+    {
+      "file": "app/detail-refresh-200-result.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Retry recovered the article."
+    },
+    {
+      "file": "app/detail-refresh-503-pending.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "An error sheet retries with router.refresh; repeated Enter must not add upstream requests."
+    },
+    {
+      "file": "app/detail-refresh-503-result.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Retry failed again; the pending state ended and retry is available."
+    },
+    {
+      "file": "app/direct-delayed-success.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Both direct-request stages were gated and explicitly released; initial pre-HTML delay is expected."
+    },
+    {
+      "file": "app/direct-nojs-valid.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "JavaScript disabled; final article title, summary, source and image must remain visible."
+    },
+    {
+      "file": "app/direct-nojs404.png",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "condition": "Actual upstream404, no JavaScript, unchanged original address and visible escape paths."
+    }
+  ],
+  "report": "report.json",
+  "execution": "Run only after parent QA-ready; this script does not build or start any server."
+}

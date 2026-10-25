@@ -1,0 +1,17 @@
+{
+  "sourceHead": "56d4c1c60d5558d08e5495d1a31b21903b83f213",
+  "buildId": "pRhNY7upYLIiB9oD27vRG",
+  "gateExitCode": 0,
+  "appTests": 150,
+  "failed": 0,
+  "skipped": 0,
+  "formatPassed": true,
+  "lintPassed": true,
+  "existingLintWarnings": 3,
+  "newLintWarnings": 0,
+  "sourceAndGitInvariantPassed": true,
+  "buildPassed": true,
+  "browserChecks": 91,
+  "browserFailed": 0,
+  "screenshots": 31
+}

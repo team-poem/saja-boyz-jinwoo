@@ -2,9 +2,9 @@
 branch: codex/figma-ui-polish
 owner: easter721
 started: 2026-10-24
-status: active
+status: done
 goal: fix(ui): 상세 복귀 회귀와 최신 Figma 화면 세부 스타일 정렬
-next: 이미지·최초 지도·직접 기사·검색 제출·재시도의 로딩 피드백 보완
+next: PR45 사용자 리뷰 대기
 base: dev
 ---
 
@@ -31,3 +31,5 @@ base: dev
 - 상대 숫자 원 최종: 소스5202747/BuildOlCnnH7LrNmRV-5J37cIH, 전체146개·production빌드·타입·실제Naver71개 실패0·캡처7장. 이동pane원점 정규화, 화면밖제외, 선택시트/포커스/읽던위치 보존 확인. 외부댓글/리뷰요청/머지/Draft전환 없음.
 
 - 2026-10-25 사용자 승인: 이미지·최초 지도·공유 주소 직접 진입·검색 제출·재시도의 빠진 로딩을 소바야로 보완하고 SEO/실제404를 보존해 PR45에 커밋·푸시한다. Figma의 필터와 비활성 표면은 유지한다. 외부 댓글·리뷰 요청·머지는 하지 않는다.
+
+- 로딩 최종: 소스56d4c1c/BuildpRhNY7upYLIiB9oD27vRG, 소바야150개 실패·생략0·포맷/린트/소스Git불변exit0·빌드타입 통과. 실제Naver Chrome91개 실패0·시나리오16·캡처31·pageErrors0. 직접주소 첫HTML전대기는유지하고서버본문/NoJS/404보존. Figma필터유지. QA서버/포트정리. 댓글/리뷰요청/승인/머지/Draft전환없음.

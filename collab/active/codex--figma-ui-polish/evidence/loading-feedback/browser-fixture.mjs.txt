@@ -1,0 +1,177 @@
+import { createServer } from 'node:http';
+import { mkdir, writeFile } from 'node:fs/promises';
+
+const port = Number(process.env.QA_API_PORT || 41147);
+const output = process.env.QA_OUTPUT || '/private/tmp/pr45-loading-qa/final';
+const hour = 3600000;
+const now = Date.now();
+const specifications = [
+  ['QA-A 종로 검증 지역', 1, 37.56, 126.99],
+  ['QA-B 서북 검증 지역', 2, 37.584, 126.963],
+  ['QA-C 동북 검증 지역', 4, 37.586, 127.017],
+];
+const items = [];
+const mapItems = [];
+let seed = 30000;
+for (const [label, count, latitude, longitude] of specifications) {
+  for (let i = 0; i < count; i++) {
+    const id = (seed++).toString(16).padStart(64, '0');
+    const item = {
+      collection_id: 'loading-qa',
+      article_id: id,
+      image_status: 'ready',
+      image_url: '/images/' + id + '.jpg',
+      article: {
+        title: '검증용 기사 · 느린검색 · ' + label + ' · ' + (i + 1) + '번째 보도',
+        description: '이미지와 응답 지연을 확인하는 합성 기사입니다. 실제 사건 보도가 아닙니다. 현장 안전 안내를 확인하고 우회 경로를 이용해 주세요.',
+        pubDate: new Date(now - items.length * hour).toISOString(),
+        originallink: 'https://publisher.example.invalid/loading/' + id,
+        link: '',
+      },
+    };
+    items.push(item);
+    mapItems.push({
+      ...item,
+      location_status: 'resolved',
+      location_reason: null,
+      location: {
+        latitude, longitude, label, precision: 'region',
+        evidence: { field: 'title', text: label },
+      },
+    });
+  }
+}
+const ids = { single: items[0].article_id, second: items[1].article_id, missing: 'f'.repeat(64) };
+const details = new Map(items.map(item => [item.article_id, item]));
+const image = '<svg xmlns="http://www.w3.org/2000/svg" width="720" height="400"><rect width="720" height="400" fill="#dae6ee"/><path d="M50 310 230 120 380 250 540 90 670 310" stroke="#9aafbf" stroke-width="24" fill="none"/><rect x="160" y="160" width="400" height="80" rx="12" fill="white"/><text x="360" y="210" text-anchor="middle" font-family="sans-serif" font-size="32">SYNTHETIC LOADING QA</text></svg>';
+const scopes = new Set(['map', 'list', 'detail', 'image']);
+const rules = new Map();
+const requests = [];
+const queue = [];
+let sequence = 0;
+
+function send(res, status, body, isImage = false) {
+  if (res.destroyed || res.writableEnded) return;
+  res.writeHead(status, {
+    'Content-Type': isImage && status === 200 ? 'image/svg+xml' : 'application/json; charset=utf-8',
+    'Cache-Control': isImage && status === 200 ? 'public, max-age=3600' : 'no-store',
+    'Access-Control-Allow-Origin': '*',
+  });
+  res.end(isImage && status === 200 ? image : JSON.stringify(body));
+}
+function ruleKey(scope, key = '*') { return scope + ':' + key; }
+function getRule(scope, key) { return rules.get(ruleKey(scope, key)) || rules.get(ruleKey(scope)) || { hold: false, status: 200 }; }
+function snapshot() {
+  return {
+    ok: true, synthetic: true, personalLocation: false, ids,
+    title: items[0].article.title, summary: items[0].article.description,
+    total: items.length, groups: specifications.map(([label, count]) => ({ label, count })),
+    rules: [...rules].map(([key, value]) => ({ key, ...value })),
+    pending: queue.filter(q => !q.done).map(q => ({ token: q.entry.token, scope: q.entry.scope, key: q.entry.key })),
+    requests,
+  };
+}
+function releasePending(scope, key, count, status) {
+  const matching = queue.filter(q => !q.done && (!scope || q.entry.scope === scope) && (!key || q.entry.key === key));
+  const selected = count === 'all' ? matching : matching.slice(0, Number(count || 1));
+  for (const item of selected) {
+    item.done = true;
+    item.entry.released = Date.now();
+    item.resolve({ status: status ?? getRule(item.entry.scope, item.entry.key).status });
+  }
+  return selected.map(q => q.entry.token);
+}
+async function controlled(req, res, scope, key, body, inherentStatus = 200) {
+  const rule = { ...getRule(scope, key) };
+  const entry = { token: ++sequence, scope, key, path: new URL(req.url, 'http://fixture.invalid').pathname, started: Date.now(), held: rule.hold };
+  requests.push(entry);
+  let queued;
+  const closed = () => {
+    entry.closedAfterMs = Date.now() - entry.started;
+    entry.completed = res.writableEnded;
+    if (queued && !queued.done) {
+      queued.done = true;
+      entry.cancelled = true;
+      queued.resolve({ cancelled: true });
+    }
+  };
+  res.once('close', closed);
+  let result = { status: rule.status };
+  if (rule.hold) {
+    result = await new Promise(resolve => {
+      queued = { req, res, entry, resolve, done: false };
+      queue.push(queued);
+    });
+  }
+  if (result.cancelled || res.destroyed) return;
+  const status = inherentStatus === 404 ? 404 : result.status;
+  entry.status = status;
+  send(res, status, status === 200 ? body : { error: status === 404 ? 'QA_NOT_FOUND' : 'QA_SYNTHETIC_UNAVAILABLE' }, scope === 'image');
+}
+const server = createServer(async (req, res) => {
+  try {
+    const url = new URL(req.url || '/', 'http://fixture.invalid');
+    const { pathname: path, searchParams: params } = url;
+    if (req.method !== 'GET' && req.method !== 'HEAD') return send(res, 405, { error: 'QA_READ_ONLY' });
+    if (path === '/__qa/health' || path === '/__qa/state') return send(res, 200, snapshot());
+    if (path === '/__qa/config') {
+      const scope = params.get('scope');
+      if (!scopes.has(scope)) return send(res, 400, { error: 'INVALID_SCOPE' });
+      const key = params.get('key') || '*';
+      const prior = getRule(scope, key);
+      const status = params.has('status') ? Number(params.get('status')) : prior.status;
+      if (![200, 404, 503].includes(status)) return send(res, 400, { error: 'INVALID_STATUS' });
+      rules.set(ruleKey(scope, key), { hold: params.has('hold') ? params.get('hold') === '1' : prior.hold, status });
+      return send(res, 200, snapshot());
+    }
+    if (path === '/__qa/release') {
+      const scope = params.get('scope') || undefined;
+      const key = params.get('key') || undefined;
+      const count = params.get('count') || 'all';
+      if (scope && !scopes.has(scope)) return send(res, 400, { error: 'INVALID_SCOPE' });
+      if (count !== 'all' && (!/^[1-9]\d*$/.test(count) || Number(count) > 100)) return send(res, 400, { error: 'INVALID_COUNT' });
+      const status = params.has('status') ? Number(params.get('status')) : undefined;
+      if (status !== undefined && ![200, 404, 503].includes(status)) return send(res, 400, { error: 'INVALID_STATUS' });
+      const released = releasePending(scope, key, count, status);
+      return send(res, 200, { released, ...snapshot() });
+    }
+    if (path === '/__qa/reset') {
+      rules.clear();
+      releasePending(undefined, undefined, 'all', 200);
+      requests.length = 0;
+      return send(res, 200, snapshot());
+    }
+    if (path === '/news') {
+      const keyword = (params.get('keyword') || '').toLowerCase();
+      const all = items.filter(item => !keyword || item.article.title.toLowerCase().includes(keyword));
+      const offset = Number(params.get('offset') || 0), limit = Number(params.get('limit') || 20);
+      return await controlled(req, res, 'list', keyword, { total: all.length, items: all.slice(offset, offset + limit) });
+    }
+    if (path === '/map/articles') {
+      const offset = Number(params.get('offset') || 0), limit = Number(params.get('limit') || 100);
+      return await controlled(req, res, 'map', 'all', { total: mapItems.length, items: mapItems.slice(offset, offset + limit) });
+    }
+    if (path.startsWith('/news/')) {
+      const key = path.slice(6), item = details.get(key);
+      return await controlled(req, res, 'detail', key, item, item ? 200 : 404);
+    }
+    if (/^\/images\/[a-f0-9]{64}\.jpg$/.test(path)) {
+      const key = path.slice('/images/'.length, -4);
+      return await controlled(req, res, 'image', key, null, details.has(key) ? 200 : 404);
+    }
+    return send(res, 404, { error: 'QA_NOT_FOUND' });
+  } catch {
+    send(res, 500, { error: 'QA_FIXTURE_ERROR' });
+  }
+});
+server.listen(port, '127.0.0.1', () => console.log(JSON.stringify({ fixture: 'http://127.0.0.1:' + port, synthetic: true, groups: [1, 2, 4] })));
+async function stop() {
+  rules.clear();
+  releasePending(undefined, undefined, 'all', 503);
+  await mkdir(output, { recursive: true });
+  await writeFile(output + '/fixture-requests.json', JSON.stringify(snapshot(), null, 2));
+  server.closeAllConnections();
+  server.close(() => process.exit(0));
+}
+process.on('SIGTERM', stop);
+process.on('SIGINT', stop);
