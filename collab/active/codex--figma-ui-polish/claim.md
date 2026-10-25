@@ -2,9 +2,9 @@
 branch: codex/figma-ui-polish
 owner: easter721
 started: 2026-10-24
-status: active
+status: done
 goal: fix(ui): 상세 복귀 회귀와 최신 Figma 화면 세부 스타일 정렬
-next: CI 재검색 회귀의 RSC 스트림 대기 진단과 안정화
+next: PR45 사용자 리뷰 대기
 base: dev
 ---
 
@@ -35,3 +35,5 @@ base: dev
 - 로딩 최종: 소스56d4c1c/BuildpRhNY7upYLIiB9oD27vRG, 소바야150개 실패·생략0·포맷/린트/소스Git불변exit0·빌드타입 통과. 실제Naver Chrome91개 실패0·시나리오16·캡처31·pageErrors0. 직접주소 첫HTML전대기는유지하고서버본문/NoJS/404보존. Figma필터유지. QA서버/포트정리. 댓글/리뷰요청/승인/머지/Draft전환없음.
 
 - 원격 ab52ab4 CI에서 같은검색어회귀1개가60초timeout으로실패했다. 로컬150gate/실제UI91은통과했으나완료근거와구분하고,기대값/전체상한을유지한채브라우저phase·요청·cleanup을진단한다. 제품UI는수정하지않는다.
+
+- 원격timeout후속: 제품파일변경없이테스트별context정리·무기한RSC EOF대기를실제UI완료검증으로교체·단계진단추가. 같은60초상한/기대값으로9개브라우저회귀·전체150개gateexit0통과. 신규계획보관후원격최종CI확인한다.

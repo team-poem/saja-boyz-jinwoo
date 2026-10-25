@@ -1,6 +1,6 @@
 # 누락 로딩 보완 · 최종 검증
 
-제품 소스 `56d4c1c60d5558d08e5495d1a31b21903b83f213`, production Build `pRhNY7upYLIiB9oD27vRG`를 검증했다. 이후 인수인계는 기록·계획 보관만 포함한다.
+제품 소스 `56d4c1c60d5558d08e5495d1a31b21903b83f213`, production Build `pRhNY7upYLIiB9oD27vRG`를 검증했다. 이후에는 같은 제품의 회귀 테스트 대기·정리를 보완하고 기록·계획을 보관했다. 제품 런타임 파일은 변경하지 않았다.
 
 ## 변경과 계약
 
@@ -39,3 +39,10 @@ Chrome393×852, reduced-motion reduce에서16개 시나리오·91개 검사 모�
 Proxy의 존재 확인과 metadata는 첫 HTML 이전 단계다. 이 구간은 앱 spinner로 표시할 수 없으며 기존 HTTP 대기가 남는다. 이를 해결했다고 주장하지 않는다. 완성된 서버 본문·공유 주소·SEO·실제404를 보존하고 내부 이동/재시도 로딩을 보완했다. 관련 [불변 계약 blob](preserved-contracts.json), [UI 계약](../../../../../docs/ui-contract.md), [구조](../../../../../docs/architecture.md)를 참고한다.
 
 소유권을 확인한 QA 서버31147/41147은 SIGTERM 종료했고 포트가 닫혔다([정리 기록](cleanup.json)). 실제 모바일 OS 권한 창·키보드·safe-area는 이번 데스크톱 Chrome 검증에 포함하지 않는다. PR Draft 상태를 유지하고 외부 댓글·리뷰 요청·승인·머지는 수행하지 않는다.
+
+
+## 원격 CI 시간 초과 후속
+
+`ab52ab4`의 원격 앱 검사는149개 통과·재검색 회귀1개60초 timeout으로 실패했다([진단 로그](ci-ab52ab4-timeout.txt)). 전체 timeout만으로 특정 대기 구간을 확정하지 않는다. 무기한 RSC 스트림 종료를 기다리는 대신 실제200 응답·새 결과·offset20·끝/빈 결과·busy 종료로 제품 완료를 검증하고, 매 테스트의 브라우저 context를 닫아 다음 테스트와 분리했다. 단계별 제한과 진행 중 요청 진단을 추가했으며 전체60초 상한과 기존 기대값은 유지했다.
+
+보완 후 [브라우저 회귀 파일9개](ci-navigation-nine-green.json)와 [전체150개](ci-gate150.json)가 실패·생략 없이 통과했고, 최종 gate exit0·포맷/린트·소스/Git 불변 검사를 확인했다. [후속 상태](ci-followup-status.json)의 diff는 테스트 파일1개뿐이며 화면/필터/SEO/404/공유/자산은 `56d4c1c` 빌드와 같다. 따라서31개 화면과91개 브라우저 결과는 같은 제품의 근거로 유지한다. 원격 최종 결과는 PR 최신 커밋의 CI를 별도로 확인한다.

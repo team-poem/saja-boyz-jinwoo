@@ -43,7 +43,17 @@
       "passed": 150,
       "failed": 0,
       "skipped": 0,
-      "support": "명시submit revision으로만결과remount. A40→B20→offset20→B23→C3→empty검증. 첫전체실행1개실패뒤동일파일9개GREEN,관측을해당keyword요청·렌더완료로한정해전체재검증."
+      "support": "명시submit revision으로만결과remount. A40→B20→offset20→B23→C3→empty검증. 첫전체실행1개실패뒤동일파일9개GREEN,관측을해당keyword요청·렌더완료로한정해전체재검증.",
+      "ci_followup": {
+        "red": "ci-ab52ab4-timeout.txt",
+        "observed": "원격149개통과/같은검색어회귀1개60초timeout",
+        "green": "ci-navigation-nine-green.json",
+        "full": "ci-gate150.json",
+        "passed": 150,
+        "failed": 0,
+        "skipped": 0,
+        "changes": "제품UI불변. 테스트마다context종료,무제한RSC스트림EOF대기대신실제200응답+새결과/offset/busy종료를검증하고단계진단추가. 전체60초상한과기대값유지."
+      }
     }
   ]
 }
