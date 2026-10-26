@@ -22,7 +22,11 @@ function isArticleCollectionItem(
   );
 }
 
-export async function fetchArticleList(keyword?: string, offset = 0) {
+export async function fetchArticleList(
+  keyword?: string,
+  offset = 0,
+  sort: 'recent' | 'popular' = 'recent',
+) {
   if (!Number.isSafeInteger(offset) || offset < 0) return null;
 
   try {
@@ -44,6 +48,7 @@ export async function fetchArticleList(keyword?: string, offset = 0) {
 
     url.searchParams.set('offset', String(offset));
     url.searchParams.set('limit', '20');
+    if (sort === 'popular') url.searchParams.set('sort', 'popular');
     const normalizedKeyword = keyword?.trim();
 
     if (normalizedKeyword) url.searchParams.set('keyword', normalizedKeyword);

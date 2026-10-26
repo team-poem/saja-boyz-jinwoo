@@ -1,0 +1,1 @@
+{"passed":true,"checks":["prefetch=0","first visit=1","reload=1","second browser=2","popular list order","restart preserves 2"],"environment":"local Go API + production Next build + Chrome; no production writes"}

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { ArticleViewTracker } from '@/features/article-views/article-view-tracker';
 import { IconText } from '@/components/ui/icon-text/icon-text';
 import { Notice } from '@/components/feedback/notice';
 import { pageMetadata, siteOrigin } from '@/app/site-metadata';
@@ -130,6 +131,7 @@ export default async function IncidentDetailPage({
         <DetailShare key={id} id={id} title={articleTitle(article.title)} />
       }
     >
+      <ArticleViewTracker id={id} apiOrigin={apiOrigin} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
