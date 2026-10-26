@@ -3,7 +3,7 @@
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, assert, beforeEach, expect, test, vi } from 'vitest';
-import IncidentsPage from '@/app/incidents/page';
+import IncidentsPage from '@/app/(browse)/@background/incidents/page';
 import type { ArticleCollectionItem } from '@/features/article-list/model/article.types';
 
 const request = vi.fn<typeof fetch>();
@@ -191,7 +191,7 @@ test('articleListMoreAppendsWithRawOffsetsAndFirstSeenIdentity', async () => {
   expect(added.querySelector('img')?.getAttribute('src')).toBe(
     apiOrigin + next.image_url,
   );
-  expect(added.textContent).toContain('AI 생성 이미지');
+  expect(added.querySelector('figcaption')).toBeNull();
   expect(
     added.querySelector('a[href="https://publisher.example.invalid/19"]'),
   ).not.toBeNull();
@@ -210,8 +210,13 @@ test('articleListMoreAppendsWithRawOffsetsAndFirstSeenIdentity', async () => {
     const url = new URL(input instanceof Request ? input.url : String(input));
     expect(url.origin).toBe(apiOrigin);
     expect(url.pathname).toBe('/news');
-    expect([...url.searchParams.keys()].sort()).toEqual(['limit', 'offset']);
+    expect([...url.searchParams.keys()].sort()).toEqual([
+      'limit',
+      'offset',
+      'sort',
+    ]);
     expect(url.searchParams.get('limit')).toBe('20');
+    expect(url.searchParams.get('sort')).toBe('popular');
     expect(init?.method).toBe('GET');
     expect(init?.cache).toBe('no-store');
     expect(init?.signal).toBeTruthy();

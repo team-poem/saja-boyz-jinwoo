@@ -1,10 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
+import { IconText } from '@/components/ui/icon-text/icon-text';
+import { DetailSheet } from '@/features/article-detail/ui/detail-sheet/detail-sheet';
+import { useArticleSheetRoute } from '@/features/article-detail/model/article-sheet-context';
 import {
   articleText,
   publicationDate,
@@ -18,107 +19,114 @@ export function MapArticleSheet({
   items,
   apiOrigin,
   onClose,
+  onHeightChange,
+  active = true,
 }: {
   items: LocatedArticle[];
   apiOrigin: string;
   onClose(): void;
+  onHeightChange?(height: number): void;
+  active?: boolean;
 }) {
-  const closeButton = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    closeButton.current?.focus({ preventScroll: true });
-  }, [items]);
+  const route = useArticleSheetRoute();
 
   return createPortal(
-    <section
-      aria-label="선택한 기사"
-      className="ui-sheet-enter fixed bottom-0 left-1/2 z-30 flex max-h-[65dvh] w-full max-w-[640px] -translate-x-1/2 flex-col gap-4 rounded-t-3xl border-0 border-t border-solid border-[#e3e8f0] bg-surface p-4 pb-[max(16px,env(safe-area-inset-bottom))] shadow-[0_-8px_16px_rgb(0_0_0/10%)]"
-      onKeyDown={(event) => {
-        if (event.key === 'Escape') onClose();
-      }}
+    <DetailSheet
+      titleId="selected-map-articles"
+      label="선택한 기사"
+      initialExpanded={false}
+      onClose={onClose}
+      closeLabel="기사 선택 닫기"
+      onHeightChange={onHeightChange}
+      active={active}
     >
-      <div
-        aria-hidden="true"
-        className="h-1 w-9 shrink-0 self-center rounded-sm bg-slate-400"
-      />
-      <div className="flex shrink-0 items-center justify-between gap-3">
-        <p className="m-0 rounded-sm border border-solid border-border bg-slate-100 px-1.5 py-0.5 text-[10px]/[normal] font-semibold text-muted">
-          선택한 위치의 기사 {items.length}건
-        </p>
-        <button
-          ref={closeButton}
-          type="button"
-          aria-label="기사 선택 닫기"
-          onClick={onClose}
-          className="ui-control relative size-6 shrink-0 border-0 bg-transparent p-0"
-        >
-          <Image
-            src="/map/sheet-close.svg"
-            alt=""
-            width={40}
-            height={40}
-            className="absolute -top-1.5 -left-2 block max-w-none"
-          />
-        </button>
-      </div>
-      <div className="flex min-h-0 flex-col gap-4 overflow-y-auto overscroll-contain">
-        {items.map((item) => {
-          const publishedAt = publicationDate(item.article.pubDate);
-          const imageUrl =
-            item.image_status === 'ready' &&
-            /^[a-f0-9]{64}$/.test(item.article_id) &&
-            item.image_url === `/images/${item.article_id}.jpg`
-              ? new URL(item.image_url, apiOrigin).href
-              : null;
+      <h1
+        id="selected-map-articles"
+        className="m-0 text-sm font-bold text-muted"
+      >
+        선택한 위치의 기사 {items.length}건
+      </h1>
+      {items.map((item) => {
+        const publishedAt = publicationDate(item.article.pubDate);
+        const imageUrl =
+          item.image_status === 'ready' &&
+          /^[a-f0-9]{64}$/.test(item.article_id) &&
+          item.image_url === '/images/' + item.article_id + '.jpg'
+            ? new URL(item.image_url, apiOrigin).href
+            : null;
 
-          return (
-            <article
-              key={item.article_id}
-              className="flex shrink-0 flex-col gap-4 border-0 border-solid border-border pb-4 not-last:border-b last:pb-0"
-            >
-              <h2 className="m-0 text-[18px]/[normal] font-extrabold text-text [overflow-wrap:anywhere]">
-                <Link href={`/incidents/${item.article_id}`}>
-                  {articleText(item.article.title)}
-                </Link>
-              </h2>
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                <p className="m-0 text-[13px]/[normal] font-medium text-muted">
-                  <span aria-hidden="true">📍 </span>
+        return (
+          <article
+            key={item.article_id}
+            className="flex shrink-0 flex-col gap-3 rounded-lg border border-solid border-border bg-background p-2.5"
+          >
+            <h2 className="m-0 text-[15px]/[21px] font-extrabold text-text [overflow-wrap:anywhere]">
+              <Link
+                scroll={false}
+                href={'/incidents/' + item.article_id}
+                onClick={(event) => {
+                  if (
+                    !route ||
+                    event.defaultPrevented ||
+                    event.button !== 0 ||
+                    event.metaKey ||
+                    event.ctrlKey ||
+                    event.shiftKey ||
+                    event.altKey ||
+                    event.currentTarget.target === '_blank'
+                  )
+                    return;
+
+                  event.preventDefault();
+                  event.currentTarget.focus({ preventScroll: true });
+                  route.openArticle(item.article_id);
+                }}
+              >
+                {articleText(item.article.title)}
+              </Link>
+            </h2>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <p className="m-0 text-[13px]/[18px] font-medium text-muted">
+                <IconText
+                  icon="pin"
+                  iconClassName="text-brand"
+                  textClassName="[overflow-wrap:anywhere]"
+                >
                   {item.location.label}
-                </p>
-                <p className="m-0 text-[12px]/[normal] text-slate-400">
-                  {Number.isNaN(publishedAt.getTime()) ? (
-                    '발행 시각 미확인'
-                  ) : (
-                    <>
-                      기사 발행{' '}
-                      <time dateTime={publishedAt.toISOString()}>
-                        {publicationText(publishedAt)}
-                      </time>
-                    </>
-                  )}
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-20 shrink-0">
-                  <ArticleImage key={imageUrl} src={imageUrl} />
-                </div>
-                <p className="m-0 min-w-0 text-[13px]/[1.5] text-muted [overflow-wrap:anywhere]">
-                  {articleText(item.article.description)}
-                </p>
-              </div>
-              <p className="m-0 text-[11px]/4 text-muted">
-                {item.location.precision === 'address'
-                  ? '기사에 언급된 주소 기준 위치'
-                  : item.location.precision === 'neighborhood'
-                    ? '기사에 언급된 동네 기준 위치 · 실제 발생 지점과 다를 수 있습니다'
-                    : '지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다'}
+                </IconText>
               </p>
-            </article>
-          );
-        })}
-      </div>
-    </section>,
+              <p className="m-0 text-[12px]/4 text-slate-400">
+                {Number.isNaN(publishedAt.getTime()) ? (
+                  '발행 시각 미확인'
+                ) : (
+                  <>
+                    기사 발행{' '}
+                    <time dateTime={publishedAt.toISOString()}>
+                      {publicationText(publishedAt)}
+                    </time>
+                  </>
+                )}
+              </p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-20 shrink-0">
+                <ArticleImage key={imageUrl} src={imageUrl} showAiCaption />
+              </div>
+              <p className="m-0 min-w-0 text-[13px]/[1.5] text-muted [overflow-wrap:anywhere]">
+                {articleText(item.article.description)}
+              </p>
+            </div>
+            <p className="m-0 text-[11px]/4 text-muted">
+              {item.location.precision === 'address'
+                ? '기사에 언급된 주소 기준 위치'
+                : item.location.precision === 'neighborhood'
+                  ? '기사에 언급된 동네 기준 위치 · 실제 발생 지점과 다를 수 있습니다'
+                  : '지역 대표 위치 · 실제 발생 지점과 다를 수 있습니다'}
+            </p>
+          </article>
+        );
+      })}
+    </DetailSheet>,
     document.body,
   );
 }

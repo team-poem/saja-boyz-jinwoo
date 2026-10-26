@@ -7,6 +7,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, assert, beforeEach, expect, test, vi } from 'vitest';
 
 vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
   notFound: () => {
     throw new Error('TEST_SEO_NOT_FOUND');
   },
@@ -105,14 +106,14 @@ test('searchDiscoveryUsesProductionBrandAndRouteMetadata', async () => {
   expect(image.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a');
   expect(image.readUInt32BE(16)).toBe(1200);
   expect(image.readUInt32BE(20)).toBe(630);
-  expect(await metadata('./page.tsx')).toMatchObject({
+  expect(await metadata('./(browse)/page.tsx')).toMatchObject({
     alternates: { canonical: origin + '/' },
   });
-  expect(await metadata('./incidents/page.tsx')).toMatchObject({
+  expect(await metadata('./(browse)/incidents/page.tsx')).toMatchObject({
     title: '사건 사고 기사 목록',
     alternates: { canonical: origin + '/incidents' },
   });
-  for (const path of ['./search/page.tsx', './report/layout.tsx']) {
+  for (const path of ['./(browse)/search/page.tsx', './report/layout.tsx']) {
     expect(await metadata(path)).toMatchObject({
       robots: { index: false, follow: true },
     });
@@ -185,14 +186,21 @@ test('articleMetadataMatchesSummaryAndEscapesStructuredCitation', async () => {
 
 test('articleMetadataErrorsAreNotIndexableArticles', async () => {
   for (const badId of ['short', 'A'.repeat(64), '../news']) {
-    await expect(
-      metadata('./incidents/[id]/page.tsx', props(undefined, badId)),
-    ).rejects.toThrow('TEST_SEO_NOT_FOUND');
+    const missing = await metadata(
+      './incidents/[id]/page.tsx',
+      props(undefined, badId),
+    );
+    expect(missing.robots).toMatchObject({ index: false, follow: true });
+    expect(JSON.stringify(missing)).not.toMatch(
+      /교통 안내|article:published_time/,
+    );
   }
   expect(request).not.toHaveBeenCalled();
   request.mockResolvedValueOnce(new Response('', { status: 404 }));
-  await expect(metadata('./incidents/[id]/page.tsx')).rejects.toThrow(
-    'TEST_SEO_NOT_FOUND',
+  const missing = await metadata('./incidents/[id]/page.tsx');
+  expect(missing.robots).toMatchObject({ index: false, follow: true });
+  expect(JSON.stringify(missing)).not.toMatch(
+    /교통 안내|article:published_time/,
   );
   for (const response of [
     new Response('PRIVATE_UPSTREAM', { status: 503 }),
@@ -328,7 +336,7 @@ test('serverArchiveLinksOlderRawPagesWithoutReplacingInfiniteScroll', async () =
   expect(failed.querySelector('a[href="/archive?page=2"]')).not.toBeNull();
 });
 
-test('serviceAnswersAreVisibleAndReachableWithoutMapJavaScript', async () => {
+test('serviceAnswersRemainPublicWithoutExtraBrowseLayers', async () => {
   const routeModule = await load('./about/page.tsx');
   const container = view(await (routeModule.default as Route)(props()));
   expect(container.querySelector('h1')?.textContent).toContain('흉흉');
@@ -347,14 +355,57 @@ test('serviceAnswersAreVisibleAndReachableWithoutMapJavaScript', async () => {
   expect(await metadata('./about/page.tsx')).toMatchObject({
     alternates: { canonical: origin + '/about' },
   });
-  const list = await load('./incidents/page.tsx');
+  const list = await load('./(browse)/@background/incidents/page.tsx');
   request.mockResolvedValueOnce(Response.json({ total: 0, items: [] }));
   const listView = view(await (list.default as Route)(props()));
-  expect(listView.querySelector('a[href="/archive"]')).not.toBeNull();
-  expect(listView.querySelector('a[href="/about"]')).not.toBeNull();
-  const home = await load('./page.tsx');
+  expect(listView.querySelector('a[href="/archive"]')).toBeNull();
+  expect(listView.querySelector('a[href="/about"]')).toBeNull();
+  const home = await load('./(browse)/@background/(map)/page.tsx');
   vi.stubEnv('NEXT_PUBLIC_NAVER_MAP_CLIENT_ID', '');
   const homeView = view(await (home.default as Route)(props()));
-  expect(homeView.querySelector('a[href="/about"]')).not.toBeNull();
+  expect(
+    homeView.querySelector('section[aria-label="흉흉 서비스 안내"]'),
+  ).toBeNull();
+  expect(graphs(homeView)).toContainEqual({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: '흉흉',
+    url: origin,
+  });
   expect(homeView.querySelector('a[href="/incidents"]')).not.toBeNull();
+});
+
+test('articleSheetMetadataMatchesDirectUrl', async () => {
+  const directPath = './incidents/[id]/page.tsx';
+  const sheetPath = './(browse)/(.)incidents/[id]/page.tsx';
+  const canonical = origin + '/incidents/' + id;
+  const fixture = item();
+  request.mockImplementation(async () => Response.json(fixture));
+  for (const route of [directPath, sheetPath]) {
+    const info = await metadata(route);
+    expect(
+      info.robots,
+      '검색 배경의 noindex가 정상 상세에 남지 않음',
+    ).toMatchObject({ index: true, follow: true });
+    expect(info.alternates?.canonical).toBe(canonical);
+    expect(info.openGraph).toMatchObject({
+      title: '교통 안내 & 점검',
+      url: canonical,
+    });
+    expect(info.twitter).toMatchObject({ title: '교통 안내 & 점검' });
+  }
+  request.mockImplementation(
+    async () => new Response('PRIVATE_FAILURE', { status: 503 }),
+  );
+  for (const route of [directPath, sheetPath]) {
+    const info = await metadata(route);
+    expect(info.robots).toMatchObject({ index: false, follow: true });
+    expect(info.alternates?.canonical).toBe(canonical);
+    expect(info.openGraph).toMatchObject({
+      title: '기사를 불러오지 못했어요',
+      url: canonical,
+    });
+    expect(JSON.stringify(info)).not.toContain('PRIVATE_FAILURE');
+    expect(JSON.stringify(info)).not.toContain('교통 안내');
+  }
 });

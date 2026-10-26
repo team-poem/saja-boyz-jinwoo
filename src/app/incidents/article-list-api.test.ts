@@ -3,7 +3,6 @@ import { afterEach, assert, beforeEach, expect, test, vi } from 'vitest';
 import { createElement, type ComponentType } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-const loadingRoutes = import.meta.glob('./loading.tsx');
 const apiOrigin = 'https://news.example.invalid';
 const idA = 'e77553113fe8862b91aec1fd09a25af83e256ac12cb4a8ff7d8d78ea3050c909';
 const idB = '6dd70b87676f579839c940ae6048bc6bf65d2005e1552c515b9a0151500b621a';
@@ -39,7 +38,8 @@ function respond(items: unknown[], total = items.length) {
 
 async function renderPage() {
   vi.resetModules();
-  const { default: IncidentsPage } = await import('./page');
+  const { default: IncidentsPage } =
+    await import('../(browse)/@background/incidents/page');
   return renderToStaticMarkup(await IncidentsPage());
 }
 
@@ -91,6 +91,7 @@ test('articleApiRequest', async () => {
   expect([...url.searchParams.entries()].sort()).toEqual([
     ['limit', '20'],
     ['offset', '0'],
+    ['sort', 'popular'],
   ]);
   expect(init?.method).toBe('GET');
   expect(init?.cache).toBe('no-store');
@@ -194,7 +195,7 @@ test('articleImageStates', async () => {
   respond([{ ...item, image_status: 'ready', image_url: imagePath }]);
   const ready = singleCard(await renderPage());
   expect(ready).toContain(`src="${apiOrigin}${imagePath}"`);
-  expect(ready).toContain('AI 생성 이미지');
+  expect(ready).not.toContain('<figcaption');
   expect(ready).toMatch(/width="80"/);
   expect(ready).toMatch(/height="80"/);
   for (const imageStatus of ['disabled', 'pending', 'generating', 'failed']) {
@@ -202,7 +203,7 @@ test('articleImageStates', async () => {
     const row = singleCard(await renderPage());
     expect(row).toContain('이미지 없음');
     expect(row).not.toMatch(/<img\b/);
-    expect(row).not.toContain('AI 생성 이미지');
+    expect(row).not.toContain('<figcaption');
   }
   for (const imageUrl of [
     null,
@@ -215,7 +216,7 @@ test('articleImageStates', async () => {
     const row = singleCard(await renderPage());
     expect(row).toContain('이미지 없음');
     expect(row).not.toMatch(/<img\b/);
-    expect(row).not.toContain('AI 생성 이미지');
+    expect(row).not.toContain('<figcaption');
   }
 });
 
@@ -305,7 +306,7 @@ test('articleRequestTimeout', async () => {
 }, 10000);
 
 test('articleLoading', async () => {
-  const load = loadingRoutes['./loading.tsx'];
+  const load = () => import('../(browse)/@background/incidents/loading');
   expect(load).toBeTypeOf('function');
   const loadingModule = await load();
   assert(isLoadingModule(loadingModule));

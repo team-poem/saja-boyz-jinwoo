@@ -1,5 +1,5 @@
 import { afterEach, expect, test, vi } from 'vitest';
-import HomePage from '@/app/page';
+import HomePage from '@/app/(browse)/@background/(map)/page';
 
 const fetcher = vi.hoisted(() => vi.fn());
 vi.mock('./fetch-map-articles', () => ({ fetchMapArticles: fetcher }));

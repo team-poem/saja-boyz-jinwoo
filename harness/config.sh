@@ -26,12 +26,13 @@ WIP_STALE_SEC=7200
 # main 이 바뀌고 내 작업 트리가 깨끗하면 pulse 가 자동으로 따라잡는다. 충돌 시 즉시 abort 하고 알린다.
 AUTO_REBASE=true
 # 따라잡는 방식: merge | rebase | auto. 기본 merge — 이미 push 한 브랜치를 rebase 하면 다음 push 가 거부되고,
-# sobaya 의 승인 기준(커밋 sha)도 깨진다. GitHub 은 squash 머지만 쓰므로 브랜치 안의 merge 커밋은 main 에 남지 않는다.
-# auto = sobaya 승인 상태가 있으면 merge, 없으면 rebase.
+# active Sobaya attempts also depend on their recorded Git revision. GitHub 은 squash 머지만 쓰므로 브랜치 안의 merge 커밋은 main 에 남지 않는다.
+# auto keeps merge while execution state exists; the legacy helper name is not a test-approval gate.
 SYNC_MODE=merge
 
-# 개발 하네스 sobaya 의 워크스페이스 루트. 비우면 이 리포의 두 단계 위(sobaya/apps/<이 리포>)를 본다.
-SOBAYA_ROOT="${SOBAYA_ROOT:-}"
+# Runtime selection: explicit environment, clone-local sourceRoot, then workspace/sibling discovery.
+# Keep machine-specific source paths in local Git config, never in tracked files.
+SOBAYA_ROOT="${SOBAYA_ROOT:-$(git -C "$ROOT" config --local --get sobaya.sourceRoot 2>/dev/null || true)}"
 # sobaya/apps 아래의 자동 감지를 우선하고, 외부 앱은 설치된 형제 클론을 찾는다.
 if [ -z "$SOBAYA_ROOT" ] && [ ! -x "$ROOT/../../tdd-set/bin/step.sh" ] && [ -x "$ROOT/../sobaya/tdd-set/bin/step.sh" ]; then
   SOBAYA_ROOT="$ROOT/../sobaya"

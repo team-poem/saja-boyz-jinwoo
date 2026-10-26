@@ -1,9 +1,9 @@
 #!/bin/sh
 # 개발 하네스 sobaya(team-poem/sobaya)를 이 앱에 붙이고, 팀이 검증한 sobaya 버전을 맞춘다.
 #
-#   attach [--sobaya PATH] [--test "npm test"]  처음 한 번. 앱 계약(AGENTS.md 의 - Test:), sobaya 의 install/설정, 루트 세션용 훅 어댑터, lock
-#   sync                                        내 sobaya 클론을 최신으로(pull --ff-only) + 앱 계약 재설치(멱등). 세션 시작 digest 가 권할 때
-#   update                                      sync 후 lock 을 현재 sobaya 커밋으로 올린다. 커밋해서 팀에 공유
+#   attach [--sobaya PATH] [--test "npm test"]  Legacy 최초 설치. 실행 전 harness/sobaya/RULES.md 확인
+#   sync / update                              Legacy 재설치 명령. 기존 설치의 유지보수에는 사용하지 않는다
+#                                              소스 경로·pin·관리 훅 갱신은 harness/sobaya/RULES.md 를 따른다
 #   check                                       클론·lock·upstream 버전과 훅 상태를 보여준다
 #
 # 배치: sobaya 워크스페이스 안에 이 리포를 둔다 (sobaya/apps/<이 리포>). 다른 곳이면 --sobaya 또는 harness/config.sh SOBAYA_ROOT.
@@ -68,10 +68,10 @@ case "$cmd" in
     lk="$(sobaya_lock)"; up="$(git -C "$sob" ls-remote -q origin HEAD 2>/dev/null | cut -f1)"
     echo "sobaya 클론:   $sob @ $(sob_short)"
     echo "lock (팀 기준): ${lk:-없음}"; echo "upstream HEAD: ${up:-확인 불가}"
-    [ -n "$lk" ] && [ "$lk" != "$(sob_head)" ] && echo "→ 클론이 lock 과 다름: sh harness/attach-sobaya.sh sync"
-    [ -n "$up" ] && [ -n "$lk" ] && [ "$up" != "$lk" ] && echo "→ upstream 이 lock 보다 앞섬: sh harness/attach-sobaya.sh update 후 커밋"
+    [ -n "$lk" ] && [ "$lk" != "$(sob_head)" ] && echo "→ 클론이 lock 과 다름: harness/sobaya/RULES.md 에 따라 소스 경로·pin·훅을 점검하세요"
+    [ -n "$up" ] && [ -n "$lk" ] && [ "$up" != "$lk" ] && echo "→ upstream 과 lock 이 다름: harness/sobaya/RULES.md 에 따라 후보 변경을 검토하세요"
     sobaya_hook_ok && echo "sobaya 앱 pre-commit: 있음" || echo "sobaya 앱 pre-commit: 없음"
     [ "$(git config --get core.hooksPath 2>/dev/null)" = ".githooks" ] && echo "협업 git 훅: 활성 (.githooks)" || echo "협업 git 훅: 비활성 → git config core.hooksPath .githooks"
-    [ -f "$sob/.claude/hooks/collab-dispatch.sh" ] && echo "루트 세션 어댑터: 설치됨" || echo "루트 세션 어댑터: 없음 (attach 또는 sync)" ;;
+    [ -f "$sob/.claude/hooks/collab-dispatch.sh" ] && echo "루트 세션 어댑터: 설치됨" || echo "루트 세션 어댑터: 없음 (기존 설치는 harness/sobaya/RULES.md 확인)" ;;
   *) sed -n '2,10p' "$0"; exit 1 ;;
 esac

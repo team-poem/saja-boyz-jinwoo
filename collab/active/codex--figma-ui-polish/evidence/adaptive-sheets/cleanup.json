@@ -1,0 +1,20 @@
+{
+  "processes": [
+    {
+      "port": 31148,
+      "pid": 67681,
+      "command": "next-server (v16.3.8)",
+      "ownershipVerified": true,
+      "signal": "SIGTERM"
+    },
+    {
+      "port": 41148,
+      "pid": 70653,
+      "command": "node /private/tmp/pr45-adaptive-sheet-qa/fixture.mjs",
+      "ownershipVerified": true,
+      "signal": "SIGTERM"
+    }
+  ],
+  "remainingListeningPorts": [],
+  "closed": true
+}

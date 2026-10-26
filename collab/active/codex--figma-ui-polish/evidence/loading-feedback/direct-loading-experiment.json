@@ -1,0 +1,130 @@
+{
+  "node": "v24.3.0",
+  "source": "/Users/jeong-gyuhwan/규환/projects/saja-boyz-jinwoo-codex--figma-ui-polish",
+  "directory": "/private/tmp/hyunghyung-direct-loading-experiment",
+  "delay": 1200,
+  "variants": [
+    {
+      "label": "direct-loading-default-bots",
+      "checks": [
+        {
+          "javaScriptEnabled": true,
+          "status": 200,
+          "firstByte": 1264,
+          "earlyLoader": true,
+          "elapsed": 2491,
+          "titleVisible": true,
+          "summaryVisible": true,
+          "sourceVisible": true,
+          "dom": {
+            "title": "로딩 실험 기사 제목 · 흉흉 · 내 주변의 사건 사고",
+            "robots": [
+              "index, follow"
+            ],
+            "canonical": "https://hyunghyung.vercel.app/incidents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "hiddenHeadings": [
+              {
+                "text": "로딩 실험 기사 제목",
+                "hiddenAncestor": false
+              }
+            ]
+          },
+          "detailRequests": 2,
+          "errors": []
+        },
+        {
+          "javaScriptEnabled": false,
+          "status": 200,
+          "firstByte": 1247,
+          "earlyLoader": true,
+          "elapsed": 2441,
+          "titleVisible": false,
+          "summaryVisible": false,
+          "sourceVisible": false,
+          "dom": {
+            "title": "로딩 실험 기사 제목 · 흉흉 · 내 주변의 사건 사고",
+            "robots": [
+              "index, follow"
+            ],
+            "canonical": "https://hyunghyung.vercel.app/incidents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "hiddenHeadings": [
+              {
+                "text": "로딩 실험 기사 제목",
+                "hiddenAncestor": true
+              }
+            ]
+          },
+          "detailRequests": 2,
+          "errors": []
+        }
+      ],
+      "missing": {
+        "status": 404,
+        "url": "http://127.0.0.1:31048/incidents/ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "body": "흉흉 홈\n기사 키워드 검색…\n페이지를 찾을 수 없어요\n주소를 확인하거나 지도로 돌아가 다른 소식을 살펴보세요.\n지도 홈\n검색\n사건 목록\n제보\n지도\n📢\n≡\n목록",
+        "exitCount": 5
+      }
+    },
+    {
+      "label": "direct-loading-all-bots",
+      "checks": [
+        {
+          "javaScriptEnabled": true,
+          "status": 200,
+          "firstByte": 2474,
+          "earlyLoader": false,
+          "elapsed": 3079,
+          "titleVisible": true,
+          "summaryVisible": true,
+          "sourceVisible": true,
+          "dom": {
+            "title": "로딩 실험 기사 제목 · 흉흉 · 내 주변의 사건 사고",
+            "robots": [
+              "index, follow"
+            ],
+            "canonical": "https://hyunghyung.vercel.app/incidents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "hiddenHeadings": [
+              {
+                "text": "로딩 실험 기사 제목",
+                "hiddenAncestor": false
+              }
+            ]
+          },
+          "detailRequests": 2,
+          "errors": []
+        },
+        {
+          "javaScriptEnabled": false,
+          "status": 200,
+          "firstByte": 2449,
+          "earlyLoader": false,
+          "elapsed": 3051,
+          "titleVisible": true,
+          "summaryVisible": true,
+          "sourceVisible": true,
+          "dom": {
+            "title": "로딩 실험 기사 제목 · 흉흉 · 내 주변의 사건 사고",
+            "robots": [
+              "index, follow"
+            ],
+            "canonical": "https://hyunghyung.vercel.app/incidents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "hiddenHeadings": [
+              {
+                "text": "로딩 실험 기사 제목",
+                "hiddenAncestor": false
+              }
+            ]
+          },
+          "detailRequests": 2,
+          "errors": []
+        }
+      ],
+      "missing": {
+        "status": 404,
+        "url": "http://127.0.0.1:31048/incidents/ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "body": "흉흉 홈\n기사 키워드 검색…\n페이지를 찾을 수 없어요\n주소를 확인하거나 지도로 돌아가 다른 소식을 살펴보세요.\n지도 홈\n검색\n사건 목록\n제보\n지도\n📢\n≡\n목록",
+        "exitCount": 5
+      }
+    }
+  ]
+}

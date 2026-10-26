@@ -1,8 +1,45 @@
 import type { LocatedArticle } from './map-article.types';
 
-type DisplayGroup = { items: LocatedArticle[]; regionCount: number };
+type DisplayGroup = {
+  items: LocatedArticle[];
+  regionCount: number;
+  diameter: number;
+};
 type PixelPoint = { x: number; y: number };
 type ProjectLocation = (location: LocatedArticle['location']) => PixelPoint;
+type MapViewportSize = { width: number; height: number };
+
+function sizeDisplayGroups(groups: DisplayGroup[]) {
+  const counts = [...new Set(groups.map((group) => group.items.length))].sort(
+    (left, right) => left - right,
+  );
+
+  if (!counts.length) return;
+
+  if (counts.length === 1) {
+    for (const group of groups) group.diameter = 48;
+
+    return;
+  }
+
+  const minimum = 38.4;
+  const maximum = 88;
+  const span = maximum - minimum;
+  const gap = Math.min(4, span / (counts.length - 1));
+  const proportionalSpan = span - gap * (counts.length - 1);
+  const logMinimum = Math.log(counts[0]);
+  const logSpan = Math.log(counts[counts.length - 1]) - logMinimum;
+  const sizes = new Map(
+    counts.map((count, rank) => [
+      count,
+      minimum +
+        rank * gap +
+        proportionalSpan * ((Math.log(count) - logMinimum) / logSpan),
+    ]),
+  );
+
+  for (const group of groups) group.diameter = sizes.get(group.items.length)!;
+}
 
 export function sameMapDisplayGroups(
   previous: Map<string, DisplayGroup>,
@@ -15,28 +52,29 @@ export function sameMapDisplayGroups(
 
     return (
       before?.regionCount === group.regionCount &&
+      before.diameter === group.diameter &&
       before.items.length === group.items.length &&
       before.items.every((item, index) => item === group.items[index])
     );
   });
 }
 
-export function mapDisplayDiameter(count: number, cluster = false) {
-  return count <= 5 && !cluster ? 38.4 : count < 10 ? 48 : 72;
-}
-
-// Logical regions retain their representative points. Projection only decides
-// which circles share a display marker, never a new geographical location.
+// 대표점은 옮기지 않는다. 카메라 안의 중심점만 상대 크기 집계에 포함한다.
 export function groupMapDisplayPoints(
   groups: Map<string, LocatedArticle[]>,
   project?: ProjectLocation,
+  viewport?: MapViewportSize,
 ) {
   const points = new Map<string, DisplayGroup>();
 
   for (const group of groups.values()) {
     const { latitude, longitude } = group[0].location;
     const key = JSON.stringify([latitude, longitude]);
-    const point = points.get(key) ?? { items: [], regionCount: 0 };
+    const point = points.get(key) ?? {
+      items: [],
+      regionCount: 0,
+      diameter: 48,
+    };
     const seen = new Set(point.items.map((item) => item.article_id));
 
     for (const item of group) {
@@ -49,60 +87,88 @@ export function groupMapDisplayPoints(
     points.set(key, point);
   }
 
-  if (!project) return points;
+  if (!project) {
+    sizeDisplayGroups([...points.values()]);
 
-  const displays = [...points].map(([key, group]) => ({
-    key,
-    group,
-    circles: [
-      {
-        point: project(group.items[0].location),
-        radius:
-          mapDisplayDiameter(group.items.length, group.regionCount > 1) / 2,
-      },
-    ],
-  }));
-  const overlaps = (
-    left: (typeof displays)[number],
-    right: (typeof displays)[number],
-  ) =>
-    left.circles.some((a) =>
-      right.circles.some(
-        (b) =>
-          Math.hypot(a.point.x - b.point.x, a.point.y - b.point.y) <=
-          a.radius + b.radius,
-      ),
-    );
-
-  // Retain original circles for transitive overlap, and include each enlarged
-  // representative circle. Restart after merging so growth cannot leave a
-  // previously checked circle overlapping the resulting display marker.
-  for (let left = 0; left < displays.length; left += 1) {
-    for (let right = left + 1; right < displays.length; right += 1) {
-      const first = displays[left];
-      const second = displays[right];
-
-      if (!overlaps(first, second)) continue;
-      const seen = new Set(first.group.items.map((item) => item.article_id));
-
-      first.group.items.push(
-        ...second.group.items.filter((item) => {
-          if (seen.has(item.article_id)) return false;
-          seen.add(item.article_id);
-
-          return true;
-        }),
-      );
-      first.group.regionCount += second.group.regionCount;
-      first.circles.push(...second.circles, {
-        point: first.circles[0].point,
-        radius: mapDisplayDiameter(first.group.items.length, true) / 2,
-      });
-      displays.splice(right, 1);
-      left = -1;
-      break;
-    }
+    return points;
   }
 
-  return new Map(displays.map(({ key, group }) => [key, group]));
+  let displays = [...points]
+    .map(([key, group]) => ({
+      key,
+      group,
+      point: project(group.items[0].location),
+    }))
+    .filter(
+      ({ point }) =>
+        Number.isFinite(point.x) &&
+        Number.isFinite(point.y) &&
+        (!viewport ||
+          (point.x >= 0 &&
+            point.y >= 0 &&
+            point.x <= viewport.width &&
+            point.y <= viewport.height)),
+    )
+    .sort((left, right) =>
+      left.key < right.key ? -1 : left.key > right.key ? 1 : 0,
+    );
+
+  // 각 단계의 연결요소를 함께 병합하고 새 분포로 다시 크기를 정한다.
+  // 한 계산 안에서는 병합만 하므로 종료하며, 다음 카메라 갱신은 원본부터 시작한다.
+  for (;;) {
+    sizeDisplayGroups(displays.map(({ group }) => group));
+    const visited = new Set<number>();
+    const next: typeof displays = [];
+    let merged = false;
+
+    for (let index = 0; index < displays.length; index += 1) {
+      if (visited.has(index)) continue;
+      const component = [index];
+
+      visited.add(index);
+
+      for (let cursor = 0; cursor < component.length; cursor += 1) {
+        const first = displays[component[cursor]];
+
+        for (let other = 0; other < displays.length; other += 1) {
+          if (visited.has(other)) continue;
+          const second = displays[other];
+
+          if (
+            Math.hypot(
+              first.point.x - second.point.x,
+              first.point.y - second.point.y,
+            ) >
+            (first.group.diameter + second.group.diameter) / 2
+          )
+            continue;
+
+          visited.add(other);
+          component.push(other);
+        }
+      }
+
+      const first = displays[index];
+      const seen = new Set(first.group.items.map((item) => item.article_id));
+
+      for (const other of component.sort((left, right) => left - right)) {
+        if (other === index) continue;
+        const second = displays[other];
+
+        for (const item of second.group.items) {
+          if (seen.has(item.article_id)) continue;
+          seen.add(item.article_id);
+          first.group.items.push(item);
+        }
+
+        first.group.regionCount += second.group.regionCount;
+        merged = true;
+      }
+
+      next.push(first);
+    }
+
+    if (!merged) return new Map(displays.map(({ key, group }) => [key, group]));
+    displays = next;
+  }
 }

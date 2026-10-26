@@ -55,14 +55,32 @@
 머지는 GitHub 에서 **squash 만**, 머지 시 브랜치 삭제. PR 제목 = claim goal. 커밋 제목은 `<type>(<scope>): <한국어 설명>` 형식을 쓴다(scope 선택). 타입은 `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `ci` 등 변경 목적에 맞게 고른다. sobaya 자동 체크포인트는 도구 형식을 유지한다.
 대화·문서·커밋은 한국어, 코드·식별자·브랜치명은 영어.
 
-## 8. 개발 하네스 sobaya 와 함께 쓸 때
-이 리포는 sobaya 워크스페이스의 `apps/<이름>` 에 산다. 구현은 sobaya 의 `tdd-set/bin/*` 가 하고, 협업 하네스는 그 바깥에서 "누가 무엇을" 을 관리한다. **sobaya 는 바꾸지 않는다.** 맞춤은 전부 이쪽 규칙이다 (`harness/sobaya/RULES.md`).
-- **워커는 `scripts/collab.sh run -- <sobaya 명령>` 으로 감싸서 돌린다.** 워커는 훅을 거치지 않으므로, 돌리기 전에 동료가 편집 중인 허브 파일이 있으면 중단하고, 끝난 뒤 워커가 건드린 허브 파일을 보고한다.
-- `spec.md` 와 `failed-test.md` 는 **브랜치(기능) 단위**. main 에 두지 않는다. handoff 가 gate·review 뒤 마지막 커밋으로 `collab/journal/plans/` 에 옮긴다. 그 뒤 이 브랜치에서 sobaya 명령을 다시 치지 않는다.
-- sobaya 승인 상태가 있는 기능 브랜치는 dev를 **merge**로 따라잡는다 (기본). rebase 하면 승인이 깨진다.
-- 이 클론에 승인 브랜치가 있으면 새 브랜치는 **워크트리**로: `scripts/collab.sh worktree <branch>`. 승인 상태가 git-dir 당 하나라 브랜치를 오가면 깨진다.
-- 세션은 앱 안에서 여는 게 기본. Claude 로 루트에서 열면 `attach-sobaya.sh` 가 놓은 어댑터가 이 앱의 훅을 대신 부른다.
-- sobaya 버전은 `harness/sobaya.lock` 이 팀 기준. digest 가 "다르다" 고 하면 `sh harness/attach-sobaya.sh sync`.
+## 8. Development with Sobaya
+
+Follow the selected Sobaya runtime's `AGENTS.md` and `tdd-set/AGENTS.md`.
+The human owns product intent. Keep future scenarios as prose, write one next
+test, observe RED, implement GREEN, then consider a small behavior-preserving
+refactor. Run the full declared suite after implementation and structural
+changes. Tests need no separate approval; do not weaken assertions to hide a bug.
+At feature boundaries, review observed outcomes and learning before choosing again.
+
+- Keep the collaboration claim, journal and branch rules above. Wrap implementation
+  workers with `scripts/collab.sh run -- <sobaya command>` and respect hotspot conflicts.
+- `spec.md` and `failed-test.md` belong to the feature branch. Keep the human-owned
+  spec unchanged. Archive them under `collab/journal/plans/` at handoff after actual
+  verification. Independent review is optional; an old `review.head` is not completion evidence.
+- Use a separate worktree for another active task. Execution state belongs to each
+  Git directory. Keep the team's merge workflow; never change HEAD during an active attempt.
+- `step.sh` and `loop.sh` run one test only; do not pass an iteration count. Choose
+  the next test from what was learned. At GREEN, tests and source may be refactored
+  within product intent without approval. Clarify ambiguous or changed product behavior.
+- `harness/sobaya.lock` selects the reviewed source revision. A clone-local
+  `git config --local sobaya.sourceRoot <runtime-path>` selects its source checkout;
+  `SOBAYA_ROOT` explicitly overrides it. Keep the selected revision and managed
+  Sobaya pre-commit hook aligned; preserve the outer `.githooks` chain.
+- Existing closed state and archived plans are history. Do not recreate feature
+  documents merely to migrate an installation or claim that migration proves GREEN.
+  See `harness/sobaya/RULES.md` before changing the source connection.
 
 ## 9. 위치
 `collab/active/<slug>/` claim + 브랜치 산출물 · `collab/journal/` 이벤트 로그 · `harness/config.sh` 설정(HOTSPOTS 등) · `harness/hooks/` 훅 스크립트 · `.githooks/` git 훅 · `scripts/collab.sh` 도구 · `harness/attach-sobaya.sh` sobaya 결합 · 사람용 절차 `CONTRIBUTING.md`

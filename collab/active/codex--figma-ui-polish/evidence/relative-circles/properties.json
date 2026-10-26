@@ -1,0 +1,80 @@
+{
+  "node": "v24.3.0",
+  "checks": [
+    "original-representative",
+    "unique-article-total",
+    "region-total",
+    "final-non-overlap",
+    "reversed-input-determinism",
+    "strict-count-size-order",
+    "equal-single-empty",
+    "resizing-chain",
+    "viewport-boundary"
+  ],
+  "results": [
+    {
+      "name": "200-sparse",
+      "inputRegions": 200,
+      "outputGroups": 200,
+      "articles": 3266,
+      "elapsedMs": 26.53,
+      "status": "PASS"
+    },
+    {
+      "name": "350-mixed",
+      "inputRegions": 350,
+      "outputGroups": 5,
+      "articles": 5618,
+      "elapsedMs": 17.26,
+      "status": "PASS"
+    },
+    {
+      "name": "500-dense",
+      "inputRegions": 500,
+      "outputGroups": 1,
+      "articles": 8157,
+      "elapsedMs": 16.4,
+      "status": "PASS"
+    },
+    {
+      "name": "equal-200",
+      "inputRegions": 200,
+      "outputGroups": 200,
+      "articles": 600,
+      "elapsedMs": 4.39,
+      "status": "PASS"
+    },
+    {
+      "name": "single",
+      "inputRegions": 1,
+      "outputGroups": 1,
+      "articles": 7,
+      "elapsedMs": 0.04,
+      "status": "PASS"
+    },
+    {
+      "name": "empty",
+      "inputRegions": 0,
+      "outputGroups": 0,
+      "articles": 0,
+      "elapsedMs": 0.02,
+      "status": "PASS"
+    },
+    {
+      "name": "resizing-chain-40-100-130",
+      "inputRegions": 3,
+      "outputGroups": 1,
+      "articles": 3,
+      "elapsedMs": 0.04,
+      "status": "PASS"
+    },
+    {
+      "name": "viewport-boundary",
+      "inputRegions": 4,
+      "outputGroups": 2,
+      "articles": 3,
+      "elapsedMs": 0.06,
+      "status": "PASS"
+    }
+  ]
+}

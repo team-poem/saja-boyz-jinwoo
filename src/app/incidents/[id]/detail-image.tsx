@@ -1,14 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+
+import {
+  ImageLoading,
+  useImageLoading,
+} from '@/components/feedback/image-loading';
 
 export function DetailImage({ src }: { src: string | null }) {
-  const [failed, setFailed] = useState(false);
+  const { status, attachImage, onLoad, onError } = useImageLoading(src);
 
-  if (!src || failed) {
+  if (!src || status === 'failed') {
     return (
-      <p className="m-0 grid h-[190px] w-full place-items-center rounded-[14px] bg-background text-sm text-muted">
+      <p className="m-0 grid h-[140px] w-full place-items-center rounded-lg bg-background text-sm text-muted">
         이미지 없음
       </p>
     );
@@ -16,17 +20,23 @@ export function DetailImage({ src }: { src: string | null }) {
 
   return (
     <figure className="m-0">
-      <Image
-        src={src}
-        alt=""
-        width={720}
-        height={380}
-        unoptimized
-        className="block h-[190px] w-full rounded-[14px] object-cover"
-        onError={() => setFailed(true)}
-      />
-      <figcaption className="mt-2 text-[11px]/4 text-muted">
-        AI 생성 이미지
+      <div className="relative h-[140px]">
+        {status === 'loading' && <ImageLoading />}
+        <Image
+          key={src}
+          src={src}
+          alt=""
+          width={720}
+          height={280}
+          unoptimized
+          className="relative block h-[140px] w-full rounded-lg object-cover"
+          ref={attachImage}
+          onLoad={onLoad}
+          onError={onError}
+        />
+      </div>
+      <figcaption className="mt-1 text-[10px]/[15px] text-muted">
+        AI로 생성된 이미지입니다.
       </figcaption>
     </figure>
   );

@@ -1,0 +1,254 @@
+{
+  "candidate": "11d667ed14f97a4ac99e9a6768a3cc38852be35a",
+  "buildId": "rxmtTarapI4TjPfGHSpye",
+  "final_candidate": false,
+  "confirmed_search_focus_findings": [
+    {
+      "passed": false,
+      "name": "search result Tab unobscured 320",
+      "failures": [
+        {
+          "text": "기사 원문",
+          "href": "/news/00000000000000000000000000000000000000000000000000000000000003eb",
+          "rect": {
+            "x": 247.875,
+            "y": 775,
+            "width": 41.125,
+            "height": 14,
+            "top": 775,
+            "right": 289,
+            "bottom": 789,
+            "left": 247.875
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 0
+        },
+        {
+          "text": "검증용 기사 · 대구 같은 지역 5번째 보도",
+          "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003ec",
+          "rect": {
+            "x": 31,
+            "y": 827,
+            "width": 218.125,
+            "height": 17,
+            "top": 827,
+            "right": 249.125,
+            "bottom": 844,
+            "left": 31
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 0
+        },
+        {
+          "text": "검증용 기사 · 대구 같은 지역 9번째 보도",
+          "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003f0",
+          "rect": {
+            "x": 31,
+            "y": 774,
+            "width": 218.5,
+            "height": 17,
+            "top": 774,
+            "right": 249.5,
+            "bottom": 791,
+            "left": 31
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 457
+        },
+        {
+          "text": "기사 원문",
+          "href": "/news/00000000000000000000000000000000000000000000000000000000000003f0",
+          "rect": {
+            "x": 247.875,
+            "y": 823,
+            "width": 41.125,
+            "height": 14,
+            "top": 823,
+            "right": 289,
+            "bottom": 837,
+            "left": 247.875
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 457
+        }
+      ]
+    },
+    {
+      "passed": false,
+      "name": "search result Tab unobscured 393",
+      "failures": [
+        {
+          "text": "기사 원문",
+          "href": "/news/00000000000000000000000000000000000000000000000000000000000003eb",
+          "rect": {
+            "x": 320.875,
+            "y": 775,
+            "width": 41.125,
+            "height": 14,
+            "top": 775,
+            "right": 362,
+            "bottom": 789,
+            "left": 320.875
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 0
+        },
+        {
+          "text": "검증용 기사 · 대구 같은 지역 5번째 보도",
+          "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003ec",
+          "rect": {
+            "x": 31,
+            "y": 827,
+            "width": 218.125,
+            "height": 17,
+            "top": 827,
+            "right": 249.125,
+            "bottom": 844,
+            "left": 31
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 0
+        },
+        {
+          "text": "검증용 기사 · 대구 같은 지역 9번째 보도",
+          "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003f0",
+          "rect": {
+            "x": 31,
+            "y": 774,
+            "width": 218.5,
+            "height": 17,
+            "top": 774,
+            "right": 249.5,
+            "bottom": 791,
+            "left": 31
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 457
+        },
+        {
+          "text": "기사 원문",
+          "href": "/news/00000000000000000000000000000000000000000000000000000000000003f0",
+          "rect": {
+            "x": 320.875,
+            "y": 823,
+            "width": 41.125,
+            "height": 14,
+            "top": 823,
+            "right": 362,
+            "bottom": 837,
+            "left": 320.875
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 457
+        }
+      ]
+    },
+    {
+      "passed": false,
+      "name": "search result Tab unobscured 1440",
+      "failures": [
+        {
+          "text": "기사 원문",
+          "href": "/news/00000000000000000000000000000000000000000000000000000000000003eb",
+          "rect": {
+            "x": 967.875,
+            "y": 775,
+            "width": 41.125,
+            "height": 14,
+            "top": 775,
+            "right": 1009,
+            "bottom": 789,
+            "left": 967.875
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 0
+        },
+        {
+          "text": "검증용 기사 · 대구 같은 지역 5번째 보도",
+          "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003ec",
+          "rect": {
+            "x": 431,
+            "y": 827,
+            "width": 218.125,
+            "height": 17,
+            "top": 827,
+            "right": 649.125,
+            "bottom": 844,
+            "left": 431
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 0
+        },
+        {
+          "text": "검증용 기사 · 대구 같은 지역 9번째 보도",
+          "href": "/incidents/00000000000000000000000000000000000000000000000000000000000003f0",
+          "rect": {
+            "x": 431,
+            "y": 774,
+            "width": 218.5,
+            "height": 17,
+            "top": 774,
+            "right": 649.5,
+            "bottom": 791,
+            "left": 431
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 457
+        },
+        {
+          "text": "기사 원문",
+          "href": "/news/00000000000000000000000000000000000000000000000000000000000003f0",
+          "rect": {
+            "x": 967.875,
+            "y": 823,
+            "width": 41.125,
+            "height": 14,
+            "top": 823,
+            "right": 1009,
+            "bottom": 837,
+            "left": 967.875
+          },
+          "top": 0,
+          "bottom": 776,
+          "hitSelf": false,
+          "fullyVisible": false,
+          "scrollY": 457
+        }
+      ]
+    }
+  ],
+  "interpretation": "검색 하단 가림만 제품 결함으로 재현해 신규 회귀로 수정했다. 긴 지역 fixture의 잘못된 evidence.field와 잘린 inline bounding 영역을 hit-test한 목록 오탐은 최종 제품 결함·최종 합격 수에 포함하지 않는다."
+}

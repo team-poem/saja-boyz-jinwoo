@@ -21,11 +21,25 @@ goal 이 허브 파일(`harness/config.sh` HOTSPOTS: 스키마, lockfile, 공용
 "스키마·의존성 변경만 담은 작은 `chore/` 브랜치를 먼저 올려 머지하고, 기능 브랜치는 그 위에서". 동료가 그 파일을 기다리는 시간이 사라진다.
 동료 claim 의 `next:` 나 "브랜치에 커밋됨" 목록에 내가 만질 파일이 있으면 순서를 사용자와 정한다.
 
-## sobaya 로 구현할 브랜치라면 (harness/sobaya.lock 이 있으면 기본)
-5. `bash <sobaya>/tdd-set/bin/install.sh .` (앱 안에서) 또는 `tdd-set/bin/install.sh apps/<이름>` (루트에서) — 이 브랜치의 `spec.md`, `failed-test.md` 가 없으면 만든다. main 에는 없으므로 새 브랜치마다 새로 생긴다.
-6. 이 클론에 이미 sobaya 승인 상태가 있는 브랜치가 있으면 새 브랜치는 **워크트리**로 연다: `sh scripts/collab.sh worktree <branch>` (2번 대신). sobaya 의 승인 상태는 git-dir 마다 하나라 같은 클론에서 브랜치를 오가면 승인이 깨진다.
-   sobaya 명령은 항상 `sh scripts/collab.sh run -- tdd-set/bin/loop.sh <앱> N` 처럼 감싸서 돌린다. 동료가 허브 파일을 편집 중이면 시작 전에 멈춘다.
-7. 사용자와 spec.md 와 실패 테스트 초안을 채우고, 사용자가 승인하면 `approve.sh`. 이후 구현은 `step.sh`/`loop.sh` 가 한다. 이 파일들은 sobaya 가 보호하므로 에이전트가 직접 고치지 않는다.
+## Development with Sobaya
+
+5. Keep feature work isolated with `sh scripts/collab.sh worktree <branch>` when
+   another task already owns this checkout or execution state. Do not copy or
+   reuse another worktree's active attempt. The team's merge workflow remains.
+6. Resolve the reviewed source runtime through `harness/config.sh` and check its
+   revision against `harness/sobaya.lock`. For existing installations, follow
+   `harness/sobaya/RULES.md`; legacy attach/sync may scaffold absent documents.
+   Prepare the authorized feature's scenario list in `failed-test.md`. Preserve
+   human-owned `spec.md`; ask about unclear product intent instead of inventing it.
+7. Write one next test, observe why it fails, then implement GREEN with the full
+   declared suite. Use a direct agent cycle or the optional one-test `step.sh` /
+   `loop.sh`; no iteration count and no `approve.sh`. Wrap implementation workers
+   with `sh scripts/collab.sh run -- <selected-runtime-command>`. Stop for a
+   colleague's active hotspot edit before launching the worker.
+8. At GREEN, consider small behavior-preserving source/test refactoring and rerun
+   the suite. Update future prose scenarios from learning; tests need no separate
+   approval. Do not weaken assertions to hide a defect. At a feature boundary,
+   assess the actual outcome and learning before choosing further authorized work.
 
 ## 이어받기 (남의 브랜치에서 계속할 때)
 1. 그 브랜치로 switch. digest 가 "owner 가 @X" 라고 알려준다.

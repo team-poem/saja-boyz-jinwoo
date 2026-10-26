@@ -1,0 +1,92 @@
+import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
+import {createRequire} from 'node:module';
+import {execFileSync} from 'node:child_process';
+const app=process.env.QA_APP||'/Users/jeong-gyuhwan/규환/projects/saja-boyz-jinwoo-codex--figma-ui-polish',origin=process.env.QA_ORIGIN||'http://localhost:31146',api=process.env.QA_API||'http://127.0.0.1:41146',out=process.env.QA_OUTPUT||'/private/tmp/pr45-relative-circles-qa/final';
+await mkdir(out+'/app',{recursive:true});
+const require=createRequire(app+'/package.json'),{chromium}=require('playwright-core'),buildId=(await readFile(app+'/.next/BUILD_ID','utf8')).trim();
+if(process.env.QA_EXPECT_BUILD_ID&&process.env.QA_EXPECT_BUILD_ID!==buildId)throw new Error('Wrong build; browser not started');
+const report={sourceHead:process.env.QA_COMMIT||execFileSync('git',['rev-parse','HEAD'],{cwd:app,encoding:'utf8'}).trim(),buildId,synthetic:true,personalLocation:false,SDKStubbed:false,SDKModified:false,checks:[],scenarios:[],states:[],screenshots:[],pageErrors:[],tiles200:0,blockedWrites:0};
+const check=(ok,name,details={})=>{report.checks.push({passed:Boolean(ok),name,...details});if(!ok)console.log('QA_FAIL '+name);};
+const browser=await chromium.launch({channel:'chrome',headless:true});
+async function scenario(name,run){console.log('QA '+name);try{await run();report.scenarios.push({name,completed:true});}catch(e){report.scenarios.push({name,completed:false,error:e.message});console.log('QA_SCENARIO_FAILED '+name+' '+e.message);}}
+async function dataset(name){const r=await fetch(api+'/__qa/dataset?name='+name);if(!r.ok)throw new Error('QA dataset switch failed');}
+async function measure(page){return page.evaluate(()=>{
+ const canvas=document.querySelector('[aria-label="주변 지도"] > .h-dvh');if(!canvas)throw new Error('Actual Naver map canvas not found');const b=canvas.getBoundingClientRect();
+ return {canvas:b.toJSON(),markers:[...document.querySelectorAll('button[aria-label^="지역 대표 위치:"]')].map(el=>{const r=el.getBoundingClientRect(),range=document.createRange();range.selectNodeContents(el);const t=range.getBoundingClientRect();return {label:el.getAttribute('aria-label'),count:Number(el.textContent.trim()),rect:r.toJSON(),cx:r.left+r.width/2,cy:r.top+r.height/2,diameter:r.width,textWidth:t.width,textHeight:t.height,inside:r.left+r.width/2>=b.left&&r.left+r.width/2<=b.right&&r.top+r.height/2>=b.top&&r.top+r.height/2<=b.bottom};})};
+ });}
+async function settled(page){
+ const started=Date.now();let previous='',same=0,value;
+ for(let i=0;i<120;i++){
+  value=await measure(page);
+  const ready=value.canvas.width>0&&value.canvas.height>0&&value.markers.length>0&&value.markers.every(m=>Number.isFinite(m.diameter)&&m.diameter>0&&m.rect.height>0);
+  const signature=JSON.stringify(value.markers.map(m=>[m.label,Math.round(m.cx*10),Math.round(m.cy*10),Math.round(m.diameter*10),Math.round(m.rect.height*10)]));
+  same=ready&&signature===previous?same+1:0;
+  if(ready&&Date.now()-started>=1500&&same>=4)return value;
+  previous=signature;
+  await page.waitForTimeout(100);
+ }
+ report.settleTimeouts??=[];report.settleTimeouts.push({elapsedMs:Date.now()-started,last:value});
+ throw new Error('Real marker geometry did not become non-zero and stable after at least1.5s observation; last state preserved');
+}
+async function state(page,label){const s=await settled(page);report.states.push({label,...s});return s;}
+async function open(){
+ const context=await browser.newContext({viewport:{width:393,height:852},reducedMotion:'reduce',permissions:['geolocation'],geolocation:{latitude:37.56,longitude:126.99,accuracy:1000}});
+ await context.route('**/*',route=>{if(!['GET','HEAD'].includes(route.request().method())){report.blockedWrites++;return route.abort();}return route.continue();});
+ const page=await context.newPage();page.setDefaultTimeout(12000);page.on('pageerror',e=>report.pageErrors.push(e.name));page.on('response',r=>{if(new URL(r.url()).hostname==='nrbe.map.naver.net'&&r.request().resourceType()==='image'&&r.status()===200)report.tiles200++;});
+ await page.goto(origin+'/');await page.waitForFunction(()=>document.querySelector('button[aria-label^="지역 대표 위치:"]'),null,{timeout:20000});await settled(page);return {context,page};
+}
+const find=(s,key)=>s.markers.find(m=>m.label.includes('QA-'+key+' ')),counts=s=>s.markers.map(m=>m.count).sort((a,b)=>a-b);
+function geometry(s,label){
+ const m=s.markers,unique=[...new Set(m.map(v=>v.count))].sort((a,b)=>a-b),overlap=[];
+ for(let i=0;i<m.length;i++)for(let j=i+1;j<m.length;j++){const d=Math.hypot(m[i].cx-m[j].cx,m[i].cy-m[j].cy)-(m[i].diameter+m[j].diameter)/2;if(d<-.75)overlap.push({a:m[i].label,b:m[j].label,clearance:d});}
+ check(m.length>0&&m.every(v=>v.inside&&Number.isFinite(v.diameter)&&v.diameter>0&&Math.abs(v.rect.height-v.diameter)<.2),label+' finite circles inside camera');
+ check(overlap.length===0,label+' no circle-fill overlap',{overlap});check(m.every(v=>v.textWidth<=v.diameter-2&&v.textHeight<=v.diameter-2),label+' count text fits');
+ for(const n of unique){const a=m.filter(v=>v.count===n);check(Math.max(...a.map(v=>v.diameter))-Math.min(...a.map(v=>v.diameter))<.5,label+' equal count equal diameter '+n);}
+ for(let i=1;i<unique.length;i++)check(m.find(v=>v.count===unique[i]).diameter>m.find(v=>v.count===unique[i-1]).diameter+.5,label+' larger count larger diameter '+unique[i-1]+'→'+unique[i]);
+}
+async function shot(page,name,description){await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(200);await page.screenshot({path:out+'/app/'+name+'.png'});report.screenshots.push({file:name+'.png',path:out+'/app/'+name+'.png',description});}
+async function drag(page,dx,dy){await page.mouse.move(120,220);await page.mouse.down();for(let i=1;i<=12;i++){await page.mouse.move(120+dx*i/12,220+dy*i/12);await page.waitForTimeout(25);}await page.mouse.up();await settled(page);}
+try{
+ await dataset('relative');
+ await scenario('relative-pan-selection-resize-and-close',async()=>{
+  const {context,page}=await open(),baseline=await state(page,'baseline3-4-8-4');check(JSON.stringify(counts(baseline))===JSON.stringify([3,4,4,8]),'baseline3/4/8/4; remote19 excluded',{counts:counts(baseline)});check(!baseline.markers.some(m=>m.label.includes('QA-OUT')),'remote19 excluded from visible distribution');geometry(baseline,'baseline');await shot(page,'relative-baseline','Actual Naver map with synthetic3/4/8/4; remote19 exists in API only.');
+  const max=find(baseline,'C'),others=baseline.markers.filter(m=>!m.label.includes('QA-C')),needed=baseline.canvas.right-max.cx+12,keep=Math.min(...others.map(m=>baseline.canvas.right-m.cx))-12;
+  if(!(needed<keep))throw new Error('Synthetic positions cannot isolate max8 with this camera; fixture precondition failed');
+  await drag(page,(needed+keep)/2,0);const panned=await state(page,'max8-outside');check(!find(panned,'C')&&find(panned,'A')&&find(panned,'B')&&find(panned,'D'),'max8 removed while3/4/4 retained',{counts:counts(panned)});geometry(panned,'panned');check(find(panned,'B')?.diameter>find(baseline,'B').diameter+.5,'remaining4 rescales after max8 leaves',{before:find(baseline,'B').diameter,after:find(panned,'B')?.diameter});await shot(page,'relative-max8-outside','Native pointer drag removes8 and rescales remaining4.');
+  await page.setViewportSize({width:393,height:640});await settled(page);
+  const marker=page.locator('button[aria-label^="지역 대표 위치: QA-B "]');await marker.focus();await page.keyboard.press('Enter');const panel=page.getByRole('dialog');await panel.waitFor();const link=panel.locator('a[href^="/incidents/"]').first();await link.waitFor();
+  const reader=await link.evaluateHandle(el=>{for(let n=el.parentElement;n;n=n.parentElement)if(getComputedStyle(n).overflowY==='auto')return n;return null;});
+  const scroll=await reader.evaluate(el=>{el.scrollTop=20;return {top:el.scrollTop,max:el.scrollHeight-el.clientHeight};});
+  check(scroll.top>0,'selection fixture has a nonzero reading scroll',{scroll});await link.evaluate(el=>el.focus({preventScroll:true}));
+  await panel.evaluate(el=>{window.__relativeQA={panel:el,link:document.activeElement};});const selected=await state(page,'selected-before-resize'),href=await link.getAttribute('href');
+  await page.setViewportSize({width:1440,height:640});const widened=await state(page,'selected-after-wide-resize');geometry(widened,'wide-selection');
+  check(Boolean(find(widened,'C'))&&find(widened,'B').diameter<find(selected,'B').diameter-.5,'resize brings8 in and changes selected4 diameter',{before:find(selected,'B')?.diameter,after:find(widened,'B')?.diameter});
+  const kept=await panel.evaluate(el=>({samePanel:el===window.__relativeQA.panel,sameFocusedLink:document.activeElement===window.__relativeQA.link,href:document.activeElement?.getAttribute('href')}));
+  const afterScroll=await reader.evaluate(el=>el.scrollTop);check(kept.samePanel&&kept.sameFocusedLink&&kept.href===href&&Math.abs(afterScroll-scroll.top)<=2,'same group preserves sheet link focus and reading scroll',{kept,beforeScroll:scroll.top,afterScroll});await shot(page,'relative-selection-resize','Selected group membership unchanged while radius changes; sheet/link/scroll must persist.');
+  await page.keyboard.press('Escape');await panel.waitFor({state:'hidden'});await page.waitForTimeout(100);
+  const restored=await page.evaluate(()=>{const marker=document.querySelector('button[aria-label^="지역 대표 위치: QA-B "]');return {markerExists:Boolean(marker),focused:document.activeElement===marker,markerInert:Boolean(marker?.closest('[inert]')),backgroundInert:Boolean(document.querySelector('[data-article-background]')?.inert),overflow:document.body.style.overflow};});
+  check(restored.markerExists&&restored.focused&&!restored.markerInert&&!restored.backgroundInert&&restored.overflow!=='hidden','close restores focus to latest marker after inert and trap cleanup',restored);await shot(page,'relative-close-latest-marker','After selection close, focus belongs to the current marker and background is interactive.');
+  await page.setViewportSize({width:320,height:852});geometry(await state(page,'resize320'),'resize320');await context.close();
+ });
+ await scenario('period-filter-changes-relative-scale',async()=>{
+  const {context,page}=await open(),before=await state(page,'period-all'),old=find(before,'B').diameter;
+  await page.getByRole('button',{name:'기간',exact:true}).click();await page.getByRole('group',{name:'기간 선택',exact:true}).getByRole('button',{name:'최근 24시간',exact:true}).click();
+  const recent=await state(page,'period24h');check(JSON.stringify(counts(recent))===JSON.stringify([2,3,4,4]),'24h publication dates produce2/3/4/4',{counts:counts(recent)});geometry(recent,'period24h');check(find(recent,'B').diameter>old+.5,'period filter recomputes current distribution instead of fixed buckets');await shot(page,'relative-period24h','Recent dates remove6 of8;4 becomes visible maximum.');await context.close();
+ });
+ await scenario('native-zoom-merge-and-unmerge',async()=>{
+  const {context,page}=await open(),before=await state(page,'zoom-original');let current=before,steps=0;
+  while(steps<3&&current.markers.length===before.markers.length){await page.mouse.move(196,270);await page.mouse.wheel(0,500);steps++;current=await state(page,'zoom-out-'+steps);geometry(current,'zoom-out-'+steps);}
+  check(current.markers.length<before.markers.length&&current.markers.some(m=>m.label.includes('지역 묶음')),'real zoom merges visual overlaps',{steps,counts:counts(current)});check(current.markers.reduce((n,m)=>n+m.count,0)===19,'zoom preserves visible article total19 without remote group');await shot(page,'relative-zoom-merged','Real wheel zoom and SDK projection; no SDK object edits.');
+  for(let i=0;i<steps;i++){await page.mouse.move(196,270);await page.mouse.wheel(0,-500);await settled(page);}
+  const back=await state(page,'zoom-return');geometry(back,'zoom-return');check(JSON.stringify(counts(back))===JSON.stringify([3,4,4,8]),'zoom back rebuilds individual original regions');await context.close();
+ });
+ await scenario('optional1-2-12-reference',async()=>{
+  await dataset('comparison');const {context,page}=await open(),value=await state(page,'current1-2-12');check(JSON.stringify(counts(value))===JSON.stringify([1,2,12]),'local comparison1/2/12 visible');geometry(value,'comparison');await shot(page,'relative-comparison-1-2-12','Current relative1/2/12 near fixed synthetic position; geography differs from historical reference.');
+  const previous='/private/tmp/pr45-icon-system-qa/raster-final/app/map-counts.png';try{await copyFile(previous,out+'/app/reference-before-relative-1-2-12.png');report.historicalReference={path:out+'/app/reference-before-relative-1-2-12.png',buildId:'XRLrbvZf66XLorkUFX5Fp',sourceHead:'e39f064d49c4aa10daed38c221c95389620b1156',note:'Historical whole-country map. Different camera/geography; visual size reference only.'};}catch{report.historicalReference={unavailable:true};}
+  await context.close();await dataset('relative');
+ });
+ check(report.tiles200>0,'actual Naver raster tile200 without SDK stub',{tiles200:report.tiles200});
+}finally{
+ await browser.close();report.summary={checks:report.checks.length,failed:report.checks.filter(c=>!c.passed),scenarios:report.scenarios.length,scenarioFailures:report.scenarios.filter(s=>!s.completed),pageErrors:report.pageErrors.length};
+ await writeFile(out+'/report.json',JSON.stringify(report,null,2));await writeFile(out+'/manifest.json',JSON.stringify({sourceHead:report.sourceHead,buildId:report.buildId,conditions:{actualSDK:true,SDKModified:false,syntheticAPI:true,fixedSyntheticPosition:true,personalLocation:false,noFixedCountBuckets:true},screenshots:report.screenshots,historicalReference:report.historicalReference},null,2));console.log(JSON.stringify({buildId:report.buildId,...report.summary,screenshots:report.screenshots.length,tiles200:report.tiles200},null,2));
+}

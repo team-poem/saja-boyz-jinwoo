@@ -154,7 +154,12 @@ function FilterSheet({
             onClick={onClose}
             className="ui-control flex size-10 shrink-0 items-center justify-center border-0 bg-transparent p-0"
           >
-            <Image src="/map/sheet-close.svg" alt="" width={40} height={40} />
+            <Image
+              src="/article-detail/close.svg"
+              alt=""
+              width={24}
+              height={24}
+            />
           </button>
         </header>
         <fieldset className="m-0 min-w-0 border-0 p-0">

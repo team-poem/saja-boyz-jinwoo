@@ -7,6 +7,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import DetailPage from './[id]/page';
 
 vi.mock('next/navigation', () => ({
+  usePathname: () => null,
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
   notFound: () => {
     throw new Error('TEST_ARTICLE_NOT_FOUND');
   },
@@ -96,7 +98,7 @@ test('articleDetailRequestAndContent', async () => {
   expect(
     view.querySelector(`img[src="${apiOrigin}/images/${id}.jpg"]`),
   ).not.toBeNull();
-  expect(view.textContent).toContain('AI 생성 이미지');
+  expect(view.textContent).toContain('AI로 생성된 이미지입니다.');
   expect(view.textContent).not.toMatch(/사건 위치|발생 시각|타임라인/);
   expect(view.querySelector('a[href="/incidents"]')).not.toBeNull();
   expect(view.querySelector('a[href="/"]')).not.toBeNull();
@@ -200,7 +202,7 @@ test('articleDetailImageFailure', async () => {
   await act(async () => image.dispatchEvent(new Event('error')));
   expect(container.querySelector('img')).toBeNull();
   expect(container.textContent).toContain('이미지 없음');
-  expect(container.textContent).not.toContain('AI 생성 이미지');
+  expect(container.textContent).not.toContain('AI로 생성된 이미지입니다.');
   expect(container.querySelector('h1')?.textContent).toBe('교통 안내 & 점검');
   expect(container.textContent).toContain(item.article.description);
   expect(
@@ -279,8 +281,10 @@ test('articleDetailShareUrl', async () => {
 });
 
 test('articleDetailLinksFromListAndSearch', async () => {
-  const { default: IncidentsPage } = await import('./page');
-  const { default: SearchPage } = await import('../search/page');
+  const { default: IncidentsPage } =
+    await import('../(browse)/@background/incidents/page');
+  const { default: SearchPage } =
+    await import('../(browse)/@background/search/page');
   for (const page of [
     () => IncidentsPage(),
     () => SearchPage({ searchParams: Promise.resolve({ q: '  도로 점검  ' }) }),
@@ -338,7 +342,6 @@ test('articleDetailLinksFromListAndSearch', async () => {
 
 test('articleDetailRouteBoundaries', async () => {
   const { createElement } = await import('react');
-  const routes = import.meta.glob('./[[]id]/{loading,not-found}.tsx');
   function isRoute(value: unknown): value is { default: () => ReactNode } {
     return (
       value !== null &&
@@ -347,19 +350,15 @@ test('articleDetailRouteBoundaries', async () => {
       typeof value.default === 'function'
     );
   }
-  const loading = routes['./[id]/loading.tsx'];
-  const notFound = routes['./[id]/not-found.tsx'];
-  expect(loading).toBeTypeOf('function');
-  expect(notFound).toBeTypeOf('function');
   const view = document.createElement('div');
-  const loadingModule = await loading();
+  const loadingModule = await import('../(browse)/(.)incidents/[id]/loading');
   assert(isRoute(loadingModule));
   view.innerHTML = renderToStaticMarkup(createElement(loadingModule.default));
   expect(
     view.querySelector('[role="status"][aria-busy="true"]')?.textContent,
   ).toContain('기사를 불러오는 중');
   expect(view.textContent).not.toContain('기사를 찾을 수 없어요');
-  const notFoundModule = await notFound();
+  const notFoundModule = await import('./[id]/not-found');
   assert(isRoute(notFoundModule));
   view.innerHTML = renderToStaticMarkup(createElement(notFoundModule.default));
   expect(view.textContent).toContain('기사를 찾을 수 없어요');
@@ -382,7 +381,7 @@ test('articleDetailSafePresentation', async () => {
     const view = await detailMarkup();
     expect(view.querySelector('img')).toBeNull();
     expect(view.textContent).toContain('이미지 없음');
-    expect(view.textContent).not.toContain('AI 생성 이미지');
+    expect(view.textContent).not.toContain('AI로 생성된 이미지입니다.');
   }
   for (const imageUrl of [
     null,

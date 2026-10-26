@@ -170,17 +170,26 @@ test('recommendedKeywordShowsPendingUntilResultsArrive', async () => {
           overflow: document.documentElement.scrollWidth > innerWidth,
           formHeight: fr.height,
           submitHeight: sr.height,
-          contained: sr.top >= fr.top && sr.bottom <= fr.bottom,
+          centered:
+            Math.abs((sr.top + sr.bottom) / 2 - (fr.top + fr.bottom) / 2) < 1,
+          targetReachable: submit.contains(
+            document.elementFromPoint(sr.left + sr.width / 2, sr.top + 1),
+          ),
           gaps: [tabs[1].left - tabs[0].right, tabs[2].left - tabs[1].right],
         };
       });
       expect(geometry.overflow).toBe(false);
-      expect(geometry.formHeight).toBeGreaterThanOrEqual(44);
+      expect(geometry.formHeight).toBeGreaterThanOrEqual(24);
       expect(geometry.submitHeight).toBeGreaterThanOrEqual(44);
-      expect(geometry.contained).toBe(true);
+      expect(geometry.centered).toBe(true);
+      expect(geometry.targetReachable).toBe(true);
       expect(geometry.gaps.every((gap) => gap >= 8)).toBe(true);
     }
     await page.setViewportSize({ width: 393, height: 852 });
+    expect(
+      await page.getByRole('heading', { name: '추천 검색어' }).count(),
+    ).toBe(0);
+    await page.goto(origin + '/search');
     const keywordLink = page.getByRole('link', { name: /교통통제/ });
     const beforePending = await keywordLink.boundingBox();
     expect(beforePending).not.toBeNull();
@@ -203,9 +212,7 @@ test('recommendedKeywordShowsPendingUntilResultsArrive', async () => {
     expect(
       Math.abs(duringPending!.height - beforePending!.height),
     ).toBeLessThan(1);
-    expect(await page.locator('article').innerText()).not.toContain(
-      '교통통제 검증 기사',
-    );
+    expect(await page.locator('article').count()).toBe(0);
     releaseResponse();
     await page.waitForURL((url) => url.searchParams.get('q') === '교통통제');
     await page

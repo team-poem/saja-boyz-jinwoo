@@ -3,10 +3,13 @@
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
-import SearchPage from '@/app/search/page';
+import SearchPage from '@/app/(browse)/@background/search/page';
 import { fetchArticleList } from '@/features/article-list/api/fetch-articles';
 import type { ArticleCollectionItem } from '@/features/article-list/model/article.types';
 
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
+}));
 const request = vi.fn<typeof fetch>();
 let container: HTMLDivElement;
 let root: Root;

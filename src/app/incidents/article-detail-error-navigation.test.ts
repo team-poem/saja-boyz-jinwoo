@@ -8,6 +8,7 @@ import { AppShell } from '../../components/layout/app-shell/app-shell';
 import DetailPage from './[id]/page';
 
 vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
   usePathname: () => `/incidents/${'a'.repeat(64)}`,
   notFound: () => {
     throw new Error('TEST_ARTICLE_NOT_FOUND');

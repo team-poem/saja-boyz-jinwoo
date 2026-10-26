@@ -63,7 +63,31 @@ check "digest: sobaya 워크스페이스 감지, 미결합 안내"      "printf 
 printf 'repo=x\nsha=%s\nchecked=%s\n' "$(git -C "$WS" rev-parse HEAD)" "$today" > harness/sobaya.lock
 check "digest: lock 과 일치"                              "sh scripts/collab.sh digest | grep -q '팀 검증 버전과 일치'"
 git -C "$WS" commit -q --allow-empty -m bump
-check "digest: sobaya 가 lock 과 다르면 sync 권유"         "sh scripts/collab.sh digest | grep -q 'attach-sobaya.sh sync'"
+check "digest: pin mismatch directs deliberate maintenance" "sh scripts/collab.sh digest | grep -q 'harness/sobaya/RULES.md'"
+
+echo "# clone-local Sobaya source selection"
+SELECTED="$R/selected runtime"; mkdir -p "$SELECTED/tdd-set/bin"
+printf '#!/bin/sh\nexit 0\n' > "$SELECTED/tdd-set/bin/step.sh"; chmod +x "$SELECTED/tdd-set/bin/step.sh"
+git config --local sobaya.sourceRoot "$SELECTED"
+resolved="$(SOBAYA_ROOT= sh -c '. "$CLAUDE_PROJECT_DIR/harness/hooks/lib.sh"; sobaya_root')"
+check "local sourceRoot selects the installed runtime instead of the parent workspace" "[ \"\$resolved\" = \"\$SELECTED\" ]"
+resolved="$(SOBAYA_ROOT="$WS" sh -c '. "$CLAUDE_PROJECT_DIR/harness/hooks/lib.sh"; sobaya_root')"
+check "explicit SOBAYA_ROOT overrides clone-local selection" "[ \"\$resolved\" = \"\$WS\" ]"
+git config --local sobaya.sourceRoot "$R/missing-runtime"
+check "invalid explicit local runtime does not fall back silently" "! SOBAYA_ROOT= sh -c '. \"\$CLAUDE_PROJECT_DIR/harness/hooks/lib.sh\"; sobaya_root'"
+git config --local --unset sobaya.sourceRoot
+resolved="$(SOBAYA_ROOT= sh -c '. "$CLAUDE_PROJECT_DIR/harness/hooks/lib.sh"; sobaya_root')"
+check "removing local selection restores workspace discovery" "[ \"\$resolved\" = \"\$WS\" ]"
+
+echo "# joining an existing attached app preserves archived feature inputs"
+cp harness/attach-sobaya.sh "$R/attach-before.sh"
+printf '#!/bin/sh\necho called > "%s"\ntouch spec.md failed-test.md\n' "$R/legacy-sync-called" > harness/attach-sobaya.sh
+out="$(sh harness/join.sh solp)"
+check "join never invokes legacy installer for an existing connection" "[ ! -e '$R/legacy-sync-called' ] && [ ! -e '$A/spec.md' ] && [ ! -e '$A/failed-test.md' ]"
+check "join reports mismatched pin maintenance without claiming synchronization" "printf '%s' \"\$out\" | grep -q 'harness/sobaya/RULES.md'"
+cp "$R/attach-before.sh" harness/attach-sobaya.sh
+git config --local --unset core.hooksPath
+rm -f "$R/legacy-sync-called" spec.md failed-test.md
 
 echo "# merge 모드"
 . "$A/harness/hooks/lib.sh"

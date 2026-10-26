@@ -1,0 +1,578 @@
+import { createRequire } from 'node:module';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+import { installNaverFixture } from './naver-stub.mjs';
+
+const app = process.env.QA_APP;
+if (!app) throw new Error('QA_APP must be the absolute application worktree');
+const origin = process.env.QA_ORIGIN || 'http://127.0.0.1:31043';
+const api = process.env.QA_API || 'http://127.0.0.1:41043';
+const canonicalOrigin = 'https://hyunghyung.vercel.app';
+const baseOutput = '/private/tmp/hyunghyung-detail-qa';
+const output = process.env.QA_RUN ? path.join(baseOutput, process.env.QA_RUN) : baseOutput;
+const require = createRequire(path.join(app, 'package.json'));
+const { chromium } = require('playwright-core');
+const { JSDOM } = require('jsdom');
+const health = await fetch(api + '/__qa/health').then((r) => r.json());
+const ids = health.ids;
+const detailUrl = (id) => '/incidents/' + id;
+const report = { started: new Date().toISOString(), origin, checks: [], scenarios: [], screenshots: [], pageErrors: [], pageErrorEvents: [], blockedExternalRequests: [], svg404: [], sdkFixtureRequests: 0, coverage: {} };
+let currentScenario = '';
+report.productionBuildId = await readFile(path.join(app, '.next/BUILD_ID'), 'utf8').then((value) => value.trim()).catch(() => null);
+await mkdir(output, { recursive: true });
+function check(value, name, detail = {}) {
+  report.checks.push({ name, passed: Boolean(value), ...detail });
+  if (!value) throw new Error(name + ' ' + JSON.stringify(detail));
+}
+async function scenario(name, run) {
+  if (process.env.QA_ONLY && !new RegExp(process.env.QA_ONLY).test(name)) return;
+  currentScenario = name;
+  console.log('QA scenario ' + name);
+  try { await run(); report.scenarios.push({ name, passed: true }); console.log('QA passed ' + name); }
+  catch (error) { report.scenarios.push({ name, passed: false, error: String(error.message) }); console.log('QA failed ' + name + ': ' + String(error.message)); }
+}
+const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const context = await browser.newContext({ viewport: { width: 393, height: 852 }, deviceScaleFactor: 1, reducedMotion: 'reduce' });
+await context.addInitScript(installNaverFixture);
+await context.route('**/*', async (route) => {
+  const request = route.request();
+  const url = new URL(request.url());
+  if (url.hostname === 'oapi.map.naver.com' && url.pathname.endsWith('/maps.js')) {
+    report.sdkFixtureRequests += 1;
+    return route.fulfill({ status: 200, contentType: 'text/javascript', body: '/* isolated QA SDK fixture */' });
+  }
+  if (!['127.0.0.1', 'localhost'].includes(url.hostname)) {
+    report.blockedExternalRequests.push({ method: request.method(), origin: url.origin });
+    return route.abort();
+  }
+  return route.continue();
+});
+const page = await context.newPage();
+page.setDefaultTimeout(7000);
+page.on('pageerror', (error) => {
+  report.pageErrors.push(error.message);
+  report.pageErrorEvents.push({ message: error.message, scenario: currentScenario, url: page.url() });
+});
+page.on('response', (response) => {
+  const url = new URL(response.url());
+  if (response.status() === 404 && url.pathname.endsWith('.svg')) report.svg404.push(url.pathname);
+});
+const articleLinks = () => page.locator('a[href^="/incidents/"]');
+const dialog = () => page.getByRole('dialog').filter({ has: page.locator('h1, h2') }).last();
+async function awaitDetail(id) {
+  await page.waitForURL((url) => url.pathname === detailUrl(id), { timeout: 10000 });
+  await dialog().waitFor({ state: 'visible', timeout: 10000 });
+  check(await page.getByRole('dialog').count() === 1, 'one active article dialog');
+}
+async function closeSheet() {
+  const closingElement = await dialog().elementHandle();
+  const close = dialog().getByRole('button', { name: /닫기|닫아/ }).or(dialog().getByRole('link', { name: /닫기|닫아/ })).first();
+  await close.click();
+  await page.waitForFunction((element) => !element.isConnected || element.getBoundingClientRect().width === 0, closingElement, { timeout: 10000 });
+  await closingElement.dispose();
+}
+async function screenshot(name, fullPage = false) {
+  const file = name + '.png';
+  await page.screenshot({ path: path.join(output, file), fullPage });
+  report.screenshots.push(file);
+}
+async function currentMeta() {
+  return page.evaluate(() => ({
+    title: document.title,
+    canonical: document.querySelector('link[rel="canonical"]')?.href,
+    ogUrl: document.querySelector('meta[property="og:url"]')?.content,
+    ogTitle: document.querySelector('meta[property="og:title"]')?.content,
+    robots: [...document.querySelectorAll('meta[name="robots"]')].map((node) => node.content),
+    headings: [...document.querySelectorAll('[role="dialog"] h1, [role="dialog"] h2')].map((node) => node.textContent),
+  }));
+}
+async function pageState() {
+  return page.evaluate(() => ({
+    scroll: scrollY,
+    links: [...document.querySelectorAll('a[href^="/incidents/"]')].map((node) => node.getAttribute('href')),
+    mapCount: window.__detailQA.maps.length,
+    activeMapCount: window.__detailQA.maps.filter((map) => !map.destroyed).length,
+    mapMoves: window.__detailQA.maps.map((map) => map.moves),
+    sdkScriptCount: document.querySelectorAll('script[src*="oapi.map.naver.com"]').length,
+  }));
+}
+async function assertMeta(id, noindex = false) {
+  const matched = await page.waitForFunction(({ expected, noindex }) => {
+    const canonical = document.querySelector('link[rel="canonical"]')?.href;
+    const robots = [...document.querySelectorAll('meta[name="robots"]')].map((node) => node.content).join(',');
+    return canonical === expected && /noindex/.test(robots) === noindex;
+  }, { expected: canonicalOrigin + detailUrl(id), noindex }, { timeout: 10000 }).then(() => true, () => false);
+  const meta = await currentMeta();
+  check(matched, 'article canonical/robots settled to expected metadata', { meta });
+  check(meta.canonical === canonicalOrigin + detailUrl(id), 'overlay canonical is exact article URL', { meta });
+  check(meta.ogUrl === meta.canonical, 'overlay OG URL equals canonical', { meta });
+  check(!meta.robots.some((value) => /noindex/.test(value)), 'article overlay is indexable after search', { meta });
+  check(meta.title.includes('검증용 기사'), 'overlay article-specific title', { meta });
+}
+async function focusInside() {
+  for (let i = 0; i < 18; i += 1) {
+    await page.keyboard.press('Tab');
+    const contained = await page.evaluate(() => Boolean(document.activeElement?.closest('[role="dialog"]')));
+    check(contained, 'Tab focus remains inside active sheet', { tab: i + 1 });
+  }
+}
+async function raw(pathname, userAgent) {
+  const response = await fetch(origin + pathname, { headers: { 'User-Agent': userAgent }, redirect: 'manual' });
+  const html = await response.text();
+  const document = new JSDOM(html).window.document;
+  const metadata = {
+    title: document.title,
+    canonical: document.querySelector('link[rel="canonical"]')?.href,
+    ogUrl: document.querySelector('meta[property="og:url"]')?.content,
+    ogTitle: document.querySelector('meta[property="og:title"]')?.content,
+    ogImage: document.querySelector('meta[property="og:image"]')?.content,
+    robots: [...document.querySelectorAll('meta[name="robots"]')].map((node) => node.content).join(','),
+  };
+  return { response, html, document, metadata };
+}
+
+try {
+  await scenario('direct-detail-server-HTML-and-bot-metadata', async () => {
+    for (const [name, ua] of [
+      ['browser', 'Mozilla/5.0 Chrome/143.0.0.0 Safari/537.36'],
+      ['google', 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'],
+      ['facebook', 'facebookexternalhit/1.1'],
+      ['twitter', 'Twitterbot/1.0'],
+      ['kakao', 'kakaotalk-scrap/1.0'],
+    ]) {
+      const result = await raw(detailUrl(ids.single) + '?utm_source=qa', ua);
+      await writeFile(path.join(output, 'direct-' + name + '.html'), result.html);
+      check(result.response.status === 200, name + ' direct detail HTTP200');
+      check(result.document.querySelector('[role="dialog"] h1')?.textContent.includes('검증용 기사'), name + ' initial server HTML h1');
+      check(result.document.querySelector('[role="dialog"]')?.textContent.includes('실제 사건 정보가 아닙니다'), name + ' initial server HTML real summary');
+      check(result.document.querySelector('[role="dialog"] time[datetime]'), name + ' initial server HTML publication date');
+      check(result.document.querySelector('[role="dialog"] a[href^="https://publisher.example.invalid/"]'), name + ' initial server HTML valid source link');
+      check(result.metadata.canonical === canonicalOrigin + detailUrl(ids.single) && result.metadata.ogUrl === result.metadata.canonical, name + ' exact canonical strips tracking', { metadata: result.metadata });
+      check(!/noindex/.test(result.metadata.robots), name + ' valid detail indexable');
+      if (['facebook', 'twitter', 'kakao'].includes(name)) check(Boolean(result.document.head.querySelector('meta[property="og:title"]')), name + ' preview metadata is in head');
+      const structured = [...result.document.querySelectorAll('script[type="application/ld+json"]')].map((node) => JSON.parse(node.textContent));
+      check(JSON.stringify(structured).includes('WebPage') && JSON.stringify(structured).includes('publisher.example.invalid'), name + ' truthful structured data citation');
+    }
+    report.coverage.serverBots = true;
+  });
+
+  await scenario('missing-and-error-SEO-distinction-and-escape', async () => {
+    for (const id of [ids.missing, 'invalid']) {
+      const result = await raw(detailUrl(id), 'facebookexternalhit/1.1');
+      check(result.response.status === 404, 'missing article true HTTP404', { id: id === 'invalid' ? 'invalid' : 'missing', status: result.response.status });
+      const cacheControl = result.response.headers.get('cache-control') ?? '';
+      check(/private/.test(cacheControl) && /no-store/.test(cacheControl), 'rewritten404 is private and not stored', { type: id === 'invalid' ? 'invalid' : 'missing', cacheControl });
+      check(/noindex/.test(result.metadata.robots), 'missing article noindex');
+      check(!result.document.querySelector('script[type="application/ld+json"]'), 'missing article no valid article structured data');
+    }
+    const unavailable = await raw(detailUrl(ids.unavailable), 'facebookexternalhit/1.1');
+    check(!/404/.test(String(unavailable.response.status)), 'upstream error is not missing404', { status: unavailable.response.status });
+    check(/noindex/.test(unavailable.metadata.robots) && !unavailable.html.includes('QA_PRIVATE_DIAGNOSTIC'), 'upstream error noindex and private body hidden');
+    const unsafe = await raw(detailUrl(ids.unsafe), 'facebookexternalhit/1.1');
+    check(!unsafe.document.querySelector('img[onerror]'), 'escaped article title cannot inject HTML');
+    const structured = [...unsafe.document.querySelectorAll('script[type="application/ld+json"]')].map((node) => JSON.parse(node.textContent));
+    check(!/javascript:|data:text|datePublished/.test(JSON.stringify(structured)), 'invalid source/date excluded from structured data');
+    report.coverage.missingAndError = true;
+  });
+
+  await scenario('direct-share-with-JavaScript-disabled', async () => {
+    const nojs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 393, height: 852 } });
+    await nojs.route('**/*', (route) => ['127.0.0.1', 'localhost'].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
+    const nojsPage = await nojs.newPage();
+    nojsPage.setDefaultTimeout(7000);
+    try {
+      await nojsPage.goto(origin + detailUrl(ids.single));
+      check(await nojsPage.getByRole('heading', { level: 1 }).innerText() === '검증용 기사 · 서울 단일 지역 도로 점검', 'JS-disabled article h1 visible');
+      check(await nojsPage.locator('a[href^="https://publisher.example.invalid/"]').count() > 0, 'JS-disabled original source usable');
+      const file = 'direct-no-javascript.png';
+      await nojsPage.screenshot({ path: path.join(output, file) });
+      report.screenshots.push(file);
+      report.coverage.noJavaScript = true;
+    } finally { await nojs.close(); }
+  });
+
+  await scenario('missing-detail-nojs-feedback-and-safe-links', async () => {
+    const nojs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 393, height: 852 } });
+    await nojs.route('**/*', (route) => ['127.0.0.1', 'localhost'].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
+    const missingPage = await nojs.newPage();
+    missingPage.setDefaultTimeout(7000);
+    try {
+      const missingUrl = origin + detailUrl(ids.missing) + '?utm_source=nojs404&qa=1';
+      const response = await missingPage.goto(missingUrl);
+      check(response.status() === 404, 'JS-disabled missing detail is HTTP404');
+      const info = await missingPage.evaluate(() => ({
+        text: document.body.innerText,
+        headings: [...document.querySelectorAll('h1')].filter((node) => node.getBoundingClientRect().height > 0).map((node) => node.textContent),
+        links: [...document.querySelectorAll('a[href="/incidents"],a[href="/"]')].filter((node) => node.getBoundingClientRect().height > 0).map((node) => ({ href: node.getAttribute('href'), text: node.textContent })),
+        feedback: (() => {
+          const node = document.querySelector('h1')?.closest('[role="status"],[role="alert"]')?.cloneNode(true);
+          node?.querySelectorAll('h1,a,button,svg').forEach((child) => child.remove());
+          return node?.textContent.trim() ?? '';
+        })(),
+      }));
+      const file = 'missing-no-javascript.png';
+      await missingPage.screenshot({ path: path.join(output, file) });
+      report.screenshots.push(file);
+      check(info.headings.some((text) => text.trim().length > 0) && info.feedback.length > 10, 'JS-disabled missing detail exposes a visible heading and guidance without fixed UI copy', { info });
+      check(info.links.some((link) => link.href === '/incidents') && info.links.some((link) => link.href === '/'), 'JS-disabled missing detail exposes visible list and map recovery links', { info });
+      check(missingPage.url() === missingUrl, 'JS-disabled404 rewrite preserves original article URL and query', { url: missingPage.url() });
+      await missingPage.locator('a[href="/incidents"]').first().click();
+      await missingPage.waitForURL((url) => url.pathname === '/incidents');
+      check(new URL(missingPage.url()).pathname === '/incidents', 'JS-disabled404 list recovery link performs real navigation');
+      report.coverage.missingNoJavaScript = true;
+    } finally { await nojs.close(); }
+  });
+
+  await scenario('direct-document-proxy-request-cost-and-HEAD', async () => {
+    const costId = (2045).toString(16).padStart(64, '0');
+    const count = async () => (await fetch(api + '/__qa/requests').then((r) => r.json())).requests.filter((request) => request.path === '/news/' + costId).length;
+    const before = await count();
+    const get = await fetch(origin + detailUrl(costId) + '?utm_source=probe-cost', { headers: { 'User-Agent': 'Mozilla/5.0 Chrome/143.0.0.0 Safari/537.36' } });
+    await get.text();
+    const afterGet = await count();
+    const head = await fetch(origin + detailUrl(costId), { method: 'HEAD', headers: { 'User-Agent': 'Mozilla/5.0 Chrome/143.0.0.0 Safari/537.36' } });
+    await head.arrayBuffer();
+    const afterHead = await count();
+    report.directDocumentApiCost = { get: afterGet - before, head: afterHead - afterGet, expectedAdditionalProxyGets: 1 };
+    check(get.status === 200 && head.status === 200, 'valid direct GET and HEAD succeed');
+    check(afterGet - before === 2 && afterHead - afterGet === 2, 'direct GET/HEAD each use one existence probe plus one request-scoped detail load', { cost: report.directDocumentApiCost });
+    for (const id of [ids.missing, 'invalid']) {
+      const url = origin + detailUrl(id) + '?utm_source=head404';
+      const missingHead = await fetch(url, { method: 'HEAD', redirect: 'manual' });
+      check(missingHead.status === 404 && (await missingHead.arrayBuffer()).byteLength === 0, 'missing/invalid direct HEAD preserves404 with no response body', { type: id === 'invalid' ? 'invalid' : 'missing', status: missingHead.status });
+    }
+    report.coverage.proxyCostAndHEAD = true;
+  });
+
+  await scenario('list-infinite-pagination-overlay-history-and-scroll', async () => {
+    await page.goto(origin + '/incidents');
+    await articleLinks().first().waitFor();
+    await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+    await page.waitForFunction(() => document.querySelectorAll('a[href^="/incidents/"]').length > 20, null, { timeout: 15000 });
+    const count = await articleLinks().count();
+    check(count > 20, 'list infinite scrolling added second page', { count });
+    const opener = articleLinks().nth(25);
+    const href = await opener.getAttribute('href');
+    const id = href.split('/').pop();
+    await opener.scrollIntoViewIfNeeded();
+    const before = await pageState();
+    await opener.click();
+    await awaitDetail(id);
+    if (!process.env.QA_SKIP_SEO) await assertMeta(id);
+    const during = await pageState();
+    check(during.links.includes(href) && during.links.length >= before.links.length, 'list content stays mounted behind sheet');
+    await screenshot('list-detail-expanded-393');
+    await closeSheet();
+    await page.waitForURL((url) => url.pathname === '/incidents');
+    const closed = await pageState();
+    check(closed.links.length >= count && Math.abs(closed.scroll - before.scroll) <= 2, 'list loaded pages and reading position restored', { beforeScroll: before.scroll, afterScroll: closed.scroll, beforeLinks: count, afterLinks: closed.links.length });
+    const restoredFocus = await page.waitForFunction((href) => document.activeElement?.getAttribute('href') === href, href, { timeout: 2000 }).then(() => true, () => false);
+    check(restoredFocus, 'list opener regains focus');
+    await page.goForward();
+    await awaitDetail(id);
+    await page.goBack();
+    await page.waitForURL((url) => url.pathname === '/incidents');
+    check(await page.getByRole('dialog').count() === 0, 'list browser back clears parallel detail slot');
+    report.coverage.listHistoryAndPagination = true;
+  });
+
+  await scenario('search-overlay-indexability-and-return-noindex', async () => {
+    const query = '검증용';
+    await page.goto(origin + '/search?q=' + encodeURIComponent(query));
+    await articleLinks().first().waitFor();
+    const before = await currentMeta();
+    check(before.robots.some((value) => /noindex/.test(value)), 'search is initially noindex', { before });
+    const link = articleLinks().first();
+    const href = await link.getAttribute('href');
+    const id = href.split('/').pop();
+    await link.click();
+    await awaitDetail(id);
+    if (!process.env.QA_SKIP_SEO) await assertMeta(id);
+    await screenshot('search-detail-expanded-393');
+    await page.keyboard.press('Escape');
+    await page.waitForURL((url) => url.pathname === '/search' && url.searchParams.get('q') === query);
+    await page.waitForFunction(() => [...document.querySelectorAll('meta[name="robots"]')].some((node) => /noindex/.test(node.content)));
+    const after = await currentMeta();
+    check(after.canonical === before.canonical && after.title === before.title, 'search title/canonical restored after sheet close', { before, after });
+    check(await page.getByRole('searchbox', { name: /기사.*검색|키워드.*검색/ }).inputValue() === query, 'search query preserved');
+    await page.goForward();
+    await awaitDetail(id);
+    await page.keyboard.press('Escape');
+    report.coverage.searchMetadataAndHistory = true;
+  });
+
+  await scenario('map-single-region-sheet-expand-and-focus', async () => {
+    await page.goto(origin + '/');
+    const marker = page.getByRole('button', { name: /지역 대표 위치: 서울/ });
+    await marker.waitFor();
+    const before = await pageState();
+    await marker.click();
+    await awaitDetail(ids.single);
+    const after = await pageState();
+    check(after.mapCount === before.mapCount && after.activeMapCount === before.activeMapCount, 'map instance preserved during single-marker detail');
+    check(after.sdkScriptCount === 1 && before.sdkScriptCount === 1, 'single SDK script remains mounted during article overlay');
+    const bounds = await dialog().boundingBox();
+    check(bounds && bounds.height < 700 && bounds.height > 350, 'map detail initially uses collapsed sheet', { bounds });
+    await screenshot('map-detail-collapsed-393');
+    const expand = dialog().getByRole('button', { name: /펼치|확장/ }).first();
+    await expand.click();
+    await page.waitForFunction(() => [...document.querySelectorAll('[role="dialog"]')].some((node) => node.getBoundingClientRect().height > 700));
+    await screenshot('map-detail-expanded-393');
+    await focusInside();
+    const base = await pageState();
+    await dialog().hover();
+    await page.mouse.wheel(0, 600);
+    const scrolled = await pageState();
+    check(scrolled.scroll === base.scroll && JSON.stringify(scrolled.mapMoves) === JSON.stringify(base.mapMoves), 'sheet wheel scroll does not move page or map');
+    await page.keyboard.press('Escape');
+    await page.waitForURL((url) => url.pathname === '/');
+    check(await marker.evaluate((node) => node === document.activeElement), 'map opener focus restored');
+    report.coverage.mapSingleAndFocus = true;
+  });
+
+  await scenario('map-region-pair-and-twelve-members-preserved', async () => {
+    for (const [region, count] of [['부산', 2], ['대구', 12]]) {
+      await page.goto(origin + '/');
+      const marker = page.getByRole('button', { name: new RegExp(`지역 대표 위치: ${region}.*기사 ${count}건`) });
+      await marker.waitFor();
+      await marker.click();
+      await page.getByRole('dialog').waitFor();
+      const memberLinks = page.getByRole('dialog').locator('a[href^="/incidents/"]');
+      check(await memberLinks.count() === count, region + ' all grouped articles available', { count: await memberLinks.count() });
+      const href = await memberLinks.first().getAttribute('href');
+      await memberLinks.first().click();
+      await awaitDetail(href.split('/').pop());
+      check(await page.getByRole('dialog').count() === 1, region + ' selection and detail panels do not stack');
+      await page.keyboard.press('Escape');
+      await page.waitForURL((url) => url.pathname === '/');
+      await page.getByRole('dialog').waitFor();
+      check(await page.getByRole('dialog').locator('a[href^="/incidents/"]').count() === count, region + ' closing article returns to region selection');
+      await screenshot('map-' + count + '-member-selection-393');
+    }
+    report.coverage.mapMulti = true;
+  });
+
+  await scenario('map-carousel-share-copy-and-direct-close', async () => {
+    await page.goto(origin + '/');
+    const links = articleLinks();
+    await links.first().waitFor();
+    const href = await links.first().getAttribute('href');
+    await links.first().click();
+    await awaitDetail(href.split('/').pop());
+    await dialog().getByRole('button', { name: /공유/ }).click();
+    const copies = await page.evaluate(() => window.__detailQA.copies);
+    check(copies.at(-1) === origin + href, 'share copy retains clean current-origin article URL', { copies });
+    await page.evaluate(() => { window.__detailQA.shareMode = 'cancel'; });
+    await dialog().getByRole('button', { name: /공유/ }).click();
+    check(await page.evaluate(() => window.__detailQA.copies.length) === copies.length, 'native share cancellation does not fall back to clipboard');
+    await page.goto(origin + detailUrl(ids.single) + '?utm_source=direct-qa');
+    await dialog().waitFor();
+    await closeSheet();
+    check(new URL(page.url()).origin === origin && !new URL(page.url()).pathname.match(/^\/incidents\/[a-f0-9]{64}$/), 'direct entry close stays inside app');
+    report.coverage.carouselAndShare = true;
+  });
+
+  await scenario('map-sheet-pointer-drag-keyboard-and-background-cleanup', async () => {
+    await page.setViewportSize({ width: 393, height: 852 });
+    await page.goto(origin + '/');
+    const marker = page.getByRole('button', { name: /지역 대표 위치: 서울/ });
+    await marker.waitFor();
+    await marker.click();
+    await awaitDetail(ids.single);
+    const handle = dialog().getByRole('button', { name: /시트.*펼치기/ });
+    const from = await handle.boundingBox();
+    check(Boolean(from), 'collapsed sheet handle has geometry');
+    await page.mouse.move(from.x + from.width / 2, from.y + 10);
+    await page.mouse.down();
+    await page.mouse.move(from.x + from.width / 2, from.y - 100, { steps: 8 });
+    await page.mouse.up();
+    await page.getByRole('button', { name: /시트.*접기/ }).waitFor();
+    check((await dialog().boundingBox()).height > 700, 'upward pointer drag expands sheet');
+    const expanded = await page.getByRole('button', { name: /시트.*접기/ }).boundingBox();
+    await page.mouse.move(expanded.x + expanded.width / 2, expanded.y + 10);
+    await page.mouse.down();
+    await page.mouse.move(expanded.x + expanded.width / 2, expanded.y + 130, { steps: 8 });
+    await page.mouse.up();
+    await page.getByRole('button', { name: /시트.*펼치기/ }).waitFor();
+    check((await dialog().boundingBox()).height < 700, 'downward pointer drag collapses without click re-toggle');
+    await page.getByRole('button', { name: /시트.*펼치기/ }).focus();
+    await page.keyboard.press('Space');
+    await page.getByRole('button', { name: /시트.*접기/ }).waitFor();
+    check((await dialog().boundingBox()).height > 700, 'keyboard space expands sheet');
+    await page.keyboard.press('Escape');
+    await page.waitForURL((url) => url.pathname === '/');
+    const cleanup = await page.evaluate(() => ({
+      overflow: document.body.style.overflow,
+      padding: document.body.style.paddingRight,
+      background: [...document.querySelectorAll('[data-article-background]')].map((node) => ({ inert: node.inert, hidden: node.getAttribute('aria-hidden') })),
+      activeIsMarker: document.activeElement?.getAttribute('aria-label')?.startsWith('지역 대표 위치: 서울'),
+      activeMaps: window.__detailQA.maps.filter((map) => !map.destroyed).length,
+    }));
+    check(cleanup.overflow === '' && cleanup.padding === '' && cleanup.background.every((node) => !node.inert && node.hidden === null), 'closing routed sheet restores body and background interactivity', { cleanup });
+    check(cleanup.activeIsMarker && cleanup.activeMaps === 1, 'drag-close restores original map trigger and keeps one map');
+    const multi = page.getByRole('button', { name: /지역 대표 위치: 부산.*기사 2건/ });
+    await multi.click();
+    await page.getByRole('dialog').waitFor();
+    await page.getByRole('dialog').getByRole('button', { name: '기사 선택 닫기' }).click();
+    check(await page.getByRole('dialog').count() === 0, 'local group chooser closes completely');
+    const chooserCleanup = await page.evaluate(() => ({ overflow: document.body.style.overflow, background: document.querySelector('[data-article-background]')?.inert, hidden: document.querySelector('[data-article-background]')?.getAttribute('aria-hidden'), activeLabel: document.activeElement?.getAttribute('aria-label') }));
+    check(chooserCleanup.overflow === '' && !chooserCleanup.background && chooserCleanup.hidden === null && chooserCleanup.activeLabel?.includes('부산'), 'local chooser restores body inert and marker focus', { chooserCleanup });
+    report.coverage.pointerDragAndCleanup = true;
+  });
+
+  await scenario('map-related-replacement-history-and-location-context', async () => {
+    await page.setViewportSize({ width: 393, height: 852 });
+    await page.goto(origin + '/');
+    await page.getByRole('button', { name: /지역 대표 위치: 부산.*기사 2건/ }).click();
+    const chooser = page.getByRole('dialog');
+    const original = chooser.locator('a[href="' + detailUrl(ids.pairFirst) + '"]');
+    await original.click();
+    await awaitDetail(ids.pairFirst);
+    const location = dialog().getByText('부산 · 지역 대표 위치', { exact: false });
+    check(await location.count() > 0, 'map detail uses verified region location context');
+    const related = dialog().getByRole('region', { name: '같은 지역 보도' });
+    await related.waitFor();
+    const links = related.getByRole('link');
+    check(await links.count() === 1, 'pair region exposes only one related article');
+    check(await links.first().getAttribute('href') === detailUrl(ids.pairSecond), 'related link points at actual other member');
+    await links.first().click();
+    await awaitDetail(ids.pairSecond);
+    check(await dialog().getByRole('heading', { level: 1 }).innerText() === '검증용 기사 · 부산 같은 지역 두 번째 보도', 'related replacement loads target article title');
+    const otherLink = dialog().getByRole('region', { name: '같은 지역 보도' }).getByRole('link');
+    check(await otherLink.count() === 1 && await otherLink.first().getAttribute('href') === detailUrl(ids.pairFirst), 'related context follows replaced article ID');
+    await screenshot('map-related-second-article-393');
+    await closeSheet();
+    await page.waitForURL((url) => url.pathname === '/');
+    check(await page.getByRole('dialog').locator('a[href^="/incidents/"]').count() === 2, 'related-close returns to original map group');
+    await page.goForward();
+    await awaitDetail(ids.pairSecond);
+    check(await dialog().getByRole('heading', { level: 1 }).innerText() === '검증용 기사 · 부산 같은 지역 두 번째 보도', 'forward reopens final related article without intermediate history entry');
+    await closeSheet();
+    await page.waitForURL((url) => url.pathname === '/');
+    report.coverage.relatedReplacement = true;
+  });
+
+  await scenario('native-share-success-failure-and-manual-copy-fallback', async () => {
+    await page.goto(origin + detailUrl(ids.single) + '?utm_source=qa');
+    await dialog().waitFor();
+    await page.evaluate(() => { window.__detailQA.shareMode = 'success'; });
+    await dialog().getByRole('button', { name: '기사 공유하기' }).click();
+    const native = await page.evaluate(() => window.__detailQA.nativeShares);
+    check(native.length === 1 && native[0].url === origin + detailUrl(ids.single), 'native share receives clean detail URL');
+    await page.evaluate(() => { window.__detailQA.shareMode = 'fail'; });
+    await dialog().getByRole('button', { name: '기사 공유하기' }).click();
+    const copied = await page.evaluate(() => window.__detailQA.copies);
+    check(copied.at(-1) === origin + detailUrl(ids.single), 'native share failure falls back to clipboard');
+    await page.evaluate(() => { window.__detailQA.shareMode = 'unsupported'; navigator.clipboard.writeText = async () => { throw new Error('QA clipboard denied'); }; });
+    await dialog().getByRole('button', { name: '기사 공유하기' }).click();
+    const manual = dialog().getByRole('textbox', { name: '공유 링크' });
+    await manual.waitFor();
+    check(await manual.inputValue() === origin + detailUrl(ids.single), 'clipboard failure exposes selectable exact URL');
+    check(await manual.getAttribute('readonly') !== null, 'manual URL is read-only');
+    report.coverage.nativeAndManualShare = true;
+  });
+
+  await scenario('error-retry-missing-recovery-image-failure-and-svg-assets', async () => {
+    const beforeRequests = await fetch(api + '/__qa/requests').then((r) => r.json());
+    const beforeCount = beforeRequests.requests.filter((request) => request.path === '/news/' + ids.unavailable).length;
+    await page.goto(origin + detailUrl(ids.unavailable));
+    await page.getByRole('dialog').getByRole('alert').waitFor();
+    check((await page.getByRole('dialog').getByRole('alert').innerText()).includes('기사를 불러오지 못했어요'), 'upstream503 shows retryable error instead of missing article');
+    await page.getByRole('link', { name: '다시 시도', exact: true }).click();
+    await page.getByRole('dialog').getByRole('alert').waitFor();
+    await page.waitForTimeout(150);
+    const retriedRequests = await fetch(api + '/__qa/requests').then((r) => r.json());
+    const afterCount = retriedRequests.requests.filter((request) => request.path === '/news/' + ids.unavailable).length;
+    check(afterCount >= beforeCount + 2, 'retry performs a fresh detail API request', { beforeCount, afterCount });
+    const missingBrowserUrl = origin + detailUrl(ids.missing) + '?utm_source=browser404&qa=1';
+    await page.goto(missingBrowserUrl);
+    await page.getByRole('heading', { level: 1 }).waitFor();
+    check(page.url() === missingBrowserUrl, 'JS-enabled404 rewrite preserves original URL and query', { url: page.url() });
+    const recovery = page.getByRole('link', { name: /^사건 목록$|^목록으로$/ }).last();
+    check(await recovery.count() > 0 && await recovery.getAttribute('href') === '/incidents', 'missing detail exposes actual list recovery');
+    check(await page.getByRole('link', { name: /^지도 홈$/ }).count() > 0, 'JS-enabled404 exposes map recovery');
+    await screenshot('missing-with-javascript');
+    await recovery.click();
+    await page.waitForURL((url) => url.pathname === '/incidents');
+    await articleLinks().first().waitFor();
+    check(await articleLinks().count() > 0, 'missing-detail recovery reaches usable article list');
+    await page.route('**/images/*.jpg', (route) => route.abort());
+    await page.goto(origin + detailUrl(ids.single));
+    await dialog().getByText('이미지 없음', { exact: true }).waitFor();
+    check(await dialog().getByRole('heading', { level: 1 }).count() === 1, 'image failure preserves readable article');
+    await screenshot('detail-image-failure-393');
+    await page.unroute('**/images/*.jpg');
+    const svg = await fetch(origin + '/article-detail/close.svg');
+    check(svg.status === 200 && svg.headers.get('content-type')?.includes('svg'), 'Figma close SVG returns200');
+    check(report.svg404.length === 0, 'all requested SVG assets resolve', { svg404: report.svg404 });
+    report.coverage.retryMissingImageAndAssets = true;
+  });
+
+  await scenario('reduced-motion-preserves-sheet-controls', async () => {
+    await page.goto(origin + detailUrl(ids.single));
+    await dialog().waitFor();
+    const motion = await dialog().evaluate((element) => ({ reduced: matchMedia('(prefers-reduced-motion: reduce)').matches, animation: getComputedStyle(element).animationDuration, transition: getComputedStyle(element).transitionDuration }));
+    const seconds = (value) => value.split(',').map((part) => part.trim().endsWith('ms') ? Number.parseFloat(part) / 1000 : Number.parseFloat(part));
+    check(motion.reduced && [...seconds(motion.animation), ...seconds(motion.transition)].every((duration) => duration <= 0.01), 'reduced motion disables long sheet animations', { motion });
+    await dialog().getByRole('button', { name: /시트.*접기/ }).click();
+    check(await dialog().getByRole('button', { name: /시트.*펼치기/ }).count() === 1, 'reduced motion still supports collapse');
+    report.coverage.reducedMotion = true;
+  });
+
+  await scenario('close-icon-edge-hit-targets', async () => {
+    await page.setViewportSize({ width: 393, height: 852 });
+    for (const mode of ['direct', 'chooser']) {
+      for (const dy of [3, 12, 21]) {
+        if (mode === 'direct') await page.goto(origin + detailUrl(ids.single));
+        else {
+          await page.goto(origin + '/');
+          await page.getByRole('button', { name: /지역 대표 위치: 부산.*기사 2건/ }).click();
+        }
+        const target = mode === 'direct'
+          ? page.getByRole('dialog').getByRole('link', { name: '닫기', exact: true })
+          : page.getByRole('dialog').getByRole('button', { name: '기사 선택 닫기' });
+        await target.waitFor();
+        const box = await target.boundingBox();
+        const point = { x: box.x + box.width / 2, y: box.y + dy };
+        const hit = await page.evaluate(({ x, y }) => {
+          const node = document.elementFromPoint(x, y)?.closest('a,button');
+          return { tag: node?.tagName, label: node?.getAttribute('aria-label') };
+        }, point);
+        check(hit.label === (mode === 'direct' ? '닫기' : '기사 선택 닫기'), mode + ' close edge +' + dy + ' targets close control instead of drag handle', { hit, point });
+        await page.mouse.click(point.x, point.y);
+        const closed = await page.waitForFunction(() => document.querySelectorAll('[role="dialog"]').length === 0, null, { timeout: 2000 }).then(() => true, () => false);
+        check(closed, mode + ' close edge +' + dy + ' closes instead of collapsing');
+      }
+    }
+    report.coverage.closeEdgeHitTargets = true;
+  });
+
+  await scenario('responsive-direct-sheet-and-scroll', async () => {
+    for (const width of [320, 393, 768, 1440]) {
+      await page.setViewportSize({ width, height: 852 });
+      await page.goto(origin + detailUrl(ids.single));
+      await dialog().waitFor();
+      const geometry = await page.evaluate(() => ({ overflow: document.documentElement.scrollWidth > innerWidth, dialog: document.querySelector('[role="dialog"]')?.getBoundingClientRect().toJSON() }));
+      check(!geometry.overflow && geometry.dialog.left >= -1 && geometry.dialog.right <= width + 1, 'direct detail fits viewport ' + width, { geometry });
+      const share = dialog().getByRole('button', { name: /공유/ });
+      await share.scrollIntoViewIfNeeded();
+      check(await share.isVisible(), 'share button reachable at width ' + width);
+      await screenshot('direct-expanded-' + width);
+    }
+    report.coverage.responsive = true;
+  });
+} finally {
+  await context.close();
+  await browser.close();
+  report.requests = await fetch(api + '/__qa/requests').then((r) => r.json()).catch(() => null);
+  report.finished = new Date().toISOString();
+  report.sourceFileHashes = {};
+  for (const name of ['src/app/layout.tsx', 'src/app/incidents/[id]/page.tsx']) {
+    try { report.sourceFileHashes[name] = createHash('sha256').update(await readFile(path.join(app, name))).digest('hex'); }
+    catch { /* Source might still be undergoing an authorized rename; no repository writes. */ }
+  }
+  await writeFile(path.join(output, 'report.json'), JSON.stringify(report, null, 2));
+  console.log(JSON.stringify({ scenarios: report.scenarios, checks: report.checks.length, failedChecks: report.checks.filter((entry) => !entry.passed), pageErrors: report.pageErrors, screenshots: report.screenshots }, null, 2));
+  if (report.scenarios.some((entry) => !entry.passed) || report.pageErrors.length) process.exitCode = 1;
+}

@@ -1,0 +1,35 @@
+{
+  "sourceHead": "9f33c546c1ef5894d3351e7bf0496f1b8278dfc1",
+  "buildId": "3az_4QQ5E5r7rXctQkgo6",
+  "gateExitCode": 0,
+  "appTests": 151,
+  "failedTests": 0,
+  "skippedTests": 0,
+  "formatPassed": true,
+  "lintPassed": true,
+  "existingLintWarnings": 3,
+  "newLintWarnings": 0,
+  "sourceAndGitInvariantPassed": true,
+  "buildPassed": true,
+  "browser": {
+    "checks": 120,
+    "failed": 0,
+    "scenarios": 4,
+    "incomplete": 0,
+    "screenshots": 11,
+    "pageErrors": 0,
+    "tiles200": 23
+  },
+  "normalHeightsPx": [
+    451.5,
+    490.5,
+    596.390625
+  ],
+  "viewport": {
+    "width": 393,
+    "height": 852
+  },
+  "manualUrlGrowthPx": 82,
+  "reducedMotion": "reduce",
+  "serversClosed": true
+}

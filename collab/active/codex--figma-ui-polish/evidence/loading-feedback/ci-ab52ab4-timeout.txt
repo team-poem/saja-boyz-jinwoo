@@ -1,0 +1,52 @@
+tion 60011ms
+2026-10-25T11:38:04.3370660Z
+2026-10-25T11:38:04.3371379Z ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+2026-10-25T11:38:04.3371851Z
+2026-10-25T11:38:04.3374924Z  FAIL  src/proxy-navigation.test.ts > repeatingTheSameSearchReplacesCardsAndResetsPagination
+2026-10-25T11:38:04.3380230Z Error: Test timed out in 60000ms.
+2026-10-25T11:38:04.3381743Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+2026-10-25T11:38:04.3383148Z  ❯ src/proxy-navigation.test.ts:1108:1
+2026-10-25T11:38:04.3575174Z     1106| }, 90000);
+2026-10-25T11:38:04.3576449Z     1107|
+2026-10-25T11:38:04.3578142Z     1108| test('repeatingTheSameSearchReplacesCardsAndResetsPagination', async (…
+2026-10-25T11:38:04.3579718Z        | ^
+2026-10-25T11:38:04.3580845Z     1109|   const saved = listArticles;
+2026-10-25T11:38:04.3581787Z
+2026-10-25T11:38:04.3582884Z     1110|   const batch = (prefix: string, size: number, base: number) =>
+2026-10-25T11:38:04.3583767Z
+2026-10-25T11:38:04.3584648Z ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+2026-10-25T11:38:04.3585176Z
+2026-10-25T11:38:04.3617561Z  Test Files  1 failed | 36 passed (37)
+2026-10-25T11:38:04.3619270Z       Tests  1 failed | 149 passed (150)
+2026-10-25T11:38:04.3620323Z    Start at  11:35:54
+2026-10-25T11:38:04.3621329Z    Duration  129.91s (tests 91%, environment 6%, import 2%)
+2026-10-25T11:38:04.3621896Z
+2026-10-25T11:38:04.3622946Z     Isolate  37 workers spawned · ~625ms startup each (spawn + environment, per file)
+2026-10-25T11:38:04.3625045Z              at least ~7.09s faster with isolate: false — reuses workers across files instead of one per file
+2026-10-25T11:38:04.3625973Z
+2026-10-25T11:38:04.3635696Z
+2026-10-25T11:38:04.3654883Z ##[error]Error: Test timed out in 60000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/proxy-navigation.test.ts:1108:1
+
+
+2026-10-25T11:38:04.4129814Z  ELIFECYCLE  Command failed with exit code 1.
+2026-10-25T11:38:04.4450151Z ##[error]Process completed with exit code 1.
+2026-10-25T11:38:04.4553283Z Post job cleanup.
+2026-10-25T11:38:04.6126317Z Pruning is unnecessary.
+2026-10-25T11:38:04.6339752Z Post job cleanup.
+2026-10-25T11:38:04.7372479Z [command]/usr/bin/git version
+2026-10-25T11:38:04.7420622Z git version 2.55.0
+2026-10-25T11:38:04.7466610Z Temporarily overriding HOME='/home/runner/work/_temp/20874fa2-4751-4e18-8760-c619b0e45c90' before making global git config changes
+2026-10-25T11:38:04.7468687Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-25T11:38:04.7476386Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/saja-boyz-jinwoo/saja-boyz-jinwoo
+2026-10-25T11:38:04.7523002Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-25T11:38:04.7566030Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-25T11:38:04.7824319Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-25T11:38:04.7854879Z http.https://github.com/.extraheader
+2026-10-25T11:38:04.7874179Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-25T11:38:04.7917685Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-25T11:38:04.8194328Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-25T11:38:04.8239075Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-25T11:38:04.8618128Z Cleaning up orphan processes
+2026-10-25T11:38:04.8995951Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, pnpm/action-setup@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

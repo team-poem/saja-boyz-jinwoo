@@ -3,8 +3,11 @@
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
-import SearchPage from '@/app/search/page';
+import SearchPage from '@/app/(browse)/@background/search/page';
 
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
+}));
 const storageKey = 'hh:recent-searches:v1';
 const request = vi.fn<typeof fetch>();
 let root: Root | undefined;

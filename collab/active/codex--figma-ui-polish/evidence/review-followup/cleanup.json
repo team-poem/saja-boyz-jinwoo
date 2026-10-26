@@ -1,0 +1,12 @@
+[
+  {
+    "name": "app",
+    "pid": 47421,
+    "exitCode": 143
+  },
+  {
+    "name": "fixture",
+    "pid": 47219,
+    "exitCode": 0
+  }
+]

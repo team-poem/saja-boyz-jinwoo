@@ -1,0 +1,16 @@
+[
+  {
+    "port": 31146,
+    "ownedPids": [
+      87203
+    ],
+    "closed": true
+  },
+  {
+    "port": 41146,
+    "ownedPids": [
+      27979
+    ],
+    "closed": true
+  }
+]
