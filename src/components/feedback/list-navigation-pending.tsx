@@ -62,7 +62,7 @@ export function ListNavigationPending({
   return createPortal(
     <div
       data-list-navigation-pending=""
-      className="fixed top-[calc(116px_+_env(safe-area-inset-top))] bottom-[calc(84px_+_env(safe-area-inset-bottom))] left-1/2 z-20 w-[min(calc(100%_-_32px),608px)] -translate-x-1/2 overflow-hidden bg-background"
+      className="fixed top-[calc(116px_+_env(safe-area-inset-top))] bottom-[calc(84px_+_env(safe-area-inset-bottom))] left-1/2 z-20 w-[min(100%,640px)] -translate-x-1/2 overflow-hidden bg-background px-4"
     >
       <ListLoading />
     </div>,
