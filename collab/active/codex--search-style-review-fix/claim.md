@@ -2,9 +2,9 @@
 branch: codex/search-style-review-fix
 owner: easter721
 started: 2026-11-12
-status: active
+status: done
 goal: fix(search): 검색 폼을 스타일 검사 규칙에 맞춤
-next: 검색 폼 CSS를 Tailwind로 옮기고 기존 상호작용을 검증해 PR 68에 반영
+next: 검증한 검색 폼 변경을 PR 68에 반영하고 원격 검사를 확인
 base: codex/adaptive-skeletons
 ---
 
