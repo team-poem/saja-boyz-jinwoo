@@ -1142,11 +1142,9 @@ test('serverLoadingBoundariesKeepMapFrameAndStandaloneArticleSeoAccessible', asy
         .soft(await loading.isVisible(), '기사 서버 대기 중 첫 지도 스켈레톤')
         .toBe(true);
       if (await loading.isVisible()) {
-        expect
-          .soft(
-            await loading.evaluate(
-              (node) => node.getBoundingClientRect().height,
-            ),
+        await expect
+          .poll(() =>
+            loading.evaluate((node) => node.getBoundingClientRect().height),
           )
           .toBe(852);
         expect
