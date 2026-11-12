@@ -170,7 +170,7 @@ function SearchInput({
         readOnly={pending}
         aria-label="기사 키워드 검색"
         placeholder={prompt}
-        className="h-full min-h-0 min-w-0 flex-1 border-0 bg-transparent p-0 text-[14px]/[17px] font-semibold text-text placeholder:font-normal focus-visible:outline-none [&::-webkit-search-cancel-button]:appearance-none"
+        className="h-full min-h-0 min-w-0 flex-1 border-0 bg-transparent p-0 text-[14px]/[17px] font-semibold text-text placeholder:font-normal focus-visible:outline-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-cancel-button]:[-webkit-appearance:none]"
       />
       {keyword ? (
         <Link
