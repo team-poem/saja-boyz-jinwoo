@@ -2,9 +2,9 @@
 branch: codex/adaptive-skeletons
 owner: easter721
 started: 2026-11-12
-status: active
-goal: 'fix(ui): 화면 크기에 맞게 로딩 스켈레톤 표시'
-next: 지도·목록·검색의 최초 로딩 및 추가 로딩을 구분하고 화면 크기별로 검증
+status: done
+goal: fix(ui): 화면 크기에 맞게 로딩 스켈레톤 표시
+next: dev 대상 PR의 원격 검사와 리뷰 확인
 base: dev
 ---
 

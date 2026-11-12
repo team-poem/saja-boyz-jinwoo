@@ -4070,6 +4070,175 @@ test('articleListIsVisibleWithoutJavascriptAndInInitialBotHtml', async () => {
   }
 }, 60000);
 
+test('loadingSkeletonsFillTheVisibleAreaAcrossViewportSizes', async () => {
+  const screenshotDir = process.env.SKELETON_SCREENSHOT_DIR;
+  if (screenshotDir) await mkdir(screenshotDir, { recursive: true });
+
+  for (const viewport of [
+    { width: 320, height: 568 },
+    { width: 393, height: 852 },
+    { width: 1440, height: 900 },
+    { width: 844, height: 390 },
+  ]) {
+    const context = await browser!.newContext({ viewport });
+    contexts.push(context);
+    await context.route('**/*', async (route) => {
+      const headers = route.request().headers();
+      if (headers['next-router-prefetch'] || headers.purpose === 'prefetch')
+        await route.abort();
+      else await route.continue();
+    });
+    const page = await context.newPage();
+    const suffix = `${viewport.width}x${viewport.height}`;
+    const capture = async (screen: string) => {
+      if (screenshotDir)
+        await page.screenshot({
+          path: join(screenshotDir, `${screen}-${suffix}.png`),
+        });
+    };
+
+    try {
+      await page.goto(origin + '/search');
+      holdMap = true;
+      const mapNavigation = page.goto(origin + '/', {
+        waitUntil: 'domcontentloaded',
+      });
+      try {
+        await expect
+          .poll(() => waitingMap.length, { timeout: 5000 })
+          .toBeGreaterThan(0);
+        const mapLoading = page.locator('[data-map-loading]');
+        await mapLoading.waitFor();
+        const cards = mapLoading.locator('[data-map-carousel-skeleton]');
+        await expect
+          .poll(async () =>
+            cards
+              .locator('[data-map-skeleton-card]')
+              .first()
+              .evaluate((element) => element.getBoundingClientRect().height),
+          )
+          .toBe(viewport.height <= 550 ? 62 : 152);
+        const mapBounds = await cards.evaluate((element) => {
+          const frame = element.getBoundingClientRect();
+          const last = element.lastElementChild!.getBoundingClientRect();
+          const first = element.firstElementChild!.getBoundingClientRect();
+          return {
+            right: frame.right,
+            lastRight: last.right,
+            height: first.height,
+          };
+        });
+        await capture('map');
+        expect(mapBounds.lastRight).toBeGreaterThanOrEqual(mapBounds.right);
+        expect(mapBounds.height).toBe(viewport.height <= 550 ? 62 : 152);
+      } finally {
+        holdMap = false;
+        for (const response of waitingMap.splice(0))
+          response.end(JSON.stringify({ total: 0, items: [] }));
+        await mapNavigation;
+      }
+
+      holdList = true;
+      try {
+        await page
+          .getByRole('navigation', { name: '주 메뉴' })
+          .getByRole('link', { name: '목록', exact: true })
+          .click();
+        await expect
+          .poll(() => waitingLists.length, { timeout: 5000 })
+          .toBeGreaterThan(0);
+        const pending = page.locator('[data-list-navigation-pending]');
+        await pending.waitFor();
+        const overlayWidth = await pending.evaluate(
+          (element) => element.getBoundingClientRect().width,
+        );
+        expect(overlayWidth).toBe(Math.min(viewport.width, 640));
+        const bounds = await pending
+          .locator('[data-skeleton-cards]')
+          .evaluate((element) => {
+            const frame = element.getBoundingClientRect();
+            const last = element.lastElementChild!.getBoundingClientRect();
+            return {
+              top: frame.top,
+              bottom: frame.bottom,
+              lastBottom: last.bottom,
+            };
+          });
+        expect(bounds.lastBottom).toBeGreaterThanOrEqual(bounds.bottom);
+        expect(bounds.bottom).toBeGreaterThan(viewport.height - 120);
+        await capture('list');
+      } finally {
+        holdList = false;
+        for (const response of waitingLists.splice(0))
+          response.end(
+            JSON.stringify({ total: listArticles.length, items: listArticles }),
+          );
+      }
+      await page.waitForURL(origin + '/incidents');
+      expect(await page.locator('[data-list-navigation-pending]').count()).toBe(
+        0,
+      );
+
+      await page.goto(origin + '/search');
+      const input = page.getByRole('searchbox', { name: '기사 키워드 검색' });
+      await input.fill('검색 대기');
+      let release = () => {};
+      const gate = new Promise<void>((resolve) => {
+        release = resolve;
+      });
+      let waiting = false;
+      await page.route('**/search?**', async (route) => {
+        if (
+          new URL(route.request().url()).searchParams.get('q') !== '검색 대기'
+        )
+          return route.continue();
+        waiting = true;
+        await gate;
+        await route.continue();
+      });
+      try {
+        await input.press('Enter');
+        await expect.poll(() => waiting, { timeout: 5000 }).toBe(true);
+        const cards = page.locator('main [data-skeleton-cards]');
+        await cards.waitFor();
+        const bounds = await cards.evaluate((element) => ({
+          bottom: element.getBoundingClientRect().bottom,
+          lastBottom: element.lastElementChild!.getBoundingClientRect().bottom,
+        }));
+        expect(bounds.lastBottom).toBeGreaterThanOrEqual(bounds.bottom);
+        expect(bounds.bottom).toBeGreaterThan(viewport.height - 100);
+        expect(
+          await page.locator('main [role="status"][aria-busy="true"]').count(),
+        ).toBe(1);
+        await capture('search');
+      } finally {
+        release();
+      }
+      await page
+        .getByRole('heading', { name: '기사 검색 결과', exact: true })
+        .waitFor();
+      await page.unroute('**/search?**');
+      expect(await page.locator('main [data-skeleton-cards]').count()).toBe(0);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBe(true);
+    } finally {
+      holdMap = false;
+      holdList = false;
+      for (const response of [
+        ...waitingMap.splice(0),
+        ...waitingLists.splice(0),
+      ])
+        if (!response.destroyed)
+          response.end(JSON.stringify({ total: 0, items: [] }));
+      await context.unrouteAll({ behavior: 'wait' });
+      await context.close();
+    }
+  }
+}, 120000);
+
 test('articleListNavigationShowsSkeletonWhileTheServerIsPending', async () => {
   const context = await browser!.newContext({
     viewport: { width: 393, height: 852 },
