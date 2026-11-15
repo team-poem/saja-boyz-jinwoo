@@ -61,7 +61,9 @@ test('reportInputFocusStaysOnFieldBoundary', async () => {
       expect(focus.get('outline-offset'), name).toBe('0px');
       expect(focus.get('border-color'), name).toBe('#ea1a2d');
       expect(focus.get('--tw-ring-offset-width') ?? '0px', name).toBe('0px');
-      expect(focus.get('--tw-ring-shadow') ?? '', name).not.toContain('4px');
+      expect(focus.get('--tw-ring-shadow') ?? '', name).not.toMatch(
+        /(?:[4-9]|[1-9]\d+)px/,
+      );
     }
 
     const attachment = container.querySelector<HTMLInputElement>(
@@ -77,7 +79,9 @@ test('reportInputFocusStaysOnFieldBoundary', async () => {
     expect(uploadFocus.get('outline-offset')).toBe('0px');
     expect(uploadFocus.get('border-color')).toBe('#ea1a2d');
     expect(uploadFocus.get('--tw-ring-offset-width') ?? '0px').toBe('0px');
-    expect(uploadFocus.get('--tw-ring-shadow') ?? '').not.toContain('4px');
+    expect(uploadFocus.get('--tw-ring-shadow') ?? '').not.toMatch(
+      /(?:[4-9]|[1-9]\d+)px/,
+    );
   } finally {
     container.remove();
   }
