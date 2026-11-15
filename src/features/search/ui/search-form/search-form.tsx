@@ -174,14 +174,14 @@ function SearchInput({
           readOnly={pending}
           aria-label="기사 키워드 검색"
           placeholder={prompt}
-          className="h-full min-h-0 min-w-0 flex-1 border-0 bg-transparent p-0 text-[14px]/[17px] font-semibold text-text placeholder:text-transparent focus-visible:outline-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-cancel-button]:[-webkit-appearance:none]"
+          className="peer h-full min-h-0 min-w-0 flex-1 border-0 bg-transparent p-0 text-[14px]/[17px] font-semibold text-text placeholder:text-transparent focus-visible:outline-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-cancel-button]:[-webkit-appearance:none]"
         />
         {!hasValue && !composing && (
           <span
             key={prompt}
             data-search-input-prompt
             aria-hidden="true"
-            className="ui-sheet-enter pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 truncate text-[14px]/[17px] font-normal text-muted"
+            className="ui-sheet-enter pointer-events-none absolute inset-x-0 top-1/2 hidden -translate-y-1/2 truncate text-[14px]/[17px] font-normal text-muted peer-placeholder-shown:block"
           >
             {prompt}
           </span>

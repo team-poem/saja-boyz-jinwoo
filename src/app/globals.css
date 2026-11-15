@@ -67,13 +67,6 @@
   }
 }
 
-@layer components {
-  /* 입력 이벤트가 없는 자동완성에서도 안내가 입력값을 가리지 않는다. */
-  input:not(:placeholder-shown) + [data-search-input-prompt] {
-    display: none;
-  }
-}
-
 /* 실제 컨트롤만 반응하며 포커스 윤곽과 레이아웃은 전환하지 않는다. */
 .ui-control:not(:disabled, [aria-disabled='true']):active {
   background-color: #e2e8f0;
