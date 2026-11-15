@@ -2,9 +2,9 @@
 branch: codex/search-prompt-focus
 owner: easter721
 started: 2026-11-16
-status: active
+status: done
 goal: fix(search): 입력 안내 롤링과 공유 링크 포커스 정렬
-next: 검색 입력 안내 모션과 공유 복사 필드의 키보드 윤곽 검증
+next: PR 68 원격 검사와 동료 재리뷰 확인
 base: codex/adaptive-skeletons
 ---
 
