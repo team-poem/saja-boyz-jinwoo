@@ -2,9 +2,9 @@
 branch: codex/report-focus
 owner: easter721
 started: 2026-11-15
-status: active
+status: done
 goal: fix(report): 제보 입력란 포커스 표시 정렬
-next: 제보 필드와 첨부 입력의 포커스 경계 및 키보드 접근성 검증
+next: PR 68에 제보 포커스 인계 기록과 보관된 계획 반영
 base: codex/adaptive-skeletons
 ---
 
