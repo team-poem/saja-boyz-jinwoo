@@ -27,6 +27,7 @@ export async function fetchArticleList(
   offset = 0,
   sort: 'recent' | 'popular' = 'recent',
   signal?: AbortSignal,
+  period?: '24h' | '7d' | '30d',
 ) {
   if (!Number.isSafeInteger(offset) || offset < 0) return null;
 
@@ -50,6 +51,7 @@ export async function fetchArticleList(
     url.searchParams.set('offset', String(offset));
     url.searchParams.set('limit', '20');
     if (sort === 'popular') url.searchParams.set('sort', 'popular');
+    if (period) url.searchParams.set('period', period);
     const normalizedKeyword = keyword?.trim();
 
     if (normalizedKeyword) url.searchParams.set('keyword', normalizedKeyword);
