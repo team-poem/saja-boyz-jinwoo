@@ -2,9 +2,9 @@
 branch: codex/input-focus-alignment
 owner: easter721
 started: 2026-11-15
-status: active
+status: done
 goal: fix(ui): 입력 필드의 포커스 윤곽 정렬
-next: 검색과 제보 입력란의 포커스 스타일을 맞추고 키보드 접근성을 검증
+next: PR 68의 원격 검사와 리뷰 상태를 확인
 base: codex/adaptive-skeletons
 ---
 
