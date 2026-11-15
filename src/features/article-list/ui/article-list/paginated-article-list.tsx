@@ -96,7 +96,13 @@ export function PaginatedArticleList({
 
   return (
     <>
-      <ArticleList items={page.items} apiOrigin={page.apiOrigin} now={now} />
+      {period && page.items.length === 0 ? (
+        <Notice title="선택한 기간의 기사가 없어요">
+          기간을 변경해 다른 소식도 살펴보세요.
+        </Notice>
+      ) : (
+        <ArticleList items={page.items} apiOrigin={page.apiOrigin} now={now} />
+      )}
       {pending && <ArticleSkeleton label="추가 기사를 불러오는 중이에요" />}
       {hasMore && <div ref={tail} aria-hidden="true" className="h-px" />}
       {hasMore && (failed || retrying) && (
