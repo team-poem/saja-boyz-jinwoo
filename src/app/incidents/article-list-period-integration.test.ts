@@ -33,7 +33,10 @@ vi.mock('next/link', () => ({
     href: string;
     children: ReactNode;
     scroll?: boolean;
-  }) => createElement('a', { href, ...props }, children),
+  }) => {
+    void _scroll;
+    return createElement('a', { href, ...props }, children);
+  },
 }));
 
 afterEach(() => {
