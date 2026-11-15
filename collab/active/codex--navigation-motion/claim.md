@@ -2,9 +2,9 @@
 branch: codex/navigation-motion
 owner: easter721
 started: 2026-11-15
-status: active
+status: done
 goal: fix(ui): 검색 안내와 화면 전환 모션 개선
-next: 검색 안내 롤링과 상세 복귀 및 목록 진입 전환을 검증한다
+next: PR 68에서 통합 검증과 리뷰를 이어간다
 base: codex/adaptive-skeletons
 ---
 
