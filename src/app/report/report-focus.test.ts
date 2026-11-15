@@ -1,34 +1,49 @@
 // file: src/app/report/report-focus.test.ts
+// @vitest-environment jsdom
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 import tailwindcss from '@tailwindcss/postcss';
-import { chromium } from 'playwright-core';
-import postcss from 'postcss';
+import postcss, { type Root } from 'postcss';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, test } from 'vitest';
 
 import ReportPage from './page';
 
+function focusDeclarations(css: Root, element: Element) {
+  const result = new Map<string, string>();
+  const layers = ['base', 'components', 'utilities'];
+  for (const layer of layers) {
+    css.walkRules((rule) => {
+      if (rule.parent?.type !== 'atrule' || rule.parent.params !== layer)
+        return;
+      try {
+        if (!element.matches(rule.selector)) return;
+      } catch {
+        return;
+      }
+      rule.walkDecls((decl) => {
+        result.set(decl.prop, decl.value);
+      });
+    });
+  }
+  return result;
+}
+
 test('reportInputFocusStaysOnFieldBoundary', async () => {
   const path = join(process.cwd(), 'src/app/globals.css');
-  const style = await postcss([tailwindcss()]).process(
+  const output = await postcss([tailwindcss()]).process(
     await readFile(path, 'utf8'),
     {
       from: path,
     },
   );
-  const markup = renderToStaticMarkup(createElement(ReportPage));
-  const browser = await chromium.launch({ channel: 'chrome', headless: true });
+  const container = document.createElement('div');
+  container.innerHTML = renderToStaticMarkup(createElement(ReportPage));
+  document.body.append(container);
 
   try {
-    const page = await browser.newPage({
-      viewport: { width: 320, height: 640 },
-    });
-    await page.setContent(`<style>${style.css}</style>${markup}`);
-    await page.keyboard.press('Tab');
-
     for (const name of [
       'category',
       'occurredAt',
@@ -36,54 +51,34 @@ test('reportInputFocusStaysOnFieldBoundary', async () => {
       'location',
       'description',
     ]) {
-      const field = page.locator(`[name="${name}"]`);
-      await field.focus();
-      const focus = await field.evaluate((element) => {
-        const computed = getComputedStyle(element);
-        return {
-          visible: element.matches(':focus-visible'),
-          outlineStyle: computed.outlineStyle,
-          outlineWidth: Number.parseFloat(computed.outlineWidth),
-          outlineOffset: computed.outlineOffset,
-          border: computed.borderTopColor,
-          shadow: computed.boxShadow,
-        };
-      });
-      expect(focus.visible, name).toBe(true);
-      expect(focus.outlineStyle, name).toBe('solid');
-      expect(focus.outlineWidth, name).toBeGreaterThanOrEqual(2);
-      expect(focus.outlineOffset, name).toBe('0px');
-      expect(focus.border, name).toBe('rgb(234, 26, 45)');
-      expect(
-        focus.shadow === 'none' || focus.shadow.includes('inset'),
-        name,
-      ).toBe(true);
-      expect(focus.shadow, name).not.toMatch(
-        /0px 0px 0px (?:[4-9]|[1-9]\d+)px/,
-      );
+      const field = container.querySelector<HTMLElement>(`[name="${name}"]`);
+      expect(field, name).not.toBeNull();
+      field!.focus();
+      expect(field!.matches(':focus-visible'), name).toBe(true);
+      const focus = focusDeclarations(output.root, field!);
+      expect(focus.get('outline'), name).toContain('solid');
+      expect(focus.get('outline-style'), name).not.toBe('none');
+      expect(focus.get('outline-offset'), name).toBe('0px');
+      expect(focus.get('border-color'), name).toBe('#ea1a2d');
+      expect(focus.get('--tw-ring-offset-width') ?? '0px', name).toBe('0px');
+      expect(focus.get('--tw-ring-shadow') ?? '', name).not.toContain('4px');
     }
 
-    const attachment = page.locator('[name="attachments"]');
-    await attachment.focus();
-    const uploadFocus = await attachment.evaluate((element) => {
-      const computed = getComputedStyle(element.parentElement!);
-      return {
-        outlineStyle: computed.outlineStyle,
-        outlineWidth: Number.parseFloat(computed.outlineWidth),
-        outlineOffset: computed.outlineOffset,
-        border: computed.borderTopColor,
-        shadow: computed.boxShadow,
-      };
-    });
-    expect(uploadFocus.outlineStyle).toBe('solid');
-    expect(uploadFocus.outlineWidth).toBeGreaterThanOrEqual(2);
-    expect(uploadFocus.outlineOffset).toBe('0px');
-    expect(uploadFocus.border).toBe('rgb(234, 26, 45)');
-    expect(
-      uploadFocus.shadow === 'none' || uploadFocus.shadow.includes('inset'),
-    ).toBe(true);
-    expect(uploadFocus.shadow).not.toMatch(/0px 0px 0px (?:[4-9]|[1-9]\d+)px/);
+    const attachment = container.querySelector<HTMLInputElement>(
+      '[name="attachments"]',
+    )!;
+    attachment.focus();
+    const uploadFocus = focusDeclarations(
+      output.root,
+      attachment.parentElement!,
+    );
+    expect(uploadFocus.get('outline-style')).toBe('solid');
+    expect(uploadFocus.get('outline-width')).toBe('3px');
+    expect(uploadFocus.get('outline-offset')).toBe('0px');
+    expect(uploadFocus.get('border-color')).toBe('#ea1a2d');
+    expect(uploadFocus.get('--tw-ring-offset-width') ?? '0px').toBe('0px');
+    expect(uploadFocus.get('--tw-ring-shadow') ?? '').not.toContain('4px');
   } finally {
-    await browser.close();
+    container.remove();
   }
 }, 60000);
