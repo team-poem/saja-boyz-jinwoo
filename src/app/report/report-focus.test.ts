@@ -58,6 +58,9 @@ test('reportInputFocusStaysOnFieldBoundary', async () => {
         focus.shadow === 'none' || focus.shadow.includes('inset'),
         name,
       ).toBe(true);
+      expect(focus.shadow, name).not.toMatch(
+        /0px 0px 0px (?:[4-9]|[1-9]\d+)px/,
+      );
     }
 
     const attachment = page.locator('[name="attachments"]');
@@ -79,6 +82,7 @@ test('reportInputFocusStaysOnFieldBoundary', async () => {
     expect(
       uploadFocus.shadow === 'none' || uploadFocus.shadow.includes('inset'),
     ).toBe(true);
+    expect(uploadFocus.shadow).not.toMatch(/0px 0px 0px (?:[4-9]|[1-9]\d+)px/);
   } finally {
     await browser.close();
   }
