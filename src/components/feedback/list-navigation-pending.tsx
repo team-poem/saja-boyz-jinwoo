@@ -1,7 +1,7 @@
 'use client';
 
 import { useLinkStatus } from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { ArticleFilters } from '@/components/layout/article-filters/article-filters';
@@ -53,6 +53,7 @@ export function ListNavigationPending({
 }) {
   const { pending: linkPending } = useLinkStatus();
   const pending = linkPending || pendingOverride;
+  const pendingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!pending) return;
@@ -62,6 +63,8 @@ export function ListNavigationPending({
     const unlockMain = lockBackground(main);
     const shell = main.closest<HTMLElement>('[data-article-background]');
     const unlockShell = shell ? lockBackground(shell) : undefined;
+
+    pendingRef.current?.focus({ preventScroll: true });
 
     return () => {
       unlockShell?.();
@@ -73,13 +76,19 @@ export function ListNavigationPending({
 
   return createPortal(
     <div
+      ref={pendingRef}
+      tabIndex={-1}
       data-list-navigation-pending=""
       className="fixed inset-y-0 left-1/2 z-50 w-[min(100%,640px)] -translate-x-1/2 overflow-hidden bg-background px-4 pt-[calc(12px_+_env(safe-area-inset-top))] pb-[110px]"
     >
-      <SearchHeader isHome={false} />
-      <ArticleFilters isHome={false} />
+      <div inert>
+        <SearchHeader isHome={false} />
+        <ArticleFilters isHome={false} />
+      </div>
       <ListLoading />
-      <BottomNavigation pathname="/incidents" />
+      <div inert>
+        <BottomNavigation pathname="/incidents" />
+      </div>
     </div>,
     document.body,
   );

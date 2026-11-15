@@ -49,3 +49,46 @@ test('listNavigationShowsDestinationShell', async () => {
     expect(restoredInert).toBe(previousInert);
   }
 });
+
+test('listPendingLocksControlsAndPreservesDestinationFocus', async () => {
+  vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
+  const host = document.createElement('div');
+  const main = document.createElement('main');
+  main.id = 'main-content';
+  const opener = document.createElement('button');
+  opener.textContent = '목록';
+  main.append(opener);
+  document.body.append(main, host);
+  opener.focus();
+  const root = createRoot(host);
+  let mounted = true;
+  const destination = document.createElement('button');
+  destination.textContent = '도착 화면';
+  try {
+    await act(async () => root.render(createElement(ListNavigationPending)));
+    const pending = document.querySelector('[data-list-navigation-pending]');
+    expect(pending).not.toBeNull();
+    const controls = Array.from(
+      pending!.querySelectorAll<HTMLButtonElement | HTMLAnchorElement>(
+        'a[href], button:not(:disabled)',
+      ),
+    );
+    expect(controls.every((control) => control.closest('[inert]'))).toBe(true);
+    const statuses = pending!.querySelectorAll('[role="status"]');
+    expect(statuses).toHaveLength(1);
+    expect(statuses[0].closest('[inert]')).toBeNull();
+    expect(pending!.contains(document.activeElement)).toBe(true);
+
+    document.body.append(destination);
+    destination.focus();
+    await act(async () => root.unmount());
+    mounted = false;
+    expect(document.activeElement).toBe(destination);
+  } finally {
+    if (mounted) await act(async () => root.unmount());
+    destination.remove();
+    main.remove();
+    host.remove();
+    vi.unstubAllGlobals();
+  }
+});
