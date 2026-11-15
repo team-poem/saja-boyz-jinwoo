@@ -5,15 +5,13 @@ import { createRoot } from 'react-dom/client';
 import { afterEach, assert, expect, test, vi } from 'vitest';
 
 import IncidentsPage from '@/app/(browse)/@background/incidents/page';
-import {
-  ArticleRouteHost,
-  useArticleSheetRoute,
-} from '@/features/article-detail/ui/article-route-host/article-route-host';
+import { ArticleRouteHost } from '@/features/article-detail/ui/article-route-host/article-route-host';
+import { DetailInline } from '@/features/article-detail/ui/detail-sheet/detail-inline';
 
 let pathname = '/incidents';
 let articleSegments: string[] = [];
 const push = vi.fn((href: string) => window.history.pushState({}, '', href));
-const back = vi.fn(() => window.history.back());
+const back = vi.fn();
 
 vi.mock('next/navigation', () => ({
   usePathname: () => pathname,
@@ -38,6 +36,7 @@ vi.mock('next/link', () => ({
     return createElement('a', { href, ...props }, children);
   },
 }));
+vi.mock('next/compat/router', () => ({ useRouter: () => null }));
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -48,10 +47,12 @@ afterEach(() => {
 test('listPeriodSelectionPaginationUnavailableAndDetailReturn', async () => {
   vi.stubEnv('NEWS_API_BASE_URL', 'https://news.example.invalid');
   vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
+  vi.stubGlobal('scrollTo', vi.fn());
   pathname = '/incidents';
   articleSegments = [];
   window.history.replaceState({}, '', '/incidents');
   push.mockClear();
+  back.mockClear();
   const observers: {
     callback: IntersectionObserverCallback;
     target: Element | null;
@@ -120,14 +121,6 @@ test('listPeriodSelectionPaginationUnavailableAndDetailReturn', async () => {
   const host = document.createElement('div');
   document.body.append(host);
   const root = createRoot(host);
-  function DetailProbe() {
-    const route = useArticleSheetRoute();
-    return createElement(
-      'a',
-      { 'aria-label': '상세에서 목록 복귀', href: route?.sourcePath },
-      '목록으로',
-    );
-  }
   async function renderPage() {
     const params = Object.fromEntries(
       new URLSearchParams(window.location.search),
@@ -140,7 +133,11 @@ test('listPeriodSelectionPaginationUnavailableAndDetailReturn', async () => {
         createElement(
           ArticleRouteHost,
           { background: page },
-          createElement(DetailProbe),
+          createElement(
+            DetailInline,
+            { titleId: 'detail-heading' },
+            createElement('h2', { id: 'detail-heading' }, '상세 기사'),
+          ),
         ),
       ),
     );
@@ -193,6 +190,7 @@ test('listPeriodSelectionPaginationUnavailableAndDetailReturn', async () => {
     expect(host.textContent).toContain('기간 기사 20');
     const articleLink = host.querySelector<HTMLAnchorElement>('article h2 a');
     assert(articleLink);
+    articleLink.focus();
     await act(async () =>
       articleLink.dispatchEvent(
         new MouseEvent('click', { bubbles: true, cancelable: true }),
@@ -201,14 +199,18 @@ test('listPeriodSelectionPaginationUnavailableAndDetailReturn', async () => {
     pathname = articleLink.getAttribute('href')!;
     articleSegments = ['(.)incidents'];
     await renderPage();
-    expect(
-      host
-        .querySelector<HTMLAnchorElement>('a[aria-label="상세에서 목록 복귀"]')
-        ?.getAttribute('href'),
-    ).toBe('/incidents?period=7d');
+    const detailBack = host.querySelector<HTMLAnchorElement>(
+      'a[aria-label="목록으로"]',
+    );
+    assert(detailBack);
+    expect(detailBack.getAttribute('href')).toBe('/incidents?period=7d');
+    await act(async () => detailBack.click());
+    expect(back).toHaveBeenCalledTimes(1);
     pathname = '/incidents';
     articleSegments = [];
     window.history.replaceState({}, '', '/incidents?period=7d');
+    await renderPage();
+    expect(document.activeElement).toBe(articleLink);
     unsupported = true;
     await renderPage();
     const error = host.querySelector('[role="alert"]');
