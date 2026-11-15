@@ -95,6 +95,8 @@ test('listPeriodSelectionPaginationUnavailableAndDetailReturn', async () => {
     },
   });
   let unsupported = false;
+  let wrongHeader = false;
+  let noPeriodResults = false;
   let finishOld: ((response: Response) => void) | undefined;
   const requests: URL[] = [];
   vi.stubGlobal(
@@ -109,12 +111,20 @@ test('listPeriodSelectionPaginationUnavailableAndDetailReturn', async () => {
           finishOld = resolve;
         });
       }
-      const items = offset
-        ? [item(20)]
-        : Array.from({ length: 20 }, (_, i) => item(i));
+      const items =
+        period && noPeriodResults
+          ? []
+          : offset
+            ? [item(20)]
+            : Array.from({ length: 20 }, (_, i) => item(i));
       return Response.json(
-        { total: 21, items },
-        { headers: period && !unsupported ? { 'X-News-Period': period } : {} },
+        { total: period && noPeriodResults ? 0 : 21, items },
+        {
+          headers:
+            period && !unsupported
+              ? { 'X-News-Period': wrongHeader ? '30d' : period }
+              : {},
+        },
       );
     }),
   );
@@ -191,6 +201,9 @@ test('listPeriodSelectionPaginationUnavailableAndDetailReturn', async () => {
     const articleLink = host.querySelector<HTMLAnchorElement>('article h2 a');
     assert(articleLink);
     articleLink.focus();
+    articleLink.addEventListener('click', (event) => event.preventDefault(), {
+      once: true,
+    });
     await act(async () =>
       articleLink.dispatchEvent(
         new MouseEvent('click', { bubbles: true, cancelable: true }),
@@ -223,6 +236,16 @@ test('listPeriodSelectionPaginationUnavailableAndDetailReturn', async () => {
       '/incidents?period=7d',
     );
     expect(host.querySelector('article')).toBeNull();
+    unsupported = false;
+    wrongHeader = true;
+    await renderPage();
+    expect(host.querySelector('[role="alert"]')).not.toBeNull();
+    expect(host.querySelector('article')).toBeNull();
+    wrongHeader = false;
+    noPeriodResults = true;
+    await renderPage();
+    expect(host.textContent).toMatch(/선택한 기간.*기사/);
+    expect(host.textContent).not.toContain('아직 수집된 기사가 없어요');
   } finally {
     await act(async () => root.unmount());
     host.remove();
