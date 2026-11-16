@@ -730,7 +730,7 @@ test('searchKeyboardFocusKeepsTheFormOutlineAndClearControl', async () => {
         visible: true,
         inputOutline: 'none',
         formOutline: 'solid',
-        width: '3px',
+        width: '1px',
         offset: '0px',
         color: 'rgb(232, 25, 44)',
       });
