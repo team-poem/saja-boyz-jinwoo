@@ -2761,6 +2761,18 @@ test('reportAttachmentTilesAreHorizontalAndKeepAccessibleFileControls', async ()
 }, 120000);
 
 test('thinFocus: reportFieldFocusAndErrorsRemainAccessible', async () => {
+  const luminance = (color: string) => {
+    const channels = color
+      .match(/\d+/g)!
+      .slice(0, 3)
+      .map((value) => {
+        const channel = Number(value) / 255;
+        return channel <= 0.04045
+          ? channel / 12.92
+          : ((channel + 0.055) / 1.055) ** 2.4;
+      });
+    return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+  };
   const context = await browser!.newContext({
     viewport: { width: 320, height: 568 },
   });
@@ -2846,7 +2858,10 @@ test('thinFocus: reportFieldFocusAndErrorsRemainAccessible', async () => {
       };
     });
     expect(focusedError.border).toBe('rgba(0, 0, 0, 0)');
-    expect(focusedError.outline).not.toBe(error.border);
+    const values = [luminance(focusedError.outline), luminance(error.border)];
+    const contrast =
+      (Math.max(...values) + 0.05) / (Math.min(...values) + 0.05);
+    expect(contrast).toBeGreaterThanOrEqual(3);
     expect(focusedError.width).toBe('1px');
     expect(focusedError.background).toBe(error.background);
   }
