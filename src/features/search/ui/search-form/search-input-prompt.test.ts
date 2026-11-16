@@ -25,7 +25,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-test('searchPromptAndShareFallbackPreserveInputUsability', async () => {
+test('thinFocus: searchPromptAndShareFallbackPreserveInputUsability', async () => {
   vi.useFakeTimers();
   vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
   vi.stubGlobal(
@@ -137,6 +137,7 @@ test('searchPromptAndShareFallbackPreserveInputUsability', async () => {
     shareInput.focus();
     expect(shareInput.matches(':focus-visible')).toBe(true);
     let offset = '';
+    let width = '';
     for (const layer of ['base', 'components', 'utilities']) {
       css.root.walkRules((rule) => {
         if (rule.parent?.type !== 'atrule' || rule.parent.params !== layer)
@@ -146,12 +147,16 @@ test('searchPromptAndShareFallbackPreserveInputUsability', async () => {
         } catch {
           return;
         }
+        rule.walkDecls('outline-width', (decl) => {
+          width = decl.value;
+        });
         rule.walkDecls('outline-offset', (decl) => {
           offset = decl.value;
         });
       });
     }
     expect(offset).toBe('0px');
+    expect(width).toBe('1px');
   } finally {
     await act(async () => root.unmount());
     host.remove();
