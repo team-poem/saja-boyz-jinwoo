@@ -31,7 +31,7 @@ function focusDeclarations(css: Root, element: Element) {
   return result;
 }
 
-test('thinFocus: reportInputFocusStaysOnFieldBoundary', async () => {
+test('reportInputFocusStaysOnFieldBoundary', async () => {
   const path = join(process.cwd(), 'src/app/globals.css');
   const output = await postcss([tailwindcss()]).process(
     await readFile(path, 'utf8'),

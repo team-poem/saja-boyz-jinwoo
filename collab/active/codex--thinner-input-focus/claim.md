@@ -2,9 +2,9 @@
 branch: codex/thinner-input-focus
 owner: easter721
 started: 2026-11-16
-status: active
+status: paused
 goal: 'fix(ui): 입력 포커스 윤곽 두께 조정'
-next: 검색·제보·첨부·공유 입력 및 관련 테스트
+next: 검증된 입력 포커스 변경을 PR68에 반영
 base: codex/adaptive-skeletons
 ---
 

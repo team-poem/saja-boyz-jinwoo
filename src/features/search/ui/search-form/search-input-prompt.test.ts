@@ -25,7 +25,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-test('thinFocus: searchPromptAndShareFallbackPreserveInputUsability', async () => {
+test('searchPromptAndShareFallbackPreserveInputUsability', async () => {
   vi.useFakeTimers();
   vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
   vi.stubGlobal(

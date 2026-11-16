@@ -699,7 +699,7 @@ test('searchAlignmentPreservesFullTargetsAndWorkingControls', async () => {
   await page.close();
 }, 120000);
 
-test('thinFocus: searchKeyboardFocusKeepsTheFormOutlineAndClearControl', async () => {
+test('searchKeyboardFocusKeepsTheFormOutlineAndClearControl', async () => {
   for (const width of [320, 393]) {
     const page = await openList(width);
     try {
@@ -2760,7 +2760,7 @@ test('reportAttachmentTilesAreHorizontalAndKeepAccessibleFileControls', async ()
   }
 }, 120000);
 
-test('thinFocus: reportFieldFocusAndErrorsRemainAccessible', async () => {
+test('reportFieldFocusAndErrorsRemainAccessible', async () => {
   const luminance = (color: string) => {
     const channels = color
       .match(/\d+/g)!
